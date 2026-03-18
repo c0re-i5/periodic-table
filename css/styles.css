@@ -492,10 +492,10 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) scale(0.95);
-  width: 96vw;
-  max-width: 1520px;
-  height: 90vh;
-  max-height: 880px;
+  width: 97vw;
+  max-width: 1720px;
+  height: 92vh;
+  max-height: 960px;
   background: var(--bg-secondary);
   border: 1px solid var(--border-color);
   border-radius: var(--radius);
@@ -518,7 +518,7 @@ body {
 .detail-content {
   height: 100%;
   overflow-y: auto;
-  padding: 28px 32px 32px;
+  padding: 28px 36px 32px;
   scrollbar-width: thin;
   scrollbar-color: var(--border-color) transparent;
 }
@@ -537,8 +537,8 @@ body {
 /* Three-column layout: Nuclear | Identity | Electron */
 .detail-layout {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 24px;
+  grid-template-columns: 1.15fr 1fr 1fr;
+  gap: 28px;
   min-height: 100%;
 }
 
@@ -1449,6 +1449,45 @@ body {
   background: rgba(255, 107, 107, 0.12);
   color: #ff6b6b;
   border: 1px solid rgba(255, 107, 107, 0.25);
+}
+
+/* ─── Nuclear Origin ─── */
+.nuclear-origin {
+  margin: 0 0 8px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 0.70rem;
+  text-align: center;
+  background: rgba(167, 139, 250, 0.10);
+  color: #a78bfa;
+  border: 1px solid rgba(167, 139, 250, 0.20);
+  line-height: 1.35;
+}
+
+/* ─── Nuclear Reactions ─── */
+.nuclear-reactions {
+  margin-top: 8px;
+  padding: 6px 8px;
+  background: var(--bg-primary);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+}
+
+.nuclear-reactions h4 {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  margin: 0 0 5px;
+}
+
+.nuclear-reaction-item {
+  font-size: 0.66rem;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--text-secondary);
+  padding: 2px 0;
+  line-height: 1.4;
 }
 
 /* ─── Nuclear Viz Tabs ─── */

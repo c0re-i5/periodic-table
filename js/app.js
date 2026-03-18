@@ -498,6 +498,22 @@
     document.getElementById('nuclear-binding').innerHTML = `<strong>B/A:</strong> ${nd.bindingPerNucleon} MeV`;
     document.getElementById('nuclear-magnetic').innerHTML = `<strong>μ:</strong> ${nd.magneticMoment} μₙ`;
 
+    // Cross-section and separation energies from NUCLEAR_EXTRA
+    const ne = typeof NUCLEAR_EXTRA !== 'undefined' ? NUCLEAR_EXTRA[nd.z] : null;
+    const csEl = document.getElementById('nuclear-crosssection');
+    const sepEl = document.getElementById('nuclear-separation');
+    if (ne) {
+      csEl.innerHTML = ne.sigma !== null
+        ? `<strong>σ<sub>n,γ</sub>:</strong> ${ne.sigma >= 1000 ? ne.sigma.toLocaleString() : ne.sigma} b`
+        : `<strong>σ<sub>n,γ</sub>:</strong> —`;
+      const spStr = ne.Sp !== null ? ne.Sp.toFixed(1) : '—';
+      const snStr = ne.Sn !== null ? ne.Sn.toFixed(1) : '—';
+      sepEl.innerHTML = `<strong>S<sub>p</sub>:</strong> ${spStr}  <strong>S<sub>n</sub>:</strong> ${snStr} MeV`;
+    } else {
+      csEl.innerHTML = '';
+      sepEl.innerHTML = '';
+    }
+
     // Stability
     const stability = document.getElementById('nuclear-stability');
     if (nd.stable) {
@@ -506,6 +522,29 @@
     } else {
       stability.className = 'nuclear-stability radioactive';
       stability.textContent = '☢ Radioactive';
+    }
+
+    // Nucleosynthesis origin
+    const originEl = document.getElementById('nuclear-origin');
+    if (ne && ne.origin && ne.origin.length) {
+      const labels = ne.origin.map(code => (typeof ORIGIN_LABELS !== 'undefined' && ORIGIN_LABELS[code]) || code);
+      originEl.innerHTML = `⭐ Origin: ${labels.join(' + ')}`;
+      originEl.style.display = '';
+    } else {
+      originEl.style.display = 'none';
+    }
+
+    // Nuclear reactions
+    const reactionsEl = document.getElementById('nuclear-reactions');
+    if (ne && ne.reactions && ne.reactions.length) {
+      let rHTML = '<h4>Notable Reactions</h4>';
+      ne.reactions.forEach(r => {
+        rHTML += `<div class="nuclear-reaction-item">${r}</div>`;
+      });
+      reactionsEl.innerHTML = rHTML;
+      reactionsEl.style.display = '';
+    } else {
+      reactionsEl.style.display = 'none';
     }
 
     // Isotope table
@@ -530,6 +569,7 @@
     renderDecayChain(nd);
     renderBindingEnergyChart(nd);
     renderNuclearShells(nd);
+    renderNuclideChart(nd);
   }
 
   // ─────────────── Nuclear Viz Tab Switching ───────────────
@@ -630,20 +670,46 @@
     const { canvas, ctx } = makeHiDPICanvas(container, size, size);
 
     // Pack nucleons in a roughly spherical arrangement
+    // Apply nuclear deformation β₂: prolate (>0) stretches z-axis, oblate (<0) compresses
     const nucleons = [];
     const spacing = total > 100 ? 3.2 : total > 40 ? 3.8 : total > 10 ? 4.5 : 6;
+    const ne = typeof NUCLEAR_EXTRA !== 'undefined' ? NUCLEAR_EXTRA[nd.z] : null;
+    const beta2 = ne ? ne.b2 : 0;
+    // Deformation scale factors: z-axis stretches/compresses, xy compensates for volume
+    // For quadrupole: R(θ) = R₀(1 + β₂·Y₂₀(θ)) ≈ R₀(1 + β₂·(3cos²θ-1)/2)
+    // Simplified: stretch z by (1 + β₂), compress xy by 1/√(1+β₂) to preserve volume
+    const defZ = 1 + beta2;
+    const defXY = 1 / Math.sqrt(Math.abs(defZ) || 1);
 
-    // Fibonacci sphere packing
+    // Fibonacci sphere packing with decoupled radial layers
+    // The angular distribution uses the golden angle for even spacing on the sphere.
+    // The radial placement uses a shuffled index so inner/outer shells aren't
+    // correlated with the polar angle — preventing the "pushed in" pole artifact.
     const goldenAngle = Math.PI * (3 - Math.sqrt(5));
+
+    // Build a radial index array and shuffle it deterministically
+    const radialOrder = Array.from({ length: total }, (_, i) => i);
+    // Deterministic shuffle (seeded by total) so it's stable per element
+    for (let i = radialOrder.length - 1; i > 0; i--) {
+      const j = ((i * 2654435761) >>> 0) % (i + 1); // Knuth multiplicative hash
+      const tmp = radialOrder[i];
+      radialOrder[i] = radialOrder[j];
+      radialOrder[j] = tmp;
+    }
+
     for (let i = 0; i < total; i++) {
+      // Angular position from Fibonacci sphere (evenly distributed)
       const t = i / Math.max(total - 1, 1);
       const inclination = Math.acos(1 - 2 * t);
       const azimuth = goldenAngle * i;
-      const layer = Math.cbrt((i + 0.5) / total);
+
+      // Radial position from shuffled index (decoupled from angle)
+      const ri = radialOrder[i];
+      const layer = Math.cbrt((ri + 0.5) / total);
       const r = layer * spacing * Math.cbrt(total) * 0.32;
-      const x = r * Math.sin(inclination) * Math.cos(azimuth);
-      const y = r * Math.sin(inclination) * Math.sin(azimuth);
-      const zc = r * Math.cos(inclination);
+      const x = r * Math.sin(inclination) * Math.cos(azimuth) * defXY;
+      const y = r * Math.sin(inclination) * Math.sin(azimuth) * defXY;
+      const zc = r * Math.cos(inclination) * defZ;
       const isProton = i < z;
 
       // Generate 3 valence quarks per nucleon
@@ -968,6 +1034,15 @@
       if (nuc3d.zoom !== 1.0) {
         ctx.fillText(`${nuc3d.zoom.toFixed(1)}×`, size - sw, size - Math.round(14 * sc));
       }
+
+      // Deformation indicator
+      const neData = typeof NUCLEAR_EXTRA !== 'undefined' ? NUCLEAR_EXTRA[nd.z] : null;
+      if (neData && Math.abs(neData.b2) > 0.01) {
+        ctx.textAlign = 'left';
+        ctx.fillStyle = 'rgba(167,139,250,0.55)';
+        const defLabel = neData.b2 > 0 ? 'prolate' : 'oblate';
+        ctx.fillText(`β₂=${neData.b2 > 0 ? '+' : ''}${neData.b2.toFixed(2)} (${defLabel})`, sw, Math.round(14 * sc));
+      }
       ctx.textAlign = 'left';
 
       nucleus3dAnimationId = requestAnimationFrame(frame);
@@ -1187,8 +1262,6 @@
 
     const { w: cw } = getNuclearVizSize(container);
     const sc = cw / 280;
-    const w = cw, h = cw;
-    const { canvas, ctx } = makeHiDPICanvas(container, w, h);
 
     // Find highest relevant shell for both protons and neutrons
     const maxParticles = Math.max(z, n);
@@ -1199,14 +1272,27 @@
     maxShellIdx = Math.min(maxShellIdx + 1, shells.length - 1);
 
     const numLevels = maxShellIdx + 1;
-    const levelH = Math.min(Math.round(18 * sc), (h - Math.round(40 * sc)) / numLevels);
-    const colW = (w - Math.round(60 * sc)) / 2;
-    const colLeftX = Math.round(30 * sc);
-    const colRightX = w / 2 + Math.round(10 * sc);
+
+    // Dynamic height: grow canvas if many levels so they don't overlap
+    const minLevelH = Math.round(14 * sc);
+    const idealH = Math.round(40 * sc) + numLevels * minLevelH;
+    const w = cw;
+    const h = Math.max(cw, idealH);
+    const { canvas, ctx } = makeHiDPICanvas(container, w, h);
+
+    const levelH = (h - Math.round(40 * sc)) / numLevels;
+
+    // Layout columns — give more room to labels on the left, magic numbers in center
+    const labelW = Math.round(42 * sc);  // space for shell labels like "1h₁₁/₂"
+    const gapW = Math.round(20 * sc);    // center gap for magic numbers
+    const colW = (w - labelW - gapW) / 2;
+    const colLeftX = labelW;
+    const colRightX = labelW + colW + gapW;
     const startY = h - Math.round(18 * sc);
 
     // Title
-    ctx.font = `${Math.round(9 * sc)}px Inter, sans-serif`;
+    const titleFs = Math.max(8, Math.round(9 * sc));
+    ctx.font = `${titleFs}px Inter, sans-serif`;
     ctx.fillStyle = 'rgba(255,255,255,0.5)';
     ctx.textAlign = 'center';
     ctx.fillText('Protons', colLeftX + colW / 2, Math.round(12 * sc));
@@ -1215,6 +1301,9 @@
     // Draw levels
     let protonsFilled = 0;
     let neutronsFilled = 0;
+
+    // Only show labels if they won't overlap (skip every other label at small heights)
+    const labelSkip = levelH < 10 * sc ? 2 : 1;
 
     for (let i = 0; i <= maxShellIdx; i++) {
       const shell = shells[i];
@@ -1231,10 +1320,8 @@
       neutronsFilled += nFill;
 
       // Draw proton level bar
-      // Background
       ctx.fillStyle = 'rgba(255,255,255,0.04)';
       ctx.fillRect(colLeftX, y - levelH + 3, colW, levelH - 4);
-      // Fill
       if (pFrac > 0) {
         ctx.fillStyle = `rgba(255, 107, 107, ${0.3 + pFrac * 0.5})`;
         ctx.fillRect(colLeftX, y - levelH + 3, colW * pFrac, levelH - 4);
@@ -1248,17 +1335,16 @@
         ctx.fillRect(colRightX, y - levelH + 3, colW * nFrac, levelH - 4);
       }
 
-      // Shell label
-      ctx.font = `${Math.round(7 * sc)}px JetBrains Mono, monospace`;
-      ctx.fillStyle = 'rgba(255,255,255,0.35)';
-      ctx.textAlign = 'right';
-      ctx.fillText(shell.label, colLeftX - Math.round(3 * sc), y - levelH / 2 + Math.round(5 * sc));
+      // Shell label (left of proton column)
+      if (i % labelSkip === 0) {
+        const labelFs = Math.max(6, Math.round(7 * sc));
+        ctx.font = `${labelFs}px JetBrains Mono, monospace`;
+        ctx.fillStyle = 'rgba(255,255,255,0.35)';
+        ctx.textAlign = 'right';
+        ctx.fillText(shell.label, colLeftX - Math.round(3 * sc), y - levelH / 2 + Math.round(4 * sc));
+      }
 
-      // Capacity on right
-      ctx.textAlign = 'left';
-      ctx.fillText(`${pFill}/${shell.capacity}`, colLeftX + colW + Math.round(2 * sc), y - levelH / 2 + Math.round(5 * sc));
-
-      // Magic number line
+      // Magic number line + label (in center gap)
       if (shell.magic) {
         ctx.beginPath();
         ctx.moveTo(colLeftX - 2, y + 2);
@@ -1269,13 +1355,189 @@
         ctx.stroke();
         ctx.setLineDash([]);
 
-        // Magic number label
-        ctx.font = `bold ${Math.round(8 * sc)}px JetBrains Mono, monospace`;
+        const magicFs = Math.max(6, Math.round(8 * sc));
+        ctx.font = `bold ${magicFs}px JetBrains Mono, monospace`;
         ctx.fillStyle = 'rgba(255, 217, 61, 0.6)';
         ctx.textAlign = 'center';
-        ctx.fillText(shell.cumulative, w / 2, y + 1);
+        ctx.fillText(shell.cumulative, colLeftX + colW + gapW / 2, y + 1);
       }
     }
+  }
+
+  // ═══════════════════════ CHART OF NUCLIDES RENDERER ═══════════════════════
+  // Shows a Z (proton) vs N (neutron) grid colored by decay mode
+  // Centered on the current element with ~15 Z above/below
+  function renderNuclideChart(nd) {
+    const container = document.getElementById('nviz-nuclides');
+    container.innerHTML = '';
+
+    if (typeof NUCLIDE_RANGES === 'undefined') return;
+
+    const { w: cw } = getNuclearVizSize(container);
+    const sc = cw / 280;
+    const currentZ = nd.z;
+    const currentN = nd.nucleons - nd.z;
+
+    // Determine Z window
+    const halfWin = 15;
+    const zMin = Math.max(1, currentZ - halfWin);
+    const zMax = Math.min(NUCLIDE_RANGES.length - 1, currentZ + halfWin);
+
+    // Find N range across visible elements
+    let nMin = Infinity, nMax = -Infinity;
+    for (let z = zMin; z <= zMax; z++) {
+      const range = NUCLIDE_RANGES[z];
+      if (!range) continue;
+      nMin = Math.min(nMin, range[0]);
+      nMax = Math.max(nMax, range[1]);
+    }
+    if (!isFinite(nMin)) return;
+
+    // Layout
+    const margin = { top: Math.round(20 * sc), right: Math.round(12 * sc), bottom: Math.round(32 * sc), left: Math.round(36 * sc) };
+    const plotW = cw - margin.left - margin.right;
+    const plotH = cw - margin.top - margin.bottom;
+    const cols = nMax - nMin + 1;
+    const rows = zMax - zMin + 1;
+    const cellW = Math.min(plotW / cols, plotH / rows);
+    const cellH = cellW;
+
+    const canvasW = cw;
+    const canvasH = Math.round(margin.top + rows * cellH + margin.bottom);
+    const { canvas, ctx } = makeHiDPICanvas(container, canvasW, canvasH);
+
+    // Stability line approximation: N_stable ≈ Z + 0.006 * Z^2
+    function stableN(z) { return z + 0.006 * z * z; }
+
+    // Decay mode heuristic color
+    function nuclideColor(z, n, isStable) {
+      if (isStable) return '#333333';
+      const a = z + n;
+      if (z > 83 && a > 209) {
+        if (n > 150 && z > 96) return '#4caf50'; // SF (green)
+        return '#ffd93d'; // alpha (gold)
+      }
+      const ns = stableN(z);
+      if (n < ns - 1) return '#ff6b6b'; // beta+/EC (red) — proton-rich
+      if (n > ns + 1) return '#4a9eff'; // beta- (blue) — neutron-rich
+      return '#888888'; // near stability (grey)
+    }
+
+    // Draw background
+    ctx.fillStyle = 'rgba(0,0,0,0.2)';
+    ctx.fillRect(margin.left, margin.top, cols * cellW, rows * cellH);
+
+    // Draw nuclide cells
+    for (let z = zMin; z <= zMax; z++) {
+      const range = NUCLIDE_RANGES[z];
+      if (!range) continue;
+      const [rNmin, rNmax, stableNs] = range;
+      const row = zMax - z; // Z increases upward
+      const y = margin.top + row * cellH;
+
+      for (let n = rNmin; n <= rNmax; n++) {
+        const col = n - nMin;
+        const x = margin.left + col * cellW;
+        const isStable = stableNs.includes(n);
+        const color = nuclideColor(z, n, isStable);
+
+        ctx.fillStyle = color;
+        ctx.fillRect(x + 0.5, y + 0.5, Math.max(cellW - 1, 1), Math.max(cellH - 1, 1));
+      }
+
+      // Highlight current element's row
+      if (z === currentZ) {
+        ctx.strokeStyle = 'rgba(255,255,255,0.7)';
+        ctx.lineWidth = Math.max(1, 1.5 * sc);
+        ctx.strokeRect(margin.left + (range[0] - nMin) * cellW, y, (range[1] - range[0] + 1) * cellW, cellH);
+      }
+    }
+
+    // Mark current nuclide
+    const curCol = currentN - nMin;
+    const curRow = zMax - currentZ;
+    if (curCol >= 0 && curRow >= 0) {
+      const cx = margin.left + curCol * cellW + cellW / 2;
+      const cy = margin.top + curRow * cellH + cellH / 2;
+      ctx.beginPath();
+      ctx.arc(cx, cy, Math.max(cellW * 0.6, 3), 0, Math.PI * 2);
+      ctx.strokeStyle = '#fff';
+      ctx.lineWidth = Math.max(1.5, 2 * sc);
+      ctx.stroke();
+    }
+
+    // Axes
+    const axisFs = Math.max(7, Math.round(8 * sc));
+    ctx.font = `${axisFs}px JetBrains Mono, monospace`;
+    ctx.fillStyle = 'rgba(255,255,255,0.6)';
+    ctx.textAlign = 'right';
+    ctx.textBaseline = 'middle';
+
+    // Y-axis: Z labels (every 5 or every 2 depending on density)
+    const zStep = rows > 20 ? 5 : rows > 10 ? 2 : 1;
+    for (let z = zMin; z <= zMax; z++) {
+      if (z % zStep !== 0 && z !== currentZ) continue;
+      const row = zMax - z;
+      const y = margin.top + row * cellH + cellH / 2;
+      ctx.fillStyle = z === currentZ ? '#ff6b6b' : 'rgba(255,255,255,0.5)';
+      ctx.fillText(z.toString(), margin.left - 4, y);
+    }
+
+    // X-axis: N labels
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'top';
+    const nStep = cols > 30 ? 10 : cols > 15 ? 5 : cols > 8 ? 2 : 1;
+    for (let n = nMin; n <= nMax; n++) {
+      if (n % nStep !== 0 && n !== currentN) continue;
+      const col = n - nMin;
+      const x = margin.left + col * cellW + cellW / 2;
+      ctx.fillStyle = n === currentN ? '#ff6b6b' : 'rgba(255,255,255,0.5)';
+      ctx.fillText(n.toString(), x, margin.top + rows * cellH + 3);
+    }
+
+    // Axis titles
+    const titleFs = Math.max(8, Math.round(9 * sc));
+    ctx.font = `bold ${titleFs}px Inter, sans-serif`;
+    ctx.fillStyle = 'rgba(255,255,255,0.5)';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'alphabetic';
+    ctx.fillText('Neutron number N', margin.left + (cols * cellW) / 2, canvasH - 3);
+
+    ctx.save();
+    ctx.translate(Math.round(10 * sc), margin.top + (rows * cellH) / 2);
+    ctx.rotate(-Math.PI / 2);
+    ctx.fillText('Proton number Z', 0, 0);
+    ctx.restore();
+
+    // Legend
+    const legY = Math.round(4 * sc);
+    const legFs = Math.max(6, Math.round(7 * sc));
+    ctx.font = `${legFs}px Inter, sans-serif`;
+    const legItems = [
+      { color: '#333333', label: 'Stable' },
+      { color: '#4a9eff', label: 'β⁻' },
+      { color: '#ff6b6b', label: 'β⁺/EC' },
+      { color: '#ffd93d', label: 'α' },
+      { color: '#4caf50', label: 'SF' },
+    ];
+    let legX = margin.left;
+    legItems.forEach(item => {
+      ctx.fillStyle = item.color;
+      const bx = Math.round(6 * sc);
+      ctx.fillRect(legX, legY, bx, bx);
+      ctx.fillStyle = 'rgba(255,255,255,0.6)';
+      legX += bx + 2;
+      ctx.textBaseline = 'top';
+      ctx.textAlign = 'left';
+      ctx.fillText(item.label, legX, legY);
+      legX += ctx.measureText(item.label).width + Math.round(8 * sc);
+    });
+
+    // Title
+    ctx.font = `bold ${Math.max(8, Math.round(9 * sc))}px Inter, sans-serif`;
+    ctx.fillStyle = 'rgba(255,255,255,0.4)';
+    ctx.textAlign = 'right';
+    ctx.fillText(`${nd.symbol}-${nd.nucleons}`, canvasW - margin.right, legY + Math.round(8 * sc));
   }
 
   // ═══════════════════════ Shell Diagram (Bohr Model) ═══════════════════════

@@ -34,10 +34,11 @@ Click any element to open a 3-column modal with:
 - **Orbital Diagram** — Hund's rule filling with up/down arrow notation
 - **Molecule Viewer** — 3D ball-and-stick models of common compounds for each element
 
-### Nuclear Physics (4 tabs)
+### Nuclear Physics (5 tabs)
 A dedicated nuclear column shows subatomic structure for every element:
 - **Nucleus 3D** — interactive 3D visualization of the atomic nucleus:
   - Fibonacci sphere packing of protons (red) and neutrons (teal) as translucent, edge-stroked spheres
+  - **Nuclear deformation** — β₂ quadrupole parameter stretches prolate (β₂ > 0) or compresses oblate (β₂ < 0) nuclei, visible in the 3D shape
   - Perspective projection with depth-sorted rendering and specular highlights
   - **Quark substructure** — zoom in past 1.8× to reveal the valence quarks inside each nucleon:
     - **Proton** = 2 up quarks (+⅔e) + 1 down quark (−⅓e)
@@ -49,8 +50,9 @@ A dedicated nuclear column shows subatomic structure for every element:
 - **Decay Chain** — connected node graph showing radioactive decay sequences (α, β⁻, β⁺, EC, SF) with color-coded modes
 - **Binding Energy** — B/A vs mass number chart with Fe-56 peak marker, current element highlighted, gradient fill under curve
 - **Nuclear Shells** — dual-column proton/neutron shell filling diagram with magic number indicators (2, 8, 20, 28, 50, 82, 126)
+- **Chart of Nuclides** — Z vs N grid showing all known isotopes colored by decay mode (stable = black, β⁻ = blue, β⁺/EC = red, α = gold, SF = green), centered on the current element with current nuclide highlighted
 
-Nuclear info badges show: proton/neutron count, nuclear radius, spin/parity, binding energy per nucleon, magnetic moment, and stability status. Isotope table lists all known isotopes with natural abundance and half-life.
+Nuclear info badges show: proton/neutron count, nuclear radius, spin/parity, binding energy per nucleon, magnetic moment, stability status, thermal neutron capture cross-section (σₙ,γ in barns), separation energies (Sp/Sn in MeV), and nucleosynthesis origin (Big Bang, cosmic rays, stars, supernovae, neutron star mergers, radioactive decay, or artificial). Notable nuclear reactions are listed when available (e.g., fission, fusion, medical isotopes).
 
 ### Molecular Orbital Clouds
 When viewing a compound, click **"MO Cloud"** to see its molecular electron cloud — LCAO molecular orbital theory rendered as a 3D point cloud.
@@ -74,6 +76,7 @@ When viewing a compound, click **"MO Cloud"** to see its molecular electron clou
 - **Molecular orbitals** — LCAO coefficients for 109 molecules with validated quantum numbers
 - **Ionic states** — oxidation states with electron configurations for 50 elements (91 ion entries)
 - **Nuclear data** — nuclear properties, isotopes, decay chains, shell model levels, and binding energy curve for all 118 elements
+- **Extended nuclear data** — deformation parameters (β₂), neutron capture cross-sections, separation energies (Sp/Sn), nucleosynthesis origins, notable reactions, and nuclide ranges for the Chart of Nuclides
 
 ## Getting Started
 
@@ -93,6 +96,7 @@ periodic-table/
     ├── molecular-orbitals.js # LCAO MO coefficients for 109 molecules
     ├── ions.js               # Ionic states for 50 elements
     ├── nuclear-data.js       # Nuclear properties, isotopes, decay chains for 118 elements
+    ├── nuclear-extra.js      # Deformation, cross-sections, separation energies, origins, nuclide ranges
     └── app.js                # All interactivity, renderers, and math
 ```
 
@@ -100,7 +104,7 @@ periodic-table/
 
 - **Zero dependencies** — pure HTML5, CSS3, and ES6+ JavaScript
 - **Canvas 2D API** — all 3D visualizations rendered via manual rotation matrices and perspective projection
-- **~18,500 lines of code** across 9 files
+- **~20,000 lines of code** across 10 files
 - **Responsive** — adapts from desktop to mobile with CSS Grid breakpoints
 - **Dark theme** — designed for readability with carefully chosen contrast ratios
 
@@ -141,6 +145,11 @@ The nucleus renderer visualizes nuclear structure from the nucleon level down to
 |-----------|--------|
 | Nucleon packing | Fibonacci sphere — golden angle sampling on concentric shells |
 | Nuclear data | Binding energy, spin/parity, magnetic moment, quadrupole moment for 118 elements |
+| Nuclear deformation | β₂ quadrupole parameter — prolate/oblate nucleus shape applied to Fibonacci sphere packing |
+| Cross-sections | Thermal neutron capture σₙ,γ (barns) from IAEA reference data |
+| Separation energies | Proton (Sp) and neutron (Sn) separation energies (MeV) from AME2020 |
+| Nucleosynthesis | Origin classification: Big Bang, cosmic rays, low/high-mass stars, neutron star mergers, decay, artificial |
+| Chart of Nuclides | Z vs N grid colored by decay mode heuristic (β⁻, β⁺/EC, α, SF) with stability line |
 | Isotopes | Natural abundance, half-life, and decay modes for all known stable/radioactive isotopes |
 | Decay chains | α, β⁻, β⁺, electron capture (EC), and spontaneous fission (SF) sequences |
 | Binding energy curve | 88-point B/A vs A reference data with Fe-56 peak |
