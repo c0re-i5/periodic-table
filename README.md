@@ -41,19 +41,7 @@ Click any element to open a centered modal with:
 
 ## Getting Started
 
-No build step required. Just serve the files:
-
-```bash
-# Python
-python3 -m http.server 8080
-
-# Node.js
-npx serve .
-
-# Or just open index.html in a browser
-```
-
-Then visit `http://localhost:8080`.
+No build step required. Just open the file: index.html
 
 ## Project Structure
 
