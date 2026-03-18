@@ -60,7 +60,57 @@
       <div class="detail-content" id="detail-content">
         <button class="detail-close" id="detail-close" aria-label="Close detail panel">&times;</button>
         <div class="detail-layout">
-          <!-- Left Column: Identity & Chemistry -->
+          <!-- Left Column: Nuclear Physics -->
+          <div class="detail-col-nuclear">
+            <div class="nuclear-header">
+              <h3>Nuclear Structure</h3>
+              <div class="nuclear-info-row">
+                <span class="nuclear-badge" id="nuclear-protons"></span>
+                <span class="nuclear-badge" id="nuclear-neutrons"></span>
+                <span class="nuclear-badge nuclear-radius-badge" id="nuclear-radius"></span>
+              </div>
+              <div class="nuclear-info-row">
+                <span class="nuclear-stat" id="nuclear-spin"></span>
+                <span class="nuclear-stat" id="nuclear-binding"></span>
+                <span class="nuclear-stat" id="nuclear-magnetic"></span>
+              </div>
+              <div class="nuclear-stability" id="nuclear-stability"></div>
+            </div>
+            <div class="nuclear-viz-switcher">
+              <button class="nuclear-viz-tab active" data-nviz="nucleus3d" title="3D Nucleus">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="9" cy="9" r="3" fill="#ff6b6b" stroke="none" opacity="0.8"/><circle cx="14" cy="10" r="3" fill="#4ecdc4" stroke="none" opacity="0.8"/><circle cx="11" cy="14" r="3" fill="#ff6b6b" stroke="none" opacity="0.8"/><circle cx="12" cy="7" r="3" fill="#4ecdc4" stroke="none" opacity="0.8"/>
+                </svg>
+                <span>Nucleus</span>
+              </button>
+              <button class="nuclear-viz-tab" data-nviz="decaychain" title="Decay Chain">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="4" r="2.5"/><circle cx="6" cy="14" r="2.5"/><circle cx="18" cy="14" r="2.5"/><circle cx="12" cy="21" r="2"/><line x1="12" y1="6.5" x2="6" y2="11.5"/><line x1="12" y1="6.5" x2="18" y2="11.5"/><line x1="6" y1="16.5" x2="12" y2="19"/>
+                </svg>
+                <span>Decay</span>
+              </button>
+              <button class="nuclear-viz-tab" data-nviz="binding" title="Binding Energy">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="2,20 6,14 10,10 14,6 18,4.5 22,4"/><circle cx="14" cy="6" r="2.5" fill="#ffd93d" stroke="none" opacity="0.7"/>
+                </svg>
+                <span>Binding</span>
+              </button>
+              <button class="nuclear-viz-tab" data-nviz="shells" title="Nuclear Shell Model">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="18" width="18" height="3" rx="1" fill="#4ecdc4" opacity="0.5"/><rect x="5" y="13" width="14" height="3" rx="1" fill="#ff6b6b" opacity="0.5"/><rect x="7" y="8" width="10" height="3" rx="1" fill="#ffd93d" opacity="0.5"/><rect x="9" y="3" width="6" height="3" rx="1" fill="#a78bfa" opacity="0.5"/>
+                </svg>
+                <span>Shells</span>
+              </button>
+            </div>
+            <div class="nuclear-viz-container" id="nuclear-viz-container">
+              <div class="nuclear-viz-panel active" id="nviz-nucleus3d"></div>
+              <div class="nuclear-viz-panel" id="nviz-decaychain"></div>
+              <div class="nuclear-viz-panel" id="nviz-binding"></div>
+              <div class="nuclear-viz-panel" id="nviz-shells"></div>
+            </div>
+            <div class="isotope-list" id="isotope-list"></div>
+          </div>
+          <!-- Center Column: Identity & Chemistry -->
           <div class="detail-col-left">
             <div class="detail-header">
               <div class="detail-symbol-block" id="detail-symbol-block">
@@ -86,7 +136,7 @@
               <div class="properties-grid" id="properties-grid"></div>
             </div>
           </div>
-          <!-- Right Column: Visualizations -->
+          <!-- Right Column: Electron Visualizations -->
           <div class="detail-col-right">
             <div class="detail-shells">
               <h3>Electron Configuration</h3>
@@ -140,6 +190,7 @@
   <script src="js/compounds-extra.js"></script>
   <script src="js/ions.js"></script>
   <script src="js/molecular-orbitals.js"></script>
+  <script src="js/nuclear-data.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>

@@ -32,9 +32,11 @@
   let activeElement = null;
   let activeCategory = null;
   let activeViz = 'bohr2d';
+  let activeNuclearViz = 'nucleus3d';
   let cellMap = new Map(); // number -> DOM element
   let tooltipEl = null;
   let bohr3dAnimationId = null;
+  let nucleus3dAnimationId = null;
 
   // ═══════════════════════ Initialize ═══════════════════════
   function init() {
@@ -249,6 +251,13 @@
         return;
       }
 
+      // Nuclear viz tab clicks
+      const nuclearTab = e.target.closest('.nuclear-viz-tab');
+      if (nuclearTab) {
+        switchNuclearViz(nuclearTab.dataset.nviz);
+        return;
+      }
+
       // 3D speed control — handled inside renderCloud3D now
     });
 
@@ -345,6 +354,9 @@
     // Shell Diagram (Bohr model)
     renderShellDiagram(element.shells);
 
+    // Nuclear data
+    showNuclearDetail(element);
+
     // Show panel
     detailPanel.classList.add('open');
     detailBackdrop.classList.add('open');
@@ -365,6 +377,13 @@
       cancelAnimationFrame(molState.animId);
       molState.animId = null;
     }
+    if (nucleus3dAnimationId) {
+      cancelAnimationFrame(nucleus3dAnimationId);
+      nucleus3dAnimationId = null;
+    }
+    nuc3d.canvas = null;
+    nuc3d.ctx = null;
+    nuc3d.nucleons = [];
   }
 
   // ═══════════════════════ Ionic States Renderer ═══════════════════════
@@ -452,6 +471,811 @@
         <div class="property-value">${p.value}<span class="property-unit"> ${p.unit}</span></div>
       </div>
     `).join('');
+  }
+
+  // ═══════════════════════ Nuclear Detail Population ═══════════════════════
+  function showNuclearDetail(element) {
+    const nd = typeof NUCLEAR_DATA !== 'undefined' ? NUCLEAR_DATA[element.number] : null;
+    if (!nd) return;
+
+    const z = nd.z;
+    const n = nd.nucleons - z;
+
+    // Badges
+    const protonBadge = document.getElementById('nuclear-protons');
+    protonBadge.className = 'nuclear-badge proton-badge';
+    protonBadge.textContent = `${z} protons`;
+
+    const neutronBadge = document.getElementById('nuclear-neutrons');
+    neutronBadge.className = 'nuclear-badge neutron-badge';
+    neutronBadge.textContent = `${n} neutrons`;
+
+    const radiusBadge = document.getElementById('nuclear-radius');
+    radiusBadge.textContent = `r = ${nd.radius} fm`;
+
+    // Stats
+    document.getElementById('nuclear-spin').innerHTML = `<strong>Spin:</strong> ${nd.spin}`;
+    document.getElementById('nuclear-binding').innerHTML = `<strong>B/A:</strong> ${nd.bindingPerNucleon} MeV`;
+    document.getElementById('nuclear-magnetic').innerHTML = `<strong>μ:</strong> ${nd.magneticMoment} μₙ`;
+
+    // Stability
+    const stability = document.getElementById('nuclear-stability');
+    if (nd.stable) {
+      stability.className = 'nuclear-stability stable';
+      stability.textContent = '● Stable Nucleus';
+    } else {
+      stability.className = 'nuclear-stability radioactive';
+      stability.textContent = '☢ Radioactive';
+    }
+
+    // Isotope table
+    const isoContainer = document.getElementById('isotope-list');
+    let isoHTML = '<h4>Isotopes</h4>';
+    nd.isotopes.forEach(iso => {
+      const stableClass = iso.halfLife === 'stable' ? 'isotope-stable' : 'isotope-radioactive';
+      const abund = iso.abundance > 0 ? iso.abundance.toFixed(2) + '%' : 'trace';
+      const halfStr = iso.halfLife === 'stable' ? 'Stable' : `t½ ${iso.halfLife}`;
+      const decay = iso.decayModes.length ? iso.decayModes.join(', ') : '';
+      isoHTML += `<div class="isotope-item">
+        <span class="isotope-name ${stableClass}">${iso.name}</span>
+        <span class="isotope-abundance">${abund}</span>
+        <span class="isotope-halflife">${halfStr}</span>
+        <span class="isotope-decay">${decay}</span>
+      </div>`;
+    });
+    isoContainer.innerHTML = isoHTML;
+
+    // Render nuclear visualizations
+    renderNucleus3D(nd);
+    renderDecayChain(nd);
+    renderBindingEnergyChart(nd);
+    renderNuclearShells(nd);
+  }
+
+  // ─────────────── Nuclear Viz Tab Switching ───────────────
+  function switchNuclearViz(mode) {
+    activeNuclearViz = mode;
+    document.querySelectorAll('.nuclear-viz-tab').forEach(t => {
+      t.classList.toggle('active', t.dataset.nviz === mode);
+    });
+    document.querySelectorAll('.nuclear-viz-panel').forEach(p => p.classList.remove('active'));
+    const target = document.getElementById('nviz-' + mode);
+    if (target) target.classList.add('active');
+
+    // Manage nucleus3d animation
+    if (mode !== 'nucleus3d' && nucleus3dAnimationId) {
+      cancelAnimationFrame(nucleus3dAnimationId);
+      nucleus3dAnimationId = null;
+    }
+    if (mode === 'nucleus3d' && activeElement) {
+      const nd = NUCLEAR_DATA[activeElement.number];
+      if (nd) startNucleusAnimation(nd);
+    }
+  }
+
+  // ═══════════════════════ NUCLEUS 3D RENDERER ═══════════════════════
+  // Renders protons (red) and neutrons (teal) as sphere-packed nucleons
+  // with interactive 3D rotation + zoom using perspective projection.
+
+  function getNuclearVizSize(container) {
+    const rect = container.parentElement.getBoundingClientRect();
+    const w = Math.max(300, Math.floor(rect.width - 8));
+    return { w, h: w };
+  }
+
+  function makeHiDPICanvas(container, w, h) {
+    const dpr = window.devicePixelRatio || 1;
+    const canvas = document.createElement('canvas');
+    canvas.width = w * dpr;
+    canvas.height = h * dpr;
+    canvas.style.width = w + 'px';
+    canvas.style.height = h + 'px';
+    const ctx = canvas.getContext('2d');
+    ctx.scale(dpr, dpr);
+    container.appendChild(canvas);
+    return { canvas, ctx, w, h };
+  }
+
+  // ── Nucleus 3D state (mirrors cloud3d pattern) ──
+  const nuc3d = {
+    canvas: null, ctx: null,
+    nucleons: [],
+    camTheta: 0.3,      // Y-axis rotation
+    camPhi: 0.25,        // X-axis rotation
+    fov: 500,
+    zoom: 1.0,
+    autoRotate: true,
+    dragging: false,
+    lastMouse: { x: 0, y: 0 },
+    size: 0,
+    nd: null,
+  };
+
+  function onNucPointerDown(e) {
+    nuc3d.dragging = true;
+    nuc3d.autoRotate = false;
+    nuc3d.lastMouse = { x: e.clientX, y: e.clientY };
+    if (nuc3d.canvas) nuc3d.canvas.style.cursor = 'grabbing';
+    e.preventDefault();
+  }
+  function onNucPointerMove(e) {
+    if (!nuc3d.dragging) return;
+    const dx = e.clientX - nuc3d.lastMouse.x;
+    const dy = e.clientY - nuc3d.lastMouse.y;
+    nuc3d.camTheta += dx * 0.008;
+    nuc3d.camPhi = Math.max(-1.4, Math.min(1.4, nuc3d.camPhi + dy * 0.008));
+    nuc3d.lastMouse = { x: e.clientX, y: e.clientY };
+    e.preventDefault();
+  }
+  function onNucPointerUp() {
+    nuc3d.dragging = false;
+    if (nuc3d.canvas) nuc3d.canvas.style.cursor = 'grab';
+  }
+  function onNucWheel(e) {
+    const factor = nuc3d.zoom < 1 ? 0.001 : nuc3d.zoom < 5 ? 0.003 : 0.008;
+    nuc3d.zoom = Math.max(0.3, Math.min(20.0, nuc3d.zoom + e.deltaY * -factor));
+    e.preventDefault();
+  }
+
+  function renderNucleus3D(nd) {
+    const container = document.getElementById('nviz-nucleus3d');
+    container.innerHTML = '';
+
+    const z = nd.z;
+    const n = nd.nucleons - z;
+    const total = z + n;
+
+    const { w: cw } = getNuclearVizSize(container);
+    const size = cw;
+    const { canvas, ctx } = makeHiDPICanvas(container, size, size);
+
+    // Pack nucleons in a roughly spherical arrangement
+    const nucleons = [];
+    const spacing = total > 100 ? 3.2 : total > 40 ? 3.8 : total > 10 ? 4.5 : 6;
+
+    // Fibonacci sphere packing
+    const goldenAngle = Math.PI * (3 - Math.sqrt(5));
+    for (let i = 0; i < total; i++) {
+      const t = i / Math.max(total - 1, 1);
+      const inclination = Math.acos(1 - 2 * t);
+      const azimuth = goldenAngle * i;
+      const layer = Math.cbrt((i + 0.5) / total);
+      const r = layer * spacing * Math.cbrt(total) * 0.32;
+      const x = r * Math.sin(inclination) * Math.cos(azimuth);
+      const y = r * Math.sin(inclination) * Math.sin(azimuth);
+      const zc = r * Math.cos(inclination);
+      const isProton = i < z;
+
+      // Generate 3 valence quarks per nucleon
+      // Proton: uud (2 up + 1 down), Neutron: udd (1 up + 2 down)
+      // Each quark carries one QCD color charge: red, green, blue
+      const quarkTypes = isProton ? ['u', 'u', 'd'] : ['u', 'd', 'd'];
+      const colorCharges = ['r', 'g', 'b'];
+      const qr = spacing * 0.18; // quark orbit radius (relative to nucleon center)
+      const qPhase = i * 2.39996; // unique phase per nucleon
+      const quarks = quarkTypes.map((flavor, qi) => {
+        const angle = qPhase + qi * (Math.PI * 2 / 3);
+        return {
+          flavor,             // 'u' or 'd'
+          color: colorCharges[qi],
+          // Local offset from nucleon center
+          lx: qr * Math.cos(angle),
+          ly: qr * Math.sin(angle) * 0.6,
+          lz: qr * Math.sin(angle) * 0.8,
+        };
+      });
+
+      nucleons.push({ x, y, z: zc, isProton, quarks });
+    }
+
+    // Set up state
+    nuc3d.canvas = canvas;
+    nuc3d.ctx = ctx;
+    nuc3d.nucleons = nucleons;
+    nuc3d.nd = nd;
+    nuc3d.size = size;
+    nuc3d.camTheta = 0.3;
+    nuc3d.camPhi = 0.25;
+    nuc3d.zoom = 1.0;
+    nuc3d.autoRotate = true;
+    nuc3d.dragging = false;
+    nuc3d.time = 0;
+
+    canvas.style.cursor = 'grab';
+    canvas.addEventListener('pointerdown', onNucPointerDown);
+    canvas.addEventListener('pointermove', onNucPointerMove);
+    canvas.addEventListener('pointerup', onNucPointerUp);
+    canvas.addEventListener('pointerleave', onNucPointerUp);
+    canvas.addEventListener('wheel', onNucWheel, { passive: false });
+
+    startNucleusAnimation(nd, canvas);
+  }
+
+  function startNucleusAnimation(nd, canvasOpt) {
+    if (nucleus3dAnimationId) {
+      cancelAnimationFrame(nucleus3dAnimationId);
+      nucleus3dAnimationId = null;
+    }
+
+    const container = document.getElementById('nviz-nucleus3d');
+    const canvas = canvasOpt || container.querySelector('canvas');
+    if (!canvas || !nuc3d.nucleons.length) return;
+
+    const ctx = nuc3d.ctx || canvas.getContext('2d');
+    const nucleons = nuc3d.nucleons;
+    const size = nuc3d.size;
+    const total = nucleons.length;
+    const sc = size / 280;
+    const baseR = (total > 100 ? 3.5 : total > 40 ? 5 : total > 10 ? 7 : 9) * sc;
+    const fov = nuc3d.fov;
+    const cx = size / 2, cy = size / 2;
+
+    // Quark color map — QCD color charges
+    const qcdColors = { r: '220,50,50', g: '50,200,50', b: '80,120,255' };
+    // Quark flavor labels
+    const flavorLabel = { u: 'u', d: 'd' };
+
+    function camTransform(px, py, pz, cosT, sinT, cosP, sinP) {
+      const rx = px * cosT + pz * sinT;
+      const rz = -px * sinT + pz * cosT;
+      const ry = py * cosP - rz * sinP;
+      const rz2 = py * sinP + rz * cosP;
+      const d = fov / (fov + rz2);
+      return { sx: cx + rx * d * sc, sy: cy + ry * d * sc, depth: rz2, d };
+    }
+
+    function frame() {
+      nuc3d.time += 0.016;
+      if (nuc3d.autoRotate) {
+        nuc3d.camTheta += 0.006;
+      }
+
+      const cosT = Math.cos(nuc3d.camTheta), sinT = Math.sin(nuc3d.camTheta);
+      const cosP = Math.cos(nuc3d.camPhi),   sinP = Math.sin(nuc3d.camPhi);
+      const zm = nuc3d.zoom;
+
+      // Quark visibility ramps in over zoom 1.8–3.0
+      const quarkReveal = Math.max(0, Math.min(1, (zm - 1.8) / 1.2));
+      // Nucleon shell fades as quarks appear
+      const shellOpacity = 1 - quarkReveal * 0.65;
+
+      ctx.clearRect(0, 0, size, size);
+
+      // Build all drawable items for depth sorting
+      const drawList = [];
+
+      nucleons.forEach((nuc, ni) => {
+        const px = nuc.x * zm, py = nuc.y * zm, pz = nuc.z * zm;
+        const proj = camTransform(px, py, pz, cosT, sinT, cosP, sinP);
+
+        // Nucleon shell (always drawn, fades at high zoom)
+        drawList.push({
+          type: 'nucleon',
+          sx: proj.sx, sy: proj.sy, depth: proj.depth, d: proj.d,
+          isProton: nuc.isProton,
+          shellOpacity,
+          ni,
+        });
+
+        // Quarks (visible at zoom > 1.8)
+        if (quarkReveal > 0) {
+          const t = nuc3d.time;
+          nuc.quarks.forEach((q, qi) => {
+            // Quarks jitter/orbit slightly (confinement motion)
+            const wobble = 0.3 * Math.sin(t * 2.5 + ni * 1.7 + qi * 2.1);
+            const qx = nuc.x + q.lx + wobble * 0.15;
+            const qy = nuc.y + q.ly + wobble * 0.12;
+            const qz = nuc.z + q.lz + wobble * 0.1;
+
+            const qProj = camTransform(qx * zm, qy * zm, qz * zm, cosT, sinT, cosP, sinP);
+            drawList.push({
+              type: 'quark',
+              sx: qProj.sx, sy: qProj.sy, depth: qProj.depth, d: qProj.d,
+              flavor: q.flavor,
+              colorCharge: q.color,
+              reveal: quarkReveal,
+              parentSx: proj.sx, parentSy: proj.sy,
+              qi,
+            });
+          });
+
+          // Gluon springs between quark pairs (3 connections per nucleon)
+          for (let a = 0; a < 3; a++) {
+            const b = (a + 1) % 3;
+            const qa = nuc.quarks[a], qb = nuc.quarks[b];
+            const wa = 0.3 * Math.sin(t * 2.5 + ni * 1.7 + a * 2.1);
+            const wb = 0.3 * Math.sin(t * 2.5 + ni * 1.7 + b * 2.1);
+            const ax = (nuc.x + qa.lx + wa * 0.15) * zm;
+            const ay = (nuc.y + qa.ly + wa * 0.12) * zm;
+            const az = (nuc.z + qa.lz + wa * 0.1) * zm;
+            const bx = (nuc.x + qb.lx + wb * 0.15) * zm;
+            const by = (nuc.y + qb.ly + wb * 0.12) * zm;
+            const bz = (nuc.z + qb.lz + wb * 0.1) * zm;
+            const pa = camTransform(ax, ay, az, cosT, sinT, cosP, sinP);
+            const pb = camTransform(bx, by, bz, cosT, sinT, cosP, sinP);
+            drawList.push({
+              type: 'gluon',
+              depth: (pa.depth + pb.depth) / 2,
+              x1: pa.sx, y1: pa.sy, x2: pb.sx, y2: pb.sy,
+              d: (pa.d + pb.d) / 2,
+              reveal: quarkReveal,
+              time: t,
+              idx: ni * 3 + a,
+            });
+          }
+        }
+      });
+
+      // Sort back-to-front
+      drawList.sort((a, b) => a.depth - b.depth);
+
+      // Render all items
+      drawList.forEach(item => {
+        if (item.type === 'nucleon') {
+          const depthNorm = (item.depth + 60) / 120;
+          const depthFade = Math.max(0, Math.min(1, depthNorm));
+          const r = baseR * item.d * (0.85 + 0.15 * depthFade);
+
+          const fillAlpha = (0.25 + 0.45 * depthFade) * item.shellOpacity;
+          const edgeAlpha = (0.4 + 0.5 * depthFade) * item.shellOpacity;
+
+          const rgb = item.isProton ? '255,107,107' : '78,205,196';
+          const edgeRgb = item.isProton ? '255,140,140' : '120,225,216';
+
+          // At high zoom, show nucleon as translucent bubble
+          ctx.beginPath();
+          ctx.arc(item.sx, item.sy, r, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(${rgb},${fillAlpha.toFixed(3)})`;
+          ctx.fill();
+
+          ctx.beginPath();
+          ctx.arc(item.sx, item.sy, r, 0, Math.PI * 2);
+          ctx.strokeStyle = `rgba(${edgeRgb},${edgeAlpha.toFixed(3)})`;
+          ctx.lineWidth = Math.max(0.8, 1.2 * item.d);
+          ctx.stroke();
+
+          // Specular highlight
+          ctx.beginPath();
+          ctx.arc(item.sx - r * 0.28, item.sy - r * 0.28, r * 0.32, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(255,255,255,${(fillAlpha * 0.35).toFixed(3)})`;
+          ctx.fill();
+
+        } else if (item.type === 'gluon') {
+          // Draw gluon as a wavy/helical "spring" between two quarks
+          const dx = item.x2 - item.x1, dy = item.y2 - item.y1;
+          const len = Math.sqrt(dx * dx + dy * dy);
+          if (len < 1) return;
+          const nx = -dy / len, ny = dx / len; // perpendicular
+          const segments = 12;
+          const amplitude = Math.min(len * 0.3, 3.5 * item.d * sc);
+
+          ctx.beginPath();
+          for (let s = 0; s <= segments; s++) {
+            const frac = s / segments;
+            const mx = item.x1 + dx * frac;
+            const my = item.y1 + dy * frac;
+            const wave = Math.sin(frac * Math.PI * 4 + item.time * 3 + item.idx) * amplitude;
+            const px = mx + nx * wave;
+            const py = my + ny * wave;
+            if (s === 0) ctx.moveTo(px, py);
+            else ctx.lineTo(px, py);
+          }
+          ctx.strokeStyle = `rgba(255,220,60,${(0.35 * item.reveal * item.d).toFixed(3)})`;
+          ctx.lineWidth = Math.max(0.6, 0.9 * item.d * sc);
+          ctx.stroke();
+
+        } else if (item.type === 'quark') {
+          const qr = (baseR * 0.38) * item.d * sc;
+          const r = Math.max(1.5 * sc, qr);
+          const alpha = item.reveal * Math.max(0.3, Math.min(1, (item.depth + 60) / 120));
+
+          const rgb = qcdColors[item.colorCharge];
+
+          // Gluon field haze around quark
+          ctx.beginPath();
+          ctx.arc(item.sx, item.sy, r * 2.2, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(${rgb},${(alpha * 0.08).toFixed(3)})`;
+          ctx.fill();
+
+          // Quark body
+          ctx.beginPath();
+          ctx.arc(item.sx, item.sy, r, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(${rgb},${(alpha * 0.85).toFixed(3)})`;
+          ctx.fill();
+
+          // Bright edge
+          ctx.beginPath();
+          ctx.arc(item.sx, item.sy, r, 0, Math.PI * 2);
+          ctx.strokeStyle = `rgba(255,255,255,${(alpha * 0.5).toFixed(3)})`;
+          ctx.lineWidth = Math.max(0.5, 0.8 * item.d);
+          ctx.stroke();
+
+          // Flavor label at high zoom
+          if (item.reveal > 0.5 && r > 3) {
+            ctx.font = `bold ${Math.max(6, Math.round(r * 1.1))}px JetBrains Mono, monospace`;
+            ctx.fillStyle = `rgba(255,255,255,${(alpha * 0.9).toFixed(3)})`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(flavorLabel[item.flavor], item.sx, item.sy + 0.5);
+            ctx.textBaseline = 'alphabetic';
+          }
+        }
+      });
+
+      // ── Legend ──
+      const fs = Math.round(11 * sc);
+      ctx.textAlign = 'left';
+      ctx.font = `${fs}px Inter, sans-serif`;
+      ctx.fillStyle = '#ff6b6b';
+      const sw = Math.round(8 * sc);
+      const legendY = size - Math.round(22 * sc);
+      ctx.fillRect(sw, legendY, sw, sw);
+      ctx.fillStyle = 'rgba(255,255,255,0.7)';
+      ctx.fillText(`${nd.z}p`, sw * 2.5, size - Math.round(14 * sc));
+
+      ctx.fillStyle = '#4ecdc4';
+      ctx.fillRect(Math.round(58 * sc), legendY, sw, sw);
+      ctx.fillStyle = 'rgba(255,255,255,0.7)';
+      ctx.fillText(`${nd.nucleons - nd.z}n`, Math.round(70 * sc), size - Math.round(14 * sc));
+
+      // Quark legend (appears at high zoom)
+      if (quarkReveal > 0.3) {
+        const qa = Math.min(1, (quarkReveal - 0.3) / 0.4);
+        const qlx = sw;
+        const qly = legendY - Math.round(16 * sc);
+        const qfs = Math.round(9 * sc);
+        ctx.font = `${qfs}px Inter, sans-serif`;
+
+        // Up quark
+        ctx.beginPath();
+        ctx.arc(qlx + sw / 2, qly + sw / 2 - 1, sw * 0.45, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(220,50,50,${(qa * 0.8).toFixed(2)})`;
+        ctx.fill();
+        ctx.fillStyle = `rgba(255,255,255,${(qa * 0.7).toFixed(2)})`;
+        ctx.fillText('up (⅔e)', qlx + sw + 4, qly + sw - 1);
+
+        // Down quark
+        const qlx2 = Math.round(90 * sc);
+        ctx.beginPath();
+        ctx.arc(qlx2 + sw / 2, qly + sw / 2 - 1, sw * 0.45, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(80,120,255,${(qa * 0.8).toFixed(2)})`;
+        ctx.fill();
+        ctx.fillStyle = `rgba(255,255,255,${(qa * 0.7).toFixed(2)})`;
+        ctx.fillText('down (-⅓e)', qlx2 + sw + 4, qly + sw - 1);
+
+        // Gluon indicator
+        const gly = qly - Math.round(14 * sc);
+        ctx.beginPath();
+        ctx.moveTo(qlx, gly + sw / 2);
+        for (let s = 0; s <= 8; s++) {
+          const frac = s / 8;
+          ctx.lineTo(qlx + frac * sw * 3, gly + sw / 2 + Math.sin(frac * Math.PI * 3) * 3 * sc);
+        }
+        ctx.strokeStyle = `rgba(255,220,60,${(qa * 0.6).toFixed(2)})`;
+        ctx.lineWidth = Math.max(0.8, 1 * sc);
+        ctx.stroke();
+        ctx.fillStyle = `rgba(255,255,255,${(qa * 0.6).toFixed(2)})`;
+        ctx.fillText('gluon (strong force)', qlx + sw * 3 + 4, gly + sw - 1);
+      }
+
+      // Zoom indicator + hint
+      ctx.font = `${Math.round(9 * sc)}px JetBrains Mono, monospace`;
+      ctx.fillStyle = 'rgba(255,255,255,0.35)';
+      ctx.textAlign = 'right';
+      if (zm < 1.6 && quarkReveal === 0) {
+        ctx.fillText('scroll to zoom into quarks', size - sw, Math.round(14 * sc));
+      }
+      if (nuc3d.zoom !== 1.0) {
+        ctx.fillText(`${nuc3d.zoom.toFixed(1)}×`, size - sw, size - Math.round(14 * sc));
+      }
+      ctx.textAlign = 'left';
+
+      nucleus3dAnimationId = requestAnimationFrame(frame);
+    }
+
+    frame();
+  }
+
+  // ═══════════════════════ DECAY CHAIN RENDERER ═══════════════════════
+  function renderDecayChain(nd) {
+    const container = document.getElementById('nviz-decaychain');
+    container.innerHTML = '';
+
+    if (!nd.decayChain || nd.decayChain.length === 0) {
+      container.innerHTML = '<div style="color:var(--text-muted);font-size:0.8rem;text-align:center;padding:40px 12px;">No decay chain — this element has stable isotopes</div>';
+      return;
+    }
+
+    const chain = nd.decayChain;
+    const { w: cw } = getNuclearVizSize(container);
+    const sc = cw / 280;
+    const w = cw, h = Math.min(cw, Math.max(Math.round(240 * sc), Math.round(chain.length * 42 * sc + 50)));
+    const { canvas, ctx } = makeHiDPICanvas(container, w, h);
+    const stepH = (h - Math.round(40 * sc)) / Math.max(chain.length - 1, 1);
+    const cx = w / 2;
+    const startY = Math.round(20 * sc);
+
+    const modeColors = {
+      'α': '#ff6b6b',
+      'β⁻': '#4ecdc4',
+      'β⁺': '#ffd93d',
+      'EC': '#a78bfa',
+      'SF': '#ff9f43',
+      'stable': '#4ecdc4',
+    };
+
+    chain.forEach((step, i) => {
+      const y = startY + i * stepH;
+      const isLast = step.mode === 'stable';
+
+      // Draw connecting line from previous
+      if (i > 0) {
+        const py = startY + (i - 1) * stepH;
+        const prevStep = chain[i - 1];
+        ctx.beginPath();
+        ctx.moveTo(cx, py + 12);
+        ctx.lineTo(cx, y - 12);
+        ctx.strokeStyle = modeColors[prevStep.mode] || '#666';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        // Decay mode label on the line
+        ctx.font = `${Math.round(10 * sc)}px JetBrains Mono, monospace`;
+        ctx.fillStyle = modeColors[prevStep.mode] || '#888';
+        ctx.textAlign = 'left';
+        ctx.fillText(prevStep.mode, cx + Math.round(16 * sc), (py + y) / 2 + 4);
+      }
+
+      // Node circle
+      ctx.beginPath();
+      ctx.arc(cx, y, isLast ? Math.round(13 * sc) : Math.round(10 * sc), 0, Math.PI * 2);
+      ctx.fillStyle = isLast ? 'rgba(78,205,196,0.2)' : 'rgba(255,107,107,0.15)';
+      ctx.fill();
+      ctx.strokeStyle = isLast ? '#4ecdc4' : '#ff6b6b';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+
+      // Isotope label
+      ctx.font = `bold ${Math.round(10 * sc)}px JetBrains Mono, monospace`;
+      ctx.fillStyle = isLast ? '#4ecdc4' : 'rgba(255,255,255,0.9)';
+      ctx.textAlign = 'center';
+      ctx.fillText(`${step.a}`, cx, y + 1);
+
+      // Symbol on left
+      ctx.font = `${Math.round(11 * sc)}px Inter, sans-serif`;
+      ctx.fillStyle = 'rgba(255,255,255,0.75)';
+      ctx.textAlign = 'right';
+      ctx.fillText(step.sym, cx - Math.round(18 * sc), y + 4);
+
+      // Z on right
+      ctx.font = `${Math.round(9 * sc)}px JetBrains Mono, monospace`;
+      ctx.fillStyle = 'rgba(255,255,255,0.4)';
+      ctx.textAlign = 'left';
+      ctx.fillText(`Z=${step.z}`, cx + Math.round(18 * sc), y + 4);
+    });
+  }
+
+  // ═══════════════════════ BINDING ENERGY CHART ═══════════════════════
+  function renderBindingEnergyChart(nd) {
+    const container = document.getElementById('nviz-binding');
+    container.innerHTML = '';
+
+    const { w: cw } = getNuclearVizSize(container);
+    const sc = cw / 280;
+    const w = cw, h = Math.round(cw * 0.82);
+    const { canvas, ctx } = makeHiDPICanvas(container, w, h);
+    const curve = typeof BINDING_ENERGY_CURVE !== 'undefined' ? BINDING_ENERGY_CURVE : [];
+    if (curve.length === 0) return;
+
+    const pad = { top: Math.round(20 * sc), right: Math.round(16 * sc), bottom: Math.round(32 * sc), left: Math.round(40 * sc) };
+    const plotW = w - pad.left - pad.right;
+    const plotH = h - pad.top - pad.bottom;
+
+    const maxA = 300, maxBE = 9;
+
+    function xOf(a) { return pad.left + (a / maxA) * plotW; }
+    function yOf(be) { return pad.top + plotH - (be / maxBE) * plotH; }
+
+    // Grid
+    ctx.strokeStyle = 'rgba(255,255,255,0.06)';
+    ctx.lineWidth = 1;
+    for (let be = 0; be <= maxBE; be += 2) {
+      ctx.beginPath();
+      ctx.moveTo(pad.left, yOf(be));
+      ctx.lineTo(w - pad.right, yOf(be));
+      ctx.stroke();
+    }
+    for (let a = 0; a <= maxA; a += 50) {
+      ctx.beginPath();
+      ctx.moveTo(xOf(a), pad.top);
+      ctx.lineTo(xOf(a), h - pad.bottom);
+      ctx.stroke();
+    }
+
+    // Curve
+    ctx.beginPath();
+    curve.forEach(([a, be], i) => {
+      const x = xOf(a), y = yOf(be);
+      if (i === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    });
+    ctx.strokeStyle = 'rgba(255, 217, 61, 0.8)';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    // Fill under curve
+    ctx.lineTo(xOf(curve[curve.length - 1][0]), yOf(0));
+    ctx.lineTo(xOf(curve[0][0]), yOf(0));
+    ctx.closePath();
+    const grad = ctx.createLinearGradient(0, pad.top, 0, h - pad.bottom);
+    grad.addColorStop(0, 'rgba(255, 217, 61, 0.15)');
+    grad.addColorStop(1, 'rgba(255, 217, 61, 0.02)');
+    ctx.fillStyle = grad;
+    ctx.fill();
+
+    // Highlight current element
+    const curA = nd.nucleons;
+    const curBE = nd.bindingPerNucleon;
+    const hx = xOf(curA), hy = yOf(curBE);
+
+    ctx.beginPath();
+    ctx.arc(hx, hy, Math.round(5 * sc), 0, Math.PI * 2);
+    ctx.fillStyle = '#ff6b6b';
+    ctx.fill();
+    ctx.strokeStyle = '#fff';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+
+    // Label for current element
+    ctx.font = `bold ${Math.round(10 * sc)}px Inter, sans-serif`;
+    ctx.fillStyle = '#ff6b6b';
+    ctx.textAlign = curA > 200 ? 'right' : 'left';
+    const labelX = curA > 200 ? hx - Math.round(8 * sc) : hx + Math.round(8 * sc);
+    ctx.fillText(`${nd.symbol}-${nd.nucleons}`, labelX, hy - Math.round(8 * sc));
+    ctx.font = `${Math.round(9 * sc)}px JetBrains Mono, monospace`;
+    ctx.fillStyle = 'rgba(255,255,255,0.6)';
+    ctx.fillText(`${curBE} MeV`, labelX, hy + Math.round(4 * sc));
+
+    // Fe-56 peak marker if not the current element
+    if (nd.z !== 26) {
+      const feX = xOf(56), feY = yOf(8.79);
+      ctx.beginPath();
+      ctx.arc(feX, feY, Math.round(3 * sc), 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(78,205,196,0.6)';
+      ctx.fill();
+      ctx.font = `${Math.round(8 * sc)}px Inter, sans-serif`;
+      ctx.fillStyle = 'rgba(78,205,196,0.6)';
+      ctx.textAlign = 'left';
+      ctx.fillText('Fe-56', feX + Math.round(6 * sc), feY - Math.round(4 * sc));
+    }
+
+    // Axes
+    ctx.font = `${Math.round(9 * sc)}px Inter, sans-serif`;
+    ctx.fillStyle = 'rgba(255,255,255,0.4)';
+    ctx.textAlign = 'center';
+    for (let a = 50; a <= 250; a += 50) {
+      ctx.fillText(a, xOf(a), h - pad.bottom + Math.round(14 * sc));
+    }
+    ctx.textAlign = 'right';
+    for (let be = 2; be <= 8; be += 2) {
+      ctx.fillText(be, pad.left - Math.round(6 * sc), yOf(be) + 3);
+    }
+
+    // Axis labels
+    ctx.font = `${Math.round(10 * sc)}px Inter, sans-serif`;
+    ctx.fillStyle = 'rgba(255,255,255,0.5)';
+    ctx.textAlign = 'center';
+    ctx.fillText('Mass Number (A)', w / 2, h - Math.round(4 * sc));
+
+    ctx.save();
+    ctx.translate(Math.round(12 * sc), h / 2);
+    ctx.rotate(-Math.PI / 2);
+    ctx.fillText('B/A (MeV)', 0, 0);
+    ctx.restore();
+  }
+
+  // ═══════════════════════ NUCLEAR SHELL DIAGRAM ═══════════════════════
+  function renderNuclearShells(nd) {
+    const container = document.getElementById('nviz-shells');
+    container.innerHTML = '';
+
+    const shells = typeof NUCLEAR_SHELLS !== 'undefined' ? NUCLEAR_SHELLS : [];
+    if (shells.length === 0) return;
+
+    const z = nd.z;
+    const n = nd.nucleons - z;
+
+    const { w: cw } = getNuclearVizSize(container);
+    const sc = cw / 280;
+    const w = cw, h = cw;
+    const { canvas, ctx } = makeHiDPICanvas(container, w, h);
+
+    // Find highest relevant shell for both protons and neutrons
+    const maxParticles = Math.max(z, n);
+    let maxShellIdx = 0;
+    for (let i = 0; i < shells.length; i++) {
+      if (shells[i].cumulative <= maxParticles + shells[i].capacity) maxShellIdx = i;
+    }
+    maxShellIdx = Math.min(maxShellIdx + 1, shells.length - 1);
+
+    const numLevels = maxShellIdx + 1;
+    const levelH = Math.min(Math.round(18 * sc), (h - Math.round(40 * sc)) / numLevels);
+    const colW = (w - Math.round(60 * sc)) / 2;
+    const colLeftX = Math.round(30 * sc);
+    const colRightX = w / 2 + Math.round(10 * sc);
+    const startY = h - Math.round(18 * sc);
+
+    // Title
+    ctx.font = `${Math.round(9 * sc)}px Inter, sans-serif`;
+    ctx.fillStyle = 'rgba(255,255,255,0.5)';
+    ctx.textAlign = 'center';
+    ctx.fillText('Protons', colLeftX + colW / 2, Math.round(12 * sc));
+    ctx.fillText('Neutrons', colRightX + colW / 2, Math.round(12 * sc));
+
+    // Draw levels
+    let protonsFilled = 0;
+    let neutronsFilled = 0;
+
+    for (let i = 0; i <= maxShellIdx; i++) {
+      const shell = shells[i];
+      const y = startY - i * levelH;
+
+      // Proton filling
+      const pFill = Math.min(shell.capacity, Math.max(0, z - protonsFilled));
+      const pFrac = pFill / shell.capacity;
+      protonsFilled += pFill;
+
+      // Neutron filling
+      const nFill = Math.min(shell.capacity, Math.max(0, n - neutronsFilled));
+      const nFrac = nFill / shell.capacity;
+      neutronsFilled += nFill;
+
+      // Draw proton level bar
+      // Background
+      ctx.fillStyle = 'rgba(255,255,255,0.04)';
+      ctx.fillRect(colLeftX, y - levelH + 3, colW, levelH - 4);
+      // Fill
+      if (pFrac > 0) {
+        ctx.fillStyle = `rgba(255, 107, 107, ${0.3 + pFrac * 0.5})`;
+        ctx.fillRect(colLeftX, y - levelH + 3, colW * pFrac, levelH - 4);
+      }
+
+      // Draw neutron level bar
+      ctx.fillStyle = 'rgba(255,255,255,0.04)';
+      ctx.fillRect(colRightX, y - levelH + 3, colW, levelH - 4);
+      if (nFrac > 0) {
+        ctx.fillStyle = `rgba(78, 205, 196, ${0.3 + nFrac * 0.5})`;
+        ctx.fillRect(colRightX, y - levelH + 3, colW * nFrac, levelH - 4);
+      }
+
+      // Shell label
+      ctx.font = `${Math.round(7 * sc)}px JetBrains Mono, monospace`;
+      ctx.fillStyle = 'rgba(255,255,255,0.35)';
+      ctx.textAlign = 'right';
+      ctx.fillText(shell.label, colLeftX - Math.round(3 * sc), y - levelH / 2 + Math.round(5 * sc));
+
+      // Capacity on right
+      ctx.textAlign = 'left';
+      ctx.fillText(`${pFill}/${shell.capacity}`, colLeftX + colW + Math.round(2 * sc), y - levelH / 2 + Math.round(5 * sc));
+
+      // Magic number line
+      if (shell.magic) {
+        ctx.beginPath();
+        ctx.moveTo(colLeftX - 2, y + 2);
+        ctx.lineTo(colRightX + colW + 2, y + 2);
+        ctx.strokeStyle = 'rgba(255, 217, 61, 0.4)';
+        ctx.lineWidth = 1;
+        ctx.setLineDash([3, 3]);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        // Magic number label
+        ctx.font = `bold ${Math.round(8 * sc)}px JetBrains Mono, monospace`;
+        ctx.fillStyle = 'rgba(255, 217, 61, 0.6)';
+        ctx.textAlign = 'center';
+        ctx.fillText(shell.cumulative, w / 2, y + 1);
+      }
+    }
   }
 
   // ═══════════════════════ Shell Diagram (Bohr Model) ═══════════════════════

@@ -15,7 +15,7 @@ A modern, interactive periodic table of the elements built with vanilla HTML, CS
 - **Category legend** — click to filter by element category
 
 ### Element Detail Panel
-Click any element to open a centered modal with:
+Click any element to open a 3-column modal with:
 - **Identity** — symbol, name, atomic number, atomic mass, category, phase, discovery year
 - **Ionic states** — common oxidation states with electron configurations for 50+ elements
 - **Physical & chemical properties** — electronegativity, density, melting/boiling points, electron affinity, ionization energy
@@ -33,6 +33,24 @@ Click any element to open a centered modal with:
   - Drag to rotate, scroll to zoom, 15,000-point resolution per orbital
 - **Orbital Diagram** — Hund's rule filling with up/down arrow notation
 - **Molecule Viewer** — 3D ball-and-stick models of common compounds for each element
+
+### Nuclear Physics (4 tabs)
+A dedicated nuclear column shows subatomic structure for every element:
+- **Nucleus 3D** — interactive 3D visualization of the atomic nucleus:
+  - Fibonacci sphere packing of protons (red) and neutrons (teal) as translucent, edge-stroked spheres
+  - Perspective projection with depth-sorted rendering and specular highlights
+  - **Quark substructure** — zoom in past 1.8× to reveal the valence quarks inside each nucleon:
+    - **Proton** = 2 up quarks (+⅔e) + 1 down quark (−⅓e)
+    - **Neutron** = 1 up quark (+⅔e) + 2 down quarks (−⅓e)
+    - QCD color charges (red, green, blue) — one per quark, ensuring color-neutral hadrons
+    - Animated confinement jitter simulating quantum fluctuations
+  - **Gluon springs** — wavy lines between quarks representing the strong force carriers
+  - Drag to rotate, scroll to zoom (0.3×–20×), auto-rotation
+- **Decay Chain** — connected node graph showing radioactive decay sequences (α, β⁻, β⁺, EC, SF) with color-coded modes
+- **Binding Energy** — B/A vs mass number chart with Fe-56 peak marker, current element highlighted, gradient fill under curve
+- **Nuclear Shells** — dual-column proton/neutron shell filling diagram with magic number indicators (2, 8, 20, 28, 50, 82, 126)
+
+Nuclear info badges show: proton/neutron count, nuclear radius, spin/parity, binding energy per nucleon, magnetic moment, and stability status. Isotope table lists all known isotopes with natural abundance and half-life.
 
 ### Molecular Orbital Clouds
 When viewing a compound, click **"MO Cloud"** to see its molecular electron cloud — LCAO molecular orbital theory rendered as a 3D point cloud.
@@ -55,6 +73,7 @@ When viewing a compound, click **"MO Cloud"** to see its molecular electron clou
 - **Extended compounds** — 101 compounds with 3D geometries for 76 elements (water, ammonia, sulfuric acid, ethanol, and more)
 - **Molecular orbitals** — LCAO coefficients for 109 molecules with validated quantum numbers
 - **Ionic states** — oxidation states with electron configurations for 50 elements (91 ion entries)
+- **Nuclear data** — nuclear properties, isotopes, decay chains, shell model levels, and binding energy curve for all 118 elements
 
 ## Getting Started
 
@@ -64,7 +83,7 @@ No build step required. Just open the file: index.html
 
 ```
 periodic-table/
-├── index.html                # App shell, modal overlay, visualization tabs
+├── index.html                # App shell, 3-column modal, visualization tabs
 ├── css/
 │   └── styles.css            # Dark theme, CSS Grid layout, responsive design
 └── js/
@@ -73,6 +92,7 @@ periodic-table/
     ├── compounds-extra.js    # Extended compounds with 3D geometries (76 elements)
     ├── molecular-orbitals.js # LCAO MO coefficients for 109 molecules
     ├── ions.js               # Ionic states for 50 elements
+    ├── nuclear-data.js       # Nuclear properties, isotopes, decay chains for 118 elements
     └── app.js                # All interactivity, renderers, and math
 ```
 
@@ -80,7 +100,7 @@ periodic-table/
 
 - **Zero dependencies** — pure HTML5, CSS3, and ES6+ JavaScript
 - **Canvas 2D API** — all 3D visualizations rendered via manual rotation matrices and perspective projection
-- **~15,800 lines of code** across 8 files
+- **~18,500 lines of code** across 9 files
 - **Responsive** — adapts from desktop to mobile with CSS Grid breakpoints
 - **Dark theme** — designed for readability with carefully chosen contrast ratios
 
@@ -112,6 +132,23 @@ $$\psi_{\text{MO}}(\mathbf{r}) = \sum_i c_i \, \varphi_i(\mathbf{r} - \mathbf{R}
 | MO types | σ/π bonding, σ*/π* antibonding, nonbonding (lone pairs), core |
 | Advanced bonding | 3-center-4-electron (XeF₂, KrF₂, RnF₂), d-p π bonds (FeO, WC), hypervalent (UF₆, XeF₄, PCl₅), f-orbital bonding (UO₂, PuO₂, ThO₂) |
 | Validation | All 109 molecules checked: quantum numbers ($n \geq 1$, $0 \leq l < n$, $|m| \leq l$), atom indices in range, positive $Z_{\text{eff}}$, non-zero coefficients |
+
+#### Nuclear & Subatomic Physics
+
+The nucleus renderer visualizes nuclear structure from the nucleon level down to quarks:
+
+| Component | Method |
+|-----------|--------|
+| Nucleon packing | Fibonacci sphere — golden angle sampling on concentric shells |
+| Nuclear data | Binding energy, spin/parity, magnetic moment, quadrupole moment for 118 elements |
+| Isotopes | Natural abundance, half-life, and decay modes for all known stable/radioactive isotopes |
+| Decay chains | α, β⁻, β⁺, electron capture (EC), and spontaneous fission (SF) sequences |
+| Binding energy curve | 88-point B/A vs A reference data with Fe-56 peak |
+| Nuclear shell model | 28 energy levels ($1s_{1/2}$ through $3d_{3/2}$) with magic numbers at 2, 8, 20, 28, 50, 82, 126 |
+| Quark structure | Proton = uud, Neutron = udd — correct valence quark composition per the Standard Model |
+| QCD color charge | Each nucleon contains one red, one green, one blue quark — color-neutral (white) hadrons |
+| Gluon visualization | Wavy spring connections between quark pairs representing the strong force |
+| Quark charges | Up quark: $+\frac{2}{3}e$, Down quark: $-\frac{1}{3}e$ — proton total $+1e$, neutron total $0$ |
 
 ## Browser Support
 
