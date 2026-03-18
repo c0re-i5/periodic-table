@@ -771,13 +771,15 @@
     const raw = sampleOrbital(orb.n, orb.l, orb.m, orb.Zeff, numPts);
     const colors = LOBE_COLORS[orb.lChar] || { pos: [180,180,180], neg: [180,180,180] };
 
+    // Use per-orbital scale so single orbitals fill the canvas
+    const orbScale = orb.rExt > 0 ? 200 / orb.rExt : scale;
     const points = raw.map(p => {
       const col = p.sign >= 0 ? colors.pos : colors.neg;
       return {
-        x: p.x * scale, y: p.y * scale, z: p.z * scale,
+        x: p.x * orbScale, y: p.y * orbScale, z: p.z * orbScale,
         r: col[0], g: col[1], b: col[2],
-        alpha: 0.55,
-        size: 1.6,
+        alpha: 0.30,
+        size: 1.5,
       };
     });
     cloud3d.pointCache[cacheKey] = points;
@@ -800,8 +802,8 @@
         allPoints.push({
           x: p.x * scale, y: p.y * scale, z: p.z * scale,
           r: col[0], g: col[1], b: col[2],
-          alpha: 0.3 + 0.15 * (orb.n / 7),
-          size: 1.0 + 0.3 * (orb.n / 7),
+          alpha: 0.18 + 0.07 * (orb.n / 7),
+          size: 1.0 + 0.2 * (orb.n / 7),
         });
       }
     }
@@ -867,7 +869,7 @@
     if (!element) { container.innerHTML = ''; return; }
 
     const { orbData, maxR, Z, configMap } = precomputeOrbData(element);
-    const scale = maxR > 0 ? 150 / maxR : 1;
+    const scale = maxR > 0 ? 200 / maxR : 1;
 
     cloud3d.element = element;
     cloud3d.allOrbData = orbData;
@@ -880,7 +882,7 @@
     cloud3d.zoom = 1.0;
     cloud3d.autoRotate = true;
 
-    const size = 360;
+    const size = 480;
 
     // Build orbital selector buttons
     // Group by subshell (e.g. all 2p orbitals together)
@@ -954,7 +956,7 @@
       btn.addEventListener('click', () => {
         const a = btn.dataset.action;
         if (a === 'auto') cloud3d.autoRotate = !cloud3d.autoRotate;
-        if (a === 'reset') { cloud3d.camTheta = 0.4; cloud3d.camPhi = 0.3; cloud3d.zoom = 1.0; cloud3d.autoRotate = true; }
+        if (a === 'reset') { cloud3d.camTheta = 0.4; cloud3d.camPhi = 0.3; cloud3d.zoom = 1.0; cloud3d.autoRotate = true; cloud3d.pointCache = {}; }
       });
     });
 
@@ -977,11 +979,12 @@
               for (const orb of orbs) {
                 const raw = sampleOrbital(orb.n, orb.l, orb.m, orb.Zeff, Math.floor(12000 / orbs.length));
                 const colors = LOBE_COLORS[orb.lChar];
+                const subScale = orb.rExt > 0 ? 200 / orb.rExt : scale;
                 for (const p of raw) {
                   const col = p.sign >= 0 ? colors.pos : colors.neg;
                   pts.push({
-                    x: p.x * scale, y: p.y * scale, z: p.z * scale,
-                    r: col[0], g: col[1], b: col[2], alpha: 0.5, size: 1.4,
+                    x: p.x * subScale, y: p.y * subScale, z: p.z * subScale,
+                    r: col[0], g: col[1], b: col[2], alpha: 0.28, size: 1.3,
                   });
                 }
               }
@@ -1030,7 +1033,8 @@
     if (cloud3d.canvas) cloud3d.canvas.style.cursor = 'grab';
   }
   function onCloudWheel(e) {
-    cloud3d.zoom = Math.max(0.3, Math.min(3.0, cloud3d.zoom + e.deltaY * -0.002));
+    const factor = cloud3d.zoom < 1 ? 0.001 : 0.003;
+    cloud3d.zoom = Math.max(0.15, Math.min(12.0, cloud3d.zoom + e.deltaY * -factor));
     e.preventDefault();
   }
 
@@ -1119,26 +1123,18 @@
     // ── Sort back-to-front ──
     projected.sort((a, b) => b.z - a.z);
 
-    // ── Draw with additive blending for glow ──
-    ctx.globalCompositeOperation = 'lighter';
+    // ── Draw points with normal blending (avoids white washout) ──
+    ctx.globalCompositeOperation = 'source-over';
     for (let i = 0; i < projected.length; i++) {
       const p = projected[i];
-      const sz = Math.max(0.6, p.size);
-      ctx.globalAlpha = Math.min(0.85, p.alpha * 0.6);
-      ctx.fillStyle = `rgb(${p.r},${p.g},${p.b})`;
+      const sz = Math.max(0.5, p.size);
+      const a = Math.min(0.45, p.alpha * 0.40);
+      ctx.fillStyle = `rgba(${p.r},${p.g},${p.b},${a.toFixed(3)})`;
       ctx.beginPath();
       ctx.arc(p.sx, p.sy, sz, 0, Math.PI * 2);
       ctx.fill();
-      // Soft glow halo for each point
-      if (sz > 1) {
-        ctx.globalAlpha = Math.min(0.15, p.alpha * 0.12);
-        ctx.beginPath();
-        ctx.arc(p.sx, p.sy, sz * 2.5, 0, Math.PI * 2);
-        ctx.fill();
-      }
     }
 
-    ctx.globalCompositeOperation = 'source-over';
     ctx.globalAlpha = 1;
 
     // ── Label for selected orbital ──
@@ -1270,6 +1266,360 @@
     container.innerHTML = html;
   }
 
+  // ═══════════════════ MOLECULAR ELECTRON CLOUD (LCAO) ═══════════════════
+  // Molecular orbitals via Linear Combination of Atomic Orbitals.
+  // Uses pre-defined LCAO coefficients to visualize bonding/antibonding MOs.
+  // Samples from contributing AOs and evaluates full MO for sign coloring.
+
+  const BOHR_PER_ANGSTROM = 1.8897259886;
+
+  // MO type color palette: positive / negative phase
+  const MO_COLORS = {
+    bonding:     { pos: [60, 150, 255],  neg: [255, 90, 60]  },
+    antibonding: { pos: [255, 200, 50],  neg: [150, 50, 220] },
+    nonbonding:  { pos: [50, 200, 130],  neg: [200, 60, 150] },
+    core:        { pos: [140, 140, 160], neg: [140, 140, 160] },
+  };
+
+  const molCloud = {
+    active: false,
+    compound: null,
+    moData: null,
+    atomsBohr: [],
+    pointCache: {},
+    activeFilter: 'all',
+    camTheta: 0.5,
+    camPhi: 0.4,
+    fov: 600,
+    zoom: 1.0,
+    autoRotate: true,
+    dragging: false,
+    lastMouse: { x: 0, y: 0 },
+    dpr: 1, w: 0, h: 0,
+    scale: 1,
+  };
+
+  // Evaluate atomic orbital wavefunction (unnormalized) at point (x,y,z) in Bohr
+  function evalAO(n, l, m, Zeff, x, y, z) {
+    const r = Math.sqrt(x * x + y * y + z * z);
+    if (r < 1e-12) {
+      return l === 0 ? assocLaguerre(n - 1, 1, 0) : 0;
+    }
+    const cosT = z / r;
+    const phi = Math.atan2(y, x);
+    const rho = 2 * Zeff * r / n;
+    const L = assocLaguerre(n - l - 1, 2 * l + 1, rho);
+    const R = Math.pow(rho, l) * Math.exp(-rho / 2) * L;
+    const Y = angularY(l, m, cosT, phi);
+    return R * Y;
+  }
+
+  // Evaluate full molecular orbital at point (x,y,z) in Bohr
+  function evalMO(mo, atomsBohr, x, y, z) {
+    let psi = 0;
+    for (const a of mo.ao) {
+      const atom = atomsBohr[a.atom];
+      psi += a.c * evalAO(a.n, a.l, a.m, a.zeff, x - atom.x, y - atom.y, z - atom.z);
+    }
+    return psi;
+  }
+
+  // Sample points for one molecular orbital using per-AO importance sampling
+  function sampleMolOrbital(mo, atomsBohr, numPoints) {
+    const totalW = mo.ao.reduce((s, a) => s + a.c * a.c, 0);
+    if (totalW === 0) return [];
+
+    const pts = [];
+
+    for (const contrib of mo.ao) {
+      const weight = (contrib.c * contrib.c) / totalW;
+      const targetPts = Math.max(10, Math.round(weight * numPoints));
+      const atom = atomsBohr[contrib.atom];
+      const { n, l, m, zeff } = contrib;
+      const rCut = Math.max(4, (5 * n * n) / zeff);
+
+      // Radial pre-scan
+      let maxRad = 0;
+      for (let i = 1; i <= 300; i++) {
+        const r = (i / 300) * rCut;
+        const rho = 2 * zeff * r / n;
+        const L = assocLaguerre(n - l - 1, 2 * l + 1, rho);
+        const Rv = Math.pow(rho, l) * Math.exp(-rho / 2) * L;
+        const p = r * r * Rv * Rv;
+        if (p > maxRad) maxRad = p;
+      }
+
+      // Angular pre-scan
+      let maxAng = 0;
+      for (let i = 0; i <= 50; i++) {
+        const ct = -1 + 2 * i / 50;
+        for (let j = 0; j <= 50; j++) {
+          const phi = 2 * Math.PI * j / 50;
+          const Y = angularY(l, m, ct, phi);
+          if (Y * Y > maxAng) maxAng = Y * Y;
+        }
+      }
+
+      if (maxRad === 0 || maxAng === 0) continue;
+
+      let got = 0;
+      let attempts = 0;
+      const maxAttempts = targetPts * 100;
+
+      while (got < targetPts && attempts < maxAttempts) {
+        attempts++;
+        const r = Math.random() * rCut;
+        const rho = 2 * zeff * r / n;
+        const L = assocLaguerre(n - l - 1, 2 * l + 1, rho);
+        const Rv = Math.pow(rho, l) * Math.exp(-rho / 2) * L;
+        if (Math.random() * maxRad > r * r * Rv * Rv) continue;
+
+        const cosT = -1 + 2 * Math.random();
+        const phi = 2 * Math.PI * Math.random();
+        const Y = angularY(l, m, cosT, phi);
+        if (Math.random() * maxAng > Y * Y) continue;
+
+        const st = Math.sqrt(Math.max(0, 1 - cosT * cosT));
+        const px = r * st * Math.cos(phi) + atom.x;
+        const py = r * st * Math.sin(phi) + atom.y;
+        const pz = r * cosT + atom.z;
+
+        // Evaluate full MO for sign
+        const psiVal = evalMO(mo, atomsBohr, px, py, pz);
+
+        pts.push({
+          x: px, y: py, z: pz,
+          sign: psiVal >= 0 ? 1 : -1,
+        });
+        got++;
+      }
+    }
+    return pts;
+  }
+
+  // Build colored point cloud for a molecular orbital
+  function buildMolOrbPoints(mo, atomsBohr, scale, numPoints) {
+    const cacheKey = mo.name;
+    if (molCloud.pointCache[cacheKey]) return molCloud.pointCache[cacheKey];
+
+    const raw = sampleMolOrbital(mo, atomsBohr, numPoints);
+    const colors = MO_COLORS[mo.type] || MO_COLORS.bonding;
+
+    const points = raw.map(p => {
+      const col = p.sign >= 0 ? colors.pos : colors.neg;
+      return {
+        x: p.x * scale, y: p.y * scale, z: p.z * scale,
+        r: col[0], g: col[1], b: col[2],
+        alpha: 0.30,
+        size: 1.5,
+      };
+    });
+    molCloud.pointCache[cacheKey] = points;
+    return points;
+  }
+
+  // Build all occupied MOs combined
+  function buildAllMolOrbPoints(moData, atomsBohr, scale) {
+    if (molCloud.pointCache['__all__']) return molCloud.pointCache['__all__'];
+
+    const occupied = moData.orbitals.filter(mo => mo.electrons > 0 && mo.type !== 'core');
+    const ptsPerMO = Math.max(200, Math.floor(10000 / Math.max(1, occupied.length)));
+
+    // Assign distinct hues to each MO
+    const allPoints = [];
+    occupied.forEach((mo, idx) => {
+      const raw = sampleMolOrbital(mo, atomsBohr, ptsPerMO);
+      const hue = (idx / occupied.length) * 360;
+      const rgb = hslToRgb(hue, 0.7, 0.6);
+      for (const p of raw) {
+        allPoints.push({
+          x: p.x * scale, y: p.y * scale, z: p.z * scale,
+          r: rgb[0], g: rgb[1], b: rgb[2],
+          alpha: 0.20,
+          size: 1.0,
+        });
+      }
+    });
+    molCloud.pointCache['__all__'] = allPoints;
+    return allPoints;
+  }
+
+  // HSL to RGB helper
+  function hslToRgb(h, s, l) {
+    h /= 360;
+    const a = s * Math.min(l, 1 - l);
+    const f = (n) => {
+      const k = (n + h * 12) % 12;
+      return l - a * Math.max(-1, Math.min(k - 3, 9 - k, 1));
+    };
+    return [Math.round(f(0) * 255), Math.round(f(8) * 255), Math.round(f(4) * 255)];
+  }
+
+  // Get active point set for molecular cloud
+  function getMolCloudPoints() {
+    const { moData, atomsBohr, scale } = molCloud;
+    const filter = molCloud.activeFilter;
+
+    if (filter === 'all') {
+      return buildAllMolOrbPoints(moData, atomsBohr, scale);
+    }
+    const mo = moData.orbitals.find(o => o.name === filter);
+    if (!mo) return buildAllMolOrbPoints(moData, atomsBohr, scale);
+    const numPts = mo.electrons > 0 ? 15000 : 10000;
+    return buildMolOrbPoints(mo, atomsBohr, scale, numPts);
+  }
+
+  // Draw molecular cloud (per-frame)
+  function drawMolCloud(ctx) {
+    const W = molCloud.w, H = molCloud.h;
+    const cx = W / 2, cy = H / 2;
+    const zm = molCloud.zoom;
+
+    // Inline camera transform using molCloud's own angles
+    function mcTransform(p) {
+      let q = rotY(p, molCloud.camTheta);
+      q = rotX(q, molCloud.camPhi);
+      return q;
+    }
+    function mcProject(p3) {
+      const d = molCloud.fov / (molCloud.fov + p3[2]);
+      return [p3[0] * d, p3[1] * d, p3[2], d];
+    }
+
+    ctx.clearRect(0, 0, W, H);
+
+    // Axes
+    const axLen = 130 * zm;
+    const axisData = [
+      { dir: [axLen, 0, 0], label: 'x', col: 'rgba(255,100,100,' },
+      { dir: [0, axLen, 0], label: 'y', col: 'rgba(100,255,100,' },
+      { dir: [0, 0, axLen], label: 'z', col: 'rgba(100,150,255,' },
+    ];
+    for (const ax of axisData) {
+      const tp = mcTransform(ax.dir);
+      const pp = mcProject(tp);
+      ctx.strokeStyle = ax.col + '0.10)';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.lineTo(cx + pp[0] * zm, cy + pp[1] * zm);
+      ctx.stroke();
+      ctx.font = `bold 14px 'JetBrains Mono', monospace`;
+      ctx.fillStyle = ax.col + '0.20)';
+      ctx.fillText(ax.label, cx + pp[0] * zm + 3, cy + pp[1] * zm - 3);
+    }
+
+    // Draw atom positions as small labeled dots
+    if (molCloud.compound) {
+      for (const a of molCloud.compound.atoms) {
+        const bohr = { x: a.x * BOHR_PER_ANGSTROM, y: a.y * BOHR_PER_ANGSTROM, z: a.z * BOHR_PER_ANGSTROM };
+        const t = mcTransform([bohr.x * molCloud.scale * zm, bohr.y * molCloud.scale * zm, bohr.z * molCloud.scale * zm]);
+        const p = mcProject(t);
+        const rgb = hexToRgb(getCPK(a.sym));
+        ctx.fillStyle = `rgba(${rgb[0]},${rgb[1]},${rgb[2]},0.6)`;
+        ctx.beginPath();
+        ctx.arc(cx + p[0], cy + p[1], 4 * p[3] * zm, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = `rgba(255,255,255,0.4)`;
+        ctx.font = `bold ${Math.round(10 * p[3] * zm)}px 'Inter', sans-serif`;
+        ctx.textAlign = 'center';
+        ctx.fillText(a.sym, cx + p[0], cy + p[1] - 6 * p[3] * zm);
+      }
+      ctx.textAlign = 'start';
+    }
+
+    // Get cloud points
+    const points = getMolCloudPoints();
+    if (points.length === 0) return;
+
+    // Project
+    const projected = new Array(points.length);
+    for (let i = 0; i < points.length; i++) {
+      const pt = points[i];
+      const t = mcTransform([pt.x * zm, pt.y * zm, pt.z * zm]);
+      const p = mcProject(t);
+      projected[i] = {
+        sx: cx + p[0], sy: cy + p[1], z: t[2],
+        r: pt.r, g: pt.g, b: pt.b,
+        alpha: pt.alpha * p[3],
+        size: pt.size * p[3] * zm,
+      };
+    }
+
+    // Sort back-to-front
+    projected.sort((a, b) => b.z - a.z);
+
+    // Draw
+    ctx.globalCompositeOperation = 'source-over';
+    for (let i = 0; i < projected.length; i++) {
+      const p = projected[i];
+      const sz = Math.max(0.5, p.size);
+      const a = Math.min(0.45, p.alpha * 0.40);
+      ctx.fillStyle = `rgba(${p.r},${p.g},${p.b},${a.toFixed(3)})`;
+      ctx.beginPath();
+      ctx.arc(p.sx, p.sy, sz, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+
+    // Label
+    if (molCloud.activeFilter !== 'all') {
+      const mo = molCloud.moData.orbitals.find(o => o.name === molCloud.activeFilter);
+      if (mo) {
+        ctx.font = `bold 18px 'Inter', sans-serif`;
+        ctx.fillStyle = 'rgba(255,255,255,0.5)';
+        ctx.fillText(mo.name, 16, W - 16);
+        ctx.font = `12px 'JetBrains Mono', monospace`;
+        ctx.fillStyle = 'rgba(255,255,255,0.3)';
+        const typeLabel = mo.type + (mo.electrons > 0 ? ` (${mo.electrons}e⁻)` : ' (empty)');
+        ctx.fillText(typeLabel, 16, W - 36);
+      }
+    }
+  }
+
+  // Molecular cloud camera events
+  function onMolCloudPointerDown(e) {
+    molCloud.dragging = true;
+    molCloud.autoRotate = false;
+    molCloud.lastMouse = { x: e.clientX, y: e.clientY };
+    if (molCloud.canvas) molCloud.canvas.style.cursor = 'grabbing';
+    e.preventDefault();
+  }
+  function onMolCloudPointerMove(e) {
+    if (!molCloud.dragging) return;
+    const dx = e.clientX - molCloud.lastMouse.x;
+    const dy = e.clientY - molCloud.lastMouse.y;
+    molCloud.camTheta += dx * 0.008;
+    molCloud.camPhi = Math.max(-1.4, Math.min(1.4, molCloud.camPhi + dy * 0.008));
+    molCloud.lastMouse = { x: e.clientX, y: e.clientY };
+    e.preventDefault();
+  }
+  function onMolCloudPointerUp() {
+    molCloud.dragging = false;
+    if (molCloud.canvas) molCloud.canvas.style.cursor = 'grab';
+  }
+  function onMolCloudWheel(e) {
+    const factor = molCloud.zoom < 1 ? 0.001 : 0.003;
+    molCloud.zoom = Math.max(0.15, Math.min(12.0, molCloud.zoom + e.deltaY * -factor));
+    e.preventDefault();
+  }
+
+  // Molecular cloud animation
+  function startMolCloudAnimation() {
+    if (molState.animId) cancelAnimationFrame(molState.animId);
+    const ctx = molCloud.ctx;
+    if (!ctx) return;
+
+    function frame() {
+      if (molCloud.autoRotate) {
+        molCloud.camTheta += 0.005;
+      }
+      drawMolCloud(ctx);
+      molState.animId = requestAnimationFrame(frame);
+    }
+    molState.animId = requestAnimationFrame(frame);
+  }
+
   // ═══════════════════ MOLECULE VISUALIZER ═══════════════════
   // 3D ball-and-stick model of a common compound, rendered on Canvas
   // with the same camera system as the Bohr 3D model
@@ -1283,6 +1633,7 @@
     lastMouse: { x: 0, y: 0 },
     animId: null,
     scale: 100, // Å to px scale
+    cloudMode: false,
   };
 
   function renderMolecule(element) {
@@ -1303,15 +1654,29 @@
     molState.camPhi = 0.4;
     molState.camDist = 500;
     molState.autoRotate = true;
+    molState.cloudMode = false;
+
+    // Check if MO data exists for the first compound
+    const hasMO = typeof MOLECULAR_ORBITALS !== 'undefined' && MOLECULAR_ORBITALS[compound.formula];
 
     // Build UI
     const size = 320;
+    const cloudSize = 420;
     let selectorHtml = '';
     if (compounds.length > 1) {
       selectorHtml = '<div class="mol-selector">' +
         compounds.map((c, i) =>
           `<button class="mol-sel-btn${i===0?' active':''}" data-mol-idx="${i}">${c.formula}</button>`
         ).join('') + '</div>';
+    }
+
+    // View toggle (Ball & Stick vs e⁻ Cloud)
+    let toggleHtml = '';
+    if (hasMO) {
+      toggleHtml = `<div class="mol-view-toggle" id="mol-view-toggle">
+        <button class="mol-view-btn active" data-mol-view="sticks">Ball &amp; Stick</button>
+        <button class="mol-view-btn" data-mol-view="cloud">e⁻ Cloud</button>
+      </div>`;
     }
 
     container.innerHTML = `
@@ -1321,8 +1686,10 @@
           <span class="mol-formula" id="mol-formula">${compound.formula}</span>
         </div>
         ${selectorHtml}
+        ${toggleHtml}
         <canvas id="mol-canvas" width="${size*2}" height="${size*2}"
                 style="width:${size}px;height:${size}px;cursor:grab;"></canvas>
+        <div class="mol-cloud-selector" id="mol-cloud-selector" style="display:none;"></div>
         <p class="mol-desc" id="mol-desc">${compound.description}</p>
         <div class="mol-legend" id="mol-legend"></div>
         <div class="mol-hint">Drag to rotate &middot; Scroll to zoom</div>
@@ -1330,8 +1697,8 @@
 
     // Build legend
     const uniqueSyms = [...new Set(compound.atoms.map(a => a.sym))];
-    const legendEl = document.getElementById('mol-legend');
-    legendEl.innerHTML = uniqueSyms.map(s =>
+    const legendEl2 = document.getElementById('mol-legend');
+    legendEl2.innerHTML = uniqueSyms.map(s =>
       `<span class="mol-legend-item"><span class="mol-legend-dot" style="background:${getCPK(s)}"></span>${s}</span>`
     ).join('');
 
@@ -1368,7 +1735,164 @@
       });
     });
 
+    // View toggle events (Ball & Stick / e⁻ Cloud)
+    setupMolViewToggle(container, compound, size, cloudSize);
+
     if (activeViz === 'molecule') startMoleculeAnimation();
+  }
+
+  // Toggle between Ball & Stick and e⁻ Cloud views
+  function setupMolViewToggle(container, compound, sticksSize, cloudSize) {
+    container.querySelectorAll('.mol-view-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        container.querySelectorAll('.mol-view-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const mode = btn.dataset.molView;
+        molState.cloudMode = (mode === 'cloud');
+
+        const canvas = molState.canvas;
+        const selector = document.getElementById('mol-cloud-selector');
+
+        if (molState.cloudMode) {
+          // Switch to cloud mode
+          canvas.width = cloudSize * 2;
+          canvas.height = cloudSize * 2;
+          canvas.style.width = cloudSize + 'px';
+          canvas.style.height = cloudSize + 'px';
+
+          // Remove molecule events, add cloud events
+          canvas.removeEventListener('pointerdown', onMolPointerDown);
+          canvas.removeEventListener('pointermove', onMolPointerMove);
+          canvas.removeEventListener('pointerup', onMolPointerUp);
+          canvas.removeEventListener('pointerleave', onMolPointerUp);
+          canvas.removeEventListener('wheel', onMolWheel);
+          canvas.addEventListener('pointerdown', onMolCloudPointerDown);
+          canvas.addEventListener('pointermove', onMolCloudPointerMove);
+          canvas.addEventListener('pointerup', onMolCloudPointerUp);
+          canvas.addEventListener('pointerleave', onMolCloudPointerUp);
+          canvas.addEventListener('wheel', onMolCloudWheel, { passive: false });
+
+          // Init molCloud
+          initMolCloud(molState.compound, canvas);
+
+          // Build MO selector
+          if (selector) {
+            selector.style.display = 'flex';
+            buildMolCloudSelector(selector);
+          }
+
+          // Restart animation in cloud mode
+          startMolCloudAnimation();
+        } else {
+          // Switch back to sticks mode
+          canvas.width = sticksSize * 2;
+          canvas.height = sticksSize * 2;
+          canvas.style.width = sticksSize + 'px';
+          canvas.style.height = sticksSize + 'px';
+
+          // Remove cloud events, add molecule events
+          canvas.removeEventListener('pointerdown', onMolCloudPointerDown);
+          canvas.removeEventListener('pointermove', onMolCloudPointerMove);
+          canvas.removeEventListener('pointerup', onMolCloudPointerUp);
+          canvas.removeEventListener('pointerleave', onMolCloudPointerUp);
+          canvas.removeEventListener('wheel', onMolCloudWheel);
+          canvas.addEventListener('pointerdown', onMolPointerDown);
+          canvas.addEventListener('pointermove', onMolPointerMove);
+          canvas.addEventListener('pointerup', onMolPointerUp);
+          canvas.addEventListener('pointerleave', onMolPointerUp);
+          canvas.addEventListener('wheel', onMolWheel, { passive: false });
+
+          molCloud.active = false;
+          if (selector) selector.style.display = 'none';
+
+          // Restart sticks animation
+          molState.autoRotate = true;
+          startMoleculeAnimation();
+        }
+      });
+    });
+  }
+
+  // Initialize molecular cloud state for a compound
+  function initMolCloud(compound, canvas) {
+    const formula = compound.formula;
+    const moData = MOLECULAR_ORBITALS[formula];
+    if (!moData) return;
+
+    molCloud.active = true;
+    molCloud.compound = compound;
+    molCloud.moData = moData;
+    molCloud.canvas = canvas;
+    molCloud.ctx = canvas.getContext('2d');
+    molCloud.dpr = 2;
+    molCloud.w = canvas.width;
+    molCloud.h = canvas.height;
+    molCloud.camTheta = 0.5;
+    molCloud.camPhi = 0.4;
+    molCloud.autoRotate = true;
+    molCloud.dragging = false;
+    molCloud.activeFilter = 'all';
+    molCloud.pointCache = {};
+
+    // Convert atom positions to Bohr
+    molCloud.atomsBohr = compound.atoms.map(a => ({
+      x: a.x * BOHR_PER_ANGSTROM,
+      y: a.y * BOHR_PER_ANGSTROM,
+      z: a.z * BOHR_PER_ANGSTROM,
+      sym: a.sym,
+    }));
+
+    // Compute scale: map Bohr extent to pixel space
+    const bohrCoords = molCloud.atomsBohr;
+    let maxR = 0;
+    for (const a of bohrCoords) {
+      const r = Math.sqrt(a.x * a.x + a.y * a.y + a.z * a.z);
+      if (r > maxR) maxR = r;
+    }
+    // Add orbital extent: largest rCut from any contributing AO
+    let maxOrbR = 0;
+    for (const mo of moData.orbitals) {
+      for (const ao of mo.ao) {
+        const atomR = Math.sqrt(bohrCoords[ao.atom].x ** 2 + bohrCoords[ao.atom].y ** 2 + bohrCoords[ao.atom].z ** 2);
+        const rCut = Math.max(4, (5 * ao.n * ao.n) / ao.zeff);
+        if (atomR + rCut > maxOrbR) maxOrbR = atomR + rCut;
+      }
+    }
+    molCloud.scale = 180 / Math.max(maxR + 3, maxOrbR, 4);
+    molCloud.zoom = 1.0;
+  }
+
+  // Build MO selector buttons
+  function buildMolCloudSelector(el) {
+    if (!molCloud.moData) return;
+    const orbs = molCloud.moData.orbitals;
+    const occupied = orbs.filter(o => o.electrons > 0);
+
+    let html = `<button class="mol-cloud-btn active" data-mo-name="all">All Occupied</button>`;
+    occupied.forEach(mo => {
+      const label = mo.name + ` (${mo.electrons}e⁻)`;
+      html += `<button class="mol-cloud-btn" data-mo-name="${mo.name}">${label}</button>`;
+    });
+    // Also show unoccupied (antibonding) if any
+    const unoccupied = orbs.filter(o => o.electrons === 0);
+    if (unoccupied.length > 0) {
+      html += '<span class="mol-cloud-sep">|</span>';
+      unoccupied.forEach(mo => {
+        html += `<button class="mol-cloud-btn" data-mo-name="${mo.name}">${mo.name} (empty)</button>`;
+      });
+    }
+
+    el.innerHTML = html;
+
+    el.querySelectorAll('.mol-cloud-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        el.querySelectorAll('.mol-cloud-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        molCloud.activeFilter = btn.dataset.moName;
+        // Clear only the specific cache key if switching
+        // No need to clear — we cache by name
+      });
+    });
   }
 
   function selectCompound(idx, compounds) {
@@ -1382,14 +1906,14 @@
     const nameEl = document.getElementById('mol-name');
     const formulaEl = document.getElementById('mol-formula');
     const descEl = document.getElementById('mol-desc');
-    const legendEl = document.getElementById('mol-legend');
+    const legendEl2 = document.getElementById('mol-legend');
     if (nameEl) nameEl.textContent = c.name;
     if (formulaEl) formulaEl.textContent = c.formula;
     if (descEl) descEl.textContent = c.description;
 
     const uniqueSyms = [...new Set(c.atoms.map(a => a.sym))];
-    if (legendEl) {
-      legendEl.innerHTML = uniqueSyms.map(s =>
+    if (legendEl2) {
+      legendEl2.innerHTML = uniqueSyms.map(s =>
         `<span class="mol-legend-item"><span class="mol-legend-dot" style="background:${getCPK(s)}"></span>${s}</span>`
       ).join('');
     }
@@ -1405,6 +1929,52 @@
       1.5
     );
     molState.scale = (160 * 0.55) / maxSpan * 2;
+
+    // Reset to Ball & Stick mode
+    molState.cloudMode = false;
+    molCloud.active = false;
+    molCloud.pointCache = {};
+
+    const toggle = document.getElementById('mol-view-toggle');
+    const selector = document.getElementById('mol-cloud-selector');
+    const hasMO = typeof MOLECULAR_ORBITALS !== 'undefined' && MOLECULAR_ORBITALS[c.formula];
+
+    if (toggle) {
+      toggle.style.display = hasMO ? 'flex' : 'none';
+      toggle.querySelectorAll('.mol-view-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.molView === 'sticks');
+      });
+    }
+    if (selector) selector.style.display = 'none';
+
+    // Restore sticks canvas size and event listeners
+    const canvas = molState.canvas;
+    if (canvas) {
+      canvas.width = 640;
+      canvas.height = 640;
+      canvas.style.width = '320px';
+      canvas.style.height = '320px';
+
+      // Ensure sticks event listeners (remove cloud ones if present)
+      canvas.removeEventListener('pointerdown', onMolCloudPointerDown);
+      canvas.removeEventListener('pointermove', onMolCloudPointerMove);
+      canvas.removeEventListener('pointerup', onMolCloudPointerUp);
+      canvas.removeEventListener('pointerleave', onMolCloudPointerUp);
+      canvas.removeEventListener('wheel', onMolCloudWheel);
+      // Re-add sticks listeners (removeEventListener is no-op if not present)
+      canvas.removeEventListener('pointerdown', onMolPointerDown);
+      canvas.addEventListener('pointerdown', onMolPointerDown);
+      canvas.removeEventListener('pointermove', onMolPointerMove);
+      canvas.addEventListener('pointermove', onMolPointerMove);
+      canvas.removeEventListener('pointerup', onMolPointerUp);
+      canvas.addEventListener('pointerup', onMolPointerUp);
+      canvas.removeEventListener('pointerleave', onMolPointerUp);
+      canvas.addEventListener('pointerleave', onMolPointerUp);
+      canvas.removeEventListener('wheel', onMolWheel);
+      canvas.addEventListener('wheel', onMolWheel, { passive: false });
+    }
+
+    startMoleculeAnimation();
   }
 
   // Pointer events for molecule

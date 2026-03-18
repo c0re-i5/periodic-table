@@ -493,9 +493,9 @@ body {
   left: 50%;
   transform: translate(-50%, -50%) scale(0.95);
   width: 90vw;
-  max-width: 960px;
+  max-width: 1100px;
   height: 85vh;
-  max-height: 760px;
+  max-height: 820px;
   background: var(--bg-secondary);
   border: 1px solid var(--border-color);
   border-radius: var(--radius);
@@ -1029,7 +1029,7 @@ body {
   flex-wrap: wrap;
   gap: 3px;
   justify-content: center;
-  max-width: 360px;
+  max-width: 480px;
   margin-bottom: 4px;
 }
 
@@ -1236,6 +1236,69 @@ body {
   height: 10px;
   border-radius: 50%;
   display: inline-block;
+}
+
+/* ─── Molecular Cloud Toggle + Selector ─── */
+.mol-view-toggle {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  margin: 6px 0 8px;
+}
+.mol-view-btn {
+  padding: 4px 14px;
+  font-size: 0.7rem;
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+.mol-view-btn:hover {
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(255,255,255,0.25);
+}
+.mol-view-btn.active {
+  background: rgba(100,180,255,0.15);
+  color: #7fb8ff;
+  border-color: rgba(100,180,255,0.35);
+}
+
+.mol-cloud-selector {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px;
+  max-width: 480px;
+  margin: 4px auto 8px;
+}
+.mol-cloud-btn {
+  padding: 3px 10px;
+  font-size: 0.62rem;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-family: 'JetBrains Mono', monospace;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+.mol-cloud-btn:hover {
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(255,255,255,0.2);
+}
+.mol-cloud-btn.active {
+  background: rgba(100,180,255,0.15);
+  color: #7fb8ff;
+  border-color: rgba(100,180,255,0.35);
+}
+.mol-cloud-sep {
+  color: rgba(255,255,255,0.15);
+  font-size: 0.75rem;
+  align-self: center;
+  margin: 0 2px;
 }
 
 .mol-hint {

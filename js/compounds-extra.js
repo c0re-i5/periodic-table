@@ -863,6 +863,782 @@ const EXTRA_COMPOUNDS = {
       ],
     },
   ],
+
+  // ─── Helium (2) — noble gas compound ───
+  2: [
+    {
+      name: 'Helium Dimer (van der Waals)',
+      formula: 'He₂',
+      description: 'Weakest known molecular bond. Exists only at extremely low temperatures (~1 mK).',
+      atoms: [
+        { sym: 'He', x: -1.5, y: 0, z: 0 },
+        { sym: 'He', x: 1.5, y: 0, z: 0 },
+      ],
+      bonds: [{ from: 0, to: 1, order: 1 }],
+    },
+  ],
+
+  // ─── Neon (10) — noble gas ───
+  10: [
+    {
+      name: 'Neon (monatomic)',
+      formula: 'Ne',
+      description: 'Noble gas. Used in neon signs — emits characteristic red-orange glow when electrified.',
+      atoms: [{ sym: 'Ne', x: 0, y: 0, z: 0 }],
+      bonds: [],
+    },
+  ],
+
+  // ─── Argon (18) — noble gas ───
+  18: [
+    {
+      name: 'Argon Fluorohydride',
+      formula: 'HArF',
+      description: 'First true argon compound, discovered in 2000. Stable only below 17 K.',
+      atoms: [
+        { sym: 'H', x: -1.3, y: 0, z: 0 },
+        { sym: 'Ar', x: 0, y: 0, z: 0 },
+        { sym: 'F', x: 1.3, y: 0, z: 0 },
+      ],
+      bonds: [{ from: 0, to: 1, order: 1 }, { from: 1, to: 2, order: 1 }],
+    },
+  ],
+
+  // ─── Scandium (21) ───
+  21: [
+    {
+      name: 'Scandium Oxide',
+      formula: 'Sc₂O₃',
+      description: 'Used in high-intensity discharge lamps and solid oxide fuel cells.',
+      atoms: [
+        { sym: 'Sc', x: -0.9, y: 0.5, z: 0 },
+        { sym: 'O', x: 0, y: 0, z: 0 },
+        { sym: 'Sc', x: 0.9, y: 0.5, z: 0 },
+        { sym: 'O', x: -0.9, y: -0.5, z: 0 },
+        { sym: 'O', x: 0.9, y: -0.5, z: 0 },
+      ],
+      bonds: [
+        { from: 0, to: 1, order: 1 }, { from: 2, to: 1, order: 1 },
+        { from: 0, to: 3, order: 1 }, { from: 2, to: 4, order: 1 },
+      ],
+    },
+  ],
+
+  // ─── Vanadium (23) ───
+  23: [
+    {
+      name: 'Vanadium Pentoxide',
+      formula: 'V₂O₅',
+      description: 'Key industrial catalyst (contact process for H₂SO₄). Orange-yellow solid.',
+      atoms: [
+        { sym: 'V', x: -0.8, y: 0, z: 0 },
+        { sym: 'V', x: 0.8, y: 0, z: 0 },
+        { sym: 'O', x: 0, y: 0.6, z: 0 },
+        { sym: 'O', x: -1.4, y: 0.7, z: 0 },
+        { sym: 'O', x: 1.4, y: 0.7, z: 0 },
+        { sym: 'O', x: -1.4, y: -0.7, z: 0 },
+        { sym: 'O', x: 1.4, y: -0.7, z: 0 },
+      ],
+      bonds: [
+        { from: 0, to: 2, order: 1 }, { from: 1, to: 2, order: 1 },
+        { from: 0, to: 3, order: 2 }, { from: 1, to: 4, order: 2 },
+        { from: 0, to: 5, order: 1 }, { from: 1, to: 6, order: 1 },
+      ],
+    },
+  ],
+
+  // ─── Gallium (31) ───
+  31: [
+    {
+      name: 'Gallium Arsenide',
+      formula: 'GaAs',
+      description: 'Semiconductor used in solar cells, LEDs, and laser diodes. Direct bandgap.',
+      atoms: [
+        { sym: 'Ga', x: -0.6, y: 0, z: 0 },
+        { sym: 'As', x: 0.6, y: 0, z: 0 },
+      ],
+      bonds: [{ from: 0, to: 1, order: 1 }],
+    },
+    {
+      name: 'Gallium(III) Chloride',
+      formula: 'GaCl₃',
+      description: 'Lewis acid catalyst. Trigonal planar geometry.',
+      atoms: [
+        { sym: 'Ga', x: 0, y: 0, z: 0 },
+        { sym: 'Cl', x: 1.2, y: 0, z: 0 },
+        { sym: 'Cl', x: -0.6, y: 1.04, z: 0 },
+        { sym: 'Cl', x: -0.6, y: -1.04, z: 0 },
+      ],
+      bonds: [
+        { from: 0, to: 1, order: 1 }, { from: 0, to: 2, order: 1 }, { from: 0, to: 3, order: 1 },
+      ],
+    },
+  ],
+
+  // ─── Germanium (32) ───
+  32: [
+    {
+      name: 'Germanium Dioxide',
+      formula: 'GeO₂',
+      description: 'Used in fiber optics and as a catalyst for PET plastic production.',
+      atoms: [
+        { sym: 'Ge', x: 0, y: 0, z: 0 },
+        { sym: 'O', x: 1.0, y: 0.5, z: 0 },
+        { sym: 'O', x: -1.0, y: 0.5, z: 0 },
+      ],
+      bonds: [{ from: 0, to: 1, order: 2 }, { from: 0, to: 2, order: 2 }],
+    },
+  ],
+
+  // ─── Arsenic (33) ───
+  33: [
+    {
+      name: 'Arsenic Trioxide',
+      formula: 'As₂O₃',
+      description: 'Known as "inheritance powder" — famous poison in history. Now used to treat leukemia.',
+      atoms: [
+        { sym: 'As', x: -0.8, y: 0.5, z: 0 },
+        { sym: 'As', x: 0.8, y: 0.5, z: 0 },
+        { sym: 'O', x: 0, y: 0, z: 0 },
+        { sym: 'O', x: -1.2, y: -0.4, z: 0 },
+        { sym: 'O', x: 1.2, y: -0.4, z: 0 },
+      ],
+      bonds: [
+        { from: 0, to: 2, order: 1 }, { from: 1, to: 2, order: 1 },
+        { from: 0, to: 3, order: 1 }, { from: 1, to: 4, order: 1 },
+      ],
+    },
+  ],
+
+  // ─── Selenium (34) ───
+  34: [
+    {
+      name: 'Hydrogen Selenide',
+      formula: 'H₂Se',
+      description: 'Extremely toxic gas with a foul odor. Similar structure to H₂S.',
+      atoms: [
+        { sym: 'Se', x: 0, y: 0, z: 0 },
+        { sym: 'H', x: -0.8, y: -0.6, z: 0 },
+        { sym: 'H', x: 0.8, y: -0.6, z: 0 },
+      ],
+      bonds: [{ from: 0, to: 1, order: 1 }, { from: 0, to: 2, order: 1 }],
+    },
+    {
+      name: 'Selenium Dioxide',
+      formula: 'SeO₂',
+      description: 'Useful oxidizing agent in organic chemistry. White needle-like crystals.',
+      atoms: [
+        { sym: 'Se', x: 0, y: 0, z: 0 },
+        { sym: 'O', x: 1.0, y: 0.5, z: 0 },
+        { sym: 'O', x: -1.0, y: 0.5, z: 0 },
+      ],
+      bonds: [{ from: 0, to: 1, order: 2 }, { from: 0, to: 2, order: 2 }],
+    },
+  ],
+
+  // ─── Krypton (36) ───
+  36: [
+    {
+      name: 'Krypton Difluoride',
+      formula: 'KrF₂',
+      description: 'One of the few noble gas compounds. Powerful oxidizer, unstable above -30°C.',
+      atoms: [
+        { sym: 'Kr', x: 0, y: 0, z: 0 },
+        { sym: 'F', x: -1.0, y: 0, z: 0 },
+        { sym: 'F', x: 1.0, y: 0, z: 0 },
+      ],
+      bonds: [{ from: 0, to: 1, order: 1 }, { from: 0, to: 2, order: 1 }],
+    },
+  ],
+
+  // ─── Rubidium (37) ───
+  37: [
+    {
+      name: 'Rubidium Chloride',
+      formula: 'RbCl',
+      description: 'Used in specialized fireworks and in atomic clocks. Highly soluble in water.',
+      atoms: [
+        { sym: 'Rb', x: -0.8, y: 0, z: 0 },
+        { sym: 'Cl', x: 0.8, y: 0, z: 0 },
+      ],
+      bonds: [{ from: 0, to: 1, order: 1 }],
+    },
+  ],
+
+  // ─── Strontium (38) ───
+  38: [
+    {
+      name: 'Strontium Carbonate',
+      formula: 'SrCO₃',
+      description: 'Gives red color to fireworks and flares. Found in the mineral strontianite.',
+      atoms: [
+        { sym: 'Sr', x: -1.0, y: 0, z: 0 },
+        { sym: 'C', x: 0.4, y: 0, z: 0 },
+        { sym: 'O', x: 1.2, y: 0.6, z: 0 },
+        { sym: 'O', x: 1.2, y: -0.6, z: 0 },
+        { sym: 'O', x: -0.2, y: 0.8, z: 0 },
+      ],
+      bonds: [
+        { from: 0, to: 4, order: 1 }, { from: 1, to: 2, order: 2 },
+        { from: 1, to: 3, order: 1 }, { from: 1, to: 4, order: 1 },
+      ],
+    },
+  ],
+
+  // ─── Yttrium (39) ───
+  39: [
+    {
+      name: 'Yttrium Barium Copper Oxide',
+      formula: 'YBa₂Cu₃O₇',
+      description: 'First high-temp superconductor (Tc=93 K). Revolutionized physics in 1987.',
+      atoms: [
+        { sym: 'Y', x: 0, y: 0, z: 0 },
+        { sym: 'Ba', x: 0, y: 1.2, z: 0 },
+        { sym: 'Cu', x: 0.8, y: 0.6, z: 0 },
+        { sym: 'O', x: -0.8, y: 0.6, z: 0 },
+        { sym: 'O', x: 0.8, y: -0.6, z: 0 },
+      ],
+      bonds: [
+        { from: 0, to: 3, order: 1 }, { from: 0, to: 4, order: 1 },
+        { from: 2, to: 3, order: 1 }, { from: 1, to: 3, order: 1 },
+      ],
+    },
+  ],
+
+  // ─── Zirconium (40) ───
+  40: [
+    {
+      name: 'Zirconium Dioxide (Zirconia)',
+      formula: 'ZrO₂',
+      description: 'Cubic zirconia — diamond simulant in jewelry. Also used in dental crowns.',
+      atoms: [
+        { sym: 'Zr', x: 0, y: 0, z: 0 },
+        { sym: 'O', x: 1.0, y: 0.5, z: 0 },
+        { sym: 'O', x: -1.0, y: 0.5, z: 0 },
+      ],
+      bonds: [{ from: 0, to: 1, order: 2 }, { from: 0, to: 2, order: 2 }],
+    },
+  ],
+
+  // ─── Niobium (41) ───
+  41: [
+    {
+      name: 'Niobium Pentoxide',
+      formula: 'Nb₂O₅',
+      description: 'Used in camera lenses, capacitors, and acoustic sensors.',
+      atoms: [
+        { sym: 'Nb', x: -0.7, y: 0, z: 0 },
+        { sym: 'Nb', x: 0.7, y: 0, z: 0 },
+        { sym: 'O', x: 0, y: 0.6, z: 0 },
+        { sym: 'O', x: -1.3, y: 0.6, z: 0 },
+        { sym: 'O', x: 1.3, y: 0.6, z: 0 },
+      ],
+      bonds: [
+        { from: 0, to: 2, order: 1 }, { from: 1, to: 2, order: 1 },
+        { from: 0, to: 3, order: 2 }, { from: 1, to: 4, order: 2 },
+      ],
+    },
+  ],
+
+  // ─── Molybdenum (42) ───
+  42: [
+    {
+      name: 'Molybdenum Disulfide',
+      formula: 'MoS₂',
+      description: 'Excellent lubricant (like graphite). Layered structure yields 2D materials.',
+      atoms: [
+        { sym: 'Mo', x: 0, y: 0, z: 0 },
+        { sym: 'S', x: 0.8, y: 0.8, z: 0 },
+        { sym: 'S', x: -0.8, y: -0.8, z: 0 },
+      ],
+      bonds: [{ from: 0, to: 1, order: 2 }, { from: 0, to: 2, order: 2 }],
+    },
+    {
+      name: 'Molybdenum Trioxide',
+      formula: 'MoO₃',
+      description: 'Starting material for Mo catalysts. Used in petroleum refining.',
+      atoms: [
+        { sym: 'Mo', x: 0, y: 0, z: 0 },
+        { sym: 'O', x: 1.2, y: 0, z: 0 },
+        { sym: 'O', x: -0.6, y: 1.04, z: 0 },
+        { sym: 'O', x: -0.6, y: -1.04, z: 0 },
+      ],
+      bonds: [
+        { from: 0, to: 1, order: 2 }, { from: 0, to: 2, order: 2 }, { from: 0, to: 3, order: 2 },
+      ],
+    },
+  ],
+
+  // ─── Technetium (43) ───
+  43: [
+    {
+      name: 'Technetium-99m Pertechnetate',
+      formula: 'TcO₄⁻',
+      description: 'Most widely used medical radioisotope — 30 million diagnostic scans per year.',
+      atoms: [
+        { sym: 'Tc', x: 0, y: 0, z: 0 },
+        { sym: 'O', x: 0.95, y: 0.55, z: 0.55 },
+        { sym: 'O', x: -0.95, y: -0.55, z: 0.55 },
+        { sym: 'O', x: 0.55, y: -0.95, z: -0.55 },
+        { sym: 'O', x: -0.55, y: 0.95, z: -0.55 },
+      ],
+      bonds: [
+        { from: 0, to: 1, order: 2 }, { from: 0, to: 2, order: 2 },
+        { from: 0, to: 3, order: 2 }, { from: 0, to: 4, order: 2 },
+      ],
+    },
+  ],
+
+  // ─── Ruthenium (44) ───
+  44: [
+    {
+      name: 'Ruthenium Tetroxide',
+      formula: 'RuO₄',
+      description: 'Powerful oxidizer used in electron microscopy staining. Volatile and toxic.',
+      atoms: [
+        { sym: 'Ru', x: 0, y: 0, z: 0 },
+        { sym: 'O', x: 0.9, y: 0.52, z: 0.52 },
+        { sym: 'O', x: -0.9, y: -0.52, z: 0.52 },
+        { sym: 'O', x: 0.52, y: -0.9, z: -0.52 },
+        { sym: 'O', x: -0.52, y: 0.9, z: -0.52 },
+      ],
+      bonds: [
+        { from: 0, to: 1, order: 2 }, { from: 0, to: 2, order: 2 },
+        { from: 0, to: 3, order: 2 }, { from: 0, to: 4, order: 2 },
+      ],
+    },
+  ],
+
+  // ─── Rhodium (45) ───
+  45: [
+    {
+      name: 'Rhodium(III) Chloride',
+      formula: 'RhCl₃',
+      description: 'Starting material for rhodium catalysts. Wilkinson\'s catalyst precursor.',
+      atoms: [
+        { sym: 'Rh', x: 0, y: 0, z: 0 },
+        { sym: 'Cl', x: 1.3, y: 0, z: 0 },
+        { sym: 'Cl', x: -0.65, y: 1.13, z: 0 },
+        { sym: 'Cl', x: -0.65, y: -1.13, z: 0 },
+      ],
+      bonds: [
+        { from: 0, to: 1, order: 1 }, { from: 0, to: 2, order: 1 }, { from: 0, to: 3, order: 1 },
+      ],
+    },
+  ],
+
+  // ─── Palladium (46) ───
+  46: [
+    {
+      name: 'Palladium(II) Chloride',
+      formula: 'PdCl₂',
+      description: 'Catalyst in Wacker process and cross-coupling reactions. 2010 Nobel Prize in Chemistry.',
+      atoms: [
+        { sym: 'Pd', x: 0, y: 0, z: 0 },
+        { sym: 'Cl', x: -1.2, y: 0, z: 0 },
+        { sym: 'Cl', x: 1.2, y: 0, z: 0 },
+      ],
+      bonds: [{ from: 0, to: 1, order: 1 }, { from: 0, to: 2, order: 1 }],
+    },
+  ],
+
+  // ─── Cadmium (48) ───
+  48: [
+    {
+      name: 'Cadmium Sulfide',
+      formula: 'CdS',
+      description: 'Bright yellow pigment used by artists (cadmium yellow). Also in photocells.',
+      atoms: [
+        { sym: 'Cd', x: -0.6, y: 0, z: 0 },
+        { sym: 'S', x: 0.6, y: 0, z: 0 },
+      ],
+      bonds: [{ from: 0, to: 1, order: 2 }],
+    },
+  ],
+
+  // ─── Indium (49) ───
+  49: [
+    {
+      name: 'Indium Tin Oxide',
+      formula: 'In₂O₃·SnO₂',
+      description: 'Transparent conductor in every touchscreen, LCD, and OLED display.',
+      atoms: [
+        { sym: 'In', x: -0.7, y: 0, z: 0 },
+        { sym: 'Sn', x: 0.7, y: 0, z: 0 },
+        { sym: 'O', x: 0, y: 0.8, z: 0 },
+        { sym: 'O', x: -1.2, y: 0.6, z: 0 },
+        { sym: 'O', x: 1.2, y: 0.6, z: 0 },
+      ],
+      bonds: [
+        { from: 0, to: 2, order: 1 }, { from: 1, to: 2, order: 1 },
+        { from: 0, to: 3, order: 1 }, { from: 1, to: 4, order: 1 },
+      ],
+    },
+  ],
+
+  // ─── Tin (50) ───
+  50: [
+    {
+      name: 'Tin(IV) Chloride',
+      formula: 'SnCl₄',
+      description: 'Fume-producing liquid — used in Friedel-Crafts catalysis and mirror coatings.',
+      atoms: [
+        { sym: 'Sn', x: 0, y: 0, z: 0 },
+        { sym: 'Cl', x: 0.9, y: 0.52, z: 0.52 },
+        { sym: 'Cl', x: -0.9, y: -0.52, z: 0.52 },
+        { sym: 'Cl', x: 0.52, y: -0.9, z: -0.52 },
+        { sym: 'Cl', x: -0.52, y: 0.9, z: -0.52 },
+      ],
+      bonds: [
+        { from: 0, to: 1, order: 1 }, { from: 0, to: 2, order: 1 },
+        { from: 0, to: 3, order: 1 }, { from: 0, to: 4, order: 1 },
+      ],
+    },
+    {
+      name: 'Stannous Fluoride',
+      formula: 'SnF₂',
+      description: 'Active ingredient in many toothpastes — prevents tooth decay.',
+      atoms: [
+        { sym: 'Sn', x: 0, y: 0, z: 0 },
+        { sym: 'F', x: -0.9, y: -0.5, z: 0 },
+        { sym: 'F', x: 0.9, y: -0.5, z: 0 },
+      ],
+      bonds: [{ from: 0, to: 1, order: 1 }, { from: 0, to: 2, order: 1 }],
+    },
+  ],
+
+  // ─── Antimony (51) ───
+  51: [
+    {
+      name: 'Antimony Trioxide',
+      formula: 'Sb₂O₃',
+      description: 'Primary flame retardant additive in plastics, textiles, and electronics.',
+      atoms: [
+        { sym: 'Sb', x: -0.8, y: 0.5, z: 0 },
+        { sym: 'Sb', x: 0.8, y: 0.5, z: 0 },
+        { sym: 'O', x: 0, y: 0, z: 0 },
+        { sym: 'O', x: -1.2, y: -0.4, z: 0 },
+        { sym: 'O', x: 1.2, y: -0.4, z: 0 },
+      ],
+      bonds: [
+        { from: 0, to: 2, order: 1 }, { from: 1, to: 2, order: 1 },
+        { from: 0, to: 3, order: 1 }, { from: 1, to: 4, order: 1 },
+      ],
+    },
+  ],
+
+  // ─── Tellurium (52) ───
+  52: [
+    {
+      name: 'Cadmium Telluride',
+      formula: 'CdTe',
+      description: 'Thin-film solar cell material — second most common PV technology.',
+      atoms: [
+        { sym: 'Cd', x: -0.7, y: 0, z: 0 },
+        { sym: 'Te', x: 0.7, y: 0, z: 0 },
+      ],
+      bonds: [{ from: 0, to: 1, order: 1 }],
+    },
+  ],
+
+  // ─── Cesium (55) ───
+  55: [
+    {
+      name: 'Cesium Chloride',
+      formula: 'CsCl',
+      description: 'Defines the CsCl crystal structure type. Used in ultracentrifuge separations.',
+      atoms: [
+        { sym: 'Cs', x: -0.9, y: 0, z: 0 },
+        { sym: 'Cl', x: 0.9, y: 0, z: 0 },
+      ],
+      bonds: [{ from: 0, to: 1, order: 1 }],
+    },
+  ],
+
+  // ─── Barium (56) ───
+  56: [
+    {
+      name: 'Barium Sulfate',
+      formula: 'BaSO₄',
+      description: 'Barium meal — patients drink it for X-ray/CT imaging of the GI tract.',
+      atoms: [
+        { sym: 'Ba', x: -1.2, y: 0, z: 0 },
+        { sym: 'S', x: 0.3, y: 0, z: 0 },
+        { sym: 'O', x: 1.1, y: 0.6, z: 0 },
+        { sym: 'O', x: 1.1, y: -0.6, z: 0 },
+        { sym: 'O', x: -0.3, y: 0.8, z: 0 },
+        { sym: 'O', x: -0.3, y: -0.8, z: 0 },
+      ],
+      bonds: [
+        { from: 0, to: 4, order: 1 }, { from: 0, to: 5, order: 1 },
+        { from: 1, to: 2, order: 2 }, { from: 1, to: 3, order: 2 },
+        { from: 1, to: 4, order: 1 }, { from: 1, to: 5, order: 1 },
+      ],
+    },
+    {
+      name: 'Barium Titanate',
+      formula: 'BaTiO₃',
+      description: 'Piezoelectric ceramic — converts pressure to electricity. Used in sensors.',
+      atoms: [
+        { sym: 'Ba', x: 0, y: 1.2, z: 0 },
+        { sym: 'Ti', x: 0, y: 0, z: 0 },
+        { sym: 'O', x: 1.0, y: 0, z: 0 },
+        { sym: 'O', x: -1.0, y: 0, z: 0 },
+        { sym: 'O', x: 0, y: -1.0, z: 0 },
+      ],
+      bonds: [
+        { from: 1, to: 2, order: 1 }, { from: 1, to: 3, order: 1 },
+        { from: 1, to: 4, order: 1 }, { from: 0, to: 2, order: 1 },
+      ],
+    },
+  ],
+
+  // ─── Lanthanum (57) ───
+  57: [
+    {
+      name: 'Lanthanum Oxide',
+      formula: 'La₂O₃',
+      description: 'Used in optical glass and camera lenses — increases refractive index.',
+      atoms: [
+        { sym: 'La', x: -0.9, y: 0.5, z: 0 },
+        { sym: 'La', x: 0.9, y: 0.5, z: 0 },
+        { sym: 'O', x: 0, y: 0, z: 0 },
+        { sym: 'O', x: -1.2, y: -0.4, z: 0 },
+        { sym: 'O', x: 1.2, y: -0.4, z: 0 },
+      ],
+      bonds: [
+        { from: 0, to: 2, order: 1 }, { from: 1, to: 2, order: 1 },
+        { from: 0, to: 3, order: 1 }, { from: 1, to: 4, order: 1 },
+      ],
+    },
+  ],
+
+  // ─── Cerium (58) ───
+  58: [
+    {
+      name: 'Cerium(IV) Oxide',
+      formula: 'CeO₂',
+      description: 'Catalytic converter component. Also used as glass polishing compound (jeweler\'s rouge).',
+      atoms: [
+        { sym: 'Ce', x: 0, y: 0, z: 0 },
+        { sym: 'O', x: 1.0, y: 0.5, z: 0 },
+        { sym: 'O', x: -1.0, y: 0.5, z: 0 },
+      ],
+      bonds: [{ from: 0, to: 1, order: 2 }, { from: 0, to: 2, order: 2 }],
+    },
+  ],
+
+  // ─── Neodymium (60) ───
+  60: [
+    {
+      name: 'Neodymium Iron Boron',
+      formula: 'Nd₂Fe₁₄B',
+      description: 'Strongest permanent magnets — in every hard drive, EV motor, and MRI machine.',
+      atoms: [
+        { sym: 'Nd', x: -0.8, y: 0.6, z: 0 },
+        { sym: 'Fe', x: 0, y: 0, z: 0 },
+        { sym: 'B', x: 0.8, y: 0.6, z: 0 },
+        { sym: 'Fe', x: 0, y: -0.8, z: 0 },
+      ],
+      bonds: [
+        { from: 0, to: 1, order: 1 }, { from: 1, to: 2, order: 1 },
+        { from: 1, to: 3, order: 1 }, { from: 0, to: 3, order: 1 },
+      ],
+    },
+  ],
+
+  // ─── Gadolinium (64) ───
+  64: [
+    {
+      name: 'Gadolinium DTPA',
+      formula: 'Gd-DTPA',
+      description: 'MRI contrast agent — Gd³⁺ has 7 unpaired electrons, highly paramagnetic.',
+      atoms: [
+        { sym: 'Gd', x: 0, y: 0, z: 0 },
+        { sym: 'N', x: 1.0, y: 0.5, z: 0 },
+        { sym: 'O', x: -1.0, y: 0.5, z: 0 },
+        { sym: 'O', x: 0, y: -1.0, z: 0 },
+      ],
+      bonds: [
+        { from: 0, to: 1, order: 1 }, { from: 0, to: 2, order: 1 }, { from: 0, to: 3, order: 1 },
+      ],
+    },
+  ],
+
+  // ─── Hafnium (72) ───
+  72: [
+    {
+      name: 'Hafnium Dioxide',
+      formula: 'HfO₂',
+      description: 'High-k dielectric in modern CPU transistors (replaced SiO₂ at 45nm node).',
+      atoms: [
+        { sym: 'Hf', x: 0, y: 0, z: 0 },
+        { sym: 'O', x: 1.0, y: 0.5, z: 0 },
+        { sym: 'O', x: -1.0, y: 0.5, z: 0 },
+      ],
+      bonds: [{ from: 0, to: 1, order: 2 }, { from: 0, to: 2, order: 2 }],
+    },
+  ],
+
+  // ─── Tantalum (73) ───
+  73: [
+    {
+      name: 'Tantalum Pentoxide',
+      formula: 'Ta₂O₅',
+      description: 'Capacitor dielectric in cell phones. Biocompatible — used in surgical implants.',
+      atoms: [
+        { sym: 'Ta', x: -0.7, y: 0, z: 0 },
+        { sym: 'Ta', x: 0.7, y: 0, z: 0 },
+        { sym: 'O', x: 0, y: 0.6, z: 0 },
+        { sym: 'O', x: -1.3, y: 0.6, z: 0 },
+        { sym: 'O', x: 1.3, y: 0.6, z: 0 },
+      ],
+      bonds: [
+        { from: 0, to: 2, order: 1 }, { from: 1, to: 2, order: 1 },
+        { from: 0, to: 3, order: 2 }, { from: 1, to: 4, order: 2 },
+      ],
+    },
+  ],
+
+  // ─── Rhenium (75) ───
+  75: [
+    {
+      name: 'Rhenium Heptoxide',
+      formula: 'Re₂O₇',
+      description: 'Highest oxidation state oxide (+7). Catalyst for olefin metathesis.',
+      atoms: [
+        { sym: 'Re', x: -0.7, y: 0, z: 0 },
+        { sym: 'Re', x: 0.7, y: 0, z: 0 },
+        { sym: 'O', x: 0, y: 0.5, z: 0 },
+        { sym: 'O', x: -1.3, y: 0.6, z: 0 },
+        { sym: 'O', x: 1.3, y: 0.6, z: 0 },
+      ],
+      bonds: [
+        { from: 0, to: 2, order: 1 }, { from: 1, to: 2, order: 1 },
+        { from: 0, to: 3, order: 2 }, { from: 1, to: 4, order: 2 },
+      ],
+    },
+  ],
+
+  // ─── Osmium (76) ───
+  76: [
+    {
+      name: 'Osmium Tetroxide',
+      formula: 'OsO₄',
+      description: 'Powerful biological stain for electron microscopy. Adds to C=C double bonds.',
+      atoms: [
+        { sym: 'Os', x: 0, y: 0, z: 0 },
+        { sym: 'O', x: 0.9, y: 0.52, z: 0.52 },
+        { sym: 'O', x: -0.9, y: -0.52, z: 0.52 },
+        { sym: 'O', x: 0.52, y: -0.9, z: -0.52 },
+        { sym: 'O', x: -0.52, y: 0.9, z: -0.52 },
+      ],
+      bonds: [
+        { from: 0, to: 1, order: 2 }, { from: 0, to: 2, order: 2 },
+        { from: 0, to: 3, order: 2 }, { from: 0, to: 4, order: 2 },
+      ],
+    },
+  ],
+
+  // ─── Iridium (77) ───
+  77: [
+    {
+      name: 'Iridium(IV) Oxide',
+      formula: 'IrO₂',
+      description: 'Best catalyst for oxygen evolution in water electrolysis (green hydrogen).',
+      atoms: [
+        { sym: 'Ir', x: 0, y: 0, z: 0 },
+        { sym: 'O', x: 1.0, y: 0.5, z: 0 },
+        { sym: 'O', x: -1.0, y: 0.5, z: 0 },
+      ],
+      bonds: [{ from: 0, to: 1, order: 2 }, { from: 0, to: 2, order: 2 }],
+    },
+  ],
+
+  // ─── Thallium (81) ───
+  81: [
+    {
+      name: 'Thallium(I) Sulfate',
+      formula: 'Tl₂SO₄',
+      description: 'Historically used as rat poison — odorless, tasteless, highly toxic.',
+      atoms: [
+        { sym: 'Tl', x: -1.3, y: 0, z: 0 },
+        { sym: 'Tl', x: 1.3, y: 0, z: 0 },
+        { sym: 'S', x: 0, y: 0, z: 0 },
+        { sym: 'O', x: 0.6, y: 0.6, z: 0 },
+        { sym: 'O', x: -0.6, y: -0.6, z: 0 },
+      ],
+      bonds: [
+        { from: 0, to: 4, order: 1 }, { from: 1, to: 3, order: 1 },
+        { from: 2, to: 3, order: 2 }, { from: 2, to: 4, order: 2 },
+      ],
+    },
+  ],
+
+  // ─── Bismuth (83) ───
+  83: [
+    {
+      name: 'Bismuth Subsalicylate',
+      formula: 'C₇H₅BiO₄',
+      description: 'Active ingredient in Pepto-Bismol — soothes upset stomach.',
+      atoms: [
+        { sym: 'Bi', x: 0, y: 0, z: 0 },
+        { sym: 'O', x: 1.0, y: 0.5, z: 0 },
+        { sym: 'O', x: -1.0, y: 0.5, z: 0 },
+        { sym: 'C', x: 0, y: -1.0, z: 0 },
+        { sym: 'O', x: 0.8, y: -1.3, z: 0 },
+      ],
+      bonds: [
+        { from: 0, to: 1, order: 1 }, { from: 0, to: 2, order: 1 },
+        { from: 3, to: 4, order: 2 }, { from: 0, to: 3, order: 1 },
+      ],
+    },
+  ],
+
+  // ─── Radon (86) ───
+  86: [
+    {
+      name: 'Radon Difluoride',
+      formula: 'RnF₂',
+      description: 'Predicted noble gas compound. Radon\'s higher polarizability makes bonding possible.',
+      atoms: [
+        { sym: 'Rn', x: 0, y: 0, z: 0 },
+        { sym: 'F', x: -1.0, y: 0, z: 0 },
+        { sym: 'F', x: 1.0, y: 0, z: 0 },
+      ],
+      bonds: [{ from: 0, to: 1, order: 1 }, { from: 0, to: 2, order: 1 }],
+    },
+  ],
+
+  // ─── Thorium (90) ───
+  90: [
+    {
+      name: 'Thorium Dioxide',
+      formula: 'ThO₂',
+      description: 'Highest melting point of any oxide (3300°C). Thorium fuel cycle research.',
+      atoms: [
+        { sym: 'Th', x: 0, y: 0, z: 0 },
+        { sym: 'O', x: 1.0, y: 0.5, z: 0 },
+        { sym: 'O', x: -1.0, y: 0.5, z: 0 },
+      ],
+      bonds: [{ from: 0, to: 1, order: 2 }, { from: 0, to: 2, order: 2 }],
+    },
+  ],
+
+  // ─── Plutonium (94) ───
+  94: [
+    {
+      name: 'Plutonium Dioxide',
+      formula: 'PuO₂',
+      description: 'Powers RTGs on deep-space probes (Voyager, Curiosity, Perseverance).',
+      atoms: [
+        { sym: 'Pu', x: 0, y: 0, z: 0 },
+        { sym: 'O', x: 1.0, y: 0.5, z: 0 },
+        { sym: 'O', x: -1.0, y: 0.5, z: 0 },
+      ],
+      bonds: [{ from: 0, to: 1, order: 2 }, { from: 0, to: 2, order: 2 }],
+    },
+  ],
 };
 
 // Merge extra compounds into ELEMENT_COMPOUNDS
