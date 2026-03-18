@@ -49,6 +49,21 @@
  *   Cu 3d: Zeff ≈ 7.85, 4s: 3.70 | Zn 4s: Zeff ≈ 4.35
  *   Ar 3s,3p: Zeff ≈ 6.76 | Kr 4s,4p: Zeff ≈ 8.25
  *   W 5d: Zeff ≈ 8.50, 6s: 4.35 | U 5f: 9.20, 6d/6p: 8.00
+ *   He 1s: Zeff ≈ 1.70 | Ge 4s,4p: Zeff ≈ 5.50
+ *   Au 5d: Zeff ≈ 10.50, 6s: 4.20 | Pt 5d: 10.20, 6s: 4.00
+ *   Pd 4d: Zeff ≈ 8.85, 5s: 4.30 | Rh 4d: 8.50, 5s: 4.10
+ *   Mo 4d: Zeff ≈ 7.40, 5s: 3.60 | Mn 3d: 5.60, 4s: 3.50
+ *   Zr 4d: Zeff ≈ 6.80, 5s: 3.40 | Hf 5d: 9.00, 6s: 4.10
+ *   Ce 4f: Zeff ≈ 8.20, 5d: 7.50, 6s: 3.80
+ *   Ir 5d: Zeff ≈ 10.00, 6s: 4.10 | Os 5d: 9.60, 6s: 4.00
+ *   Th 6d: Zeff ≈ 7.50, 7s: 3.80 | Pu 5f: 9.50, 6d: 8.20, 7s: 3.90
+ *   Ru 4d: Zeff ≈ 7.55, 5s: 3.70 | Ti 3d: 4.80, 4s: 3.15
+ *   Rn 6s,6p: Zeff ≈ 9.20 | Hg 5d: 10.80, 6s: 4.35
+ *   Sc 3d: Zeff ≈ 4.35, 4s: 2.85 | V 3d: 5.20, 4s: 3.30
+ *   Co 3d: Zeff ≈ 6.90, 4s: 3.90 | Sb 5s,5p: 6.10
+ *   La 5d: Zeff ≈ 7.40, 6s: 3.60 | Nb 4d: 6.40, 5s: 3.30
+ *   Ta 5d: Zeff ≈ 8.80, 6s: 4.15 | Re 5d: 9.20, 6s: 4.20
+ *   Ba 6s: Zeff ≈ 3.40 | Sr 5s: 3.00 | Tl 6s,6p: 6.30
  */
 
 const MOLECULAR_ORBITALS = {
@@ -4220,6 +4235,2458 @@ const MOLECULAR_ORBITALS = {
         ao: [
           { atom: 6, n: 2, l: 1, m: 1, zeff: 5.13, c: 0.707 },
           { atom: 6, n: 2, l: 1, m: -1, zeff: 5.13, c: 0.707 },
+        ],
+      },
+    ],
+  },
+
+  // ═══════════════════ He₂ — Helium Dimer ═══════════════════
+  // Weakly bound van der Waals dimer. Bond order = 0 (σ cancels σ*).
+  // Atoms: He₁(-1.5,0,0) He₂(1.5,0,0)
+  'He₂': {
+    orbitals: [
+      {
+        name: 'σ₁s',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 1, l: 0, m: 0, zeff: 1.70, c: 0.707 },
+          { atom: 1, n: 1, l: 0, m: 0, zeff: 1.70, c: 0.707 },
+        ],
+      },
+      {
+        name: 'σ*₁s',
+        type: 'antibonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 1, l: 0, m: 0, zeff: 1.70, c: 0.707 },
+          { atom: 1, n: 1, l: 0, m: 0, zeff: 1.70, c: -0.707 },
+        ],
+      },
+    ],
+  },
+
+  // ═══════════════════ AuCl — Gold(I) Chloride ═══════════════════
+  // Linear Au-Cl. Au 5d/6s bonding with Cl 3p.
+  // Atoms: Au(-1,0,0) Cl(1,0,0) — bond along x-axis
+  'AuCl': {
+    orbitals: [
+      {
+        name: 'σ (Au 6s–Cl 3p)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 6, l: 0, m: 0, zeff: 4.20, c: 0.55 },
+          { atom: 1, n: 3, l: 1, m: 1, zeff: 6.12, c: 0.60 },
+        ],
+      },
+      {
+        name: 'σ* (Au 6s–Cl 3p)',
+        type: 'antibonding',
+        electrons: 0,
+        ao: [
+          { atom: 0, n: 6, l: 0, m: 0, zeff: 4.20, c: 0.60 },
+          { atom: 1, n: 3, l: 1, m: 1, zeff: 6.12, c: -0.55 },
+        ],
+      },
+      {
+        name: 'Au 5dσ',
+        type: 'nonbonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 5, l: 2, m: 0, zeff: 10.50, c: 1.0 },
+        ],
+      },
+      {
+        name: 'Au 5dπ',
+        type: 'nonbonding',
+        electrons: 4,
+        ao: [
+          { atom: 0, n: 5, l: 2, m: 1, zeff: 10.50, c: 0.707 },
+          { atom: 0, n: 5, l: 2, m: -1, zeff: 10.50, c: 0.707 },
+        ],
+      },
+      {
+        name: 'Au 5dδ',
+        type: 'nonbonding',
+        electrons: 4,
+        ao: [
+          { atom: 0, n: 5, l: 2, m: 2, zeff: 10.50, c: 0.707 },
+          { atom: 0, n: 5, l: 2, m: -2, zeff: 10.50, c: 0.707 },
+        ],
+      },
+      {
+        name: 'Cl 3p lone pairs',
+        type: 'nonbonding',
+        electrons: 4,
+        ao: [
+          { atom: 1, n: 3, l: 1, m: 0, zeff: 6.12, c: 0.707 },
+          { atom: 1, n: 3, l: 1, m: -1, zeff: 6.12, c: 0.707 },
+        ],
+      },
+    ],
+  },
+
+  // ═══════════════════ CdTe — Cadmium Telluride ═══════════════════
+  // II-VI semiconductor. Cd 5s – Te 5p σ bond along x.
+  // Atoms: Cd(-0.7,0,0) Te(0.7,0,0)
+  'CdTe': {
+    orbitals: [
+      {
+        name: 'σ (Cd 5s–Te 5p)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 5, l: 0, m: 0, zeff: 4.55, c: 0.55 },
+          { atom: 1, n: 5, l: 1, m: 1, zeff: 6.55, c: 0.60 },
+        ],
+      },
+      {
+        name: 'σ* (Cd 5s–Te 5p)',
+        type: 'antibonding',
+        electrons: 0,
+        ao: [
+          { atom: 0, n: 5, l: 0, m: 0, zeff: 4.55, c: 0.60 },
+          { atom: 1, n: 5, l: 1, m: 1, zeff: 6.55, c: -0.55 },
+        ],
+      },
+      {
+        name: 'Te 5p lone pairs',
+        type: 'nonbonding',
+        electrons: 4,
+        ao: [
+          { atom: 1, n: 5, l: 1, m: 0, zeff: 6.55, c: 0.707 },
+          { atom: 1, n: 5, l: 1, m: -1, zeff: 6.55, c: 0.707 },
+        ],
+      },
+      {
+        name: 'Te 5s lone pair',
+        type: 'nonbonding',
+        electrons: 2,
+        ao: [
+          { atom: 1, n: 5, l: 0, m: 0, zeff: 6.55, c: 1.0 },
+        ],
+      },
+    ],
+  },
+
+  // ═══════════════════ SnF₂ — Tin(II) Fluoride ═══════════════════
+  // Bent molecule (like H₂O). Sn at origin, F atoms at ±x shifted down.
+  // Atoms: Sn(0,0,0) F₁(-0.9,-0.5,0) F₂(0.9,-0.5,0)
+  'SnF₂': {
+    orbitals: [
+      {
+        name: 'σ₁ (Sn 5sp–F₁ 2p)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 5, l: 0, m: 0, zeff: 6.20, c: 0.40 },
+          { atom: 0, n: 5, l: 1, m: 1, zeff: 6.20, c: 0.30 },
+          { atom: 1, n: 2, l: 1, m: 1, zeff: 5.13, c: 0.55 },
+        ],
+      },
+      {
+        name: 'σ₂ (Sn 5sp–F₂ 2p)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 5, l: 0, m: 0, zeff: 6.20, c: 0.40 },
+          { atom: 0, n: 5, l: 1, m: 1, zeff: 6.20, c: -0.30 },
+          { atom: 2, n: 2, l: 1, m: 1, zeff: 5.13, c: 0.55 },
+        ],
+      },
+      {
+        name: 'Sn 5s lone pair',
+        type: 'nonbonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 5, l: 0, m: 0, zeff: 6.20, c: 0.80 },
+          { atom: 0, n: 5, l: 1, m: -1, zeff: 6.20, c: 0.45 },
+        ],
+      },
+      {
+        name: 'F₁ lone pairs',
+        type: 'nonbonding',
+        electrons: 4,
+        ao: [
+          { atom: 1, n: 2, l: 1, m: 0, zeff: 5.13, c: 0.707 },
+          { atom: 1, n: 2, l: 1, m: -1, zeff: 5.13, c: 0.707 },
+        ],
+      },
+      {
+        name: 'F₂ lone pairs',
+        type: 'nonbonding',
+        electrons: 4,
+        ao: [
+          { atom: 2, n: 2, l: 1, m: 0, zeff: 5.13, c: 0.707 },
+          { atom: 2, n: 2, l: 1, m: -1, zeff: 5.13, c: 0.707 },
+        ],
+      },
+    ],
+  },
+
+  // ═══════════════════ PbCl₂ — Lead(II) Chloride ═══════════════════
+  // Linear Cl-Pb-Cl along x-axis. Pb 6sp hybrid σ bonds.
+  // Atoms: Cl₁(-1.6,0,0) Pb(0,0,0) Cl₂(1.6,0,0)
+  'PbCl₂': {
+    orbitals: [
+      {
+        name: 'σg (Pb 6s–Cl 3p)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 3, l: 1, m: 1, zeff: 6.12, c: 0.50 },
+          { atom: 1, n: 6, l: 0, m: 0, zeff: 6.50, c: 0.50 },
+          { atom: 2, n: 3, l: 1, m: 1, zeff: 6.12, c: -0.50 },
+        ],
+      },
+      {
+        name: 'σu (Pb 6p–Cl 3p)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 3, l: 1, m: 1, zeff: 6.12, c: 0.50 },
+          { atom: 1, n: 6, l: 1, m: 1, zeff: 6.50, c: 0.50 },
+          { atom: 2, n: 3, l: 1, m: 1, zeff: 6.12, c: 0.50 },
+        ],
+      },
+      {
+        name: 'Pb 6s lone pair',
+        type: 'nonbonding',
+        electrons: 2,
+        ao: [
+          { atom: 1, n: 6, l: 0, m: 0, zeff: 6.50, c: 1.0 },
+        ],
+      },
+      {
+        name: 'Cl₁ lone pairs',
+        type: 'nonbonding',
+        electrons: 4,
+        ao: [
+          { atom: 0, n: 3, l: 1, m: 0, zeff: 6.12, c: 0.707 },
+          { atom: 0, n: 3, l: 1, m: -1, zeff: 6.12, c: 0.707 },
+        ],
+      },
+      {
+        name: 'Cl₂ lone pairs',
+        type: 'nonbonding',
+        electrons: 4,
+        ao: [
+          { atom: 2, n: 3, l: 1, m: 0, zeff: 6.12, c: 0.707 },
+          { atom: 2, n: 3, l: 1, m: -1, zeff: 6.12, c: 0.707 },
+        ],
+      },
+    ],
+  },
+
+  // ═══════════════════ PbO₂ — Lead(IV) Dioxide ═══════════════════
+  // Linear O=Pb=O. Double bonds along x-axis.
+  // Atoms: O₁(-1.1,0,0) Pb(0,0,0) O₂(1.1,0,0)
+  'PbO₂': {
+    orbitals: [
+      {
+        name: 'σg (Pb 6s–O 2p)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.50 },
+          { atom: 1, n: 6, l: 0, m: 0, zeff: 6.50, c: 0.50 },
+          { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: -0.50 },
+        ],
+      },
+      {
+        name: 'σu (Pb 6p–O 2p)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.50 },
+          { atom: 1, n: 6, l: 1, m: 1, zeff: 6.50, c: 0.50 },
+          { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.50 },
+        ],
+      },
+      {
+        name: 'πg (Pb 6p–O 2p)',
+        type: 'bonding',
+        electrons: 4,
+        ao: [
+          { atom: 0, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
+          { atom: 1, n: 6, l: 1, m: 0, zeff: 6.50, c: 0.50 },
+          { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: -0.50 },
+        ],
+      },
+      {
+        name: 'πu (Pb 6p–O 2p)',
+        type: 'bonding',
+        electrons: 4,
+        ao: [
+          { atom: 0, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.50 },
+          { atom: 1, n: 6, l: 1, m: -1, zeff: 6.50, c: 0.50 },
+          { atom: 2, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.50 },
+        ],
+      },
+      {
+        name: 'O lone pairs',
+        type: 'nonbonding',
+        electrons: 4,
+        ao: [
+          { atom: 0, n: 2, l: 0, m: 0, zeff: 4.45, c: 0.707 },
+          { atom: 2, n: 2, l: 0, m: 0, zeff: 4.45, c: 0.707 },
+        ],
+      },
+    ],
+  },
+
+  // ═══════════════════ RnF₂ — Radon Difluoride ═══════════════════
+  // Linear F-Rn-F, like XeF₂. 3-center 4-electron bond.
+  // Atoms: Rn(0,0,0) F₁(-1,0,0) F₂(1,0,0)
+  'RnF₂': {
+    orbitals: [
+      {
+        name: 'σ (3c-4e bonding)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 1, n: 2, l: 1, m: 1, zeff: 5.13, c: 0.50 },
+          { atom: 0, n: 6, l: 1, m: 1, zeff: 9.20, c: 0.50 },
+          { atom: 2, n: 2, l: 1, m: 1, zeff: 5.13, c: -0.50 },
+        ],
+      },
+      {
+        name: 'σ nb (F–F)',
+        type: 'nonbonding',
+        electrons: 2,
+        ao: [
+          { atom: 1, n: 2, l: 1, m: 1, zeff: 5.13, c: 0.707 },
+          { atom: 2, n: 2, l: 1, m: 1, zeff: 5.13, c: 0.707 },
+        ],
+      },
+      {
+        name: 'Rn 6s lone pair',
+        type: 'nonbonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 6, l: 0, m: 0, zeff: 9.20, c: 1.0 },
+        ],
+      },
+      {
+        name: 'Rn 6p⊥ lone pairs',
+        type: 'nonbonding',
+        electrons: 4,
+        ao: [
+          { atom: 0, n: 6, l: 1, m: 0, zeff: 9.20, c: 0.707 },
+          { atom: 0, n: 6, l: 1, m: -1, zeff: 9.20, c: 0.707 },
+        ],
+      },
+      {
+        name: 'F₁ lone pairs',
+        type: 'nonbonding',
+        electrons: 4,
+        ao: [
+          { atom: 1, n: 2, l: 1, m: 0, zeff: 5.13, c: 0.707 },
+          { atom: 1, n: 2, l: 1, m: -1, zeff: 5.13, c: 0.707 },
+        ],
+      },
+      {
+        name: 'F₂ lone pairs',
+        type: 'nonbonding',
+        electrons: 4,
+        ao: [
+          { atom: 2, n: 2, l: 1, m: 0, zeff: 5.13, c: 0.707 },
+          { atom: 2, n: 2, l: 1, m: -1, zeff: 5.13, c: 0.707 },
+        ],
+      },
+    ],
+  },
+
+  // ═══════════════════ PtCl₂ — Platinum(II) Chloride ═══════════════════
+  // Linear Cl-Pt-Cl. Pt 5d/6s bonding.
+  // Atoms: Cl₁(-1.4,0,0) Pt(0,0,0) Cl₂(1.4,0,0)
+  'PtCl₂': {
+    orbitals: [
+      {
+        name: 'σg (Pt 6s–Cl 3p)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 3, l: 1, m: 1, zeff: 6.12, c: 0.50 },
+          { atom: 1, n: 6, l: 0, m: 0, zeff: 4.00, c: 0.50 },
+          { atom: 2, n: 3, l: 1, m: 1, zeff: 6.12, c: -0.50 },
+        ],
+      },
+      {
+        name: 'σu (Pt 5dσ–Cl 3p)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 3, l: 1, m: 1, zeff: 6.12, c: 0.50 },
+          { atom: 1, n: 5, l: 2, m: 0, zeff: 10.20, c: 0.50 },
+          { atom: 2, n: 3, l: 1, m: 1, zeff: 6.12, c: 0.50 },
+        ],
+      },
+      {
+        name: 'Pt 5d nonbonding',
+        type: 'nonbonding',
+        electrons: 6,
+        ao: [
+          { atom: 1, n: 5, l: 2, m: 1, zeff: 10.20, c: 0.577 },
+          { atom: 1, n: 5, l: 2, m: -1, zeff: 10.20, c: 0.577 },
+          { atom: 1, n: 5, l: 2, m: 2, zeff: 10.20, c: 0.577 },
+        ],
+      },
+      {
+        name: 'Cl₁ lone pairs',
+        type: 'nonbonding',
+        electrons: 4,
+        ao: [
+          { atom: 0, n: 3, l: 1, m: 0, zeff: 6.12, c: 0.707 },
+          { atom: 0, n: 3, l: 1, m: -1, zeff: 6.12, c: 0.707 },
+        ],
+      },
+      {
+        name: 'Cl₂ lone pairs',
+        type: 'nonbonding',
+        electrons: 4,
+        ao: [
+          { atom: 2, n: 3, l: 1, m: 0, zeff: 6.12, c: 0.707 },
+          { atom: 2, n: 3, l: 1, m: -1, zeff: 6.12, c: 0.707 },
+        ],
+      },
+    ],
+  },
+
+  // ═══════════════════ PdCl₂ — Palladium(II) Chloride ═══════════════════
+  // Linear Pd-Cl₂. Pd 4d/5s bonding.
+  // Atoms: Pd(0,0,0) Cl₁(-1.2,0,0) Cl₂(1.2,0,0)
+  'PdCl₂': {
+    orbitals: [
+      {
+        name: 'σg (Pd 5s–Cl 3p)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 1, n: 3, l: 1, m: 1, zeff: 6.12, c: 0.50 },
+          { atom: 0, n: 5, l: 0, m: 0, zeff: 4.30, c: 0.50 },
+          { atom: 2, n: 3, l: 1, m: 1, zeff: 6.12, c: -0.50 },
+        ],
+      },
+      {
+        name: 'σu (Pd 4dσ–Cl 3p)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 1, n: 3, l: 1, m: 1, zeff: 6.12, c: 0.50 },
+          { atom: 0, n: 4, l: 2, m: 0, zeff: 8.85, c: 0.50 },
+          { atom: 2, n: 3, l: 1, m: 1, zeff: 6.12, c: 0.50 },
+        ],
+      },
+      {
+        name: 'Pd 4d nonbonding',
+        type: 'nonbonding',
+        electrons: 6,
+        ao: [
+          { atom: 0, n: 4, l: 2, m: 1, zeff: 8.85, c: 0.577 },
+          { atom: 0, n: 4, l: 2, m: -1, zeff: 8.85, c: 0.577 },
+          { atom: 0, n: 4, l: 2, m: 2, zeff: 8.85, c: 0.577 },
+        ],
+      },
+      {
+        name: 'Cl₁ lone pairs',
+        type: 'nonbonding',
+        electrons: 4,
+        ao: [
+          { atom: 1, n: 3, l: 1, m: 0, zeff: 6.12, c: 0.707 },
+          { atom: 1, n: 3, l: 1, m: -1, zeff: 6.12, c: 0.707 },
+        ],
+      },
+      {
+        name: 'Cl₂ lone pairs',
+        type: 'nonbonding',
+        electrons: 4,
+        ao: [
+          { atom: 2, n: 3, l: 1, m: 0, zeff: 6.12, c: 0.707 },
+          { atom: 2, n: 3, l: 1, m: -1, zeff: 6.12, c: 0.707 },
+        ],
+      },
+    ],
+  },
+
+  // ═══════════════════ ZnCl₂ — Zinc Chloride ═══════════════════
+  // Linear Cl-Zn-Cl. Zn 4s bonding.
+  // Atoms: Cl₁(-1.6,0,0) Zn(0,0,0) Cl₂(1.6,0,0)
+  'ZnCl₂': {
+    orbitals: [
+      {
+        name: 'σg (Zn 4s–Cl 3p)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 3, l: 1, m: 1, zeff: 6.12, c: 0.50 },
+          { atom: 1, n: 4, l: 0, m: 0, zeff: 4.35, c: 0.50 },
+          { atom: 2, n: 3, l: 1, m: 1, zeff: 6.12, c: -0.50 },
+        ],
+      },
+      {
+        name: 'σu (Zn 4p–Cl 3p)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 3, l: 1, m: 1, zeff: 6.12, c: 0.50 },
+          { atom: 1, n: 4, l: 1, m: 1, zeff: 4.35, c: 0.50 },
+          { atom: 2, n: 3, l: 1, m: 1, zeff: 6.12, c: 0.50 },
+        ],
+      },
+      {
+        name: 'Cl₁ lone pairs',
+        type: 'nonbonding',
+        electrons: 4,
+        ao: [
+          { atom: 0, n: 3, l: 1, m: 0, zeff: 6.12, c: 0.707 },
+          { atom: 0, n: 3, l: 1, m: -1, zeff: 6.12, c: 0.707 },
+        ],
+      },
+      {
+        name: 'Cl₂ lone pairs',
+        type: 'nonbonding',
+        electrons: 4,
+        ao: [
+          { atom: 2, n: 3, l: 1, m: 0, zeff: 6.12, c: 0.707 },
+          { atom: 2, n: 3, l: 1, m: -1, zeff: 6.12, c: 0.707 },
+        ],
+      },
+    ],
+  },
+
+  // ═══════════════════ MoS₂ — Molybdenum Disulfide ═══════════════════
+  // Trigonal prismatic coordination in bulk, simplified as bent S-Mo-S.
+  // Atoms: Mo(0,0,0) S₁(0.8,0.8,0) S₂(-0.8,-0.8,0)
+  'MoS₂': {
+    orbitals: [
+      {
+        name: 'σ₁ (Mo 4d–S₁ 3p)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 4, l: 2, m: 0, zeff: 7.40, c: 0.55 },
+          { atom: 1, n: 3, l: 1, m: 1, zeff: 5.45, c: 0.50 },
+        ],
+      },
+      {
+        name: 'σ₂ (Mo 4d–S₂ 3p)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 4, l: 2, m: 0, zeff: 7.40, c: 0.55 },
+          { atom: 2, n: 3, l: 1, m: 1, zeff: 5.45, c: 0.50 },
+        ],
+      },
+      {
+        name: 'π (Mo 4d–S 3p)',
+        type: 'bonding',
+        electrons: 4,
+        ao: [
+          { atom: 0, n: 4, l: 2, m: 1, zeff: 7.40, c: 0.50 },
+          { atom: 1, n: 3, l: 1, m: 0, zeff: 5.45, c: 0.35 },
+          { atom: 2, n: 3, l: 1, m: 0, zeff: 5.45, c: 0.35 },
+        ],
+      },
+      {
+        name: 'Mo 4d nonbonding',
+        type: 'nonbonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 4, l: 2, m: 2, zeff: 7.40, c: 0.707 },
+          { atom: 0, n: 4, l: 2, m: -2, zeff: 7.40, c: 0.707 },
+        ],
+      },
+      {
+        name: 'S₁ lone pair',
+        type: 'nonbonding',
+        electrons: 2,
+        ao: [
+          { atom: 1, n: 3, l: 1, m: -1, zeff: 5.45, c: 1.0 },
+        ],
+      },
+      {
+        name: 'S₂ lone pair',
+        type: 'nonbonding',
+        electrons: 2,
+        ao: [
+          { atom: 2, n: 3, l: 1, m: -1, zeff: 5.45, c: 1.0 },
+        ],
+      },
+    ],
+  },
+
+  // ═══════════════════ MnO₂ — Manganese Dioxide ═══════════════════
+  // Linear O=Mn=O. Mn uses 3d/4s for bonding.
+  // Atoms: O₁(-1.1,0,0) Mn(0,0,0) O₂(1.1,0,0)
+  'MnO₂': {
+    orbitals: [
+      {
+        name: 'σg (Mn 4s–O 2p)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.50 },
+          { atom: 1, n: 4, l: 0, m: 0, zeff: 3.50, c: 0.50 },
+          { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: -0.50 },
+        ],
+      },
+      {
+        name: 'σu (Mn 3dσ–O 2p)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.50 },
+          { atom: 1, n: 3, l: 2, m: 0, zeff: 5.60, c: 0.50 },
+          { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.50 },
+        ],
+      },
+      {
+        name: 'πg (Mn 3dπ–O 2p)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
+          { atom: 1, n: 3, l: 2, m: 1, zeff: 5.60, c: 0.50 },
+          { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: -0.50 },
+        ],
+      },
+      {
+        name: 'Mn 3d nonbonding',
+        type: 'nonbonding',
+        electrons: 1,
+        ao: [
+          { atom: 1, n: 3, l: 2, m: 2, zeff: 5.60, c: 1.0 },
+        ],
+      },
+      {
+        name: 'O lone pairs',
+        type: 'nonbonding',
+        electrons: 4,
+        ao: [
+          { atom: 0, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.707 },
+          { atom: 2, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.707 },
+        ],
+      },
+    ],
+  },
+
+  // ═══════════════════ GeO₂ — Germanium Dioxide ═══════════════════
+  // Bent O=Ge=O. Ge at origin, O atoms at (±1, 0.5, 0).
+  // Atoms: Ge(0,0,0) O₁(1,0.5,0) O₂(-1,0.5,0)
+  'GeO₂': {
+    orbitals: [
+      {
+        name: 'σ₁ (Ge 4sp–O₁ 2p)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 4, l: 0, m: 0, zeff: 5.50, c: 0.40 },
+          { atom: 0, n: 4, l: 1, m: 1, zeff: 5.50, c: 0.30 },
+          { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.55 },
+        ],
+      },
+      {
+        name: 'σ₂ (Ge 4sp–O₂ 2p)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 4, l: 0, m: 0, zeff: 5.50, c: 0.40 },
+          { atom: 0, n: 4, l: 1, m: 1, zeff: 5.50, c: -0.30 },
+          { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.55 },
+        ],
+      },
+      {
+        name: 'π₁ (Ge 4p–O₁ 2p)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 4, l: 1, m: 0, zeff: 5.50, c: 0.50 },
+          { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
+        ],
+      },
+      {
+        name: 'π₂ (Ge 4p–O₂ 2p)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 4, l: 1, m: 0, zeff: 5.50, c: 0.50 },
+          { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
+        ],
+      },
+      {
+        name: 'O₁ lone pair',
+        type: 'nonbonding',
+        electrons: 2,
+        ao: [
+          { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c: 1.0 },
+        ],
+      },
+      {
+        name: 'O₂ lone pair',
+        type: 'nonbonding',
+        electrons: 2,
+        ao: [
+          { atom: 2, n: 2, l: 1, m: -1, zeff: 4.45, c: 1.0 },
+        ],
+      },
+    ],
+  },
+
+  // ═══════════════════ ZrO₂ — Zirconium Dioxide ═══════════════════
+  // Bent O=Zr=O. 4d transition metal oxide.
+  // Atoms: Zr(0,0,0) O₁(1,0.5,0) O₂(-1,0.5,0)
+  'ZrO₂': {
+    orbitals: [
+      {
+        name: 'σ₁ (Zr 4d/5s–O₁ 2p)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 5, l: 0, m: 0, zeff: 3.40, c: 0.40 },
+          { atom: 0, n: 4, l: 2, m: 0, zeff: 6.80, c: 0.30 },
+          { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.55 },
+        ],
+      },
+      {
+        name: 'σ₂ (Zr 4d/5s–O₂ 2p)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 5, l: 0, m: 0, zeff: 3.40, c: 0.40 },
+          { atom: 0, n: 4, l: 2, m: 0, zeff: 6.80, c: -0.30 },
+          { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.55 },
+        ],
+      },
+      {
+        name: 'π (Zr 4dπ–O 2p)',
+        type: 'bonding',
+        electrons: 4,
+        ao: [
+          { atom: 0, n: 4, l: 2, m: 1, zeff: 6.80, c: 0.50 },
+          { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.35 },
+          { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.35 },
+        ],
+      },
+      {
+        name: 'O lone pairs',
+        type: 'nonbonding',
+        electrons: 4,
+        ao: [
+          { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.707 },
+          { atom: 2, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.707 },
+        ],
+      },
+    ],
+  },
+
+  // ═══════════════════ HfO₂ — Hafnium Dioxide ═══════════════════
+  // Bent O=Hf=O. Analogous to ZrO₂ (same group).
+  // Atoms: Hf(0,0,0) O₁(1,0.5,0) O₂(-1,0.5,0)
+  'HfO₂': {
+    orbitals: [
+      {
+        name: 'σ₁ (Hf 5d/6s–O₁ 2p)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 6, l: 0, m: 0, zeff: 4.10, c: 0.40 },
+          { atom: 0, n: 5, l: 2, m: 0, zeff: 9.00, c: 0.30 },
+          { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.55 },
+        ],
+      },
+      {
+        name: 'σ₂ (Hf 5d/6s–O₂ 2p)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 6, l: 0, m: 0, zeff: 4.10, c: 0.40 },
+          { atom: 0, n: 5, l: 2, m: 0, zeff: 9.00, c: -0.30 },
+          { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.55 },
+        ],
+      },
+      {
+        name: 'π (Hf 5dπ–O 2p)',
+        type: 'bonding',
+        electrons: 4,
+        ao: [
+          { atom: 0, n: 5, l: 2, m: 1, zeff: 9.00, c: 0.50 },
+          { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.35 },
+          { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.35 },
+        ],
+      },
+      {
+        name: 'O lone pairs',
+        type: 'nonbonding',
+        electrons: 4,
+        ao: [
+          { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.707 },
+          { atom: 2, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.707 },
+        ],
+      },
+    ],
+  },
+
+  // ═══════════════════ CeO₂ — Cerium Dioxide ═══════════════════
+  // Bent O=Ce=O. Lanthanide 4f/5d bonding.
+  // Atoms: Ce(0,0,0) O₁(1,0.5,0) O₂(-1,0.5,0)
+  'CeO₂': {
+    orbitals: [
+      {
+        name: 'σ₁ (Ce 5d/6s–O₁ 2p)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 6, l: 0, m: 0, zeff: 3.80, c: 0.35 },
+          { atom: 0, n: 5, l: 2, m: 0, zeff: 7.50, c: 0.35 },
+          { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.55 },
+        ],
+      },
+      {
+        name: 'σ₂ (Ce 5d/6s–O₂ 2p)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 6, l: 0, m: 0, zeff: 3.80, c: 0.35 },
+          { atom: 0, n: 5, l: 2, m: 0, zeff: 7.50, c: -0.35 },
+          { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.55 },
+        ],
+      },
+      {
+        name: 'π (Ce 5dπ–O 2p)',
+        type: 'bonding',
+        electrons: 4,
+        ao: [
+          { atom: 0, n: 5, l: 2, m: 1, zeff: 7.50, c: 0.50 },
+          { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.35 },
+          { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.35 },
+        ],
+      },
+      {
+        name: 'O lone pairs',
+        type: 'nonbonding',
+        electrons: 4,
+        ao: [
+          { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.707 },
+          { atom: 2, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.707 },
+        ],
+      },
+    ],
+  },
+
+  // ═══════════════════ IrO₂ — Iridium Dioxide ═══════════════════
+  // Bent O=Ir=O. Ir 5d-O 2p bonding.
+  // Atoms: Ir(0,0,0) O₁(1,0.5,0) O₂(-1,0.5,0)
+  'IrO₂': {
+    orbitals: [
+      {
+        name: 'σ₁ (Ir 5dσ–O₁ 2p)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 5, l: 2, m: 0, zeff: 10.00, c: 0.45 },
+          { atom: 0, n: 6, l: 0, m: 0, zeff: 4.10, c: 0.25 },
+          { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.55 },
+        ],
+      },
+      {
+        name: 'σ₂ (Ir 5dσ–O₂ 2p)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 5, l: 2, m: 0, zeff: 10.00, c: -0.45 },
+          { atom: 0, n: 6, l: 0, m: 0, zeff: 4.10, c: 0.25 },
+          { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.55 },
+        ],
+      },
+      {
+        name: 'π (Ir 5dπ–O 2p)',
+        type: 'bonding',
+        electrons: 4,
+        ao: [
+          { atom: 0, n: 5, l: 2, m: 1, zeff: 10.00, c: 0.50 },
+          { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.35 },
+          { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.35 },
+        ],
+      },
+      {
+        name: 'Ir 5d nonbonding',
+        type: 'nonbonding',
+        electrons: 3,
+        ao: [
+          { atom: 0, n: 5, l: 2, m: -1, zeff: 10.00, c: 0.577 },
+          { atom: 0, n: 5, l: 2, m: 2, zeff: 10.00, c: 0.577 },
+          { atom: 0, n: 5, l: 2, m: -2, zeff: 10.00, c: 0.577 },
+        ],
+      },
+      {
+        name: 'O lone pairs',
+        type: 'nonbonding',
+        electrons: 4,
+        ao: [
+          { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.707 },
+          { atom: 2, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.707 },
+        ],
+      },
+    ],
+  },
+
+  // ═══════════════════ UO₂ — Uranyl (Uranium Dioxide) ═══════════════════
+  // Linear O=U=O (uranyl). U 5f/6d participates in bonding.
+  // Atoms: O₁(-1.1,0,0) U(0,0,0) O₂(1.1,0,0)
+  'UO₂': {
+    orbitals: [
+      {
+        name: 'σg (U 6d–O 2p)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.50 },
+          { atom: 1, n: 6, l: 2, m: 0, zeff: 8.00, c: 0.50 },
+          { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: -0.50 },
+        ],
+      },
+      {
+        name: 'σu (U 5fσ–O 2p)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.50 },
+          { atom: 1, n: 5, l: 3, m: 0, zeff: 9.20, c: 0.50 },
+          { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.50 },
+        ],
+      },
+      {
+        name: 'πg (U 5fπ–O 2p)',
+        type: 'bonding',
+        electrons: 4,
+        ao: [
+          { atom: 0, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
+          { atom: 1, n: 5, l: 3, m: 1, zeff: 9.20, c: 0.50 },
+          { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: -0.50 },
+        ],
+      },
+      {
+        name: 'πu (U 6dπ–O 2p)',
+        type: 'bonding',
+        electrons: 4,
+        ao: [
+          { atom: 0, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.50 },
+          { atom: 1, n: 6, l: 2, m: 1, zeff: 8.00, c: 0.50 },
+          { atom: 2, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.50 },
+        ],
+      },
+      {
+        name: 'U 5f nonbonding',
+        type: 'nonbonding',
+        electrons: 0,
+        ao: [
+          { atom: 1, n: 5, l: 3, m: 2, zeff: 9.20, c: 0.707 },
+          { atom: 1, n: 5, l: 3, m: -2, zeff: 9.20, c: 0.707 },
+        ],
+      },
+    ],
+  },
+
+  // ═══════════════════ ThO₂ — Thorium Dioxide ═══════════════════
+  // Bent O=Th=O. Th 6d/7s bonding (no 5f contribution in Th⁴⁺).
+  // Atoms: Th(0,0,0) O₁(1,0.5,0) O₂(-1,0.5,0)
+  'ThO₂': {
+    orbitals: [
+      {
+        name: 'σ₁ (Th 6d/7s–O₁ 2p)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 7, l: 0, m: 0, zeff: 3.80, c: 0.35 },
+          { atom: 0, n: 6, l: 2, m: 0, zeff: 7.50, c: 0.35 },
+          { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.55 },
+        ],
+      },
+      {
+        name: 'σ₂ (Th 6d/7s–O₂ 2p)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 7, l: 0, m: 0, zeff: 3.80, c: 0.35 },
+          { atom: 0, n: 6, l: 2, m: 0, zeff: 7.50, c: -0.35 },
+          { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.55 },
+        ],
+      },
+      {
+        name: 'π (Th 6dπ–O 2p)',
+        type: 'bonding',
+        electrons: 4,
+        ao: [
+          { atom: 0, n: 6, l: 2, m: 1, zeff: 7.50, c: 0.50 },
+          { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.35 },
+          { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.35 },
+        ],
+      },
+      {
+        name: 'O lone pairs',
+        type: 'nonbonding',
+        electrons: 4,
+        ao: [
+          { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.707 },
+          { atom: 2, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.707 },
+        ],
+      },
+    ],
+  },
+
+  // ═══════════════════ PuO₂ — Plutonium Dioxide ═══════════════════
+  // Bent O=Pu=O. Pu 5f/6d bonding.
+  // Atoms: Pu(0,0,0) O₁(1,0.5,0) O₂(-1,0.5,0)
+  'PuO₂': {
+    orbitals: [
+      {
+        name: 'σ₁ (Pu 5f/6d–O₁ 2p)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 6, l: 2, m: 0, zeff: 8.20, c: 0.30 },
+          { atom: 0, n: 5, l: 3, m: 0, zeff: 9.50, c: 0.30 },
+          { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.55 },
+        ],
+      },
+      {
+        name: 'σ₂ (Pu 5f/6d–O₂ 2p)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 6, l: 2, m: 0, zeff: 8.20, c: -0.30 },
+          { atom: 0, n: 5, l: 3, m: 0, zeff: 9.50, c: -0.30 },
+          { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.55 },
+        ],
+      },
+      {
+        name: 'π (Pu 5fπ–O 2p)',
+        type: 'bonding',
+        electrons: 4,
+        ao: [
+          { atom: 0, n: 5, l: 3, m: 1, zeff: 9.50, c: 0.50 },
+          { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.35 },
+          { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.35 },
+        ],
+      },
+      {
+        name: 'Pu 5f nonbonding',
+        type: 'nonbonding',
+        electrons: 4,
+        ao: [
+          { atom: 0, n: 5, l: 3, m: 2, zeff: 9.50, c: 0.50 },
+          { atom: 0, n: 5, l: 3, m: -2, zeff: 9.50, c: 0.50 },
+          { atom: 0, n: 5, l: 3, m: 3, zeff: 9.50, c: 0.50 },
+          { atom: 0, n: 5, l: 3, m: -3, zeff: 9.50, c: 0.50 },
+        ],
+      },
+      {
+        name: 'O lone pairs',
+        type: 'nonbonding',
+        electrons: 4,
+        ao: [
+          { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.707 },
+          { atom: 2, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.707 },
+        ],
+      },
+    ],
+  },
+
+  // ═══════════════════ Cu₂O — Cuprous Oxide ═══════════════════
+  // Linear Cu-O-Cu. Cu 4s/3d bonding with O 2p.
+  // Atoms: Cu₁(-1,0.5,0) O(0,0,0) Cu₂(1,0.5,0)
+  'Cu₂O': {
+    orbitals: [
+      {
+        name: 'σg (Cu 4s–O 2p)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 4, l: 0, m: 0, zeff: 3.70, c: 0.45 },
+          { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.45 },
+          { atom: 2, n: 4, l: 0, m: 0, zeff: 3.70, c: 0.45 },
+        ],
+      },
+      {
+        name: 'σu (Cu 4s–O 2p)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 4, l: 0, m: 0, zeff: 3.70, c: 0.50 },
+          { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.50 },
+          { atom: 2, n: 4, l: 0, m: 0, zeff: 3.70, c: -0.50 },
+        ],
+      },
+      {
+        name: 'O 2p lone pairs',
+        type: 'nonbonding',
+        electrons: 4,
+        ao: [
+          { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.707 },
+          { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.707 },
+        ],
+      },
+      {
+        name: 'Cu₁ 3d',
+        type: 'nonbonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 3, l: 2, m: 0, zeff: 7.85, c: 1.0 },
+        ],
+      },
+      {
+        name: 'Cu₂ 3d',
+        type: 'nonbonding',
+        electrons: 2,
+        ao: [
+          { atom: 2, n: 3, l: 2, m: 0, zeff: 7.85, c: 1.0 },
+        ],
+      },
+    ],
+  },
+
+  // ═══════════════════ Ag₂O — Silver Oxide ═══════════════════
+  // Linear Ag-O-Ag. Ag 5s bonding with O 2p.
+  // Atoms: Ag₁(-1.1,0.5,0) O(0,0,0) Ag₂(1.1,0.5,0)
+  'Ag₂O': {
+    orbitals: [
+      {
+        name: 'σg (Ag 5s–O 2p)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 5, l: 0, m: 0, zeff: 4.25, c: 0.45 },
+          { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.45 },
+          { atom: 2, n: 5, l: 0, m: 0, zeff: 4.25, c: 0.45 },
+        ],
+      },
+      {
+        name: 'σu (Ag 5s–O 2p)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 5, l: 0, m: 0, zeff: 4.25, c: 0.50 },
+          { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.50 },
+          { atom: 2, n: 5, l: 0, m: 0, zeff: 4.25, c: -0.50 },
+        ],
+      },
+      {
+        name: 'O 2p lone pairs',
+        type: 'nonbonding',
+        electrons: 4,
+        ao: [
+          { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.707 },
+          { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.707 },
+        ],
+      },
+    ],
+  },
+
+  // ═══════════════════ FeCl₃ — Iron(III) Chloride ═══════════════════
+  // Trigonal planar Fe-Cl₃. Fe 3d/4s–Cl 3p.
+  // Atoms: Fe(0,0,0) Cl₁(1.4,0.8,0) Cl₂(-1.4,0.8,0) Cl₃(0,-1.2,0)
+  'FeCl₃': {
+    orbitals: [
+      {
+        name: 'σ₁ (Fe–Cl₁)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 4, l: 0, m: 0, zeff: 3.75, c: 0.35 },
+          { atom: 0, n: 3, l: 2, m: 0, zeff: 6.25, c: 0.30 },
+          { atom: 1, n: 3, l: 1, m: 1, zeff: 6.12, c: 0.55 },
+        ],
+      },
+      {
+        name: 'σ₂ (Fe–Cl₂)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 4, l: 0, m: 0, zeff: 3.75, c: 0.35 },
+          { atom: 0, n: 3, l: 2, m: 0, zeff: 6.25, c: -0.30 },
+          { atom: 2, n: 3, l: 1, m: 1, zeff: 6.12, c: 0.55 },
+        ],
+      },
+      {
+        name: 'σ₃ (Fe–Cl₃)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 4, l: 0, m: 0, zeff: 3.75, c: 0.35 },
+          { atom: 0, n: 3, l: 2, m: 1, zeff: 6.25, c: 0.30 },
+          { atom: 3, n: 3, l: 1, m: -1, zeff: 6.12, c: 0.55 },
+        ],
+      },
+      {
+        name: 'Fe 3d nonbonding',
+        type: 'nonbonding',
+        electrons: 3,
+        ao: [
+          { atom: 0, n: 3, l: 2, m: 2, zeff: 6.25, c: 0.577 },
+          { atom: 0, n: 3, l: 2, m: -1, zeff: 6.25, c: 0.577 },
+          { atom: 0, n: 3, l: 2, m: -2, zeff: 6.25, c: 0.577 },
+        ],
+      },
+      {
+        name: 'Cl lone pairs',
+        type: 'nonbonding',
+        electrons: 12,
+        ao: [
+          { atom: 1, n: 3, l: 1, m: 0, zeff: 6.12, c: 0.408 },
+          { atom: 1, n: 3, l: 1, m: -1, zeff: 6.12, c: 0.408 },
+          { atom: 2, n: 3, l: 1, m: 0, zeff: 6.12, c: 0.408 },
+          { atom: 2, n: 3, l: 1, m: -1, zeff: 6.12, c: 0.408 },
+          { atom: 3, n: 3, l: 1, m: 0, zeff: 6.12, c: 0.408 },
+          { atom: 3, n: 3, l: 1, m: 1, zeff: 6.12, c: 0.408 },
+        ],
+      },
+    ],
+  },
+
+  // ═══════════════════ GaCl₃ — Gallium(III) Chloride ═══════════════════
+  // Trigonal planar. Ga 4s/4p–Cl 3p sp² bonding.
+  // Atoms: Ga(0,0,0) Cl₁(1.2,0,0) Cl₂(-0.6,1.04,0) Cl₃(-0.6,-1.04,0)
+  'GaCl₃': {
+    orbitals: [
+      {
+        name: 'σ₁ (Ga sp²–Cl₁ 3p)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 4, l: 0, m: 0, zeff: 5.00, c: 0.33 },
+          { atom: 0, n: 4, l: 1, m: 1, zeff: 5.00, c: 0.47 },
+          { atom: 1, n: 3, l: 1, m: 1, zeff: 6.12, c: 0.55 },
+        ],
+      },
+      {
+        name: 'σ₂ (Ga sp²–Cl₂ 3p)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 4, l: 0, m: 0, zeff: 5.00, c: 0.33 },
+          { atom: 0, n: 4, l: 1, m: -1, zeff: 5.00, c: 0.47 },
+          { atom: 2, n: 3, l: 1, m: -1, zeff: 6.12, c: 0.55 },
+        ],
+      },
+      {
+        name: 'σ₃ (Ga sp²–Cl₃ 3p)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 4, l: 0, m: 0, zeff: 5.00, c: 0.33 },
+          { atom: 0, n: 4, l: 1, m: -1, zeff: 5.00, c: -0.47 },
+          { atom: 3, n: 3, l: 1, m: -1, zeff: 6.12, c: 0.55 },
+        ],
+      },
+      {
+        name: 'Cl lone pairs',
+        type: 'nonbonding',
+        electrons: 12,
+        ao: [
+          { atom: 1, n: 3, l: 1, m: 0, zeff: 6.12, c: 0.408 },
+          { atom: 1, n: 3, l: 1, m: -1, zeff: 6.12, c: 0.408 },
+          { atom: 2, n: 3, l: 1, m: 0, zeff: 6.12, c: 0.408 },
+          { atom: 2, n: 3, l: 1, m: 1, zeff: 6.12, c: 0.408 },
+          { atom: 3, n: 3, l: 1, m: 0, zeff: 6.12, c: 0.408 },
+          { atom: 3, n: 3, l: 1, m: 1, zeff: 6.12, c: 0.408 },
+        ],
+      },
+    ],
+  },
+
+  // ═══════════════════ RhCl₃ — Rhodium(III) Chloride ═══════════════════
+  // Trigonal planar. Rh 4d/5s–Cl 3p bonding.
+  // Atoms: Rh(0,0,0) Cl₁(1.3,0,0) Cl₂(-0.65,1.13,0) Cl₃(-0.65,-1.13,0)
+  'RhCl₃': {
+    orbitals: [
+      {
+        name: 'σ₁ (Rh–Cl₁)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 5, l: 0, m: 0, zeff: 4.10, c: 0.35 },
+          { atom: 0, n: 4, l: 2, m: 0, zeff: 8.50, c: 0.30 },
+          { atom: 1, n: 3, l: 1, m: 1, zeff: 6.12, c: 0.55 },
+        ],
+      },
+      {
+        name: 'σ₂ (Rh–Cl₂)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 5, l: 0, m: 0, zeff: 4.10, c: 0.35 },
+          { atom: 0, n: 4, l: 2, m: 1, zeff: 8.50, c: 0.30 },
+          { atom: 2, n: 3, l: 1, m: -1, zeff: 6.12, c: 0.55 },
+        ],
+      },
+      {
+        name: 'σ₃ (Rh–Cl₃)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 5, l: 0, m: 0, zeff: 4.10, c: 0.35 },
+          { atom: 0, n: 4, l: 2, m: -1, zeff: 8.50, c: 0.30 },
+          { atom: 3, n: 3, l: 1, m: -1, zeff: 6.12, c: 0.55 },
+        ],
+      },
+      {
+        name: 'Rh 4d nonbonding',
+        type: 'nonbonding',
+        electrons: 4,
+        ao: [
+          { atom: 0, n: 4, l: 2, m: 2, zeff: 8.50, c: 0.707 },
+          { atom: 0, n: 4, l: 2, m: -2, zeff: 8.50, c: 0.707 },
+        ],
+      },
+      {
+        name: 'Cl lone pairs',
+        type: 'nonbonding',
+        electrons: 12,
+        ao: [
+          { atom: 1, n: 3, l: 1, m: 0, zeff: 6.12, c: 0.408 },
+          { atom: 1, n: 3, l: 1, m: -1, zeff: 6.12, c: 0.408 },
+          { atom: 2, n: 3, l: 1, m: 0, zeff: 6.12, c: 0.408 },
+          { atom: 2, n: 3, l: 1, m: 1, zeff: 6.12, c: 0.408 },
+          { atom: 3, n: 3, l: 1, m: 0, zeff: 6.12, c: 0.408 },
+          { atom: 3, n: 3, l: 1, m: 1, zeff: 6.12, c: 0.408 },
+        ],
+      },
+    ],
+  },
+
+  // ═══════════════════ MoO₃ — Molybdenum Trioxide ═══════════════════
+  // Trigonal planar. Mo 4d/5s double bonds to 3 O.
+  // Atoms: Mo(0,0,0) O₁(1.2,0,0) O₂(-0.6,1.04,0) O₃(-0.6,-1.04,0)
+  'MoO₃': {
+    orbitals: [
+      {
+        name: 'σ₁ (Mo–O₁)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 4, l: 2, m: 0, zeff: 7.40, c: 0.45 },
+          { atom: 0, n: 5, l: 0, m: 0, zeff: 3.60, c: 0.25 },
+          { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.55 },
+        ],
+      },
+      {
+        name: 'σ₂ (Mo–O₂)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 4, l: 2, m: 1, zeff: 7.40, c: 0.45 },
+          { atom: 0, n: 5, l: 0, m: 0, zeff: 3.60, c: 0.25 },
+          { atom: 2, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.55 },
+        ],
+      },
+      {
+        name: 'σ₃ (Mo–O₃)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 4, l: 2, m: -1, zeff: 7.40, c: 0.45 },
+          { atom: 0, n: 5, l: 0, m: 0, zeff: 3.60, c: 0.25 },
+          { atom: 3, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.55 },
+        ],
+      },
+      {
+        name: 'π (Mo 4dπ–O 2p)',
+        type: 'bonding',
+        electrons: 6,
+        ao: [
+          { atom: 0, n: 4, l: 2, m: 2, zeff: 7.40, c: 0.33 },
+          { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.33 },
+          { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.33 },
+          { atom: 3, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.33 },
+        ],
+      },
+      {
+        name: 'O lone pairs',
+        type: 'nonbonding',
+        electrons: 6,
+        ao: [
+          { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.577 },
+          { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.577 },
+          { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.577 },
+        ],
+      },
+    ],
+  },
+
+  // ═══════════════════ WO₃ — Tungsten Trioxide ═══════════════════
+  // Trigonal planar. W 5d/6s double bonds to 3 O.
+  // Atoms: W(0,0,0) O₁(1.2,0,0) O₂(-0.6,1.04,0) O₃(-0.6,-1.04,0)
+  'WO₃': {
+    orbitals: [
+      {
+        name: 'σ₁ (W–O₁)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 5, l: 2, m: 0, zeff: 8.50, c: 0.45 },
+          { atom: 0, n: 6, l: 0, m: 0, zeff: 4.35, c: 0.25 },
+          { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.55 },
+        ],
+      },
+      {
+        name: 'σ₂ (W–O₂)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 5, l: 2, m: 1, zeff: 8.50, c: 0.45 },
+          { atom: 0, n: 6, l: 0, m: 0, zeff: 4.35, c: 0.25 },
+          { atom: 2, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.55 },
+        ],
+      },
+      {
+        name: 'σ₃ (W–O₃)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 5, l: 2, m: -1, zeff: 8.50, c: 0.45 },
+          { atom: 0, n: 6, l: 0, m: 0, zeff: 4.35, c: 0.25 },
+          { atom: 3, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.55 },
+        ],
+      },
+      {
+        name: 'π (W 5dπ–O 2p)',
+        type: 'bonding',
+        electrons: 6,
+        ao: [
+          { atom: 0, n: 5, l: 2, m: 2, zeff: 8.50, c: 0.33 },
+          { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.33 },
+          { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.33 },
+          { atom: 3, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.33 },
+        ],
+      },
+      {
+        name: 'O lone pairs',
+        type: 'nonbonding',
+        electrons: 6,
+        ao: [
+          { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.577 },
+          { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.577 },
+          { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.577 },
+        ],
+      },
+    ],
+  },
+
+  // ═══════════════════ Hg₂Cl₂ — Mercury(I) Chloride (Calomel) ═══════════════════
+  // Linear Cl-Hg-Hg-Cl. Hg-Hg bond along x-axis.
+  // Atoms: Cl₁(-2,0,0) Hg₁(-0.7,0,0) Hg₂(0.7,0,0) Cl₂(2,0,0)
+  'Hg₂Cl₂': {
+    orbitals: [
+      {
+        name: 'σ (Hg-Hg)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 1, n: 6, l: 0, m: 0, zeff: 4.35, c: 0.707 },
+          { atom: 2, n: 6, l: 0, m: 0, zeff: 4.35, c: 0.707 },
+        ],
+      },
+      {
+        name: 'σ₁ (Hg₁–Cl₁)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 1, n: 6, l: 0, m: 0, zeff: 4.35, c: 0.50 },
+          { atom: 0, n: 3, l: 1, m: 1, zeff: 6.12, c: 0.60 },
+        ],
+      },
+      {
+        name: 'σ₂ (Hg₂–Cl₂)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 2, n: 6, l: 0, m: 0, zeff: 4.35, c: 0.50 },
+          { atom: 3, n: 3, l: 1, m: 1, zeff: 6.12, c: -0.60 },
+        ],
+      },
+      {
+        name: 'Cl₁ lone pairs',
+        type: 'nonbonding',
+        electrons: 4,
+        ao: [
+          { atom: 0, n: 3, l: 1, m: 0, zeff: 6.12, c: 0.707 },
+          { atom: 0, n: 3, l: 1, m: -1, zeff: 6.12, c: 0.707 },
+        ],
+      },
+      {
+        name: 'Cl₂ lone pairs',
+        type: 'nonbonding',
+        electrons: 4,
+        ao: [
+          { atom: 3, n: 3, l: 1, m: 0, zeff: 6.12, c: 0.707 },
+          { atom: 3, n: 3, l: 1, m: -1, zeff: 6.12, c: 0.707 },
+        ],
+      },
+    ],
+  },
+
+  // ═══════════════════ TiCl₄ — Titanium Tetrachloride ═══════════════════
+  // Tetrahedral. Ti 3d/4s sp³ bonding with 4 Cl.
+  // Atoms: Ti(0,0,0) Cl₁(1.1,1.1,0.5) Cl₂(-1.1,-1.1,0.5) Cl₃(-1.1,1.1,-0.5) Cl₄(1.1,-1.1,-0.5)
+  'TiCl₄': {
+    orbitals: [
+      {
+        name: 'σ₁ (Ti–Cl₁)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 4, l: 0, m: 0, zeff: 3.15, c: 0.35 },
+          { atom: 0, n: 3, l: 2, m: 0, zeff: 4.80, c: 0.30 },
+          { atom: 1, n: 3, l: 1, m: 1, zeff: 6.12, c: 0.55 },
+        ],
+      },
+      {
+        name: 'σ₂ (Ti–Cl₂)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 4, l: 0, m: 0, zeff: 3.15, c: 0.35 },
+          { atom: 0, n: 3, l: 2, m: 0, zeff: 4.80, c: -0.30 },
+          { atom: 2, n: 3, l: 1, m: 1, zeff: 6.12, c: 0.55 },
+        ],
+      },
+      {
+        name: 'σ₃ (Ti–Cl₃)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 4, l: 0, m: 0, zeff: 3.15, c: 0.35 },
+          { atom: 0, n: 3, l: 2, m: 1, zeff: 4.80, c: 0.30 },
+          { atom: 3, n: 3, l: 1, m: -1, zeff: 6.12, c: 0.55 },
+        ],
+      },
+      {
+        name: 'σ₄ (Ti–Cl₄)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 4, l: 0, m: 0, zeff: 3.15, c: 0.35 },
+          { atom: 0, n: 3, l: 2, m: -1, zeff: 4.80, c: 0.30 },
+          { atom: 4, n: 3, l: 1, m: -1, zeff: 6.12, c: 0.55 },
+        ],
+      },
+      {
+        name: 'Cl lone pairs',
+        type: 'nonbonding',
+        electrons: 16,
+        ao: [
+          { atom: 1, n: 3, l: 1, m: 0, zeff: 6.12, c: 0.354 },
+          { atom: 1, n: 3, l: 1, m: -1, zeff: 6.12, c: 0.354 },
+          { atom: 2, n: 3, l: 1, m: 0, zeff: 6.12, c: 0.354 },
+          { atom: 2, n: 3, l: 1, m: -1, zeff: 6.12, c: 0.354 },
+          { atom: 3, n: 3, l: 1, m: 0, zeff: 6.12, c: 0.354 },
+          { atom: 3, n: 3, l: 1, m: 1, zeff: 6.12, c: 0.354 },
+          { atom: 4, n: 3, l: 1, m: 0, zeff: 6.12, c: 0.354 },
+          { atom: 4, n: 3, l: 1, m: 1, zeff: 6.12, c: 0.354 },
+        ],
+      },
+    ],
+  },
+
+  // ═══════════════════ OsO₄ — Osmium Tetroxide ═══════════════════
+  // Tetrahedral. Os 5d/6s bonds to 4 O (double bonds).
+  // Atoms: Os(0,0,0) O₁(0.9,0.52,0.52) O₂(-0.9,-0.52,0.52) O₃(0.52,-0.9,-0.52) O₄(-0.52,0.9,-0.52)
+  'OsO₄': {
+    orbitals: [
+      {
+        name: 'σ₁ (Os–O₁)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 5, l: 2, m: 0, zeff: 9.60, c: 0.40 },
+          { atom: 0, n: 6, l: 0, m: 0, zeff: 4.00, c: 0.25 },
+          { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.55 },
+        ],
+      },
+      {
+        name: 'σ₂ (Os–O₂)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 5, l: 2, m: 0, zeff: 9.60, c: -0.40 },
+          { atom: 0, n: 6, l: 0, m: 0, zeff: 4.00, c: 0.25 },
+          { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.55 },
+        ],
+      },
+      {
+        name: 'σ₃ (Os–O₃)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 5, l: 2, m: 1, zeff: 9.60, c: 0.40 },
+          { atom: 0, n: 6, l: 0, m: 0, zeff: 4.00, c: 0.25 },
+          { atom: 3, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.55 },
+        ],
+      },
+      {
+        name: 'σ₄ (Os–O₄)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 5, l: 2, m: -1, zeff: 9.60, c: 0.40 },
+          { atom: 0, n: 6, l: 0, m: 0, zeff: 4.00, c: 0.25 },
+          { atom: 4, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.55 },
+        ],
+      },
+      {
+        name: 'π (Os 5d–O 2p)',
+        type: 'bonding',
+        electrons: 8,
+        ao: [
+          { atom: 0, n: 5, l: 2, m: 2, zeff: 9.60, c: 0.25 },
+          { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.25 },
+          { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.25 },
+          { atom: 3, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.25 },
+          { atom: 4, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.25 },
+        ],
+      },
+    ],
+  },
+
+  // ═══════════════════ RuO₄ — Ruthenium Tetroxide ═══════════════════
+  // Tetrahedral. Ru 4d/5s bonds to 4 O. Analogous to OsO₄.
+  // Atoms: Ru(0,0,0) O₁(0.9,0.52,0.52) O₂(-0.9,-0.52,0.52) O₃(0.52,-0.9,-0.52) O₄(-0.52,0.9,-0.52)
+  'RuO₄': {
+    orbitals: [
+      {
+        name: 'σ₁ (Ru–O₁)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 4, l: 2, m: 0, zeff: 7.55, c: 0.40 },
+          { atom: 0, n: 5, l: 0, m: 0, zeff: 3.70, c: 0.25 },
+          { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.55 },
+        ],
+      },
+      {
+        name: 'σ₂ (Ru–O₂)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 4, l: 2, m: 0, zeff: 7.55, c: -0.40 },
+          { atom: 0, n: 5, l: 0, m: 0, zeff: 3.70, c: 0.25 },
+          { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.55 },
+        ],
+      },
+      {
+        name: 'σ₃ (Ru–O₃)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 4, l: 2, m: 1, zeff: 7.55, c: 0.40 },
+          { atom: 0, n: 5, l: 0, m: 0, zeff: 3.70, c: 0.25 },
+          { atom: 3, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.55 },
+        ],
+      },
+      {
+        name: 'σ₄ (Ru–O₄)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 4, l: 2, m: -1, zeff: 7.55, c: 0.40 },
+          { atom: 0, n: 5, l: 0, m: 0, zeff: 3.70, c: 0.25 },
+          { atom: 4, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.55 },
+        ],
+      },
+      {
+        name: 'π (Ru 4d–O 2p)',
+        type: 'bonding',
+        electrons: 8,
+        ao: [
+          { atom: 0, n: 4, l: 2, m: 2, zeff: 7.55, c: 0.25 },
+          { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.25 },
+          { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.25 },
+          { atom: 3, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.25 },
+          { atom: 4, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.25 },
+        ],
+      },
+    ],
+  },
+
+  // ═══════════════════ Ca(OH)₂ — Calcium Hydroxide ═══════════════════
+  // Ca bonded to 2 OH groups. Ca 4s ionic/covalent with O 2p.
+  // Atoms: Ca(0,0,0) O₁(-1,0.8,0) O₂(1,0.8,0) H₁(-1.5,1.3,0) H₂(1.5,1.3,0)
+  'Ca(OH)₂': {
+    orbitals: [
+      {
+        name: 'σ₁ (Ca 4s–O₁ 2p)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 4, l: 0, m: 0, zeff: 2.85, c: 0.40 },
+          { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.65 },
+        ],
+      },
+      {
+        name: 'σ₂ (Ca 4s–O₂ 2p)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 4, l: 0, m: 0, zeff: 2.85, c: 0.40 },
+          { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.65 },
+        ],
+      },
+      {
+        name: 'σ (O₁–H₁)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
+          { atom: 3, n: 1, l: 0, m: 0, zeff: 1.24, c: 0.55 },
+        ],
+      },
+      {
+        name: 'σ (O₂–H₂)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
+          { atom: 4, n: 1, l: 0, m: 0, zeff: 1.24, c: 0.55 },
+        ],
+      },
+      {
+        name: 'O₁ lone pairs',
+        type: 'nonbonding',
+        electrons: 4,
+        ao: [
+          { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.707 },
+          { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.707 },
+        ],
+      },
+      {
+        name: 'O₂ lone pairs',
+        type: 'nonbonding',
+        electrons: 4,
+        ao: [
+          { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.707 },
+          { atom: 2, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.707 },
+        ],
+      },
+    ],
+  },
+
+  // ═══════════════════ Mg(OH)₂ — Magnesium Hydroxide ═══════════════════
+  // Mg bonded to 2 OH groups. Mg 3s–O 2p bonding.
+  // Atoms: Mg(0,0,0) O₁(-1,0.7,0) O₂(1,0.7,0) H₁(-1.5,1.2,0) H₂(1.5,1.2,0)
+  'Mg(OH)₂': {
+    orbitals: [
+      {
+        name: 'σ₁ (Mg 3s–O₁ 2p)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 3, l: 0, m: 0, zeff: 2.85, c: 0.40 },
+          { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.65 },
+        ],
+      },
+      {
+        name: 'σ₂ (Mg 3s–O₂ 2p)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 3, l: 0, m: 0, zeff: 2.85, c: 0.40 },
+          { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.65 },
+        ],
+      },
+      {
+        name: 'σ (O₁–H₁)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
+          { atom: 3, n: 1, l: 0, m: 0, zeff: 1.24, c: 0.55 },
+        ],
+      },
+      {
+        name: 'σ (O₂–H₂)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
+          { atom: 4, n: 1, l: 0, m: 0, zeff: 1.24, c: 0.55 },
+        ],
+      },
+      {
+        name: 'O₁ lone pairs',
+        type: 'nonbonding',
+        electrons: 4,
+        ao: [
+          { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.707 },
+          { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.707 },
+        ],
+      },
+      {
+        name: 'O₂ lone pairs',
+        type: 'nonbonding',
+        electrons: 4,
+        ao: [
+          { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.707 },
+          { atom: 2, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.707 },
+        ],
+      },
+    ],
+  },
+
+  // ═══════════════════ PCl₅ — Phosphorus Pentachloride ═══════════════════
+  // Trigonal bipyramidal. P sp³d hybridization.
+  // Atoms: P(0,0,0) Cl₁(1.3,0,0) Cl₂(-0.65,1.13,0) Cl₃(-0.65,-1.13,0) Cl₄(0,0,1.3) Cl₅(0,0,-1.3)
+  'PCl₅': {
+    orbitals: [
+      {
+        name: 'σ₁ᵉᑫ (P sp²–Cl₁)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 3, l: 0, m: 0, zeff: 4.80, c: 0.30 },
+          { atom: 0, n: 3, l: 1, m: 1, zeff: 4.80, c: 0.40 },
+          { atom: 1, n: 3, l: 1, m: 1, zeff: 6.12, c: 0.55 },
+        ],
+      },
+      {
+        name: 'σ₂ᵉᑫ (P sp²–Cl₂)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 3, l: 0, m: 0, zeff: 4.80, c: 0.30 },
+          { atom: 0, n: 3, l: 1, m: -1, zeff: 4.80, c: 0.40 },
+          { atom: 2, n: 3, l: 1, m: -1, zeff: 6.12, c: 0.55 },
+        ],
+      },
+      {
+        name: 'σ₃ᵉᑫ (P sp²–Cl₃)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 3, l: 0, m: 0, zeff: 4.80, c: 0.30 },
+          { atom: 0, n: 3, l: 1, m: -1, zeff: 4.80, c: -0.40 },
+          { atom: 3, n: 3, l: 1, m: -1, zeff: 6.12, c: 0.55 },
+        ],
+      },
+      {
+        name: 'σ₄ᵃˣ (P 3d–Cl₄)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 3, l: 2, m: 0, zeff: 4.80, c: 0.45 },
+          { atom: 0, n: 3, l: 1, m: 0, zeff: 4.80, c: 0.30 },
+          { atom: 4, n: 3, l: 1, m: 0, zeff: 6.12, c: 0.55 },
+        ],
+      },
+      {
+        name: 'σ₅ᵃˣ (P 3d–Cl₅)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 3, l: 2, m: 0, zeff: 4.80, c: 0.45 },
+          { atom: 0, n: 3, l: 1, m: 0, zeff: 4.80, c: -0.30 },
+          { atom: 5, n: 3, l: 1, m: 0, zeff: 6.12, c: 0.55 },
+        ],
+      },
+      {
+        name: 'Cl lone pairs',
+        type: 'nonbonding',
+        electrons: 20,
+        ao: [
+          { atom: 1, n: 3, l: 1, m: 0, zeff: 6.12, c: 0.316 },
+          { atom: 1, n: 3, l: 1, m: -1, zeff: 6.12, c: 0.316 },
+          { atom: 2, n: 3, l: 1, m: 0, zeff: 6.12, c: 0.316 },
+          { atom: 2, n: 3, l: 1, m: 1, zeff: 6.12, c: 0.316 },
+          { atom: 3, n: 3, l: 1, m: 0, zeff: 6.12, c: 0.316 },
+          { atom: 3, n: 3, l: 1, m: 1, zeff: 6.12, c: 0.316 },
+          { atom: 4, n: 3, l: 1, m: 1, zeff: 6.12, c: 0.316 },
+          { atom: 4, n: 3, l: 1, m: -1, zeff: 6.12, c: 0.316 },
+          { atom: 5, n: 3, l: 1, m: 1, zeff: 6.12, c: 0.316 },
+          { atom: 5, n: 3, l: 1, m: -1, zeff: 6.12, c: 0.316 },
+        ],
+      },
+    ],
+  },
+
+  // ═══════════════════ Sc₂O₃ — Scandium Oxide ═══════════════════
+  // Two Sc bridged by O atoms. Sc 3d/4s–O 2p bonding.
+  // Atoms: Sc₁(-0.9,0.5,0) O₁(0,0,0) Sc₂(0.9,0.5,0) O₂(-0.9,-0.5,0) O₃(0.9,-0.5,0)
+  'Sc₂O₃': {
+    orbitals: [
+      {
+        name: 'σ (Sc₁–O₁)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 4, l: 0, m: 0, zeff: 2.85, c: 0.40 },
+          { atom: 0, n: 3, l: 2, m: 0, zeff: 4.35, c: 0.25 },
+          { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
+        ],
+      },
+      {
+        name: 'σ (Sc₂–O₁)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 2, n: 4, l: 0, m: 0, zeff: 2.85, c: 0.40 },
+          { atom: 2, n: 3, l: 2, m: 0, zeff: 4.35, c: 0.25 },
+          { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c: -0.60 },
+        ],
+      },
+      {
+        name: 'σ (Sc₁–O₂)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 4, l: 0, m: 0, zeff: 2.85, c: 0.40 },
+          { atom: 3, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.60 },
+        ],
+      },
+      {
+        name: 'σ (Sc₂–O₃)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 2, n: 4, l: 0, m: 0, zeff: 2.85, c: 0.40 },
+          { atom: 4, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.60 },
+        ],
+      },
+      {
+        name: 'O lone pairs',
+        type: 'nonbonding',
+        electrons: 6,
+        ao: [
+          { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 },
+          { atom: 3, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 },
+          { atom: 4, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 },
+        ],
+      },
+    ],
+  },
+
+  // ═══════════════════ Cr₂O₃ — Chromium(III) Oxide ═══════════════════
+  // Two Cr bridged by O. Cr 3d/4s–O 2p.
+  // Atoms: Cr₁(-0.9,0.4,0) Cr₂(0.9,0.4,0) O₁(0,-0.4,0.3) O₂(-1.3,-0.5,-0.3) O₃(1.3,-0.5,-0.3)
+  'Cr₂O₃': {
+    orbitals: [
+      {
+        name: 'σ (Cr₁–O₁)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 3, l: 2, m: 0, zeff: 5.20, c: 0.45 },
+          { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.60 },
+        ],
+      },
+      {
+        name: 'σ (Cr₂–O₁)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 1, n: 3, l: 2, m: 0, zeff: 5.20, c: 0.45 },
+          { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: -0.60 },
+        ],
+      },
+      {
+        name: 'σ (Cr₁–O₂)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 4, l: 0, m: 0, zeff: 3.30, c: 0.40 },
+          { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
+        ],
+      },
+      {
+        name: 'σ (Cr₂–O₃)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 1, n: 4, l: 0, m: 0, zeff: 3.30, c: 0.40 },
+          { atom: 4, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
+        ],
+      },
+      {
+        name: 'Cr 3d nonbonding',
+        type: 'nonbonding',
+        electrons: 6,
+        ao: [
+          { atom: 0, n: 3, l: 2, m: 2, zeff: 5.20, c: 0.50 },
+          { atom: 0, n: 3, l: 2, m: -2, zeff: 5.20, c: 0.50 },
+          { atom: 1, n: 3, l: 2, m: 2, zeff: 5.20, c: 0.50 },
+          { atom: 1, n: 3, l: 2, m: -2, zeff: 5.20, c: 0.50 },
+        ],
+      },
+      {
+        name: 'O lone pairs',
+        type: 'nonbonding',
+        electrons: 6,
+        ao: [
+          { atom: 2, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.577 },
+          { atom: 3, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.577 },
+          { atom: 4, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.577 },
+        ],
+      },
+    ],
+  },
+
+  // ═══════════════════ As₂O₃ — Arsenic Trioxide ═══════════════════
+  // Two As bridged by O atoms. As 4s/4p–O 2p.
+  // Atoms: As₁(-0.8,0.5,0) As₂(0.8,0.5,0) O₁(0,0,0) O₂(-1.2,-0.4,0) O₃(1.2,-0.4,0)
+  'As₂O₃': {
+    orbitals: [
+      {
+        name: 'σ (As₁–O₁)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 4, l: 1, m: 1, zeff: 5.80, c: 0.50 },
+          { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.55 },
+        ],
+      },
+      {
+        name: 'σ (As₂–O₁)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 1, n: 4, l: 1, m: 1, zeff: 5.80, c: 0.50 },
+          { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: -0.55 },
+        ],
+      },
+      {
+        name: 'σ (As₁–O₂)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 4, l: 0, m: 0, zeff: 5.80, c: 0.45 },
+          { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.55 },
+        ],
+      },
+      {
+        name: 'σ (As₂–O₃)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 1, n: 4, l: 0, m: 0, zeff: 5.80, c: 0.45 },
+          { atom: 4, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.55 },
+        ],
+      },
+      {
+        name: 'As lone pairs',
+        type: 'nonbonding',
+        electrons: 4,
+        ao: [
+          { atom: 0, n: 4, l: 0, m: 0, zeff: 5.80, c: 0.707 },
+          { atom: 1, n: 4, l: 0, m: 0, zeff: 5.80, c: 0.707 },
+        ],
+      },
+      {
+        name: 'O lone pairs',
+        type: 'nonbonding',
+        electrons: 6,
+        ao: [
+          { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 },
+          { atom: 3, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.577 },
+          { atom: 4, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.577 },
+        ],
+      },
+    ],
+  },
+
+  // ═══════════════════ Sb₂O₃ — Antimony Trioxide ═══════════════════
+  // Analogous to As₂O₃ — Sb 5s/5p–O 2p.
+  // Atoms: Sb₁(-0.8,0.5,0) Sb₂(0.8,0.5,0) O₁(0,0,0) O₂(-1.2,-0.4,0) O₃(1.2,-0.4,0)
+  'Sb₂O₃': {
+    orbitals: [
+      {
+        name: 'σ (Sb₁–O₁)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 5, l: 1, m: 1, zeff: 6.10, c: 0.50 },
+          { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.55 },
+        ],
+      },
+      {
+        name: 'σ (Sb₂–O₁)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 1, n: 5, l: 1, m: 1, zeff: 6.10, c: 0.50 },
+          { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: -0.55 },
+        ],
+      },
+      {
+        name: 'σ (Sb₁–O₂)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 5, l: 0, m: 0, zeff: 6.10, c: 0.45 },
+          { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.55 },
+        ],
+      },
+      {
+        name: 'σ (Sb₂–O₃)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 1, n: 5, l: 0, m: 0, zeff: 6.10, c: 0.45 },
+          { atom: 4, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.55 },
+        ],
+      },
+      {
+        name: 'Sb lone pairs',
+        type: 'nonbonding',
+        electrons: 4,
+        ao: [
+          { atom: 0, n: 5, l: 0, m: 0, zeff: 6.10, c: 0.707 },
+          { atom: 1, n: 5, l: 0, m: 0, zeff: 6.10, c: 0.707 },
+        ],
+      },
+      {
+        name: 'O lone pairs',
+        type: 'nonbonding',
+        electrons: 6,
+        ao: [
+          { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 },
+          { atom: 3, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.577 },
+          { atom: 4, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.577 },
+        ],
+      },
+    ],
+  },
+
+  // ═══════════════════ La₂O₃ — Lanthanum Oxide ═══════════════════
+  // Two La bridged by O. La 5d/6s–O 2p.
+  // Atoms: La₁(-0.9,0.5,0) La₂(0.9,0.5,0) O₁(0,0,0) O₂(-1.2,-0.4,0) O₃(1.2,-0.4,0)
+  'La₂O₃': {
+    orbitals: [
+      {
+        name: 'σ (La₁–O₁)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 5, l: 2, m: 0, zeff: 7.40, c: 0.35 },
+          { atom: 0, n: 6, l: 0, m: 0, zeff: 3.60, c: 0.30 },
+          { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
+        ],
+      },
+      {
+        name: 'σ (La₂–O₁)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 1, n: 5, l: 2, m: 0, zeff: 7.40, c: 0.35 },
+          { atom: 1, n: 6, l: 0, m: 0, zeff: 3.60, c: 0.30 },
+          { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: -0.60 },
+        ],
+      },
+      {
+        name: 'σ (La₁–O₂)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 6, l: 0, m: 0, zeff: 3.60, c: 0.40 },
+          { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
+        ],
+      },
+      {
+        name: 'σ (La₂–O₃)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 1, n: 6, l: 0, m: 0, zeff: 3.60, c: 0.40 },
+          { atom: 4, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
+        ],
+      },
+      {
+        name: 'O lone pairs',
+        type: 'nonbonding',
+        electrons: 6,
+        ao: [
+          { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 },
+          { atom: 3, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.577 },
+          { atom: 4, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.577 },
+        ],
+      },
+    ],
+  },
+
+  // ═══════════════════ V₂O₅ — Vanadium Pentoxide ═══════════════════
+  // Two V, bridging O, plus terminal O=V. 7 atoms.
+  // Atoms: V₁(-0.8,0,0) V₂(0.8,0,0) O_br(0,0.6,0) O₁(-1.4,0.7,0) O₂(1.4,0.7,0) O₃(-1.4,-0.7,0) O₄(1.4,-0.7,0)
+  'V₂O₅': {
+    orbitals: [
+      {
+        name: 'σ (V₁–O_br)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 3, l: 2, m: 0, zeff: 5.20, c: 0.45 },
+          { atom: 2, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.60 },
+        ],
+      },
+      {
+        name: 'σ (V₂–O_br)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 1, n: 3, l: 2, m: 0, zeff: 5.20, c: 0.45 },
+          { atom: 2, n: 2, l: 1, m: -1, zeff: 4.45, c: -0.60 },
+        ],
+      },
+      {
+        name: 'σ (V₁=O₁)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 4, l: 0, m: 0, zeff: 3.30, c: 0.40 },
+          { atom: 3, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.60 },
+        ],
+      },
+      {
+        name: 'σ (V₂=O₂)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 1, n: 4, l: 0, m: 0, zeff: 3.30, c: 0.40 },
+          { atom: 4, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.60 },
+        ],
+      },
+      {
+        name: 'σ (V₁–O₃)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 3, l: 2, m: 1, zeff: 5.20, c: 0.45 },
+          { atom: 5, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.60 },
+        ],
+      },
+      {
+        name: 'σ (V₂–O₄)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 1, n: 3, l: 2, m: -1, zeff: 5.20, c: 0.45 },
+          { atom: 6, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.60 },
+        ],
+      },
+      {
+        name: 'π (V=O terminal)',
+        type: 'bonding',
+        electrons: 4,
+        ao: [
+          { atom: 0, n: 3, l: 2, m: -2, zeff: 5.20, c: 0.35 },
+          { atom: 1, n: 3, l: 2, m: 2, zeff: 5.20, c: 0.35 },
+          { atom: 3, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.35 },
+          { atom: 4, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.35 },
+        ],
+      },
+      {
+        name: 'O lone pairs',
+        type: 'nonbonding',
+        electrons: 10,
+        ao: [
+          { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.316 },
+          { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.316 },
+          { atom: 4, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.316 },
+          { atom: 5, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.316 },
+          { atom: 6, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.316 },
+        ],
+      },
+    ],
+  },
+
+  // ═══════════════════ Nb₂O₅ — Niobium Pentoxide ═══════════════════
+  // Two Nb bridged by O, plus terminal O.
+  // Atoms: Nb₁(-0.7,0,0) Nb₂(0.7,0,0) O_br(0,0.6,0) O₁(-1.3,0.6,0) O₂(1.3,0.6,0)
+  'Nb₂O₅': {
+    orbitals: [
+      {
+        name: 'σ (Nb₁–O_br)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 4, l: 2, m: 0, zeff: 6.40, c: 0.45 },
+          { atom: 2, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.60 },
+        ],
+      },
+      {
+        name: 'σ (Nb₂–O_br)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 1, n: 4, l: 2, m: 0, zeff: 6.40, c: 0.45 },
+          { atom: 2, n: 2, l: 1, m: -1, zeff: 4.45, c: -0.60 },
+        ],
+      },
+      {
+        name: 'σ (Nb₁=O₁)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 5, l: 0, m: 0, zeff: 3.30, c: 0.40 },
+          { atom: 3, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.60 },
+        ],
+      },
+      {
+        name: 'σ (Nb₂=O₂)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 1, n: 5, l: 0, m: 0, zeff: 3.30, c: 0.40 },
+          { atom: 4, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.60 },
+        ],
+      },
+      {
+        name: 'π (Nb=O terminal)',
+        type: 'bonding',
+        electrons: 4,
+        ao: [
+          { atom: 0, n: 4, l: 2, m: 1, zeff: 6.40, c: 0.50 },
+          { atom: 1, n: 4, l: 2, m: -1, zeff: 6.40, c: 0.50 },
+          { atom: 3, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
+          { atom: 4, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
+        ],
+      },
+      {
+        name: 'O lone pairs',
+        type: 'nonbonding',
+        electrons: 6,
+        ao: [
+          { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 },
+          { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.577 },
+          { atom: 4, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.577 },
+        ],
+      },
+    ],
+  },
+
+  // ═══════════════════ Ta₂O₅ — Tantalum Pentoxide ═══════════════════
+  // Analogous to Nb₂O₅. Ta 5d/6s–O 2p.
+  // Atoms: Ta₁(-0.7,0,0) Ta₂(0.7,0,0) O_br(0,0.6,0) O₁(-1.3,0.6,0) O₂(1.3,0.6,0)
+  'Ta₂O₅': {
+    orbitals: [
+      {
+        name: 'σ (Ta₁–O_br)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 5, l: 2, m: 0, zeff: 8.80, c: 0.45 },
+          { atom: 2, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.60 },
+        ],
+      },
+      {
+        name: 'σ (Ta₂–O_br)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 1, n: 5, l: 2, m: 0, zeff: 8.80, c: 0.45 },
+          { atom: 2, n: 2, l: 1, m: -1, zeff: 4.45, c: -0.60 },
+        ],
+      },
+      {
+        name: 'σ (Ta₁=O₁)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 6, l: 0, m: 0, zeff: 4.15, c: 0.40 },
+          { atom: 3, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.60 },
+        ],
+      },
+      {
+        name: 'σ (Ta₂=O₂)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 1, n: 6, l: 0, m: 0, zeff: 4.15, c: 0.40 },
+          { atom: 4, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.60 },
+        ],
+      },
+      {
+        name: 'π (Ta=O terminal)',
+        type: 'bonding',
+        electrons: 4,
+        ao: [
+          { atom: 0, n: 5, l: 2, m: 1, zeff: 8.80, c: 0.50 },
+          { atom: 1, n: 5, l: 2, m: -1, zeff: 8.80, c: 0.50 },
+          { atom: 3, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
+          { atom: 4, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
+        ],
+      },
+      {
+        name: 'O lone pairs',
+        type: 'nonbonding',
+        electrons: 6,
+        ao: [
+          { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 },
+          { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.577 },
+          { atom: 4, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.577 },
+        ],
+      },
+    ],
+  },
+
+  // ═══════════════════ Re₂O₇ — Rhenium Heptoxide ═══════════════════
+  // Two Re bridged by O, plus terminal O.
+  // Atoms: Re₁(-0.7,0,0) Re₂(0.7,0,0) O_br(0,0.5,0) O₁(-1.3,0.6,0) O₂(1.3,0.6,0)
+  'Re₂O₇': {
+    orbitals: [
+      {
+        name: 'σ (Re₁–O_br)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 5, l: 2, m: 0, zeff: 9.20, c: 0.45 },
+          { atom: 2, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.60 },
+        ],
+      },
+      {
+        name: 'σ (Re₂–O_br)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 1, n: 5, l: 2, m: 0, zeff: 9.20, c: 0.45 },
+          { atom: 2, n: 2, l: 1, m: -1, zeff: 4.45, c: -0.60 },
+        ],
+      },
+      {
+        name: 'σ (Re₁=O₁)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 6, l: 0, m: 0, zeff: 4.20, c: 0.40 },
+          { atom: 3, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.60 },
+        ],
+      },
+      {
+        name: 'σ (Re₂=O₂)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 1, n: 6, l: 0, m: 0, zeff: 4.20, c: 0.40 },
+          { atom: 4, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.60 },
+        ],
+      },
+      {
+        name: 'π (Re=O terminal)',
+        type: 'bonding',
+        electrons: 4,
+        ao: [
+          { atom: 0, n: 5, l: 2, m: 1, zeff: 9.20, c: 0.50 },
+          { atom: 1, n: 5, l: 2, m: -1, zeff: 9.20, c: 0.50 },
+          { atom: 3, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
+          { atom: 4, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
+        ],
+      },
+      {
+        name: 'O lone pairs',
+        type: 'nonbonding',
+        electrons: 6,
+        ao: [
+          { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 },
+          { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.577 },
+          { atom: 4, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.577 },
         ],
       },
     ],

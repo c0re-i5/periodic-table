@@ -1641,10 +1641,12 @@ const EXTRA_COMPOUNDS = {
   ],
 };
 
-// Merge extra compounds into ELEMENT_COMPOUNDS
+// Merge extra compounds into ELEMENT_COMPOUNDS (skip duplicates by formula)
 Object.keys(EXTRA_COMPOUNDS).forEach(key => {
   const num = parseInt(key);
   if (ELEMENT_COMPOUNDS[num]) {
-    ELEMENT_COMPOUNDS[num] = ELEMENT_COMPOUNDS[num].concat(EXTRA_COMPOUNDS[num]);
+    const existing = new Set(ELEMENT_COMPOUNDS[num].map(c => c.formula));
+    const unique = EXTRA_COMPOUNDS[num].filter(c => !existing.has(c.formula));
+    ELEMENT_COMPOUNDS[num] = ELEMENT_COMPOUNDS[num].concat(unique);
   }
 });

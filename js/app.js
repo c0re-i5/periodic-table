@@ -791,7 +791,7 @@
     if (cloud3d.pointCache['__all__']) return cloud3d.pointCache['__all__'];
 
     const totalOrbs = orbData.length;
-    const ptsPerOrb = Math.max(200, Math.floor(8000 / Math.max(1, totalOrbs)));
+    const ptsPerOrb = Math.max(400, Math.floor(15000 / Math.max(1, totalOrbs)));
 
     const allPoints = [];
     for (const orb of orbData) {
@@ -869,7 +869,7 @@
     if (!element) { container.innerHTML = ''; return; }
 
     const { orbData, maxR, Z, configMap } = precomputeOrbData(element);
-    const scale = maxR > 0 ? 200 / maxR : 1;
+    const scale = maxR > 0 ? 200 / Math.pow(maxR, 0.75) : 1;
 
     cloud3d.element = element;
     cloud3d.allOrbData = orbData;
