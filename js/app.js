@@ -1853,7 +1853,7 @@
     const cacheKey = `${orb.n}${orb.l}${orb.m}`;
     if (cloud3d.pointCache[cacheKey]) return cloud3d.pointCache[cacheKey];
 
-    const numPts = 50000;
+    const numPts = 80000;
     const raw = sampleOrbital(orb.n, orb.l, orb.m, orb.Zeff, numPts);
     const colors = LOBE_COLORS[orb.lChar] || { pos: [180,180,180], neg: [180,180,180] };
 
@@ -1864,8 +1864,8 @@
       return {
         x: p.x * orbScale, y: p.y * orbScale, z: p.z * orbScale,
         r: col[0], g: col[1], b: col[2],
-        alpha: 0.25,
-        size: 0.9,
+        alpha: 0.22,
+        size: 0.8,
       };
     });
     cloud3d.pointCache[cacheKey] = points;
@@ -1877,7 +1877,7 @@
     if (cloud3d.pointCache['__all__']) return cloud3d.pointCache['__all__'];
 
     const totalOrbs = orbData.length;
-    const ptsPerOrb = Math.max(800, Math.floor(50000 / Math.max(1, totalOrbs)));
+    const ptsPerOrb = Math.max(1200, Math.floor(80000 / Math.max(1, totalOrbs)));
 
     const allPoints = [];
     for (const orb of orbData) {
@@ -2063,7 +2063,7 @@
             if (!cloud3d.pointCache[cacheKey]) {
               const pts = [];
               for (const orb of orbs) {
-                const raw = sampleOrbital(orb.n, orb.l, orb.m, orb.Zeff, Math.floor(40000 / orbs.length));
+                const raw = sampleOrbital(orb.n, orb.l, orb.m, orb.Zeff, Math.floor(65000 / orbs.length));
                 const colors = LOBE_COLORS[orb.lChar];
                 const subScale = orb.rExt > 0 ? 200 / orb.rExt : scale;
                 for (const p of raw) {
@@ -2427,10 +2427,11 @@
       const { n, l, m, zeff } = contrib;
       const rCut = Math.max(4, (5 * n * n) / zeff);
 
-      // Radial pre-scan
+      // Radial pre-scan (high-res, matching atomic sampling)
       let maxRad = 0;
-      for (let i = 1; i <= 300; i++) {
-        const r = (i / 300) * rCut;
+      const RSCAN = 500;
+      for (let i = 1; i <= RSCAN; i++) {
+        const r = (i / RSCAN) * rCut;
         const rho = 2 * zeff * r / n;
         const L = assocLaguerre(n - l - 1, 2 * l + 1, rho);
         const Rv = Math.pow(rho, l) * Math.exp(-rho / 2) * L;
@@ -2438,12 +2439,13 @@
         if (p > maxRad) maxRad = p;
       }
 
-      // Angular pre-scan
+      // Angular pre-scan (high-res, matching atomic sampling)
       let maxAng = 0;
-      for (let i = 0; i <= 50; i++) {
-        const ct = -1 + 2 * i / 50;
-        for (let j = 0; j <= 50; j++) {
-          const phi = 2 * Math.PI * j / 50;
+      const ASCAN = 80;
+      for (let i = 0; i <= ASCAN; i++) {
+        const ct = -1 + 2 * i / ASCAN;
+        for (let j = 0; j <= ASCAN; j++) {
+          const phi = 2 * Math.PI * j / ASCAN;
           const Y = angularY(l, m, ct, phi);
           if (Y * Y > maxAng) maxAng = Y * Y;
         }
@@ -2453,7 +2455,7 @@
 
       let got = 0;
       let attempts = 0;
-      const maxAttempts = targetPts * 100;
+      const maxAttempts = targetPts * 200;
 
       while (got < targetPts && attempts < maxAttempts) {
         attempts++;
@@ -2499,8 +2501,8 @@
       return {
         x: p.x * scale, y: p.y * scale, z: p.z * scale,
         r: col[0], g: col[1], b: col[2],
-        alpha: 0.25,
-        size: 0.9,
+        alpha: 0.22,
+        size: 0.8,
       };
     });
     molCloud.pointCache[cacheKey] = points;
@@ -2512,7 +2514,7 @@
     if (molCloud.pointCache['__all__']) return molCloud.pointCache['__all__'];
 
     const occupied = moData.orbitals.filter(mo => mo.electrons > 0 && mo.type !== 'core');
-    const ptsPerMO = Math.max(500, Math.floor(35000 / Math.max(1, occupied.length)));
+    const ptsPerMO = Math.max(1000, Math.floor(60000 / Math.max(1, occupied.length)));
     const gExt = molCloud.globalExtent;
 
     // Assign distinct hues to each MO, with adaptive size/alpha for compact orbitals
@@ -2562,7 +2564,7 @@
     }
     const mo = moData.orbitals.find(o => o.name === filter);
     if (!mo) return buildAllMolOrbPoints(moData, atomsBohr, scale);
-    const numPts = mo.electrons > 0 ? 50000 : 35000;
+    const numPts = mo.electrons > 0 ? 80000 : 55000;
     return buildMolOrbPoints(mo, atomsBohr, scale, numPts);
   }
 
@@ -2988,21 +2990,28 @@
       const r = Math.sqrt(a.x * a.x + a.y * a.y + a.z * a.z);
       if (r > maxR) maxR = r;
     }
-    // Add orbital extent: largest rCut from any contributing AO
+    // Add orbital extent: largest rCut from contributing AOs, weighted by coefficient
     let maxOrbR = 0;
+    let maxOrbRWeighted = 0;
     const orbExtents = {};
     for (const mo of moData.orbitals) {
       let moExtent = 0;
+      const totalW = mo.ao.reduce((s, a) => s + a.c * a.c, 0) || 1;
       for (const ao of mo.ao) {
         const atomR = Math.sqrt(bohrCoords[ao.atom].x ** 2 + bohrCoords[ao.atom].y ** 2 + bohrCoords[ao.atom].z ** 2);
         const rCut = Math.max(4, (5 * ao.n * ao.n) / ao.zeff);
         const ext = atomR + rCut;
         if (ext > maxOrbR) maxOrbR = ext;
         if (ext > moExtent) moExtent = ext;
+        // Weight extent by coefficient: negligible contributions don't inflate scale
+        const w = (ao.c * ao.c) / totalW;
+        const wExt = atomR + rCut * Math.max(w, 0.15);
+        if (wExt > maxOrbRWeighted) maxOrbRWeighted = wExt;
       }
       orbExtents[mo.name] = Math.max(moExtent, 4);
     }
-    const globalExtent = Math.max(maxR + 3, maxOrbR, 4);
+    // Use weighted extent for global scale so tiny AO contributions don't dominate
+    const globalExtent = Math.max(maxR + 3, maxOrbRWeighted, 4);
     molCloud.scale = 180 / globalExtent;
     molCloud.globalExtent = globalExtent;
     molCloud.orbExtents = orbExtents;
@@ -3092,7 +3101,7 @@
         // Auto-zoom
         if (molCloud.orbExtents[name]) {
           const ratio = molCloud.globalExtent / molCloud.orbExtents[name];
-          molCloud.viewZoom = Math.min(ratio, 6);
+          molCloud.viewZoom = Math.min(ratio, 12);
         }
         // Sync selector buttons
         const selector = document.getElementById('mol-cloud-selector');
@@ -3198,7 +3207,7 @@
         // Auto-zoom: fill canvas when viewing a single orbital
         if (moName !== 'all' && molCloud.orbExtents[moName]) {
           const ratio = molCloud.globalExtent / molCloud.orbExtents[moName];
-          molCloud.viewZoom = Math.min(ratio, 6);
+          molCloud.viewZoom = Math.min(ratio, 12);
         } else {
           molCloud.viewZoom = 1.0;
         }

@@ -9750,4 +9750,2046 @@ const MOLECULAR_ORBITALS = {
       },
     ],
   },
+
+  // ─── KOH — Potassium Hydroxide (K, O, H) ───
+  'KOH': {
+    notes: 'Strong base widely used in industry. Extremely hygroscopic. Called caustic potash.',
+    orbitals: [
+      {
+        name: 'σ (O-H bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 1, desc: 'σ bonding between O 2p and H 1s — covalent O-H bond within the hydroxide ion.',
+        ao: [
+          { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.75 },
+          { atom: 2, n: 1, l: 0, m: 0, zeff: 1.00, c: 0.55 },
+        ],
+      },
+      {
+        name: 'O 2px (lone pair)',
+        type: 'nonbonding',
+        electrons: 2,
+        energy: 2, desc: 'Oxygen lone pair perpendicular to the O-H bond axis.',
+        ao: [
+          { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c: 1.0 },
+        ],
+      },
+      {
+        name: 'O 2pz (lone pair)',
+        type: 'nonbonding',
+        electrons: 2,
+        energy: 3, desc: 'Second oxygen lone pair directed along the K-O axis.',
+        ao: [
+          { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c: 1.0 },
+        ],
+      },
+      {
+        name: 'O 2s',
+        type: 'core',
+        electrons: 2,
+        energy: 4, desc: 'Oxygen inner 2s orbital — core electron pair.',
+        ao: [
+          { atom: 1, n: 2, l: 0, m: 0, zeff: 4.45, c: 1.0 },
+        ],
+      },
+    ],
+  },
+
+  // ─── HgCl₂ — Mercuric Chloride (Hg, Cl, Cl) ───
+  'HgCl₂': {
+    notes: 'Highly toxic mercury compound. Linear gas-phase geometry. Once used as a disinfectant (corrosive sublimate).',
+    orbitals: [
+      {
+        name: 'σg (bonding)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 1, desc: 'Symmetric σ bonding — Hg 6s combines with both Cl 3p orbitals in phase.',
+        ao: [
+          { atom: 0, n: 6, l: 0, m: 0, zeff: 3.30, c: 0.40 },
+          { atom: 1, n: 3, l: 1, m: 1, zeff: 6.12, c: 0.60 },
+          { atom: 2, n: 3, l: 1, m: 1, zeff: 6.12, c: 0.60 },
+        ],
+      },
+      {
+        name: 'σu (bonding)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 2, desc: 'Antisymmetric σ bonding — Cl 3p orbitals out of phase with Hg contribution.',
+        ao: [
+          { atom: 1, n: 3, l: 1, m: 1, zeff: 6.12, c: 0.707 },
+          { atom: 2, n: 3, l: 1, m: 1, zeff: 6.12, c: -0.707 },
+        ],
+      },
+      {
+        name: 'Cl 3py (lone pair, 1)',
+        type: 'nonbonding',
+        electrons: 2,
+        energy: 3, desc: 'Chlorine lone pair perpendicular to the molecular axis.',
+        ao: [
+          { atom: 1, n: 3, l: 1, m: -1, zeff: 6.12, c: 1.0 },
+        ],
+      },
+      {
+        name: 'Cl 3py (lone pair, 2)',
+        type: 'nonbonding',
+        electrons: 2,
+        energy: 4, desc: 'Second chlorine lone pair perpendicular to the molecular axis.',
+        ao: [
+          { atom: 2, n: 3, l: 1, m: -1, zeff: 6.12, c: 1.0 },
+        ],
+      },
+      {
+        name: 'Cl 3pz (lone pair, 1)',
+        type: 'nonbonding',
+        electrons: 2,
+        energy: 5, desc: 'Chlorine lone pair in the third direction.',
+        ao: [
+          { atom: 1, n: 3, l: 1, m: 0, zeff: 6.12, c: 1.0 },
+        ],
+      },
+      {
+        name: 'Cl 3pz (lone pair, 2)',
+        type: 'nonbonding',
+        electrons: 2,
+        energy: 6, desc: 'Second chlorine lone pair in the third direction.',
+        ao: [
+          { atom: 2, n: 3, l: 1, m: 0, zeff: 6.12, c: 1.0 },
+        ],
+      },
+    ],
+  },
+
+  // ─── AuCl₃ — Gold(III) Chloride ───
+  'AuCl₃': {
+    notes: 'Important gold catalyst. Planar dimer in solid state. Strong Lewis acid used in organic synthesis.',
+    orbitals: [
+      {
+        name: 'σ₁ (Au-Cl bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 1, desc: 'σ bonding between Au 6s/5d and Cl 3p — first Au-Cl bond.',
+        ao: [
+          { atom: 0, n: 6, l: 0, m: 0, zeff: 4.20, c: 0.35 },
+          { atom: 1, n: 3, l: 1, m: 1, zeff: 6.12, c: 0.75 },
+        ],
+      },
+      {
+        name: 'σ₂ (Au-Cl bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 2, desc: 'σ bonding — second Au-Cl bond.',
+        ao: [
+          { atom: 0, n: 5, l: 2, m: 2, zeff: 10.9, c: 0.40 },
+          { atom: 2, n: 3, l: 1, m: 1, zeff: 6.12, c: 0.75 },
+        ],
+      },
+      {
+        name: 'σ₃ (Au-Cl bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 3, desc: 'σ bonding — third Au-Cl bond.',
+        ao: [
+          { atom: 0, n: 5, l: 2, m: -2, zeff: 10.9, c: 0.40 },
+          { atom: 3, n: 3, l: 1, m: 1, zeff: 6.12, c: 0.75 },
+        ],
+      },
+      {
+        name: 'Cl lone pairs (6e)',
+        type: 'nonbonding',
+        electrons: 6,
+        energy: 4, desc: 'Combined chlorine lone pairs — six electrons in non-bonding p orbitals.',
+        ao: [
+          { atom: 1, n: 3, l: 1, m: 0, zeff: 6.12, c: 0.577 },
+          { atom: 2, n: 3, l: 1, m: 0, zeff: 6.12, c: 0.577 },
+          { atom: 3, n: 3, l: 1, m: 0, zeff: 6.12, c: 0.577 },
+        ],
+      },
+    ],
+  },
+
+  // ─── Al₂O₃ — Aluminum Oxide (Alumina) ───
+  'Al₂O₃': {
+    notes: 'Corundum structure — extremely hard. Sapphire and ruby are gem varieties. Critical industrial ceramic.',
+    orbitals: [
+      {
+        name: 'σ₁ (Al-O bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 1, desc: 'σ bonding between Al 3s/3p and O 2p — ionic/covalent character.',
+        ao: [
+          { atom: 0, n: 3, l: 0, m: 0, zeff: 3.50, c: 0.30 },
+          { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.80 },
+        ],
+      },
+      {
+        name: 'σ₂ (Al-O bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 2, desc: 'Second σ Al-O bond.',
+        ao: [
+          { atom: 0, n: 3, l: 1, m: 1, zeff: 3.50, c: 0.30 },
+          { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.80 },
+        ],
+      },
+      {
+        name: 'σ₃ (Al-O bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 3, desc: 'Third σ Al-O bond.',
+        ao: [
+          { atom: 1, n: 3, l: 0, m: 0, zeff: 3.50, c: 0.30 },
+          { atom: 4, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.80 },
+        ],
+      },
+      {
+        name: 'O lone pairs (6e)',
+        type: 'nonbonding',
+        electrons: 6,
+        energy: 4, desc: 'Oxygen lone pairs — remaining non-bonding electrons on the three oxygens.',
+        ao: [
+          { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 },
+          { atom: 3, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 },
+          { atom: 4, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 },
+        ],
+      },
+    ],
+  },
+
+  // ─── Fe₂O₃ — Iron(III) Oxide (Hematite) ───
+  'Fe₂O₃': {
+    notes: 'Hematite — the most important iron ore. Gives Mars its red color. Antiferromagnetic below Morin temperature.',
+    orbitals: [
+      {
+        name: 'σ₁ (Fe-O bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 1, desc: 'σ bonding between Fe 3d and O 2p — mixed ionic/covalent.',
+        ao: [
+          { atom: 0, n: 3, l: 2, m: 0, zeff: 6.25, c: 0.30 },
+          { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.80 },
+        ],
+      },
+      {
+        name: 'σ₂ (Fe-O bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 2, desc: 'Second σ Fe-O bond.',
+        ao: [
+          { atom: 0, n: 4, l: 0, m: 0, zeff: 3.75, c: 0.25 },
+          { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.80 },
+        ],
+      },
+      {
+        name: 'σ₃ (Fe-O bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 3, desc: 'Third σ Fe-O bond using the second Fe center.',
+        ao: [
+          { atom: 1, n: 3, l: 2, m: 0, zeff: 6.25, c: 0.30 },
+          { atom: 4, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.80 },
+        ],
+      },
+      {
+        name: 'O lone pairs (6e)',
+        type: 'nonbonding',
+        electrons: 6,
+        energy: 4, desc: 'Combined non-bonding oxygen lone pairs.',
+        ao: [
+          { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 },
+          { atom: 3, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 },
+          { atom: 4, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 },
+        ],
+      },
+      {
+        name: 'Fe d electrons (8e)',
+        type: 'nonbonding',
+        electrons: 8,
+        energy: 5, desc: 'Localized Fe³⁺ d⁵ electrons — high-spin configuration causes paramagnetism.',
+        ao: [
+          { atom: 0, n: 3, l: 2, m: -2, zeff: 6.25, c: 0.707 },
+          { atom: 1, n: 3, l: 2, m: -2, zeff: 6.25, c: 0.707 },
+        ],
+      },
+    ],
+  },
+
+  // ─── CaCO₃ — Calcium Carbonate ───
+  'CaCO₃': {
+    notes: 'Calcite/limestone — the most common carbonate mineral. Makes up chalk, marble, and coral reefs.',
+    orbitals: [
+      {
+        name: 'σ₁ (C-O bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 1, desc: 'σ bonding in the carbonate ion — C 2p and O 2p overlap.',
+        ao: [
+          { atom: 1, n: 2, l: 1, m: 1, zeff: 3.14, c: 0.50 },
+          { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.70 },
+        ],
+      },
+      {
+        name: 'σ₂ (C-O bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 2, desc: 'Second C-O σ bond in the carbonate ion.',
+        ao: [
+          { atom: 1, n: 2, l: 0, m: 0, zeff: 3.14, c: 0.45 },
+          { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.70 },
+        ],
+      },
+      {
+        name: 'σ₃ (C-O bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 3, desc: 'Third C-O σ bond completing the carbonate framework.',
+        ao: [
+          { atom: 1, n: 2, l: 1, m: -1, zeff: 3.14, c: 0.50 },
+          { atom: 4, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.70 },
+        ],
+      },
+      {
+        name: 'π (delocalized)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 4, desc: 'Delocalized π orbital across all three C-O bonds — gives carbonate its resonance stability.',
+        ao: [
+          { atom: 1, n: 2, l: 1, m: 0, zeff: 3.14, c: 0.40 },
+          { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
+          { atom: 3, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
+          { atom: 4, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
+        ],
+      },
+      {
+        name: 'O lone pairs (6e)',
+        type: 'nonbonding',
+        electrons: 6,
+        energy: 5, desc: 'Non-bonding oxygen lone pairs in the carbonate anion.',
+        ao: [
+          { atom: 2, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.577 },
+          { atom: 3, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.577 },
+          { atom: 4, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.577 },
+        ],
+      },
+    ],
+  },
+
+  // ─── H₂SO₄ — Sulfuric Acid ───
+  'H₂SO₄': {
+    notes: 'The most produced industrial chemical globally. Strong diprotic acid. Used in batteries, fertilizers, refining.',
+    orbitals: [
+      {
+        name: 'σ₁ (S=O bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 1, desc: 'Double bond between S 3p and O 2p — the two S=O bonds give sulfuric acid its stability.',
+        ao: [
+          { atom: 0, n: 3, l: 1, m: 1, zeff: 5.48, c: 0.55 },
+          { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.70 },
+        ],
+      },
+      {
+        name: 'σ₂ (S=O bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 2, desc: 'Second S=O double bond — symmetric partner.',
+        ao: [
+          { atom: 0, n: 3, l: 1, m: -1, zeff: 5.48, c: 0.55 },
+          { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.70 },
+        ],
+      },
+      {
+        name: 'σ₃ (S-OH bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 3, desc: 'S-O single bond to hydroxyl group — this proton is donated in acid reactions.',
+        ao: [
+          { atom: 0, n: 3, l: 0, m: 0, zeff: 5.48, c: 0.45 },
+          { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.70 },
+        ],
+      },
+      {
+        name: 'σ₄ (S-OH bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 4, desc: 'Second S-OH bond — sulfuric acid is diprotic, both OH groups can donate protons.',
+        ao: [
+          { atom: 0, n: 3, l: 1, m: 0, zeff: 5.48, c: 0.45 },
+          { atom: 4, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.70 },
+        ],
+      },
+      {
+        name: 'σ₅ (O-H bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 5, desc: 'O-H covalent bond in the first hydroxyl group.',
+        ao: [
+          { atom: 3, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.70 },
+          { atom: 5, n: 1, l: 0, m: 0, zeff: 1.00, c: 0.55 },
+        ],
+      },
+      {
+        name: 'σ₆ (O-H bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 6, desc: 'O-H covalent bond in the second hydroxyl group.',
+        ao: [
+          { atom: 4, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.70 },
+          { atom: 6, n: 1, l: 0, m: 0, zeff: 1.00, c: 0.55 },
+        ],
+      },
+      {
+        name: 'O lone pairs (4e)',
+        type: 'nonbonding',
+        electrons: 4,
+        energy: 7, desc: 'Lone pairs on the two S=O oxygens.',
+        ao: [
+          { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.707 },
+          { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.707 },
+        ],
+      },
+    ],
+  },
+
+  // ─── AgNO₃ — Silver Nitrate ───
+  'AgNO₃': {
+    notes: 'Key silver compound in photography. Cauterizing agent in medicine. Precursor for silver halides.',
+    orbitals: [
+      {
+        name: 'σ (N-O bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 1, desc: 'σ bonding in the nitrate ion — N 2sp² and O 2p overlap.',
+        ao: [
+          { atom: 1, n: 2, l: 1, m: 1, zeff: 3.83, c: 0.50 },
+          { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.70 },
+        ],
+      },
+      {
+        name: 'σ₂ (N-O bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 2, desc: 'Second N-O σ bond in nitrate.',
+        ao: [
+          { atom: 1, n: 2, l: 0, m: 0, zeff: 3.83, c: 0.45 },
+          { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.70 },
+        ],
+      },
+      {
+        name: 'σ₃ (N-O bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 3, desc: 'Third N-O σ bond completing the nitrate framework.',
+        ao: [
+          { atom: 1, n: 2, l: 1, m: -1, zeff: 3.83, c: 0.50 },
+          { atom: 4, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.70 },
+        ],
+      },
+      {
+        name: 'π (delocalized NO₃)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 4, desc: 'Delocalized π system across the nitrate ion — resonance stabilization.',
+        ao: [
+          { atom: 1, n: 2, l: 1, m: 0, zeff: 3.83, c: 0.40 },
+          { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
+          { atom: 3, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
+          { atom: 4, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
+        ],
+      },
+      {
+        name: 'O lone pairs (6e)',
+        type: 'nonbonding',
+        electrons: 6,
+        energy: 5, desc: 'Non-bonding lone pairs on the three nitrate oxygens.',
+        ao: [
+          { atom: 2, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.577 },
+          { atom: 3, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.577 },
+          { atom: 4, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.577 },
+        ],
+      },
+    ],
+  },
+
+  // ─── BaTiO₃ — Barium Titanate ───
+  'BaTiO₃': {
+    notes: 'Classic ferroelectric perovskite. Piezoelectric — converts mechanical stress to electricity. Used in capacitors.',
+    orbitals: [
+      {
+        name: 'σ₁ (Ti-O bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 1, desc: 'Ti 3d - O 2p σ bonding along the first Ti-O axis.',
+        ao: [
+          { atom: 1, n: 3, l: 2, m: 0, zeff: 7.60, c: 0.40 },
+          { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.75 },
+        ],
+      },
+      {
+        name: 'σ₂ (Ti-O bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 2, desc: 'Ti-O σ bonding in the second direction.',
+        ao: [
+          { atom: 1, n: 3, l: 2, m: 2, zeff: 7.60, c: 0.40 },
+          { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.75 },
+        ],
+      },
+      {
+        name: 'σ₃ (Ti-O bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 3, desc: 'Ti-O σ bonding in the third direction.',
+        ao: [
+          { atom: 1, n: 4, l: 0, m: 0, zeff: 5.13, c: 0.35 },
+          { atom: 4, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.75 },
+        ],
+      },
+      {
+        name: 'O lone pairs (6e)',
+        type: 'nonbonding',
+        electrons: 6,
+        energy: 4, desc: 'Combined non-bonding oxygen lone pairs in the TiO₃ octahedron.',
+        ao: [
+          { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 },
+          { atom: 3, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 },
+          { atom: 4, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 },
+        ],
+      },
+    ],
+  },
+
+  // ─── Pa₂O₅ — Protactinium Pentoxide ───
+  'Pa₂O₅': {
+    notes: 'Protactinium oxide — extremely rare and radioactive. Pa is one of the rarest natural elements on Earth.',
+    orbitals: [
+      {
+        name: 'σ₁ (Pa-O bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 1, desc: 'Pa 6d - O 2p σ bonding — mixed ionic/covalent character.',
+        ao: [
+          { atom: 0, n: 6, l: 2, m: 0, zeff: 5.50, c: 0.25 },
+          { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.82 },
+        ],
+      },
+      {
+        name: 'σ₂ (Pa-O bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 2, desc: 'Second Pa-O bond.',
+        ao: [
+          { atom: 0, n: 7, l: 0, m: 0, zeff: 3.40, c: 0.20 },
+          { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.82 },
+        ],
+      },
+      {
+        name: 'σ₃ (Pa-O bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 3, desc: 'Third Pa-O bond using second Pa center.',
+        ao: [
+          { atom: 1, n: 6, l: 2, m: 0, zeff: 5.50, c: 0.25 },
+          { atom: 4, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.82 },
+        ],
+      },
+      {
+        name: 'O lone pairs bridging (2e)',
+        type: 'nonbonding',
+        electrons: 2,
+        energy: 4, desc: 'Bridging oxygen lone pair connecting the two Pa centers.',
+        ao: [
+          { atom: 5, n: 2, l: 1, m: 0, zeff: 4.45, c: 1.0 },
+        ],
+      },
+      {
+        name: 'O lone pairs terminal (8e)',
+        type: 'nonbonding',
+        electrons: 8,
+        energy: 5, desc: 'Terminal oxygen lone pairs on the four outer oxygens.',
+        ao: [
+          { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
+          { atom: 3, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
+          { atom: 4, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
+          { atom: 6, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
+        ],
+      },
+    ],
+  },
+
+  // ─── In₂O₃ — Indium Oxide ───
+  'In₂O₃': {
+    notes: 'Transparent conducting oxide — the key ingredient in ITO (indium tin oxide) for touchscreens and LCDs.',
+    orbitals: [
+      {
+        name: 'σ₁ (In-O bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 1, desc: 'In 5s/5p and O 2p σ bonding — ionic character dominates.',
+        ao: [
+          { atom: 0, n: 5, l: 0, m: 0, zeff: 5.00, c: 0.25 },
+          { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.82 },
+        ],
+      },
+      {
+        name: 'σ₂ (In-O bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 2, desc: 'Second In-O bond.',
+        ao: [
+          { atom: 0, n: 5, l: 1, m: 1, zeff: 5.00, c: 0.25 },
+          { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.82 },
+        ],
+      },
+      {
+        name: 'σ₃ (In-O bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 3, desc: 'Third In-O bond from the second In center.',
+        ao: [
+          { atom: 1, n: 5, l: 0, m: 0, zeff: 5.00, c: 0.25 },
+          { atom: 4, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.82 },
+        ],
+      },
+      {
+        name: 'O lone pairs (6e)',
+        type: 'nonbonding',
+        electrons: 6,
+        energy: 4, desc: 'Non-bonding oxygen lone pairs.',
+        ao: [
+          { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 },
+          { atom: 3, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 },
+          { atom: 4, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 },
+        ],
+      },
+    ],
+  },
+
+  // ─── BaSO₄ — Barium Sulfate ───
+  'BaSO₄': {
+    notes: 'Extremely insoluble salt. Used as "barium meal" in X-ray imaging of the GI tract. Also white pigment (blanc fixe).',
+    orbitals: [
+      {
+        name: 'σ₁ (S-O bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 1, desc: 'S 3p - O 2p σ bonding in the sulfate tetrahedron.',
+        ao: [
+          { atom: 1, n: 3, l: 1, m: 1, zeff: 5.48, c: 0.50 },
+          { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.70 },
+        ],
+      },
+      {
+        name: 'σ₂ (S-O bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 2, desc: 'Second S-O bond.',
+        ao: [
+          { atom: 1, n: 3, l: 1, m: -1, zeff: 5.48, c: 0.50 },
+          { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.70 },
+        ],
+      },
+      {
+        name: 'σ₃ (S-O bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 3, desc: 'Third S-O bond.',
+        ao: [
+          { atom: 1, n: 3, l: 0, m: 0, zeff: 5.48, c: 0.45 },
+          { atom: 4, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.70 },
+        ],
+      },
+      {
+        name: 'σ₄ (S-O bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 4, desc: 'Fourth S-O bond completing the tetrahedral sulfate.',
+        ao: [
+          { atom: 1, n: 3, l: 1, m: 0, zeff: 5.48, c: 0.50 },
+          { atom: 5, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.70 },
+        ],
+      },
+      {
+        name: 'O lone pairs (8e)',
+        type: 'nonbonding',
+        electrons: 8,
+        energy: 5, desc: 'Non-bonding lone pairs on all four sulfate oxygens.',
+        ao: [
+          { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
+          { atom: 3, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
+          { atom: 4, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
+          { atom: 5, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
+        ],
+      },
+    ],
+  },
+
+  // ─── FeSO₄ — Iron(II) Sulfate ───
+  'FeSO₄': {
+    notes: 'Green vitriol — used in water treatment, iron supplements, and ink making since antiquity.',
+    orbitals: [
+      {
+        name: 'σ₁ (S-O bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 1, desc: 'S-O σ bonding in the sulfate tetrahedron.',
+        ao: [
+          { atom: 1, n: 3, l: 1, m: 1, zeff: 5.48, c: 0.50 },
+          { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.70 },
+        ],
+      },
+      {
+        name: 'σ₂ (S-O bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 2, desc: 'Second S-O bond.',
+        ao: [
+          { atom: 1, n: 3, l: 1, m: -1, zeff: 5.48, c: 0.50 },
+          { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.70 },
+        ],
+      },
+      {
+        name: 'σ₃ (S-O bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 3, desc: 'Third S-O bond.',
+        ao: [
+          { atom: 1, n: 3, l: 0, m: 0, zeff: 5.48, c: 0.45 },
+          { atom: 4, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.70 },
+        ],
+      },
+      {
+        name: 'σ₄ (S-O bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 4, desc: 'Fourth S-O bond completing the sulfate tetrahedron.',
+        ao: [
+          { atom: 1, n: 3, l: 1, m: 0, zeff: 5.48, c: 0.50 },
+          { atom: 5, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.70 },
+        ],
+      },
+      {
+        name: 'O lone pairs (8e)',
+        type: 'nonbonding',
+        electrons: 8,
+        energy: 5, desc: 'Non-bonding lone pairs on sulfate oxygens.',
+        ao: [
+          { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
+          { atom: 3, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
+          { atom: 4, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
+          { atom: 5, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
+        ],
+      },
+      {
+        name: 'Fe 3d (6e)',
+        type: 'nonbonding',
+        electrons: 6,
+        energy: 6, desc: 'Fe²⁺ d⁶ electrons — localized on iron in high-spin configuration.',
+        ao: [
+          { atom: 0, n: 3, l: 2, m: -2, zeff: 6.25, c: 0.707 },
+          { atom: 0, n: 3, l: 2, m: 0, zeff: 6.25, c: 0.707 },
+        ],
+      },
+    ],
+  },
+
+  // ─── NiSO₄ — Nickel Sulfate ───
+  'NiSO₄': {
+    notes: 'Green crystalline salt — primary nickel source for electroplating. Also used in nickel-cadmium batteries.',
+    orbitals: [
+      {
+        name: 'σ₁ (S-O bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 1, desc: 'S-O σ bonding in the sulfate tetrahedron.',
+        ao: [
+          { atom: 1, n: 3, l: 1, m: 1, zeff: 5.48, c: 0.50 },
+          { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.70 },
+        ],
+      },
+      {
+        name: 'σ₂ (S-O bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 2, desc: 'Second S-O bond.',
+        ao: [
+          { atom: 1, n: 3, l: 1, m: -1, zeff: 5.48, c: 0.50 },
+          { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.70 },
+        ],
+      },
+      {
+        name: 'σ₃ (S-O bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 3, desc: 'Third S-O bond.',
+        ao: [
+          { atom: 1, n: 3, l: 0, m: 0, zeff: 5.48, c: 0.45 },
+          { atom: 4, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.70 },
+        ],
+      },
+      {
+        name: 'σ₄ (S-O bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 4, desc: 'Fourth S-O bond.',
+        ao: [
+          { atom: 1, n: 3, l: 1, m: 0, zeff: 5.48, c: 0.50 },
+          { atom: 5, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.70 },
+        ],
+      },
+      {
+        name: 'O lone pairs (8e)',
+        type: 'nonbonding',
+        electrons: 8,
+        energy: 5, desc: 'Non-bonding lone pairs on the four sulfate oxygens.',
+        ao: [
+          { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
+          { atom: 3, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
+          { atom: 4, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
+          { atom: 5, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
+        ],
+      },
+      {
+        name: 'Ni 3d (8e)',
+        type: 'nonbonding',
+        electrons: 8,
+        energy: 6, desc: 'Ni²⁺ d⁸ electrons — paramagnetic configuration gives the green color.',
+        ao: [
+          { atom: 0, n: 3, l: 2, m: -1, zeff: 7.64, c: 0.707 },
+          { atom: 0, n: 3, l: 2, m: 1, zeff: 7.64, c: 0.707 },
+        ],
+      },
+    ],
+  },
+
+  // ─── CuSO₄ — Copper(II) Sulfate ───
+  'CuSO₄': {
+    notes: 'Blue vitriol — vivid blue crystals when hydrated. Used in agriculture (Bordeaux mixture), electroplating, and as a fungicide.',
+    orbitals: [
+      {
+        name: 'σ₁ (S-O bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 1, desc: 'S-O σ bonding in the sulfate tetrahedron.',
+        ao: [
+          { atom: 1, n: 3, l: 1, m: 1, zeff: 5.48, c: 0.50 },
+          { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.70 },
+        ],
+      },
+      {
+        name: 'σ₂ (S-O bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 2, desc: 'Second S-O bond.',
+        ao: [
+          { atom: 1, n: 3, l: 1, m: -1, zeff: 5.48, c: 0.50 },
+          { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.70 },
+        ],
+      },
+      {
+        name: 'σ₃ (S-O bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 3, desc: 'Third S-O bond.',
+        ao: [
+          { atom: 1, n: 3, l: 0, m: 0, zeff: 5.48, c: 0.45 },
+          { atom: 4, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.70 },
+        ],
+      },
+      {
+        name: 'σ₄ (S-O bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 4, desc: 'Fourth S-O bond.',
+        ao: [
+          { atom: 1, n: 3, l: 1, m: 0, zeff: 5.48, c: 0.50 },
+          { atom: 5, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.70 },
+        ],
+      },
+      {
+        name: 'O lone pairs (8e)',
+        type: 'nonbonding',
+        electrons: 8,
+        energy: 5, desc: 'Non-bonding lone pairs on sulfate oxygens.',
+        ao: [
+          { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
+          { atom: 3, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
+          { atom: 4, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
+          { atom: 5, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
+        ],
+      },
+      {
+        name: 'Cu 3d (9e)',
+        type: 'nonbonding',
+        electrons: 9,
+        energy: 6, desc: 'Cu²⁺ d⁹ — single unpaired electron causes the characteristic blue color and paramagnetism.',
+        ao: [
+          { atom: 0, n: 3, l: 2, m: 2, zeff: 7.73, c: 1.0 },
+        ],
+      },
+    ],
+  },
+
+  // ─── Tl₂SO₄ — Thallium(I) Sulfate ───
+  'Tl₂SO₄': {
+    notes: 'Extremely toxic thallium salt — once used as rat poison. Odorless, tasteless, and colorless in solution, making it notoriously dangerous.',
+    orbitals: [
+      {
+        name: 'σ₁ (S-O bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 1, desc: 'S-O σ bonding in the sulfate tetrahedron.',
+        ao: [
+          { atom: 2, n: 3, l: 1, m: 1, zeff: 5.48, c: 0.50 },
+          { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.70 },
+        ],
+      },
+      {
+        name: 'σ₂ (S-O bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 2, desc: 'Second S-O bond.',
+        ao: [
+          { atom: 2, n: 3, l: 1, m: -1, zeff: 5.48, c: 0.50 },
+          { atom: 4, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.70 },
+        ],
+      },
+      {
+        name: 'σ₃ (S-O bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 3, desc: 'Third S-O bond.',
+        ao: [
+          { atom: 2, n: 3, l: 0, m: 0, zeff: 5.48, c: 0.45 },
+          { atom: 5, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.70 },
+        ],
+      },
+      {
+        name: 'σ₄ (S-O bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 4, desc: 'Fourth S-O bond.',
+        ao: [
+          { atom: 2, n: 3, l: 1, m: 0, zeff: 5.48, c: 0.50 },
+          { atom: 6, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.70 },
+        ],
+      },
+      {
+        name: 'O lone pairs (8e)',
+        type: 'nonbonding',
+        electrons: 8,
+        energy: 5, desc: 'Non-bonding lone pairs on sulfate oxygens.',
+        ao: [
+          { atom: 3, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
+          { atom: 4, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
+          { atom: 5, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
+          { atom: 6, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
+        ],
+      },
+    ],
+  },
+
+  // ─── SrCO₃ — Strontium Carbonate ───
+  'SrCO₃': {
+    notes: 'Primary strontium source mineral (strontianite). Used in fireworks (crimson red flame) and CRT glass.',
+    orbitals: [
+      {
+        name: 'σ₁ (C-O bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 1, desc: 'C-O σ bonding in the carbonate ion.',
+        ao: [
+          { atom: 1, n: 2, l: 1, m: 1, zeff: 3.14, c: 0.50 },
+          { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.70 },
+        ],
+      },
+      {
+        name: 'σ₂ (C-O bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 2, desc: 'Second C-O σ bond.',
+        ao: [
+          { atom: 1, n: 2, l: 0, m: 0, zeff: 3.14, c: 0.45 },
+          { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.70 },
+        ],
+      },
+      {
+        name: 'σ₃ (C-O bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 3, desc: 'Third C-O σ bond completing the carbonate.',
+        ao: [
+          { atom: 1, n: 2, l: 1, m: -1, zeff: 3.14, c: 0.50 },
+          { atom: 4, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.70 },
+        ],
+      },
+      {
+        name: 'π (delocalized CO₃)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 4, desc: 'Delocalized π orbital — resonance gives all three C-O bonds equal character.',
+        ao: [
+          { atom: 1, n: 2, l: 1, m: 0, zeff: 3.14, c: 0.40 },
+          { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
+          { atom: 3, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
+          { atom: 4, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
+        ],
+      },
+      {
+        name: 'O lone pairs (6e)',
+        type: 'nonbonding',
+        electrons: 6,
+        energy: 5, desc: 'Non-bonding oxygen lone pairs in the carbonate anion.',
+        ao: [
+          { atom: 2, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.577 },
+          { atom: 3, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.577 },
+          { atom: 4, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.577 },
+        ],
+      },
+    ],
+  },
+
+  // ─── KMnO₄ — Potassium Permanganate ───
+  'KMnO₄': {
+    notes: 'Deep purple oxidizer used in water purification, wound cleaning, and organic chemistry. Strong enough to start fires with glycerol.',
+    orbitals: [
+      {
+        name: 'σ₁ (Mn-O bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 1, desc: 'Mn 3d - O 2p σ bonding — first Mn-O bond in the tetrahedral permanganate.',
+        ao: [
+          { atom: 1, n: 3, l: 2, m: 0, zeff: 6.85, c: 0.40 },
+          { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.75 },
+        ],
+      },
+      {
+        name: 'σ₂ (Mn-O bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 2, desc: 'Second Mn-O σ bond.',
+        ao: [
+          { atom: 1, n: 3, l: 2, m: 2, zeff: 6.85, c: 0.40 },
+          { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.75 },
+        ],
+      },
+      {
+        name: 'σ₃ (Mn-O bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 3, desc: 'Third Mn-O σ bond.',
+        ao: [
+          { atom: 1, n: 3, l: 2, m: -2, zeff: 6.85, c: 0.40 },
+          { atom: 4, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.75 },
+        ],
+      },
+      {
+        name: 'σ₄ (Mn-O bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 4, desc: 'Fourth Mn-O σ bond completing the tetrahedron.',
+        ao: [
+          { atom: 1, n: 4, l: 0, m: 0, zeff: 4.80, c: 0.35 },
+          { atom: 5, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.75 },
+        ],
+      },
+      {
+        name: 'π (Mn-O delocalized)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 5, desc: 'Delocalized π bonding across MnO₄⁻ — Mn d orbitals overlap with O p orbitals. Responsible for the intense purple color.',
+        ao: [
+          { atom: 1, n: 3, l: 2, m: 1, zeff: 6.85, c: 0.35 },
+          { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
+          { atom: 3, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
+          { atom: 4, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
+          { atom: 5, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
+        ],
+      },
+      {
+        name: 'O lone pairs (8e)',
+        type: 'nonbonding',
+        electrons: 8,
+        energy: 6, desc: 'Non-bonding oxygen lone pairs on the four permanganate oxygens.',
+        ao: [
+          { atom: 2, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.50 },
+          { atom: 3, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.50 },
+          { atom: 4, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.50 },
+          { atom: 5, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.50 },
+        ],
+      },
+    ],
+  },
+
+  // ─── TcO₄⁻ — Pertechnetate Ion ───
+  'TcO₄⁻': {
+    notes: 'Technetium-99m pertechnetate — the most widely used radiopharmaceutical in nuclear medicine imaging.',
+    orbitals: [
+      {
+        name: 'σ₁ (Tc-O bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 1, desc: 'Tc 4d - O 2p σ bonding in the tetrahedral pertechnetate.',
+        ao: [
+          { atom: 0, n: 4, l: 2, m: 0, zeff: 7.23, c: 0.40 },
+          { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.75 },
+        ],
+      },
+      {
+        name: 'σ₂ (Tc-O bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 2, desc: 'Second Tc-O σ bond.',
+        ao: [
+          { atom: 0, n: 4, l: 2, m: 2, zeff: 7.23, c: 0.40 },
+          { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.75 },
+        ],
+      },
+      {
+        name: 'σ₃ (Tc-O bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 3, desc: 'Third Tc-O σ bond.',
+        ao: [
+          { atom: 0, n: 4, l: 2, m: -2, zeff: 7.23, c: 0.40 },
+          { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.75 },
+        ],
+      },
+      {
+        name: 'σ₄ (Tc-O bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 4, desc: 'Fourth Tc-O σ bond completing the tetrahedron.',
+        ao: [
+          { atom: 0, n: 5, l: 0, m: 0, zeff: 5.00, c: 0.35 },
+          { atom: 4, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.75 },
+        ],
+      },
+      {
+        name: 'O lone pairs (8e)',
+        type: 'nonbonding',
+        electrons: 8,
+        energy: 5, desc: 'Non-bonding oxygen lone pairs.',
+        ao: [
+          { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
+          { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
+          { atom: 3, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
+          { atom: 4, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
+        ],
+      },
+    ],
+  },
+
+  // ─── NaHCO₃ — Sodium Bicarbonate (Baking Soda) ───
+  'NaHCO₃': {
+    notes: 'Baking soda — among the most versatile household chemicals. Leavening agent, antacid, fire extinguisher, and cleaning agent.',
+    orbitals: [
+      {
+        name: 'σ₁ (C-O bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 1, desc: 'C-O σ bonding in the bicarbonate ion.',
+        ao: [
+          { atom: 2, n: 2, l: 1, m: 1, zeff: 3.14, c: 0.50 },
+          { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.70 },
+        ],
+      },
+      {
+        name: 'σ₂ (C=O bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 2, desc: 'C=O double bond — the stronger of the C-O bonds.',
+        ao: [
+          { atom: 2, n: 2, l: 0, m: 0, zeff: 3.14, c: 0.45 },
+          { atom: 4, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.70 },
+        ],
+      },
+      {
+        name: 'σ₃ (C-OH bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 3, desc: 'C-OH bond — the hydroxyl-bearing C-O bond.',
+        ao: [
+          { atom: 2, n: 2, l: 1, m: -1, zeff: 3.14, c: 0.50 },
+          { atom: 5, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.70 },
+        ],
+      },
+      {
+        name: 'σ (O-H bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 4, desc: 'O-H covalent bond in the bicarbonate.',
+        ao: [
+          { atom: 5, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.70 },
+          { atom: 1, n: 1, l: 0, m: 0, zeff: 1.00, c: 0.55 },
+        ],
+      },
+      {
+        name: 'O lone pairs (4e)',
+        type: 'nonbonding',
+        electrons: 4,
+        energy: 5, desc: 'Non-bonding lone pairs on C=O and C-O oxygens.',
+        ao: [
+          { atom: 3, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.707 },
+          { atom: 4, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.707 },
+        ],
+      },
+    ],
+  },
+
+  // ─── Co₃O₄ — Cobalt(II,III) Oxide ───
+  'Co₃O₄': {
+    notes: 'Spinel-structured mixed-valence oxide. Black pigment used since antiquity for blue glass. Important battery cathode material.',
+    orbitals: [
+      {
+        name: 'σ₁ (Co-O bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 1, desc: 'Co 3d - O 2p σ bonding in the spinel lattice.',
+        ao: [
+          { atom: 0, n: 3, l: 2, m: 0, zeff: 7.05, c: 0.35 },
+          { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.75 },
+        ],
+      },
+      {
+        name: 'σ₂ (Co-O bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 2, desc: 'Second Co-O bond from the Co³⁺ site.',
+        ao: [
+          { atom: 1, n: 3, l: 2, m: 2, zeff: 7.05, c: 0.35 },
+          { atom: 4, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.75 },
+        ],
+      },
+      {
+        name: 'σ₃ (Co-O bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 3, desc: 'Third Co-O bond from the Co²⁺ site.',
+        ao: [
+          { atom: 2, n: 3, l: 2, m: 0, zeff: 7.05, c: 0.35 },
+          { atom: 5, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.75 },
+        ],
+      },
+      {
+        name: 'O lone pairs (4e)',
+        type: 'nonbonding',
+        electrons: 4,
+        energy: 4, desc: 'Non-bonding oxygen lone pairs.',
+        ao: [
+          { atom: 3, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
+          { atom: 4, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
+          { atom: 5, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
+          { atom: 6, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
+        ],
+      },
+      {
+        name: 'Co d electrons (mixed)',
+        type: 'nonbonding',
+        electrons: 6,
+        energy: 5, desc: 'Mixed Co²⁺(d⁷)/Co³⁺(d⁶) d electrons — the mixed valence state gives magnetic properties.',
+        ao: [
+          { atom: 0, n: 3, l: 2, m: -1, zeff: 7.05, c: 0.577 },
+          { atom: 1, n: 3, l: 2, m: -1, zeff: 7.05, c: 0.577 },
+          { atom: 2, n: 3, l: 2, m: -1, zeff: 7.05, c: 0.577 },
+        ],
+      },
+    ],
+  },
+
+  // ─── PtCl₂(NH₃)₂ — Cisplatin ───
+  'PtCl₂(NH₃)₂': {
+    notes: 'Cisplatin — revolutionary anticancer drug. Cross-links DNA to kill rapidly dividing cancer cells. One of the most important drugs in oncology.',
+    orbitals: [
+      {
+        name: 'σ₁ (Pt-N bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 1, desc: 'Pt 5d - N 2p σ bonding — the Pt-NH₃ dative bond, amine donates lone pair to Pt.',
+        ao: [
+          { atom: 0, n: 5, l: 2, m: 2, zeff: 8.85, c: 0.40 },
+          { atom: 3, n: 2, l: 1, m: 1, zeff: 3.83, c: 0.70 },
+        ],
+      },
+      {
+        name: 'σ₂ (Pt-N bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 2, desc: 'Second Pt-NH₃ dative bond — trans to the first.',
+        ao: [
+          { atom: 0, n: 5, l: 2, m: -2, zeff: 8.85, c: 0.40 },
+          { atom: 4, n: 2, l: 1, m: 1, zeff: 3.83, c: 0.70 },
+        ],
+      },
+      {
+        name: 'σ₃ (Pt-Cl bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 3, desc: 'Pt-Cl bond — chloride is labile and can be displaced by DNA purine bases.',
+        ao: [
+          { atom: 0, n: 5, l: 2, m: 0, zeff: 8.85, c: 0.35 },
+          { atom: 1, n: 3, l: 1, m: 1, zeff: 6.12, c: 0.75 },
+        ],
+      },
+      {
+        name: 'σ₄ (Pt-Cl bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 4, desc: 'Second Pt-Cl bond — both chlorides leave during DNA cross-linking.',
+        ao: [
+          { atom: 0, n: 6, l: 0, m: 0, zeff: 4.40, c: 0.30 },
+          { atom: 2, n: 3, l: 1, m: 1, zeff: 6.12, c: 0.75 },
+        ],
+      },
+      {
+        name: 'Cl lone pairs (4e)',
+        type: 'nonbonding',
+        electrons: 4,
+        energy: 5, desc: 'Chloride non-bonding lone pairs — perpendicular to Pt-Cl bonds.',
+        ao: [
+          { atom: 1, n: 3, l: 1, m: 0, zeff: 6.12, c: 0.707 },
+          { atom: 2, n: 3, l: 1, m: 0, zeff: 6.12, c: 0.707 },
+        ],
+      },
+      {
+        name: 'Pt 5d (filled, 6e)',
+        type: 'nonbonding',
+        electrons: 6,
+        energy: 6, desc: 'Filled Pt²⁺ d⁸ non-bonding orbitals — three of the four remaining d pairs.',
+        ao: [
+          { atom: 0, n: 5, l: 2, m: -1, zeff: 8.85, c: 0.707 },
+          { atom: 0, n: 5, l: 2, m: 1, zeff: 8.85, c: 0.707 },
+        ],
+      },
+    ],
+  },
+
+  // ─── K₂Cr₂O₇ — Potassium Dichromate ───
+  'K₂Cr₂O₇': {
+    notes: 'Powerful oxidizing agent — bright orange crystals. Carcinogenic. Used in leather tanning, wood staining, and as analytical reagent.',
+    orbitals: [
+      {
+        name: 'σ₁ (Cr-O terminal)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 1, desc: 'Cr=O σ bonding to a terminal oxygen on the first CrO₃ unit.',
+        ao: [
+          { atom: 2, n: 3, l: 2, m: 0, zeff: 6.77, c: 0.40 },
+          { atom: 4, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.75 },
+        ],
+      },
+      {
+        name: 'σ₂ (Cr-O terminal)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 2, desc: 'Cr=O σ bonding on the second CrO₃ unit.',
+        ao: [
+          { atom: 3, n: 3, l: 2, m: 0, zeff: 6.77, c: 0.40 },
+          { atom: 7, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.75 },
+        ],
+      },
+      {
+        name: 'σ (Cr-O-Cr bridge)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 3, desc: 'Bridging oxygen connecting the two CrO₃ units — the Cr-O-Cr linkage.',
+        ao: [
+          { atom: 2, n: 4, l: 0, m: 0, zeff: 4.72, c: 0.30 },
+          { atom: 10, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.55 },
+          { atom: 3, n: 4, l: 0, m: 0, zeff: 4.72, c: 0.30 },
+        ],
+      },
+      {
+        name: 'O lone pairs (terminal)',
+        type: 'nonbonding',
+        electrons: 8,
+        energy: 4, desc: 'Non-bonding lone pairs on the six terminal oxygens.',
+        ao: [
+          { atom: 4, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.408 },
+          { atom: 5, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.408 },
+          { atom: 6, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.408 },
+          { atom: 7, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.408 },
+          { atom: 8, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.408 },
+          { atom: 9, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.408 },
+        ],
+      },
+    ],
+  },
+
+  // ─── BeH₂ — Beryllium Hydride ───
+  'BeH₂': {
+    notes: 'Classic sp-hybridized molecule. Linear geometry with two equivalent Be-H bonds.',
+    orbitals: [
+      {
+        name: '1σg (bonding)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 1, desc: 'Symmetric σ bonding — Be 2s combines with both H 1s in phase.',
+        ao: [
+          { atom: 0, n: 2, l: 0, m: 0, zeff: 1.66, c: 0.45 },
+          { atom: 1, n: 1, l: 0, m: 0, zeff: 1.00, c: 0.55 },
+          { atom: 2, n: 1, l: 0, m: 0, zeff: 1.00, c: 0.55 },
+        ],
+      },
+      {
+        name: '1σu (bonding)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 2, desc: 'Antisymmetric σ bonding — Be 2p mixes with out-of-phase H combination.',
+        ao: [
+          { atom: 0, n: 2, l: 1, m: 1, zeff: 1.66, c: 0.50 },
+          { atom: 1, n: 1, l: 0, m: 0, zeff: 1.00, c: 0.55 },
+          { atom: 2, n: 1, l: 0, m: 0, zeff: 1.00, c: -0.55 },
+        ],
+      },
+    ],
+  },
+
+  // ─── Na₂O — Sodium Oxide ───
+  'Na₂O': {
+    notes: 'Antifluorite structure in solid. Extremely strong base — important in glass formulation.',
+    orbitals: [
+      {
+        name: 'σg (bonding)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 1, desc: 'Symmetric σ bonding — O 2p combines with both Na 3s in phase. Strongly ionic.',
+        ao: [
+          { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.85 },
+          { atom: 0, n: 3, l: 0, m: 0, zeff: 2.20, c: 0.10 },
+          { atom: 2, n: 3, l: 0, m: 0, zeff: 2.20, c: 0.10 },
+        ],
+      },
+      {
+        name: 'O 2px (lone pair)',
+        type: 'nonbonding',
+        electrons: 2,
+        energy: 2, desc: 'Oxygen lone pair perpendicular to the molecular axis.',
+        ao: [
+          { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c: 1.0 },
+        ],
+      },
+      {
+        name: 'O 2pz (lone pair)',
+        type: 'nonbonding',
+        electrons: 2,
+        energy: 3, desc: 'Second oxygen lone pair perpendicular to the molecular axis.',
+        ao: [
+          { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c: 1.0 },
+        ],
+      },
+    ],
+  },
+
+  // ─── K₂O — Potassium Oxide ───
+  'K₂O': {
+    notes: 'Strongly ionic alkali oxide. Important glass-forming component (potash). Reacts violently with water.',
+    orbitals: [
+      {
+        name: 'σg (bonding)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 1, desc: 'O 2p dominant σ bond — nearly pure ionic character with K.',
+        ao: [
+          { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.90 },
+          { atom: 0, n: 4, l: 0, m: 0, zeff: 2.26, c: 0.06 },
+          { atom: 2, n: 4, l: 0, m: 0, zeff: 2.26, c: 0.06 },
+        ],
+      },
+      {
+        name: 'O 2px (lone pair)',
+        type: 'nonbonding',
+        electrons: 2,
+        energy: 2, desc: 'Oxygen lone pair.',
+        ao: [
+          { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c: 1.0 },
+        ],
+      },
+      {
+        name: 'O 2pz (lone pair)',
+        type: 'nonbonding',
+        electrons: 2,
+        energy: 3, desc: 'Second oxygen lone pair.',
+        ao: [
+          { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c: 1.0 },
+        ],
+      },
+    ],
+  },
+
+  // ─── GeH₄ — Germane ───
+  'GeH₄': {
+    notes: 'Isoelectronic to methane and silane. Tetrahedral (Td) symmetry. Key precursor for germanium thin films.',
+    orbitals: [
+      {
+        name: '1a₁ (bonding)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 1, desc: 'Totally symmetric bonding — Ge 4s mixes with all four H 1s in phase.',
+        ao: [
+          { atom: 0, n: 4, l: 0, m: 0, zeff: 5.01, c: 0.40 },
+          { atom: 1, n: 1, l: 0, m: 0, zeff: 1.00, c: 0.45 },
+          { atom: 2, n: 1, l: 0, m: 0, zeff: 1.00, c: 0.45 },
+          { atom: 3, n: 1, l: 0, m: 0, zeff: 1.00, c: 0.45 },
+          { atom: 4, n: 1, l: 0, m: 0, zeff: 1.00, c: 0.45 },
+        ],
+      },
+      {
+        name: '1t₂x (bonding)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 2, desc: 'Triply degenerate bonding — Ge 4px overlaps with appropriate H combination.',
+        ao: [
+          { atom: 0, n: 4, l: 1, m: 1, zeff: 5.01, c: 0.40 },
+          { atom: 1, n: 1, l: 0, m: 0, zeff: 1.00, c: 0.45 },
+          { atom: 2, n: 1, l: 0, m: 0, zeff: 1.00, c: -0.45 },
+          { atom: 3, n: 1, l: 0, m: 0, zeff: 1.00, c: -0.45 },
+          { atom: 4, n: 1, l: 0, m: 0, zeff: 1.00, c: 0.45 },
+        ],
+      },
+      {
+        name: '1t₂y (bonding)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 3, desc: 'Second t₂ component — Ge 4py direction.',
+        ao: [
+          { atom: 0, n: 4, l: 1, m: -1, zeff: 5.01, c: 0.40 },
+          { atom: 1, n: 1, l: 0, m: 0, zeff: 1.00, c: 0.45 },
+          { atom: 2, n: 1, l: 0, m: 0, zeff: 1.00, c: 0.45 },
+          { atom: 3, n: 1, l: 0, m: 0, zeff: 1.00, c: -0.45 },
+          { atom: 4, n: 1, l: 0, m: 0, zeff: 1.00, c: -0.45 },
+        ],
+      },
+      {
+        name: '1t₂z (bonding)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 4, desc: 'Third t₂ component — Ge 4pz direction.',
+        ao: [
+          { atom: 0, n: 4, l: 1, m: 0, zeff: 5.01, c: 0.40 },
+          { atom: 1, n: 1, l: 0, m: 0, zeff: 1.00, c: 0.45 },
+          { atom: 2, n: 1, l: 0, m: 0, zeff: 1.00, c: -0.45 },
+          { atom: 3, n: 1, l: 0, m: 0, zeff: 1.00, c: 0.45 },
+          { atom: 4, n: 1, l: 0, m: 0, zeff: 1.00, c: -0.45 },
+        ],
+      },
+    ],
+  },
+
+  // ─── AsH₃ — Arsine ───
+  'AsH₃': {
+    notes: 'Extremely toxic — among the most dangerous industrial gases. Pyramidal like NH₃ but with wider bond angles.',
+    orbitals: [
+      {
+        name: '3a₁ (bonding)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 1, desc: 'Symmetric σ bonding — As 4s mixes with in-phase H combination.',
+        ao: [
+          { atom: 0, n: 4, l: 0, m: 0, zeff: 5.67, c: 0.40 },
+          { atom: 1, n: 1, l: 0, m: 0, zeff: 1.00, c: 0.53 },
+          { atom: 2, n: 1, l: 0, m: 0, zeff: 1.00, c: 0.53 },
+          { atom: 3, n: 1, l: 0, m: 0, zeff: 1.00, c: 0.53 },
+        ],
+      },
+      {
+        name: '1e (bonding, a)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 2, desc: 'Degenerate e bonding — As 4p overlaps with H combination.',
+        ao: [
+          { atom: 0, n: 4, l: 1, m: 1, zeff: 5.67, c: 0.45 },
+          { atom: 1, n: 1, l: 0, m: 0, zeff: 1.00, c: 0.55 },
+          { atom: 2, n: 1, l: 0, m: 0, zeff: 1.00, c: -0.275 },
+          { atom: 3, n: 1, l: 0, m: 0, zeff: 1.00, c: -0.275 },
+        ],
+      },
+      {
+        name: '1e (bonding, b)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 3, desc: 'Second degenerate e component.',
+        ao: [
+          { atom: 0, n: 4, l: 1, m: -1, zeff: 5.67, c: 0.45 },
+          { atom: 2, n: 1, l: 0, m: 0, zeff: 1.00, c: 0.50 },
+          { atom: 3, n: 1, l: 0, m: 0, zeff: 1.00, c: -0.50 },
+        ],
+      },
+      {
+        name: '4a₁ (lone pair)',
+        type: 'nonbonding',
+        electrons: 2,
+        energy: 4, desc: 'As lone pair — directed upward from the pyramidal base. Gives AsH₃ its pyramidal shape.',
+        ao: [
+          { atom: 0, n: 4, l: 1, m: 0, zeff: 5.67, c: 0.80 },
+          { atom: 0, n: 4, l: 0, m: 0, zeff: 5.67, c: 0.30 },
+        ],
+      },
+    ],
+  },
+
+  // ─── SnCl₂ — Tin(II) Chloride ───
+  'SnCl₂': {
+    notes: 'Bent molecule due to lone pair on Sn. Stannous chloride is a versatile reducing agent.',
+    orbitals: [
+      {
+        name: 'σ₁ (Sn-Cl bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 1, desc: 'Sn 5sp² - Cl 3p σ bonding.',
+        ao: [
+          { atom: 0, n: 5, l: 0, m: 0, zeff: 4.40, c: 0.30 },
+          { atom: 1, n: 3, l: 1, m: 1, zeff: 6.12, c: 0.75 },
+        ],
+      },
+      {
+        name: 'σ₂ (Sn-Cl bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 2, desc: 'Second Sn-Cl bond.',
+        ao: [
+          { atom: 0, n: 5, l: 1, m: 1, zeff: 4.40, c: 0.30 },
+          { atom: 2, n: 3, l: 1, m: 1, zeff: 6.12, c: 0.75 },
+        ],
+      },
+      {
+        name: 'Sn lone pair',
+        type: 'nonbonding',
+        electrons: 2,
+        energy: 3, desc: 'Stereochemically active Sn²⁺ lone pair — causes the bent geometry.',
+        ao: [
+          { atom: 0, n: 5, l: 0, m: 0, zeff: 4.40, c: 0.70 },
+          { atom: 0, n: 5, l: 1, m: 0, zeff: 4.40, c: 0.50 },
+        ],
+      },
+      {
+        name: 'Cl lone pairs (4e)',
+        type: 'nonbonding',
+        electrons: 4,
+        energy: 4, desc: 'Chlorine non-bonding lone pairs.',
+        ao: [
+          { atom: 1, n: 3, l: 1, m: 0, zeff: 6.12, c: 0.707 },
+          { atom: 2, n: 3, l: 1, m: 0, zeff: 6.12, c: 0.707 },
+        ],
+      },
+    ],
+  },
+
+  // ─── TeO₂ — Tellurium Dioxide ───
+  'TeO₂': {
+    notes: 'Paratellurite crystal — exceptional acousto-optic properties. Bent geometry due to Te lone pair.',
+    orbitals: [
+      {
+        name: 'σ₁ (Te=O bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 1, desc: 'Te 5p - O 2p σ bonding.',
+        ao: [
+          { atom: 0, n: 5, l: 1, m: 1, zeff: 5.00, c: 0.40 },
+          { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.75 },
+        ],
+      },
+      {
+        name: 'σ₂ (Te=O bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 2, desc: 'Second Te=O bond.',
+        ao: [
+          { atom: 0, n: 5, l: 1, m: -1, zeff: 5.00, c: 0.40 },
+          { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.75 },
+        ],
+      },
+      {
+        name: 'Te lone pair',
+        type: 'nonbonding',
+        electrons: 2,
+        energy: 3, desc: 'Active Te lone pair causing the bent molecular geometry.',
+        ao: [
+          { atom: 0, n: 5, l: 0, m: 0, zeff: 5.00, c: 0.80 },
+          { atom: 0, n: 5, l: 1, m: 0, zeff: 5.00, c: 0.40 },
+        ],
+      },
+      {
+        name: 'O lone pairs (4e)',
+        type: 'nonbonding',
+        electrons: 4,
+        energy: 4, desc: 'Oxygen non-bonding lone pairs.',
+        ao: [
+          { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.707 },
+          { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.707 },
+        ],
+      },
+    ],
+  },
+
+  // ─── HgO — Mercury(II) Oxide ───
+  'HgO': {
+    notes: 'Priestley discovered oxygen in 1774 by heating this compound. Red (α) and yellow forms exist.',
+    orbitals: [
+      {
+        name: '1σ (bonding)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 1, desc: 'Hg 6s - O 2p σ bonding. Significant covalent character despite being a metal oxide.',
+        ao: [
+          { atom: 0, n: 6, l: 0, m: 0, zeff: 3.30, c: 0.30 },
+          { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.80 },
+        ],
+      },
+      {
+        name: '1π (bonding)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 2, desc: 'Hg 5d - O 2p π bonding — weak but contributes to the double-bond character.',
+        ao: [
+          { atom: 0, n: 5, l: 2, m: 1, zeff: 10.0, c: 0.20 },
+          { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.80 },
+        ],
+      },
+      {
+        name: 'O 2pz (lone pair)',
+        type: 'nonbonding',
+        electrons: 2,
+        energy: 3, desc: 'Oxygen lone pair along the perpendicular axis.',
+        ao: [
+          { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c: 1.0 },
+        ],
+      },
+    ],
+  },
+
+  // ─── NOCl — Nitrosyl Chloride ───
+  'NOCl': {
+    notes: 'Bent molecule (113° ONcl angle). Important reagent and intermediate in industrial chemistry.',
+    orbitals: [
+      {
+        name: 'σ (N=O bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 1, desc: 'N-O σ bonding — the strong N=O double bond.',
+        ao: [
+          { atom: 0, n: 2, l: 1, m: 1, zeff: 3.83, c: 0.55 },
+          { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.65 },
+        ],
+      },
+      {
+        name: 'π (N=O bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 2, desc: 'N-O π bonding component of the double bond.',
+        ao: [
+          { atom: 0, n: 2, l: 1, m: 0, zeff: 3.83, c: 0.55 },
+          { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.55 },
+        ],
+      },
+      {
+        name: 'σ (N-Cl bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 3, desc: 'N-Cl σ bonding — weaker single bond.',
+        ao: [
+          { atom: 0, n: 2, l: 0, m: 0, zeff: 3.83, c: 0.40 },
+          { atom: 2, n: 3, l: 1, m: 1, zeff: 6.12, c: 0.70 },
+        ],
+      },
+      {
+        name: 'Cl lone pairs (4e)',
+        type: 'nonbonding',
+        electrons: 4,
+        energy: 4, desc: 'Chlorine non-bonding lone pairs.',
+        ao: [
+          { atom: 2, n: 3, l: 1, m: 0, zeff: 6.12, c: 0.707 },
+          { atom: 2, n: 3, l: 1, m: -1, zeff: 6.12, c: 0.707 },
+        ],
+      },
+      {
+        name: 'O lone pair',
+        type: 'nonbonding',
+        electrons: 2,
+        energy: 5, desc: 'Oxygen lone pair — directed away from the bond.',
+        ao: [
+          { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c: 1.0 },
+        ],
+      },
+    ],
+  },
+
+  // ─── COCl₂ — Phosgene ───
+  'COCl₂': {
+    notes: 'Extremely toxic — once a WWI chemical weapon. Now critical for polycarbonate plastics and isocyanate chemistry.',
+    orbitals: [
+      {
+        name: 'σ (C=O bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 1, desc: 'C-O σ bonding — the strong C=O double bond.',
+        ao: [
+          { atom: 0, n: 2, l: 1, m: 1, zeff: 3.14, c: 0.50 },
+          { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.70 },
+        ],
+      },
+      {
+        name: 'π (C=O bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 2, desc: 'C-O π bonding — π component of the carbonyl.',
+        ao: [
+          { atom: 0, n: 2, l: 1, m: 0, zeff: 3.14, c: 0.50 },
+          { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.60 },
+        ],
+      },
+      {
+        name: 'σ₁ (C-Cl bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 3, desc: 'First C-Cl σ bond.',
+        ao: [
+          { atom: 0, n: 2, l: 0, m: 0, zeff: 3.14, c: 0.40 },
+          { atom: 2, n: 3, l: 1, m: 1, zeff: 6.12, c: 0.70 },
+        ],
+      },
+      {
+        name: 'σ₂ (C-Cl bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 4, desc: 'Second C-Cl σ bond.',
+        ao: [
+          { atom: 0, n: 2, l: 1, m: -1, zeff: 3.14, c: 0.40 },
+          { atom: 3, n: 3, l: 1, m: 1, zeff: 6.12, c: 0.70 },
+        ],
+      },
+      {
+        name: 'Cl lone pairs (4e)',
+        type: 'nonbonding',
+        electrons: 4,
+        energy: 5, desc: 'Chlorine non-bonding lone pairs.',
+        ao: [
+          { atom: 2, n: 3, l: 1, m: 0, zeff: 6.12, c: 0.707 },
+          { atom: 3, n: 3, l: 1, m: 0, zeff: 6.12, c: 0.707 },
+        ],
+      },
+      {
+        name: 'O lone pair',
+        type: 'nonbonding',
+        electrons: 2,
+        energy: 6, desc: 'Oxygen lone pair perpendicular to the molecular plane.',
+        ao: [
+          { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c: 1.0 },
+        ],
+      },
+    ],
+  },
+
+  // ─── CH₃OH — Methanol ───
+  'CH₃OH': {
+    notes: 'Simplest alcohol. Toxic — metabolized to formaldehyde and formic acid. Used as racing fuel and feedstock.',
+    orbitals: [
+      {
+        name: 'σ (C-O bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 1, desc: 'C-O σ bonding — the key functional group bond.',
+        ao: [
+          { atom: 0, n: 2, l: 1, m: 1, zeff: 3.14, c: 0.45 },
+          { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.65 },
+        ],
+      },
+      {
+        name: 'σ (O-H bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 2, desc: 'O-H bond — polar covalent, site of hydrogen bonding.',
+        ao: [
+          { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.70 },
+          { atom: 5, n: 1, l: 0, m: 0, zeff: 1.00, c: 0.55 },
+        ],
+      },
+      {
+        name: 'σ (C-H bonds, 6e)',
+        type: 'bonding',
+        electrons: 6,
+        energy: 3, desc: 'Three equivalent C-H bonds in the methyl group.',
+        ao: [
+          { atom: 0, n: 2, l: 0, m: 0, zeff: 3.14, c: 0.35 },
+          { atom: 2, n: 1, l: 0, m: 0, zeff: 1.00, c: 0.45 },
+          { atom: 3, n: 1, l: 0, m: 0, zeff: 1.00, c: 0.45 },
+          { atom: 4, n: 1, l: 0, m: 0, zeff: 1.00, c: 0.45 },
+        ],
+      },
+      {
+        name: 'O lone pair (a)',
+        type: 'nonbonding',
+        electrons: 2,
+        energy: 4, desc: 'Oxygen lone pair — perpendicular to the C-O-H plane.',
+        ao: [
+          { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c: 1.0 },
+        ],
+      },
+    ],
+  },
+
+  // ─── CH₃Cl — Chloromethane ───
+  'CH₃Cl': {
+    notes: 'Methyl chloride — important industrial chemical. Ozone depleting substance. Tetrahedral geometry.',
+    orbitals: [
+      {
+        name: 'σ (C-Cl bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 1, desc: 'C-Cl σ bonding — polarized toward Cl due to electronegativity difference.',
+        ao: [
+          { atom: 0, n: 2, l: 1, m: 1, zeff: 3.14, c: 0.40 },
+          { atom: 1, n: 3, l: 1, m: 1, zeff: 6.12, c: 0.70 },
+        ],
+      },
+      {
+        name: 'σ (C-H bonds, 6e)',
+        type: 'bonding',
+        electrons: 6,
+        energy: 2, desc: 'Three equivalent C-H bonds in the methyl group.',
+        ao: [
+          { atom: 0, n: 2, l: 0, m: 0, zeff: 3.14, c: 0.40 },
+          { atom: 2, n: 1, l: 0, m: 0, zeff: 1.00, c: 0.50 },
+          { atom: 3, n: 1, l: 0, m: 0, zeff: 1.00, c: 0.50 },
+          { atom: 4, n: 1, l: 0, m: 0, zeff: 1.00, c: 0.50 },
+        ],
+      },
+      {
+        name: 'Cl lone pairs (4e)',
+        type: 'nonbonding',
+        electrons: 4,
+        energy: 3, desc: 'Chlorine non-bonding lone pairs.',
+        ao: [
+          { atom: 1, n: 3, l: 1, m: 0, zeff: 6.12, c: 0.707 },
+          { atom: 1, n: 3, l: 1, m: -1, zeff: 6.12, c: 0.707 },
+        ],
+      },
+    ],
+  },
+
+  // ─── ClF — Chlorine Monofluoride ───
+  'ClF': {
+    notes: 'Simplest interhalogen compound. Very reactive — used as a fluorinating agent.',
+    orbitals: [
+      {
+        name: '1σ (bonding)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 1, desc: 'Cl 3p - F 2p σ bonding along the bond axis.',
+        ao: [
+          { atom: 0, n: 3, l: 1, m: 1, zeff: 6.12, c: 0.50 },
+          { atom: 1, n: 2, l: 1, m: 1, zeff: 5.10, c: 0.65 },
+        ],
+      },
+      {
+        name: 'F 2px (lone pair)',
+        type: 'nonbonding',
+        electrons: 2,
+        energy: 2, desc: 'Fluorine lone pair perpendicular to bond.',
+        ao: [
+          { atom: 1, n: 2, l: 1, m: -1, zeff: 5.10, c: 1.0 },
+        ],
+      },
+      {
+        name: 'F 2py (lone pair)',
+        type: 'nonbonding',
+        electrons: 2,
+        energy: 3, desc: 'Second fluorine lone pair perpendicular to bond.',
+        ao: [
+          { atom: 1, n: 2, l: 1, m: 0, zeff: 5.10, c: 1.0 },
+        ],
+      },
+      {
+        name: 'Cl 3px (lone pair)',
+        type: 'nonbonding',
+        electrons: 2,
+        energy: 4, desc: 'Chlorine lone pair perpendicular to bond.',
+        ao: [
+          { atom: 0, n: 3, l: 1, m: -1, zeff: 6.12, c: 1.0 },
+        ],
+      },
+      {
+        name: 'Cl 3py (lone pair)',
+        type: 'nonbonding',
+        electrons: 2,
+        energy: 5, desc: 'Second chlorine lone pair.',
+        ao: [
+          { atom: 0, n: 3, l: 1, m: 0, zeff: 6.12, c: 1.0 },
+        ],
+      },
+    ],
+  },
+
+  // ─── ICl — Iodine Monochloride ───
+  'ICl': {
+    notes: 'Red-brown interhalogen compound. Used in Wijs solution for determining iodine values of fats.',
+    orbitals: [
+      {
+        name: '1σ (bonding)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 1, desc: 'I 5p - Cl 3p σ bonding along the bond axis.',
+        ao: [
+          { atom: 0, n: 5, l: 1, m: 1, zeff: 7.60, c: 0.45 },
+          { atom: 1, n: 3, l: 1, m: 1, zeff: 6.12, c: 0.60 },
+        ],
+      },
+      {
+        name: 'Cl lone pairs (4e)',
+        type: 'nonbonding',
+        electrons: 4,
+        energy: 2, desc: 'Chlorine non-bonding lone pairs.',
+        ao: [
+          { atom: 1, n: 3, l: 1, m: -1, zeff: 6.12, c: 0.707 },
+          { atom: 1, n: 3, l: 1, m: 0, zeff: 6.12, c: 0.707 },
+        ],
+      },
+      {
+        name: 'I lone pairs (4e)',
+        type: 'nonbonding',
+        electrons: 4,
+        energy: 3, desc: 'Iodine non-bonding lone pairs.',
+        ao: [
+          { atom: 0, n: 5, l: 1, m: -1, zeff: 7.60, c: 0.707 },
+          { atom: 0, n: 5, l: 1, m: 0, zeff: 7.60, c: 0.707 },
+        ],
+      },
+    ],
+  },
+
+  // ─── IBr — Iodine Monobromide ───
+  'IBr': {
+    notes: 'Dark-red interhalogen. Less stable than ICl — decomposes at higher temperatures.',
+    orbitals: [
+      {
+        name: '1σ (bonding)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 1, desc: 'I 5p - Br 4p σ bonding along the bond axis.',
+        ao: [
+          { atom: 0, n: 5, l: 1, m: 1, zeff: 7.60, c: 0.50 },
+          { atom: 1, n: 4, l: 1, m: 1, zeff: 7.85, c: 0.55 },
+        ],
+      },
+      {
+        name: 'Br lone pairs (4e)',
+        type: 'nonbonding',
+        electrons: 4,
+        energy: 2, desc: 'Bromine non-bonding lone pairs.',
+        ao: [
+          { atom: 1, n: 4, l: 1, m: -1, zeff: 7.85, c: 0.707 },
+          { atom: 1, n: 4, l: 1, m: 0, zeff: 7.85, c: 0.707 },
+        ],
+      },
+      {
+        name: 'I lone pairs (4e)',
+        type: 'nonbonding',
+        electrons: 4,
+        energy: 3, desc: 'Iodine non-bonding lone pairs.',
+        ao: [
+          { atom: 0, n: 5, l: 1, m: -1, zeff: 7.60, c: 0.707 },
+          { atom: 0, n: 5, l: 1, m: 0, zeff: 7.60, c: 0.707 },
+        ],
+      },
+    ],
+  },
 };

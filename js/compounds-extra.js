@@ -71,6 +71,17 @@ const EXTRA_COMPOUNDS = {
       ],
       bonds: [{ from: 0, to: 1, order: 2 }],
     },
+    {
+      name: 'Beryllium Hydride',
+      formula: 'BeH₂',
+      description: 'Simplest beryllium compound. Linear geometry — classic example of sp hybridization.',
+      atoms: [
+        { sym: 'Be', x: 0, y: 0, z: 0 },
+        { sym: 'H', x: -1.33, y: 0, z: 0 },
+        { sym: 'H', x: 1.33, y: 0, z: 0 },
+      ],
+      bonds: [{ from: 0, to: 1, order: 1 }, { from: 0, to: 2, order: 1 }],
+    },
   ],
 
   // ─── Boron (5) — add B₂H₆ ───
@@ -95,6 +106,16 @@ const EXTRA_COMPOUNDS = {
         { from: 1, to: 4, order: 0.5 }, { from: 1, to: 5, order: 0.5 },
         { from: 1, to: 6, order: 1 }, { from: 1, to: 7, order: 1 },
       ],
+    },
+    {
+      name: 'Boron Nitride',
+      formula: 'BN',
+      description: 'Ultrahard ceramic used as industrial abrasive. Hexagonal form is "white graphene".',
+      atoms: [
+        { sym: 'B', x: -0.641, y: 0, z: 0 },
+        { sym: 'N', x: 0.641, y: 0, z: 0 },
+      ],
+      bonds: [{ from: 0, to: 1, order: 3 }],
     },
   ],
 
@@ -164,6 +185,90 @@ const EXTRA_COMPOUNDS = {
         { from: 2, to: 8, order: 1 },
       ],
     },
+    {
+      name: 'Hydrogen Cyanide',
+      formula: 'HCN',
+      description: 'Extremely toxic linear molecule. Key precursor in origin-of-life chemistry.',
+      atoms: [
+        { sym: 'H', x: -1.63, y: 0, z: 0 },
+        { sym: 'C', x: -0.564, y: 0, z: 0 },
+        { sym: 'N', x: 0.592, y: 0, z: 0 },
+      ],
+      bonds: [{ from: 0, to: 1, order: 1 }, { from: 1, to: 2, order: 3 }],
+    },
+    {
+      name: 'Carbon Tetrachloride',
+      formula: 'CCl₄',
+      description: 'Tetrahedral molecule once used as solvent and fire extinguisher. Banned due to ozone depletion.',
+      atoms: [
+        { sym: 'C', x: 0, y: 0, z: 0 },
+        { sym: 'Cl', x: 1.02, y: 1.02, z: 1.02 },
+        { sym: 'Cl', x: -1.02, y: -1.02, z: 1.02 },
+        { sym: 'Cl', x: -1.02, y: 1.02, z: -1.02 },
+        { sym: 'Cl', x: 1.02, y: -1.02, z: -1.02 },
+      ],
+      bonds: [{ from: 0, to: 1, order: 1 }, { from: 0, to: 2, order: 1 }, { from: 0, to: 3, order: 1 }, { from: 0, to: 4, order: 1 }],
+    },
+    {
+      name: 'Carbon Disulfide',
+      formula: 'CS₂',
+      description: 'Linear molecule analogous to CO₂. Used in viscose rayon production.',
+      atoms: [
+        { sym: 'S', x: -1.553, y: 0, z: 0 },
+        { sym: 'C', x: 0, y: 0, z: 0 },
+        { sym: 'S', x: 1.553, y: 0, z: 0 },
+      ],
+      bonds: [{ from: 0, to: 1, order: 2 }, { from: 1, to: 2, order: 2 }],
+    },
+  
+    {
+      name: 'Methanol',
+      formula: 'CH₃OH',
+      description: 'Simplest alcohol. Toxic — causes blindness. Used as racing fuel, solvent, and formaldehyde feedstock.',
+      atoms: [
+        { sym: 'C', x: 0, y: 0, z: 0 },
+        { sym: 'O', x: 1.43, y: 0, z: 0 },
+        { sym: 'H', x: -0.52, y: 0.89, z: 0.52 },
+        { sym: 'H', x: -0.52, y: -0.89, z: 0.52 },
+        { sym: 'H', x: -0.52, y: 0, z: -1.04 },
+        { sym: 'H', x: 1.83, y: 0.76, z: 0 },
+      ],
+      bonds: [
+        { from: 0, to: 1, order: 1 }, { from: 0, to: 2, order: 1 },
+        { from: 0, to: 3, order: 1 }, { from: 0, to: 4, order: 1 },
+        { from: 1, to: 5, order: 1 },
+      ],
+    },
+    {
+      name: 'Chloromethane',
+      formula: 'CH₃Cl',
+      description: 'Methyl chloride — once a refrigerant. Tetrahedral geometry. Key industrial methylating agent.',
+      atoms: [
+        { sym: 'C', x: 0, y: 0, z: 0 },
+        { sym: 'Cl', x: 1.78, y: 0, z: 0 },
+        { sym: 'H', x: -0.52, y: 0.89, z: 0.52 },
+        { sym: 'H', x: -0.52, y: -0.89, z: 0.52 },
+        { sym: 'H', x: -0.52, y: 0, z: -1.04 },
+      ],
+      bonds: [
+        { from: 0, to: 1, order: 1 }, { from: 0, to: 2, order: 1 },
+        { from: 0, to: 3, order: 1 }, { from: 0, to: 4, order: 1 },
+      ],
+    },
+    {
+      name: 'Phosgene',
+      formula: 'COCl₂',
+      description: 'Extremely toxic — once a WWI chemical weapon. Now important for polycarbonate and polyurethane production.',
+      atoms: [
+        { sym: 'C', x: 0, y: 0, z: 0 },
+        { sym: 'O', x: 0, y: 1.17, z: 0 },
+        { sym: 'Cl', x: -1.48, y: -0.68, z: 0 },
+        { sym: 'Cl', x: 1.48, y: -0.68, z: 0 },
+      ],
+      bonds: [
+        { from: 0, to: 1, order: 2 }, { from: 0, to: 2, order: 1 }, { from: 0, to: 3, order: 1 },
+      ],
+    },
   ],
 
   // ─── Nitrogen (7) — add NO₂, N₂O, HNO₃ ───
@@ -204,6 +309,30 @@ const EXTRA_COMPOUNDS = {
       bonds: [
         { from: 0, to: 1, order: 2 }, { from: 0, to: 2, order: 1.5 },
         { from: 0, to: 3, order: 1 }, { from: 3, to: 4, order: 1 },
+      ],
+    },
+    {
+      name: 'Nitric Oxide',
+      formula: 'NO',
+      description: 'Radical signaling molecule. Won Nobel Prize in Physiology 1998.',
+      atoms: [
+        { sym: 'N', x: -0.575, y: 0, z: 0 },
+        { sym: 'O', x: 0.575, y: 0, z: 0 },
+      ],
+      bonds: [{ from: 0, to: 1, order: 2 }],
+    },
+  
+    {
+      name: 'Nitrosyl Chloride',
+      formula: 'NOCl',
+      description: 'Bent molecule — reagent in organic and inorganic synthesis. Decomposes to NO and Cl₂.',
+      atoms: [
+        { sym: 'N', x: 0, y: 0, z: 0 },
+        { sym: 'O', x: 1.14, y: 0, z: 0 },
+        { sym: 'Cl', x: -0.80, y: -1.55, z: 0 },
+      ],
+      bonds: [
+        { from: 0, to: 1, order: 2 }, { from: 0, to: 2, order: 1 },
       ],
     },
   ],
@@ -291,6 +420,17 @@ const EXTRA_COMPOUNDS = {
         { from: 4, to: 5, order: 1 },
       ],
     },
+    {
+      name: 'Sodium Oxide',
+      formula: 'Na₂O',
+      description: 'Strongly basic oxide. Reacts vigorously with water to form NaOH. Used in glass and ceramic production.',
+      atoms: [
+        { sym: 'Na', x: -2.08, y: 0, z: 0 },
+        { sym: 'O', x: 0, y: 0, z: 0 },
+        { sym: 'Na', x: 2.08, y: 0, z: 0 },
+      ],
+      bonds: [{ from: 0, to: 1, order: 1 }, { from: 1, to: 2, order: 1 }],
+    },
   ],
 
   // ─── Magnesium (12) — add MgCl₂, Mg(OH)₂ ───
@@ -359,6 +499,16 @@ const EXTRA_COMPOUNDS = {
         { from: 0, to: 1, order: 1 }, { from: 0, to: 2, order: 1 },
         { from: 0, to: 3, order: 1 }, { from: 0, to: 4, order: 1 },
       ],
+    },
+    {
+      name: 'Silicon Carbide',
+      formula: 'SiC',
+      description: 'Extremely hard compound used in semiconductors, LEDs, and abrasives. Found in meteorites.',
+      atoms: [
+        { sym: 'Si', x: -0.91, y: 0, z: 0 },
+        { sym: 'C', x: 0.91, y: 0, z: 0 },
+      ],
+      bonds: [{ from: 0, to: 1, order: 2 }],
     },
   ],
 
@@ -435,6 +585,25 @@ const EXTRA_COMPOUNDS = {
         { from: 0, to: 1, order: 2 }, { from: 0, to: 2, order: 2 }, { from: 0, to: 3, order: 2 },
       ],
     },
+    {
+      name: 'Sulfur Hexafluoride',
+      formula: 'SF₆',
+      description: 'Octahedral molecule with remarkable chemical inertness. Dense gas used as electrical insulator.',
+      atoms: [
+        { sym: 'S', x: 0, y: 0, z: 0 },
+        { sym: 'F', x: 1.564, y: 0, z: 0 },
+        { sym: 'F', x: -1.564, y: 0, z: 0 },
+        { sym: 'F', x: 0, y: 1.564, z: 0 },
+        { sym: 'F', x: 0, y: -1.564, z: 0 },
+        { sym: 'F', x: 0, y: 0, z: 1.564 },
+        { sym: 'F', x: 0, y: 0, z: -1.564 },
+      ],
+      bonds: [
+        { from: 0, to: 1, order: 1 }, { from: 0, to: 2, order: 1 },
+        { from: 0, to: 3, order: 1 }, { from: 0, to: 4, order: 1 },
+        { from: 0, to: 5, order: 1 }, { from: 0, to: 6, order: 1 },
+      ],
+    },
   ],
 
   // ─── Chlorine (17) — add Cl₂ ───
@@ -446,6 +615,17 @@ const EXTRA_COMPOUNDS = {
       atoms: [
         { sym: 'Cl', x: -0.99, y: 0, z: 0 },
         { sym: 'Cl', x: 0.99, y: 0, z: 0 },
+      ],
+      bonds: [{ from: 0, to: 1, order: 1 }],
+    },
+  
+    {
+      name: 'Chlorine Monofluoride',
+      formula: 'ClF',
+      description: 'Interhalogen compound — extremely reactive gas. Fluorinating agent used in uranium enrichment.',
+      atoms: [
+        { sym: 'Cl', x: -0.82, y: 0, z: 0 },
+        { sym: 'F', x: 0.82, y: 0, z: 0 },
       ],
       bonds: [{ from: 0, to: 1, order: 1 }],
     },
@@ -462,6 +642,17 @@ const EXTRA_COMPOUNDS = {
         { sym: 'Cl', x: 1.33, y: 0, z: 0 },
       ],
       bonds: [{ from: 0, to: 1, order: 1 }],
+    },
+    {
+      name: 'Potassium Oxide',
+      formula: 'K₂O',
+      description: 'Highly reactive basic oxide. Used in fertilizer and glass production.',
+      atoms: [
+        { sym: 'K', x: -2.35, y: 0, z: 0 },
+        { sym: 'O', x: 0, y: 0, z: 0 },
+        { sym: 'K', x: 2.35, y: 0, z: 0 },
+      ],
+      bonds: [{ from: 0, to: 1, order: 1 }, { from: 1, to: 2, order: 1 }],
     },
   ],
 
@@ -532,6 +723,18 @@ const EXTRA_COMPOUNDS = {
         { from: 0, to: 2, order: 1 }, { from: 0, to: 3, order: 1 },
         { from: 1, to: 2, order: 1 }, { from: 1, to: 4, order: 1 },
       ],
+    },
+    {
+      name: 'Chromium Trioxide',
+      formula: 'CrO₃',
+      description: 'Strong oxidizing agent used in chrome plating and organic oxidation reactions.',
+      atoms: [
+        { sym: 'Cr', x: 0, y: 0, z: 0 },
+        { sym: 'O', x: 1.60, y: 0, z: 0 },
+        { sym: 'O', x: -0.80, y: 1.386, z: 0 },
+        { sym: 'O', x: -0.80, y: -1.386, z: 0 },
+      ],
+      bonds: [{ from: 0, to: 1, order: 2 }, { from: 0, to: 2, order: 2 }, { from: 0, to: 3, order: 2 }],
     },
   ],
 
@@ -617,6 +820,16 @@ const EXTRA_COMPOUNDS = {
         { from: 2, to: 4, order: 1 }, { from: 2, to: 5, order: 1 }, { from: 2, to: 6, order: 1 },
       ],
     },
+    {
+      name: 'Cobalt(II) Oxide',
+      formula: 'CoO',
+      description: 'Antiferromagnetic oxide used in ceramics and as a pigment. Rock salt structure.',
+      atoms: [
+        { sym: 'Co', x: -0.815, y: 0, z: 0 },
+        { sym: 'O', x: 0.815, y: 0, z: 0 },
+      ],
+      bonds: [{ from: 0, to: 1, order: 2 }],
+    },
   ],
 
   // ─── Nickel (28) — add NiO ───
@@ -630,6 +843,17 @@ const EXTRA_COMPOUNDS = {
         { sym: 'O', x: 0.85, y: 0, z: 0 },
       ],
       bonds: [{ from: 0, to: 1, order: 2 }],
+    },
+    {
+      name: 'Nickel(II) Chloride',
+      formula: 'NiCl₂',
+      description: 'Important catalyst precursor. Yellow deliquescent solid with CdCl₂-type layered structure.',
+      atoms: [
+        { sym: 'Ni', x: 0, y: 0, z: 0 },
+        { sym: 'Cl', x: 2.076, y: 0, z: 0 },
+        { sym: 'Cl', x: -2.076, y: 0, z: 0 },
+      ],
+      bonds: [{ from: 0, to: 1, order: 1 }, { from: 0, to: 2, order: 1 }],
     },
   ],
 
@@ -734,6 +958,27 @@ const EXTRA_COMPOUNDS = {
       ],
       bonds: [{ from: 0, to: 1, order: 1 }],
     },
+  
+    {
+      name: 'Iodine Monochloride',
+      formula: 'ICl',
+      description: 'Interhalogen compound — red-brown liquid. Used in electrophilic iodination (Wijs reagent).',
+      atoms: [
+        { sym: 'I', x: -1.16, y: 0, z: 0 },
+        { sym: 'Cl', x: 1.16, y: 0, z: 0 },
+      ],
+      bonds: [{ from: 0, to: 1, order: 1 }],
+    },
+    {
+      name: 'Iodine Monobromide',
+      formula: 'IBr',
+      description: 'Dark-red interhalogen. Halogenating agent in organic chemistry.',
+      atoms: [
+        { sym: 'I', x: -1.24, y: 0, z: 0 },
+        { sym: 'Br', x: 1.24, y: 0, z: 0 },
+      ],
+      bonds: [{ from: 0, to: 1, order: 1 }],
+    },
   ],
 
   // ─── Gold (79) — add Au₂O₃ ───
@@ -765,6 +1010,17 @@ const EXTRA_COMPOUNDS = {
       bonds: [
         { from: 0, to: 1, order: 1 }, { from: 1, to: 2, order: 1 }, { from: 2, to: 3, order: 1 },
       ],
+    },
+  
+    {
+      name: 'Mercury(II) Oxide',
+      formula: 'HgO',
+      description: 'Priestley discovered oxygen by heating this. Decomposes above 500°C to Hg + O₂.',
+      atoms: [
+        { sym: 'Hg', x: -1.02, y: 0, z: 0 },
+        { sym: 'O', x: 1.02, y: 0, z: 0 },
+      ],
+      bonds: [{ from: 0, to: 1, order: 2 }],
     },
   ],
 
@@ -988,6 +1244,22 @@ const EXTRA_COMPOUNDS = {
       ],
       bonds: [{ from: 0, to: 1, order: 2 }, { from: 0, to: 2, order: 2 }],
     },
+    {
+      name: 'Germane',
+      formula: 'GeH₄',
+      description: 'Germanium hydride — tetrahedral. Toxic gas used in semiconductor manufacturing for Ge thin films.',
+      atoms: [
+        { sym: 'Ge', x: 0, y: 0, z: 0 },
+        { sym: 'H', x: 0.88, y: 0.88, z: 0.88 },
+        { sym: 'H', x: -0.88, y: -0.88, z: 0.88 },
+        { sym: 'H', x: -0.88, y: 0.88, z: -0.88 },
+        { sym: 'H', x: 0.88, y: -0.88, z: -0.88 },
+      ],
+      bonds: [
+        { from: 0, to: 1, order: 1 }, { from: 0, to: 2, order: 1 },
+        { from: 0, to: 3, order: 1 }, { from: 0, to: 4, order: 1 },
+      ],
+    },
   ],
 
   // ─── Arsenic (33) ───
@@ -1006,6 +1278,20 @@ const EXTRA_COMPOUNDS = {
       bonds: [
         { from: 0, to: 2, order: 1 }, { from: 1, to: 2, order: 1 },
         { from: 0, to: 3, order: 1 }, { from: 1, to: 4, order: 1 },
+      ],
+    },
+    {
+      name: 'Arsine',
+      formula: 'AsH₃',
+      description: 'Extremely toxic gas — even small amounts lethal. Pyramidal like ammonia. Used in semiconductor doping.',
+      atoms: [
+        { sym: 'As', x: 0, y: 0, z: 0.37 },
+        { sym: 'H', x: 0, y: 1.27, z: -0.42 },
+        { sym: 'H', x: -1.10, y: -0.64, z: -0.42 },
+        { sym: 'H', x: 1.10, y: -0.64, z: -0.42 },
+      ],
+      bonds: [
+        { from: 0, to: 1, order: 1 }, { from: 0, to: 2, order: 1 }, { from: 0, to: 3, order: 1 },
       ],
     },
   ],
@@ -1082,6 +1368,16 @@ const EXTRA_COMPOUNDS = {
         { from: 0, to: 4, order: 1 }, { from: 1, to: 2, order: 2 },
         { from: 1, to: 3, order: 1 }, { from: 1, to: 4, order: 1 },
       ],
+    },
+    {
+      name: 'Strontium Oxide',
+      formula: 'SrO',
+      description: 'Rock salt structured oxide used in cathode ray tubes and fireworks.',
+      atoms: [
+        { sym: 'Sr', x: -0.96, y: 0, z: 0 },
+        { sym: 'O', x: 0.96, y: 0, z: 0 },
+      ],
+      bonds: [{ from: 0, to: 1, order: 2 }],
     },
   ],
 
@@ -1274,6 +1570,18 @@ const EXTRA_COMPOUNDS = {
         { from: 0, to: 3, order: 1 }, { from: 1, to: 4, order: 1 },
       ],
     },
+    {
+      name: 'Indium(III) Chloride',
+      formula: 'InCl₃',
+      description: 'Lewis acid catalyst for organic synthesis. Trigonal planar in gas phase.',
+      atoms: [
+        { sym: 'In', x: 0, y: 0, z: 0 },
+        { sym: 'Cl', x: 2.29, y: 0, z: 0 },
+        { sym: 'Cl', x: -1.145, y: 1.983, z: 0 },
+        { sym: 'Cl', x: -1.145, y: -1.983, z: 0 },
+      ],
+      bonds: [{ from: 0, to: 1, order: 1 }, { from: 0, to: 2, order: 1 }, { from: 0, to: 3, order: 1 }],
+    },
   ],
 
   // ─── Tin (50) ───
@@ -1302,6 +1610,17 @@ const EXTRA_COMPOUNDS = {
         { sym: 'Sn', x: 0, y: 0, z: 0 },
         { sym: 'F', x: -0.9, y: -0.5, z: 0 },
         { sym: 'F', x: 0.9, y: -0.5, z: 0 },
+      ],
+      bonds: [{ from: 0, to: 1, order: 1 }, { from: 0, to: 2, order: 1 }],
+    },
+    {
+      name: 'Tin(II) Chloride',
+      formula: 'SnCl₂',
+      description: 'Stannous chloride — bent geometry from lone pair. Powerful reducing agent used in tin plating.',
+      atoms: [
+        { sym: 'Sn', x: 0, y: 0.50, z: 0 },
+        { sym: 'Cl', x: -1.28, y: -0.50, z: 0 },
+        { sym: 'Cl', x: 1.28, y: -0.50, z: 0 },
       ],
       bonds: [{ from: 0, to: 1, order: 1 }, { from: 0, to: 2, order: 1 }],
     },
@@ -1338,6 +1657,17 @@ const EXTRA_COMPOUNDS = {
         { sym: 'Te', x: 0.7, y: 0, z: 0 },
       ],
       bonds: [{ from: 0, to: 1, order: 1 }],
+    },
+    {
+      name: 'Tellurium Dioxide',
+      formula: 'TeO₂',
+      description: 'Paratellurite — important acousto-optic crystal. Used in optical modulators and rewritable DVDs.',
+      atoms: [
+        { sym: 'Te', x: 0, y: 0.38, z: 0 },
+        { sym: 'O', x: -0.96, y: -0.38, z: 0 },
+        { sym: 'O', x: 0.96, y: -0.38, z: 0 },
+      ],
+      bonds: [{ from: 0, to: 1, order: 2 }, { from: 0, to: 2, order: 2 }],
     },
   ],
 
@@ -1390,6 +1720,16 @@ const EXTRA_COMPOUNDS = {
         { from: 1, to: 2, order: 1 }, { from: 1, to: 3, order: 1 },
         { from: 1, to: 4, order: 1 }, { from: 0, to: 2, order: 1 },
       ],
+    },
+    {
+      name: 'Barium Oxide',
+      formula: 'BaO',
+      description: 'Strongly basic oxide. Rock salt crystal structure. Used in vacuum tubes.',
+      atoms: [
+        { sym: 'Ba', x: -0.97, y: 0, z: 0 },
+        { sym: 'O', x: 0.97, y: 0, z: 0 },
+      ],
+      bonds: [{ from: 0, to: 1, order: 2 }],
     },
   ],
 
@@ -1573,6 +1913,16 @@ const EXTRA_COMPOUNDS = {
         { from: 2, to: 3, order: 2 }, { from: 2, to: 4, order: 2 },
       ],
     },
+    {
+      name: 'Thallium(I) Chloride',
+      formula: 'TlCl',
+      description: 'Highly toxic ionic compound once used as rat poison before being banned.',
+      atoms: [
+        { sym: 'Tl', x: -1.243, y: 0, z: 0 },
+        { sym: 'Cl', x: 1.243, y: 0, z: 0 },
+      ],
+      bonds: [{ from: 0, to: 1, order: 1 }],
+    },
   ],
 
   // ─── Bismuth (83) ───
@@ -1592,6 +1942,18 @@ const EXTRA_COMPOUNDS = {
         { from: 0, to: 1, order: 1 }, { from: 0, to: 2, order: 1 },
         { from: 3, to: 4, order: 2 }, { from: 0, to: 3, order: 1 },
       ],
+    },
+    {
+      name: 'Bismuth Trichloride',
+      formula: 'BiCl₃',
+      description: 'Pyramidal molecule. Bismuth is the heaviest stable element. Used in cosmetics and medicine.',
+      atoms: [
+        { sym: 'Bi', x: 0, y: 0.5, z: 0 },
+        { sym: 'Cl', x: 2.10, y: -0.60, z: 0 },
+        { sym: 'Cl', x: -1.05, y: -0.60, z: 1.82 },
+        { sym: 'Cl', x: -1.05, y: -0.60, z: -1.82 },
+      ],
+      bonds: [{ from: 0, to: 1, order: 1 }, { from: 0, to: 2, order: 1 }, { from: 0, to: 3, order: 1 }],
     },
   ],
 
@@ -1957,6 +2319,7 @@ const EXTRA_COMPOUNDS = {
       bonds: [{ from: 0, to: 1, order: 2 }, { from: 0, to: 2, order: 2 }],
     },
   ],
+
 };
 
 // Merge extra compounds into ELEMENT_COMPOUNDS (skip duplicates by formula)
