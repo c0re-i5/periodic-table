@@ -6691,4 +6691,1661 @@ const MOLECULAR_ORBITALS = {
       },
     ],
   },
+
+  // ═══════════════════════════════════════════════════════════
+  //  BATCH 2 — Additional molecules (40 new entries)
+  // ═══════════════════════════════════════════════════════════
+
+  // ─── Simple / organic molecules for already-covered elements ───
+
+  'HCN': {
+    // atoms: H(0), C(1), N(2) — linear, along x-axis
+    orbitals: [
+      {
+        name: '3σ (C-H bond)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 1, n: 2, l: 1, m: 1, zeff: 3.25, c: -0.60 },
+          { atom: 0, n: 1, l: 0, m: 0, zeff: 1.24, c:  0.55 },
+          { atom: 1, n: 2, l: 0, m: 0, zeff: 3.25, c:  0.30 },
+        ],
+      },
+      {
+        name: '4σ (C-N bond)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 1, n: 2, l: 1, m: 1, zeff: 3.25, c:  0.55 },
+          { atom: 2, n: 2, l: 1, m: 1, zeff: 3.90, c:  0.65 },
+        ],
+      },
+      {
+        name: '1π (C≡N, y)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 1, n: 2, l: 1, m: -1, zeff: 3.25, c: 0.55 },
+          { atom: 2, n: 2, l: 1, m: -1, zeff: 3.90, c: 0.65 },
+        ],
+      },
+      {
+        name: '1π\' (C≡N, z)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 1, n: 2, l: 1, m: 0, zeff: 3.25, c: 0.55 },
+          { atom: 2, n: 2, l: 1, m: 0, zeff: 3.90, c: 0.65 },
+        ],
+      },
+      {
+        name: '5σ (N lone pair)',
+        type: 'nonbonding',
+        electrons: 2,
+        ao: [
+          { atom: 2, n: 2, l: 0, m: 0, zeff: 3.90, c: 0.80 },
+          { atom: 2, n: 2, l: 1, m: 1, zeff: 3.90, c: -0.35 },
+        ],
+      },
+    ],
+  },
+
+  'CCl₄': {
+    // atoms: C(0), Cl(1-4) — tetrahedral
+    orbitals: [
+      {
+        name: 'a₁ (inner valence)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 2, l: 0, m: 0, zeff: 3.25, c: -0.75 },
+          { atom: 1, n: 3, l: 1, m: 1, zeff: 6.10, c:  0.30 },
+          { atom: 2, n: 3, l: 1, m: 1, zeff: 6.10, c:  0.30 },
+          { atom: 3, n: 3, l: 1, m: 1, zeff: 6.10, c:  0.30 },
+          { atom: 4, n: 3, l: 1, m: 1, zeff: 6.10, c:  0.30 },
+        ],
+      },
+      {
+        name: 't₂ (C-Cl bond 1)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 2, l: 1, m: 1, zeff: 3.25, c:  0.50 },
+          { atom: 1, n: 3, l: 1, m: 1, zeff: 6.10, c:  0.55 },
+          { atom: 2, n: 3, l: 1, m: 1, zeff: 6.10, c: -0.18 },
+          { atom: 3, n: 3, l: 1, m: 1, zeff: 6.10, c: -0.18 },
+          { atom: 4, n: 3, l: 1, m: 1, zeff: 6.10, c: -0.18 },
+        ],
+      },
+      {
+        name: 't₂ (C-Cl bond 2)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 2, l: 1, m: -1, zeff: 3.25, c:  0.50 },
+          { atom: 2, n: 3, l: 1, m: -1, zeff: 6.10, c:  0.55 },
+          { atom: 1, n: 3, l: 1, m: -1, zeff: 6.10, c: -0.18 },
+          { atom: 3, n: 3, l: 1, m: -1, zeff: 6.10, c: -0.18 },
+          { atom: 4, n: 3, l: 1, m: -1, zeff: 6.10, c: -0.18 },
+        ],
+      },
+      {
+        name: 't₂ (C-Cl bond 3)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 2, l: 1, m: 0, zeff: 3.25, c:  0.50 },
+          { atom: 3, n: 3, l: 1, m: 0, zeff: 6.10, c:  0.55 },
+          { atom: 1, n: 3, l: 1, m: 0, zeff: 6.10, c: -0.18 },
+          { atom: 2, n: 3, l: 1, m: 0, zeff: 6.10, c: -0.18 },
+          { atom: 4, n: 3, l: 1, m: 0, zeff: 6.10, c: -0.18 },
+        ],
+      },
+      {
+        name: 'Cl lone pairs (12e)',
+        type: 'nonbonding',
+        electrons: 12,
+        ao: [
+          { atom: 1, n: 3, l: 1, m: 0, zeff: 6.10, c: 0.50 },
+          { atom: 2, n: 3, l: 1, m: -1, zeff: 6.10, c: 0.50 },
+          { atom: 3, n: 3, l: 1, m: 0, zeff: 6.10, c: 0.50 },
+          { atom: 4, n: 3, l: 1, m: -1, zeff: 6.10, c: 0.50 },
+        ],
+      },
+    ],
+  },
+
+  'NO': {
+    // atoms: N(0), O(1) — along x-axis
+    orbitals: [
+      {
+        name: '3σ (inner valence)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 2, l: 0, m: 0, zeff: 3.90, c: -0.65 },
+          { atom: 1, n: 2, l: 0, m: 0, zeff: 4.45, c:  0.58 },
+        ],
+      },
+      {
+        name: '4σ (bond)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 2, l: 1, m: 1, zeff: 3.90, c:  0.60 },
+          { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.65 },
+        ],
+      },
+      {
+        name: '1π (y)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 2, l: 1, m: -1, zeff: 3.90, c: 0.55 },
+          { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.65 },
+        ],
+      },
+      {
+        name: '1π\' (z)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 2, l: 1, m: 0, zeff: 3.90, c: 0.55 },
+          { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.65 },
+        ],
+      },
+      {
+        name: '2π* (radical)',
+        type: 'antibonding',
+        electrons: 1,
+        ao: [
+          { atom: 0, n: 2, l: 1, m: -1, zeff: 3.90, c:  0.65 },
+          { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c: -0.55 },
+        ],
+      },
+    ],
+  },
+
+  'CS₂': {
+    // atoms: C(0), S(1), S(2) — linear, along x-axis
+    orbitals: [
+      {
+        name: 'σg (bonding)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 2, l: 0, m: 0, zeff: 3.25, c: -0.70 },
+          { atom: 1, n: 3, l: 1, m: 1, zeff: 5.45, c:  0.45 },
+          { atom: 2, n: 3, l: 1, m: 1, zeff: 5.45, c:  0.45 },
+        ],
+      },
+      {
+        name: 'σu (bonding)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 2, l: 1, m: 1, zeff: 3.25, c:  0.55 },
+          { atom: 1, n: 3, l: 1, m: 1, zeff: 5.45, c:  0.50 },
+          { atom: 2, n: 3, l: 1, m: 1, zeff: 5.45, c: -0.50 },
+        ],
+      },
+      {
+        name: 'πu (bonding, y)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 2, l: 1, m: -1, zeff: 3.25, c:  0.55 },
+          { atom: 1, n: 3, l: 1, m: -1, zeff: 5.45, c:  0.50 },
+          { atom: 2, n: 3, l: 1, m: -1, zeff: 5.45, c:  0.50 },
+        ],
+      },
+      {
+        name: 'πu (bonding, z)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 2, l: 1, m: 0, zeff: 3.25, c:  0.55 },
+          { atom: 1, n: 3, l: 1, m: 0, zeff: 5.45, c:  0.50 },
+          { atom: 2, n: 3, l: 1, m: 0, zeff: 5.45, c:  0.50 },
+        ],
+      },
+      {
+        name: 'S₁ lone pair',
+        type: 'nonbonding',
+        electrons: 2,
+        ao: [
+          { atom: 1, n: 3, l: 0, m: 0, zeff: 5.45, c: 0.85 },
+          { atom: 1, n: 3, l: 1, m: 1, zeff: 5.45, c: -0.35 },
+        ],
+      },
+      {
+        name: 'S₂ lone pair',
+        type: 'nonbonding',
+        electrons: 2,
+        ao: [
+          { atom: 2, n: 3, l: 0, m: 0, zeff: 5.45, c: 0.85 },
+          { atom: 2, n: 3, l: 1, m: 1, zeff: 5.45, c:  0.35 },
+        ],
+      },
+    ],
+  },
+
+  'SF₆': {
+    // atoms: S(0), F(1-6) — octahedral
+    orbitals: [
+      {
+        name: 'a₁g (inner valence)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 3, l: 0, m: 0, zeff: 5.45, c: -0.70 },
+          { atom: 1, n: 2, l: 1, m: 1, zeff: 5.13, c:  0.27 },
+          { atom: 2, n: 2, l: 1, m: 1, zeff: 5.13, c:  0.27 },
+          { atom: 3, n: 2, l: 1, m: -1, zeff: 5.13, c: 0.27 },
+          { atom: 4, n: 2, l: 1, m: -1, zeff: 5.13, c: 0.27 },
+          { atom: 5, n: 2, l: 1, m: 0, zeff: 5.13, c:  0.27 },
+          { atom: 6, n: 2, l: 1, m: 0, zeff: 5.13, c:  0.27 },
+        ],
+      },
+      {
+        name: 't₁u (S-F bond, x)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 3, l: 1, m: 1, zeff: 5.45, c:  0.50 },
+          { atom: 1, n: 2, l: 1, m: 1, zeff: 5.13, c:  0.55 },
+          { atom: 2, n: 2, l: 1, m: 1, zeff: 5.13, c: -0.55 },
+        ],
+      },
+      {
+        name: 't₁u (S-F bond, y)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 3, l: 1, m: -1, zeff: 5.45, c: 0.50 },
+          { atom: 3, n: 2, l: 1, m: -1, zeff: 5.13, c: 0.55 },
+          { atom: 4, n: 2, l: 1, m: -1, zeff: 5.13, c: -0.55 },
+        ],
+      },
+      {
+        name: 't₁u (S-F bond, z)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 3, l: 1, m: 0, zeff: 5.45, c:  0.50 },
+          { atom: 5, n: 2, l: 1, m: 0, zeff: 5.13, c:  0.55 },
+          { atom: 6, n: 2, l: 1, m: 0, zeff: 5.13, c: -0.55 },
+        ],
+      },
+      {
+        name: 'eg (S-F d-hybrid, dz²)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 3, l: 2, m: 0, zeff: 5.45, c:  0.45 },
+          { atom: 5, n: 2, l: 1, m: 0, zeff: 5.13, c:  0.50 },
+          { atom: 6, n: 2, l: 1, m: 0, zeff: 5.13, c:  0.50 },
+        ],
+      },
+      {
+        name: 'eg (S-F d-hybrid, dx²-y²)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 3, l: 2, m: 2, zeff: 5.45, c:  0.45 },
+          { atom: 1, n: 2, l: 1, m: 1, zeff: 5.13, c:  0.50 },
+          { atom: 3, n: 2, l: 1, m: -1, zeff: 5.13, c: 0.50 },
+        ],
+      },
+      {
+        name: 'F lone pairs (24e)',
+        type: 'nonbonding',
+        electrons: 24,
+        ao: [
+          { atom: 1, n: 2, l: 1, m: 0, zeff: 5.13, c: 0.408 },
+          { atom: 2, n: 2, l: 1, m: 0, zeff: 5.13, c: 0.408 },
+          { atom: 3, n: 2, l: 1, m: 0, zeff: 5.13, c: 0.408 },
+          { atom: 4, n: 2, l: 1, m: 0, zeff: 5.13, c: 0.408 },
+          { atom: 5, n: 2, l: 1, m: -1, zeff: 5.13, c: 0.408 },
+          { atom: 6, n: 2, l: 1, m: -1, zeff: 5.13, c: 0.408 },
+        ],
+      },
+    ],
+  },
+
+  'BN': {
+    // atoms: B(0), N(1) — along x-axis
+    orbitals: [
+      {
+        name: 'σ (bond)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 2, l: 1, m: 1, zeff: 2.60, c:  0.45 },
+          { atom: 1, n: 2, l: 1, m: 1, zeff: 3.90, c:  0.70 },
+        ],
+      },
+      {
+        name: 'π (y)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 2, l: 1, m: -1, zeff: 2.60, c: 0.45 },
+          { atom: 1, n: 2, l: 1, m: -1, zeff: 3.90, c: 0.70 },
+        ],
+      },
+      {
+        name: 'π\' (z)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 2, l: 1, m: 0, zeff: 2.60, c: 0.45 },
+          { atom: 1, n: 2, l: 1, m: 0, zeff: 3.90, c: 0.70 },
+        ],
+      },
+      {
+        name: 'N lone pair',
+        type: 'nonbonding',
+        electrons: 2,
+        ao: [
+          { atom: 1, n: 2, l: 0, m: 0, zeff: 3.90, c: 0.85 },
+          { atom: 1, n: 2, l: 1, m: 1, zeff: 3.90, c: -0.30 },
+        ],
+      },
+    ],
+  },
+
+  'SiC': {
+    // atoms: Si(0), C(1) — along x-axis
+    orbitals: [
+      {
+        name: 'σ (bond)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 3, l: 1, m: 1, zeff: 4.15, c:  0.50 },
+          { atom: 1, n: 2, l: 1, m: 1, zeff: 3.25, c:  0.65 },
+        ],
+      },
+      {
+        name: 'π (y)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 3, l: 1, m: -1, zeff: 4.15, c: 0.45 },
+          { atom: 1, n: 2, l: 1, m: -1, zeff: 3.25, c: 0.70 },
+        ],
+      },
+      {
+        name: 'Si lone pair',
+        type: 'nonbonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 3, l: 0, m: 0, zeff: 4.15, c: 0.85 },
+          { atom: 0, n: 3, l: 1, m: 1, zeff: 4.15, c: -0.30 },
+        ],
+      },
+      {
+        name: 'C lone pair',
+        type: 'nonbonding',
+        electrons: 2,
+        ao: [
+          { atom: 1, n: 2, l: 0, m: 0, zeff: 3.25, c: 0.85 },
+          { atom: 1, n: 2, l: 1, m: 1, zeff: 3.25, c:  0.30 },
+        ],
+      },
+    ],
+  },
+
+  'TiO₂': {
+    // atoms: Ti(0), O(1), O(2) — bent, Ti in center
+    orbitals: [
+      {
+        name: 'σ₁ (Ti-O bond)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 3, l: 2, m: 0, zeff: 4.82, c:  0.40 },
+          { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.60 },
+          { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.60 },
+        ],
+      },
+      {
+        name: 'σ₂ (Ti-O bond)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 4, l: 0, m: 0, zeff: 3.15, c:  0.40 },
+          { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.55 },
+          { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: -0.55 },
+        ],
+      },
+      {
+        name: 'π₁ (d-p, y)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 3, l: 2, m: -1, zeff: 4.82, c: 0.40 },
+          { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.60 },
+          { atom: 2, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.60 },
+        ],
+      },
+      {
+        name: 'π₂ (d-p, z)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 3, l: 2, m: 1, zeff: 4.82, c:  0.40 },
+          { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c:  0.60 },
+          { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c:  0.60 },
+        ],
+      },
+      {
+        name: 'O₁ lone pair',
+        type: 'nonbonding',
+        electrons: 2,
+        ao: [
+          { atom: 1, n: 2, l: 0, m: 0, zeff: 4.45, c: 0.80 },
+          { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.45 },
+        ],
+      },
+      {
+        name: 'O₂ lone pair',
+        type: 'nonbonding',
+        electrons: 2,
+        ao: [
+          { atom: 2, n: 2, l: 0, m: 0, zeff: 4.45, c: 0.80 },
+          { atom: 2, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.45 },
+        ],
+      },
+    ],
+  },
+
+  'CrO₃': {
+    // atoms: Cr(0), O(1), O(2), O(3) — trigonal planar
+    orbitals: [
+      {
+        name: 'σ₁ (Cr-O bond)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 3, l: 2, m: 0, zeff: 5.13, c:  0.40 },
+          { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.55 },
+          { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.55 },
+          { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.55 },
+        ],
+      },
+      {
+        name: 'σ₂ (Cr-O antisym)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 4, l: 0, m: 0, zeff: 3.45, c:  0.35 },
+          { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.55 },
+          { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: -0.27 },
+          { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c: -0.27 },
+        ],
+      },
+      {
+        name: 'π (d-p, out-of-plane)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 3, l: 2, m: 1, zeff: 5.13, c:  0.45 },
+          { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c:  0.55 },
+          { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c:  0.55 },
+          { atom: 3, n: 2, l: 1, m: 0, zeff: 4.45, c:  0.55 },
+        ],
+      },
+      {
+        name: 'O₁ lone pair',
+        type: 'nonbonding',
+        electrons: 2,
+        ao: [
+          { atom: 1, n: 2, l: 0, m: 0, zeff: 4.45, c: 0.80 },
+          { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.45 },
+        ],
+      },
+      {
+        name: 'O₂ lone pair',
+        type: 'nonbonding',
+        electrons: 2,
+        ao: [
+          { atom: 2, n: 2, l: 0, m: 0, zeff: 4.45, c: 0.80 },
+          { atom: 2, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.45 },
+        ],
+      },
+      {
+        name: 'O₃ lone pair',
+        type: 'nonbonding',
+        electrons: 2,
+        ao: [
+          { atom: 3, n: 2, l: 0, m: 0, zeff: 4.45, c: 0.80 },
+          { atom: 3, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.45 },
+        ],
+      },
+    ],
+  },
+
+  'NiCl₂': {
+    // atoms: Ni(0), Cl(1), Cl(2) — linear
+    orbitals: [
+      {
+        name: 'σ₁ (Ni-Cl bond)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 4, l: 0, m: 0, zeff: 4.05, c:  0.35 },
+          { atom: 1, n: 3, l: 1, m: 1, zeff: 6.10, c:  0.55 },
+          { atom: 2, n: 3, l: 1, m: 1, zeff: 6.10, c:  0.55 },
+        ],
+      },
+      {
+        name: 'σ₂ (Ni-Cl antisym)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 3, l: 2, m: 0, zeff: 7.55, c:  0.35 },
+          { atom: 1, n: 3, l: 1, m: 1, zeff: 6.10, c:  0.55 },
+          { atom: 2, n: 3, l: 1, m: 1, zeff: 6.10, c: -0.55 },
+        ],
+      },
+      {
+        name: 'Ni dxy',
+        type: 'nonbonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 3, l: 2, m: -2, zeff: 7.55, c: 1.0 },
+        ],
+      },
+      {
+        name: 'Ni dx²-y²',
+        type: 'nonbonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 3, l: 2, m: 2, zeff: 7.55, c: 1.0 },
+        ],
+      },
+      {
+        name: 'Ni dyz',
+        type: 'nonbonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 3, l: 2, m: -1, zeff: 7.55, c: 1.0 },
+        ],
+      },
+      {
+        name: 'Ni dxz',
+        type: 'nonbonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 3, l: 2, m: 1, zeff: 7.55, c: 1.0 },
+        ],
+      },
+      {
+        name: 'Cl lone pairs (8e)',
+        type: 'nonbonding',
+        electrons: 8,
+        ao: [
+          { atom: 1, n: 3, l: 1, m: 0, zeff: 6.10, c: 0.50 },
+          { atom: 1, n: 3, l: 1, m: -1, zeff: 6.10, c: 0.50 },
+          { atom: 2, n: 3, l: 1, m: 0, zeff: 6.10, c: 0.50 },
+          { atom: 2, n: 3, l: 1, m: -1, zeff: 6.10, c: 0.50 },
+        ],
+      },
+    ],
+  },
+
+  // ─── Transition metal compounds for uncovered elements ───
+
+  'CoO': {
+    // atoms: Co(0), O(1) — along x-axis, Co²⁺ d7
+    orbitals: [
+      {
+        name: 'σ (bond)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 4, l: 0, m: 0, zeff: 3.90, c:  0.35 },
+          { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.75 },
+        ],
+      },
+      {
+        name: 'π (d-p bond, y)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 3, l: 2, m: -1, zeff: 6.90, c:  0.45 },
+          { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c:  0.75 },
+        ],
+      },
+      {
+        name: 'π (d-p bond, z)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 3, l: 2, m: 1, zeff: 6.90, c:  0.45 },
+          { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c:  0.75 },
+        ],
+      },
+      {
+        name: 'O 2s',
+        type: 'nonbonding',
+        electrons: 2,
+        ao: [
+          { atom: 1, n: 2, l: 0, m: 0, zeff: 4.45, c: 1.0 },
+        ],
+      },
+      {
+        name: 'Co dxy',
+        type: 'nonbonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 3, l: 2, m: -2, zeff: 6.90, c: 1.0 },
+        ],
+      },
+      {
+        name: 'Co dx²-y²',
+        type: 'nonbonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 3, l: 2, m: 2, zeff: 6.90, c: 1.0 },
+        ],
+      },
+      {
+        name: 'Co dz²',
+        type: 'nonbonding',
+        electrons: 1,
+        ao: [
+          { atom: 0, n: 3, l: 2, m: 0, zeff: 6.90, c: 1.0 },
+        ],
+      },
+    ],
+  },
+
+  'CoCl₂': {
+    // atoms: Co(0), Cl(1), Cl(2) — linear, Co²⁺ d7
+    orbitals: [
+      {
+        name: 'σ₁ (Co-Cl bond)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 4, l: 0, m: 0, zeff: 3.90, c:  0.35 },
+          { atom: 1, n: 3, l: 1, m: 1, zeff: 6.10, c:  0.55 },
+          { atom: 2, n: 3, l: 1, m: 1, zeff: 6.10, c:  0.55 },
+        ],
+      },
+      {
+        name: 'σ₂ (Co-Cl antisym)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 3, l: 2, m: 0, zeff: 6.90, c:  0.35 },
+          { atom: 1, n: 3, l: 1, m: 1, zeff: 6.10, c:  0.55 },
+          { atom: 2, n: 3, l: 1, m: 1, zeff: 6.10, c: -0.55 },
+        ],
+      },
+      {
+        name: 'Co dxy',
+        type: 'nonbonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 3, l: 2, m: -2, zeff: 6.90, c: 1.0 },
+        ],
+      },
+      {
+        name: 'Co dx²-y²',
+        type: 'nonbonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 3, l: 2, m: 2, zeff: 6.90, c: 1.0 },
+        ],
+      },
+      {
+        name: 'Co dyz',
+        type: 'nonbonding',
+        electrons: 1,
+        ao: [
+          { atom: 0, n: 3, l: 2, m: -1, zeff: 6.90, c: 1.0 },
+        ],
+      },
+      {
+        name: 'Co dxz',
+        type: 'nonbonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 3, l: 2, m: 1, zeff: 6.90, c: 1.0 },
+        ],
+      },
+      {
+        name: 'Cl lone pairs (8e)',
+        type: 'nonbonding',
+        electrons: 8,
+        ao: [
+          { atom: 1, n: 3, l: 1, m: 0, zeff: 6.10, c: 0.50 },
+          { atom: 1, n: 3, l: 1, m: -1, zeff: 6.10, c: 0.50 },
+          { atom: 2, n: 3, l: 1, m: 0, zeff: 6.10, c: 0.50 },
+          { atom: 2, n: 3, l: 1, m: -1, zeff: 6.10, c: 0.50 },
+        ],
+      },
+    ],
+  },
+
+  'SrO': {
+    // atoms: Sr(0), O(1) — along x-axis, ionic Sr²⁺O²⁻
+    orbitals: [
+      {
+        name: 'σ (bond)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 5, l: 0, m: 0, zeff: 2.85, c:  0.30 },
+          { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.80 },
+        ],
+      },
+      {
+        name: 'O 2s',
+        type: 'nonbonding',
+        electrons: 2,
+        ao: [
+          { atom: 1, n: 2, l: 0, m: 0, zeff: 4.45, c: 1.0 },
+        ],
+      },
+      {
+        name: 'O 2py',
+        type: 'nonbonding',
+        electrons: 2,
+        ao: [
+          { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c: 1.0 },
+        ],
+      },
+      {
+        name: 'O 2pz',
+        type: 'nonbonding',
+        electrons: 2,
+        ao: [
+          { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c: 1.0 },
+        ],
+      },
+    ],
+  },
+
+  'Y₂O₃': {
+    // atoms: Y(0), Y(1), O(2), O(3), O(4) — bixbyite unit
+    orbitals: [
+      {
+        name: 'σ₁ (Y-O bond)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 4, l: 2, m: 0, zeff: 6.26, c:  0.35 },
+          { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.60 },
+          { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.60 },
+        ],
+      },
+      {
+        name: 'σ₂ (Y-O bond)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 1, n: 4, l: 2, m: 0, zeff: 6.26, c:  0.35 },
+          { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.60 },
+          { atom: 4, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.60 },
+        ],
+      },
+      {
+        name: 'O₁ lone pairs',
+        type: 'nonbonding',
+        electrons: 4,
+        ao: [
+          { atom: 2, n: 2, l: 0, m: 0, zeff: 4.45, c: 0.70 },
+          { atom: 2, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.70 },
+        ],
+      },
+      {
+        name: 'O₂ lone pairs',
+        type: 'nonbonding',
+        electrons: 4,
+        ao: [
+          { atom: 3, n: 2, l: 0, m: 0, zeff: 4.45, c: 0.70 },
+          { atom: 3, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.70 },
+        ],
+      },
+      {
+        name: 'O₃ lone pairs',
+        type: 'nonbonding',
+        electrons: 4,
+        ao: [
+          { atom: 4, n: 2, l: 0, m: 0, zeff: 4.45, c: 0.70 },
+          { atom: 4, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.70 },
+        ],
+      },
+    ],
+  },
+
+  'InCl₃': {
+    // atoms: In(0), Cl(1), Cl(2), Cl(3) — trigonal planar
+    orbitals: [
+      {
+        name: 'σ₁ (In-Cl bond)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 5, l: 0, m: 0, zeff: 5.00, c:  0.35 },
+          { atom: 1, n: 3, l: 1, m: 1, zeff: 6.10, c:  0.55 },
+          { atom: 2, n: 3, l: 1, m: 1, zeff: 6.10, c:  0.55 },
+          { atom: 3, n: 3, l: 1, m: 1, zeff: 6.10, c:  0.55 },
+        ],
+      },
+      {
+        name: 'σ₂ (In-Cl bond)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 5, l: 1, m: 1, zeff: 5.00, c:  0.40 },
+          { atom: 1, n: 3, l: 1, m: 1, zeff: 6.10, c:  0.55 },
+          { atom: 2, n: 3, l: 1, m: 1, zeff: 6.10, c: -0.27 },
+          { atom: 3, n: 3, l: 1, m: 1, zeff: 6.10, c: -0.27 },
+        ],
+      },
+      {
+        name: 'σ₃ (In-Cl bond)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 5, l: 1, m: -1, zeff: 5.00, c: 0.40 },
+          { atom: 2, n: 3, l: 1, m: -1, zeff: 6.10, c: 0.55 },
+          { atom: 3, n: 3, l: 1, m: -1, zeff: 6.10, c: -0.55 },
+        ],
+      },
+      {
+        name: 'In 5s lone pair',
+        type: 'nonbonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 5, l: 0, m: 0, zeff: 5.00, c: 0.85 },
+        ],
+      },
+      {
+        name: 'Cl lone pairs (12e)',
+        type: 'nonbonding',
+        electrons: 12,
+        ao: [
+          { atom: 1, n: 3, l: 1, m: 0, zeff: 6.10, c: 0.408 },
+          { atom: 1, n: 3, l: 1, m: -1, zeff: 6.10, c: 0.408 },
+          { atom: 2, n: 3, l: 1, m: 0, zeff: 6.10, c: 0.408 },
+          { atom: 2, n: 3, l: 1, m: -1, zeff: 6.10, c: 0.408 },
+          { atom: 3, n: 3, l: 1, m: 0, zeff: 6.10, c: 0.408 },
+          { atom: 3, n: 3, l: 1, m: -1, zeff: 6.10, c: 0.408 },
+        ],
+      },
+    ],
+  },
+
+  'BaO': {
+    // atoms: Ba(0), O(1) — along x-axis, ionic Ba²⁺O²⁻
+    orbitals: [
+      {
+        name: 'σ (bond)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 6, l: 0, m: 0, zeff: 2.85, c:  0.25 },
+          { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.82 },
+        ],
+      },
+      {
+        name: 'O 2s',
+        type: 'nonbonding',
+        electrons: 2,
+        ao: [
+          { atom: 1, n: 2, l: 0, m: 0, zeff: 4.45, c: 1.0 },
+        ],
+      },
+      {
+        name: 'O 2py',
+        type: 'nonbonding',
+        electrons: 2,
+        ao: [
+          { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c: 1.0 },
+        ],
+      },
+      {
+        name: 'O 2pz',
+        type: 'nonbonding',
+        electrons: 2,
+        ao: [
+          { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c: 1.0 },
+        ],
+      },
+    ],
+  },
+
+  'TlCl': {
+    // atoms: Tl(0), Cl(1) — along x-axis, Tl⁺ [Xe]4f¹⁴5d¹⁰6s²
+    orbitals: [
+      {
+        name: 'σ (bond)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 6, l: 1, m: 1, zeff: 6.95, c:  0.35 },
+          { atom: 1, n: 3, l: 1, m: 1, zeff: 6.10, c:  0.75 },
+        ],
+      },
+      {
+        name: 'Tl 6s lone pair',
+        type: 'nonbonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 6, l: 0, m: 0, zeff: 6.95, c: 1.0 },
+        ],
+      },
+      {
+        name: 'Cl 3s',
+        type: 'nonbonding',
+        electrons: 2,
+        ao: [
+          { atom: 1, n: 3, l: 0, m: 0, zeff: 6.10, c: 1.0 },
+        ],
+      },
+      {
+        name: 'Cl lone pairs',
+        type: 'nonbonding',
+        electrons: 4,
+        ao: [
+          { atom: 1, n: 3, l: 1, m: -1, zeff: 6.10, c: 0.707 },
+          { atom: 1, n: 3, l: 1, m: 0, zeff: 6.10, c: 0.707 },
+        ],
+      },
+    ],
+  },
+
+  'BiCl₃': {
+    // atoms: Bi(0), Cl(1), Cl(2), Cl(3) — trigonal pyramidal (like NH₃)
+    orbitals: [
+      {
+        name: 'σ₁ (Bi-Cl bond)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 6, l: 1, m: 1, zeff: 7.41, c:  0.40 },
+          { atom: 1, n: 3, l: 1, m: 1, zeff: 6.10, c:  0.70 },
+        ],
+      },
+      {
+        name: 'σ₂ (Bi-Cl bond)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 6, l: 1, m: -1, zeff: 7.41, c: 0.40 },
+          { atom: 2, n: 3, l: 1, m: -1, zeff: 6.10, c: 0.70 },
+        ],
+      },
+      {
+        name: 'σ₃ (Bi-Cl bond)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 6, l: 1, m: 0, zeff: 7.41, c:  0.40 },
+          { atom: 3, n: 3, l: 1, m: 0, zeff: 6.10, c:  0.70 },
+        ],
+      },
+      {
+        name: 'Bi 6s² lone pair',
+        type: 'nonbonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 6, l: 0, m: 0, zeff: 7.41, c: 1.0 },
+        ],
+      },
+      {
+        name: 'Cl lone pairs (12e)',
+        type: 'nonbonding',
+        electrons: 12,
+        ao: [
+          { atom: 1, n: 3, l: 1, m: 0, zeff: 6.10, c: 0.408 },
+          { atom: 1, n: 3, l: 1, m: -1, zeff: 6.10, c: 0.408 },
+          { atom: 2, n: 3, l: 1, m: 0, zeff: 6.10, c: 0.408 },
+          { atom: 2, n: 3, l: 1, m: 1, zeff: 6.10, c: 0.408 },
+          { atom: 3, n: 3, l: 1, m: 1, zeff: 6.10, c: 0.408 },
+          { atom: 3, n: 3, l: 1, m: -1, zeff: 6.10, c: 0.408 },
+        ],
+      },
+    ],
+  },
+
+  'RaCl₂': {
+    // atoms: Ra(0), Cl(1), Cl(2) — bent/linear
+    orbitals: [
+      {
+        name: 'σ₁ (Ra-Cl bond)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 7, l: 0, m: 0, zeff: 2.85, c:  0.25 },
+          { atom: 1, n: 3, l: 1, m: 1, zeff: 6.10, c:  0.55 },
+          { atom: 2, n: 3, l: 1, m: 1, zeff: 6.10, c:  0.55 },
+        ],
+      },
+      {
+        name: 'σ₂ (Ra-Cl antisym)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 7, l: 1, m: 1, zeff: 2.85, c:  0.25 },
+          { atom: 1, n: 3, l: 1, m: 1, zeff: 6.10, c:  0.55 },
+          { atom: 2, n: 3, l: 1, m: 1, zeff: 6.10, c: -0.55 },
+        ],
+      },
+      {
+        name: 'Cl₁ lone pairs',
+        type: 'nonbonding',
+        electrons: 4,
+        ao: [
+          { atom: 1, n: 3, l: 1, m: 0, zeff: 6.10, c: 0.707 },
+          { atom: 1, n: 3, l: 1, m: -1, zeff: 6.10, c: 0.707 },
+        ],
+      },
+      {
+        name: 'Cl₂ lone pairs',
+        type: 'nonbonding',
+        electrons: 4,
+        ao: [
+          { atom: 2, n: 3, l: 1, m: 0, zeff: 6.10, c: 0.707 },
+          { atom: 2, n: 3, l: 1, m: -1, zeff: 6.10, c: 0.707 },
+        ],
+      },
+    ],
+  },
+
+  'KI': {
+    // atoms: K(0), I(1) — along x-axis, ionic
+    orbitals: [
+      {
+        name: 'σ (bond)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 0, n: 4, l: 0, m: 0, zeff: 2.20, c:  0.25 },
+          { atom: 1, n: 5, l: 1, m: 1, zeff: 7.60, c:  0.80 },
+        ],
+      },
+      {
+        name: 'I 5s',
+        type: 'nonbonding',
+        electrons: 2,
+        ao: [
+          { atom: 1, n: 5, l: 0, m: 0, zeff: 7.60, c: 1.0 },
+        ],
+      },
+      {
+        name: 'I lone pairs (4e)',
+        type: 'nonbonding',
+        electrons: 4,
+        ao: [
+          { atom: 1, n: 5, l: 1, m: -1, zeff: 7.60, c: 0.707 },
+          { atom: 1, n: 5, l: 1, m: 0, zeff: 7.60, c: 0.707 },
+        ],
+      },
+    ],
+  },
+
+  // ─── Actinide dioxide series ───
+
+  'NpO₂': {
+    // atoms: O(0), Np(1), O(2) — linear, Np⁴⁺ 5f³
+    orbitals: [
+      {
+        name: 'σg (bond)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 1, n: 6, l: 2, m: 0, zeff: 10.6, c:  0.30 },
+          { atom: 0, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.60 },
+          { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.60 },
+        ],
+      },
+      {
+        name: 'σu (bond)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 1, n: 5, l: 3, m: 0, zeff: 8.20, c:  0.35 },
+          { atom: 0, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.55 },
+          { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: -0.55 },
+        ],
+      },
+      {
+        name: 'πu (bonding, y)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 1, n: 5, l: 3, m: -1, zeff: 8.20, c: 0.35 },
+          { atom: 0, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.60 },
+          { atom: 2, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.60 },
+        ],
+      },
+      {
+        name: 'πu (bonding, z)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 1, n: 5, l: 3, m: 1, zeff: 8.20, c:  0.35 },
+          { atom: 0, n: 2, l: 1, m: 0, zeff: 4.45, c:  0.60 },
+          { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c:  0.60 },
+        ],
+      },
+      {
+        name: 'Np 5f nonbonding (3e)',
+        type: 'nonbonding',
+        electrons: 3,
+        ao: [
+          { atom: 1, n: 5, l: 3, m: -2, zeff: 8.20, c: 0.577 },
+          { atom: 1, n: 5, l: 3, m: 2, zeff: 8.20, c: 0.577 },
+          { atom: 1, n: 5, l: 3, m: -3, zeff: 8.20, c: 0.577 },
+        ],
+      },
+      {
+        name: 'O lone pairs',
+        type: 'nonbonding',
+        electrons: 4,
+        ao: [
+          { atom: 0, n: 2, l: 0, m: 0, zeff: 4.45, c: 0.50 },
+          { atom: 2, n: 2, l: 0, m: 0, zeff: 4.45, c: 0.50 },
+          { atom: 0, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
+          { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
+        ],
+      },
+    ],
+  },
+
+  'AmO₂': {
+    // atoms: O(0), Am(1), O(2) — linear, Am⁴⁺ 5f⁵
+    orbitals: [
+      {
+        name: 'σg (bond)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 1, n: 6, l: 2, m: 0, zeff: 11.2, c:  0.30 },
+          { atom: 0, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.60 },
+          { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.60 },
+        ],
+      },
+      {
+        name: 'σu (bond)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 1, n: 5, l: 3, m: 0, zeff: 8.80, c:  0.35 },
+          { atom: 0, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.55 },
+          { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: -0.55 },
+        ],
+      },
+      {
+        name: 'πu (bonding, y)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 1, n: 5, l: 3, m: -1, zeff: 8.80, c: 0.35 },
+          { atom: 0, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.60 },
+          { atom: 2, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.60 },
+        ],
+      },
+      {
+        name: 'πu (bonding, z)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 1, n: 5, l: 3, m: 1, zeff: 8.80, c:  0.35 },
+          { atom: 0, n: 2, l: 1, m: 0, zeff: 4.45, c:  0.60 },
+          { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c:  0.60 },
+        ],
+      },
+      {
+        name: 'Am 5f nonbonding (5e)',
+        type: 'nonbonding',
+        electrons: 5,
+        ao: [
+          { atom: 1, n: 5, l: 3, m: -2, zeff: 8.80, c: 0.447 },
+          { atom: 1, n: 5, l: 3, m: 2, zeff: 8.80, c: 0.447 },
+          { atom: 1, n: 5, l: 3, m: -3, zeff: 8.80, c: 0.447 },
+          { atom: 1, n: 5, l: 3, m: 3, zeff: 8.80, c: 0.447 },
+          { atom: 1, n: 5, l: 3, m: -1, zeff: 8.80, c: 0.447 },
+        ],
+      },
+      {
+        name: 'O lone pairs',
+        type: 'nonbonding',
+        electrons: 4,
+        ao: [
+          { atom: 0, n: 2, l: 0, m: 0, zeff: 4.45, c: 0.50 },
+          { atom: 2, n: 2, l: 0, m: 0, zeff: 4.45, c: 0.50 },
+          { atom: 0, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
+          { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
+        ],
+      },
+    ],
+  },
+
+  'CmO₂': {
+    // atoms: O(0), Cm(1), O(2) — linear, Cm⁴⁺ 5f⁶
+    orbitals: [
+      {
+        name: 'σg (bond)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 1, n: 6, l: 2, m: 0, zeff: 11.5, c:  0.30 },
+          { atom: 0, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.60 },
+          { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.60 },
+        ],
+      },
+      {
+        name: 'σu (bond)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 1, n: 5, l: 3, m: 0, zeff: 9.10, c:  0.35 },
+          { atom: 0, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.55 },
+          { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: -0.55 },
+        ],
+      },
+      {
+        name: 'πu (bonding, y)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 1, n: 5, l: 3, m: -1, zeff: 9.10, c: 0.35 },
+          { atom: 0, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.60 },
+          { atom: 2, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.60 },
+        ],
+      },
+      {
+        name: 'πu (bonding, z)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 1, n: 5, l: 3, m: 1, zeff: 9.10, c:  0.35 },
+          { atom: 0, n: 2, l: 1, m: 0, zeff: 4.45, c:  0.60 },
+          { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c:  0.60 },
+        ],
+      },
+      {
+        name: 'Cm 5f nonbonding (6e)',
+        type: 'nonbonding',
+        electrons: 6,
+        ao: [
+          { atom: 1, n: 5, l: 3, m: -2, zeff: 9.10, c: 0.408 },
+          { atom: 1, n: 5, l: 3, m: 2, zeff: 9.10, c: 0.408 },
+          { atom: 1, n: 5, l: 3, m: -3, zeff: 9.10, c: 0.408 },
+          { atom: 1, n: 5, l: 3, m: 3, zeff: 9.10, c: 0.408 },
+          { atom: 1, n: 5, l: 3, m: -1, zeff: 9.10, c: 0.408 },
+          { atom: 1, n: 5, l: 3, m: 1, zeff: 9.10, c: 0.408 },
+        ],
+      },
+      {
+        name: 'O lone pairs',
+        type: 'nonbonding',
+        electrons: 4,
+        ao: [
+          { atom: 0, n: 2, l: 0, m: 0, zeff: 4.45, c: 0.50 },
+          { atom: 2, n: 2, l: 0, m: 0, zeff: 4.45, c: 0.50 },
+          { atom: 0, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
+          { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
+        ],
+      },
+    ],
+  },
+
+  'PaO₂': {
+    // atoms: O(0), Pa(1), O(2) — linear, Pa⁴⁺ 5f¹
+    orbitals: [
+      {
+        name: 'σg (bond)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 1, n: 6, l: 2, m: 0, zeff: 10.2, c:  0.30 },
+          { atom: 0, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.60 },
+          { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.60 },
+        ],
+      },
+      {
+        name: 'σu (bond)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 1, n: 5, l: 3, m: 0, zeff: 7.80, c:  0.35 },
+          { atom: 0, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.55 },
+          { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: -0.55 },
+        ],
+      },
+      {
+        name: 'πu (bonding, y)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 1, n: 5, l: 3, m: -1, zeff: 7.80, c: 0.35 },
+          { atom: 0, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.60 },
+          { atom: 2, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.60 },
+        ],
+      },
+      {
+        name: 'πu (bonding, z)',
+        type: 'bonding',
+        electrons: 2,
+        ao: [
+          { atom: 1, n: 5, l: 3, m: 1, zeff: 7.80, c:  0.35 },
+          { atom: 0, n: 2, l: 1, m: 0, zeff: 4.45, c:  0.60 },
+          { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c:  0.60 },
+        ],
+      },
+      {
+        name: 'Pa 5f nonbonding (1e)',
+        type: 'nonbonding',
+        electrons: 1,
+        ao: [
+          { atom: 1, n: 5, l: 3, m: -2, zeff: 7.80, c: 1.0 },
+        ],
+      },
+      {
+        name: 'O lone pairs',
+        type: 'nonbonding',
+        electrons: 4,
+        ao: [
+          { atom: 0, n: 2, l: 0, m: 0, zeff: 4.45, c: 0.50 },
+          { atom: 2, n: 2, l: 0, m: 0, zeff: 4.45, c: 0.50 },
+          { atom: 0, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
+          { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
+        ],
+      },
+    ],
+  },
+
+  // ─── Lanthanide sesquioxides (Ln₂O₃) ───
+  // Same structure as La₂O₃: atoms Ln(0), Ln(1), O(2), O(3), O(4)
+  // 4f electrons are nonbonding, Zeff from Slater's rules for each Ln
+
+  'Pr₂O₃': {
+    orbitals: [
+      { name: 'σ₁ (Pr-O bond)', type: 'bonding', electrons: 2, ao: [
+        { atom: 0, n: 5, l: 2, m: 0, zeff: 7.60, c: 0.35 }, { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 }, { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
+      ]},
+      { name: 'σ₂ (Pr-O bond)', type: 'bonding', electrons: 2, ao: [
+        { atom: 1, n: 5, l: 2, m: 0, zeff: 7.60, c: 0.35 }, { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 }, { atom: 4, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
+      ]},
+      { name: 'Pr 4f nonbonding (4e)', type: 'nonbonding', electrons: 4, ao: [
+        { atom: 0, n: 4, l: 3, m: -3, zeff: 7.60, c: 0.50 }, { atom: 0, n: 4, l: 3, m: -2, zeff: 7.60, c: 0.50 },
+        { atom: 1, n: 4, l: 3, m: -3, zeff: 7.60, c: 0.50 }, { atom: 1, n: 4, l: 3, m: -2, zeff: 7.60, c: 0.50 },
+      ]},
+      { name: 'O lone pairs', type: 'nonbonding', electrons: 6, ao: [
+        { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 }, { atom: 3, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 }, { atom: 4, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 },
+      ]},
+    ],
+  },
+
+  'Nd₂O₃': {
+    orbitals: [
+      { name: 'σ₁ (Nd-O bond)', type: 'bonding', electrons: 2, ao: [
+        { atom: 0, n: 5, l: 2, m: 0, zeff: 7.95, c: 0.35 }, { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 }, { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
+      ]},
+      { name: 'σ₂ (Nd-O bond)', type: 'bonding', electrons: 2, ao: [
+        { atom: 1, n: 5, l: 2, m: 0, zeff: 7.95, c: 0.35 }, { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 }, { atom: 4, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
+      ]},
+      { name: 'Nd 4f nonbonding (6e)', type: 'nonbonding', electrons: 6, ao: [
+        { atom: 0, n: 4, l: 3, m: -3, zeff: 7.95, c: 0.408 }, { atom: 0, n: 4, l: 3, m: -2, zeff: 7.95, c: 0.408 }, { atom: 0, n: 4, l: 3, m: -1, zeff: 7.95, c: 0.408 },
+        { atom: 1, n: 4, l: 3, m: -3, zeff: 7.95, c: 0.408 }, { atom: 1, n: 4, l: 3, m: -2, zeff: 7.95, c: 0.408 }, { atom: 1, n: 4, l: 3, m: -1, zeff: 7.95, c: 0.408 },
+      ]},
+      { name: 'O lone pairs', type: 'nonbonding', electrons: 6, ao: [
+        { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 }, { atom: 3, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 }, { atom: 4, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 },
+      ]},
+    ],
+  },
+
+  'Sm₂O₃': {
+    orbitals: [
+      { name: 'σ₁ (Sm-O bond)', type: 'bonding', electrons: 2, ao: [
+        { atom: 0, n: 5, l: 2, m: 0, zeff: 8.65, c: 0.35 }, { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 }, { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
+      ]},
+      { name: 'σ₂ (Sm-O bond)', type: 'bonding', electrons: 2, ao: [
+        { atom: 1, n: 5, l: 2, m: 0, zeff: 8.65, c: 0.35 }, { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 }, { atom: 4, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
+      ]},
+      { name: 'Sm 4f nonbonding (10e)', type: 'nonbonding', electrons: 10, ao: [
+        { atom: 0, n: 4, l: 3, m: -3, zeff: 8.65, c: 0.316 }, { atom: 0, n: 4, l: 3, m: -2, zeff: 8.65, c: 0.316 }, { atom: 0, n: 4, l: 3, m: -1, zeff: 8.65, c: 0.316 }, { atom: 0, n: 4, l: 3, m: 0, zeff: 8.65, c: 0.316 }, { atom: 0, n: 4, l: 3, m: 1, zeff: 8.65, c: 0.316 },
+        { atom: 1, n: 4, l: 3, m: -3, zeff: 8.65, c: 0.316 }, { atom: 1, n: 4, l: 3, m: -2, zeff: 8.65, c: 0.316 }, { atom: 1, n: 4, l: 3, m: -1, zeff: 8.65, c: 0.316 }, { atom: 1, n: 4, l: 3, m: 0, zeff: 8.65, c: 0.316 }, { atom: 1, n: 4, l: 3, m: 1, zeff: 8.65, c: 0.316 },
+      ]},
+      { name: 'O lone pairs', type: 'nonbonding', electrons: 6, ao: [
+        { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 }, { atom: 3, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 }, { atom: 4, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 },
+      ]},
+    ],
+  },
+
+  'Eu₂O₃': {
+    orbitals: [
+      { name: 'σ₁ (Eu-O bond)', type: 'bonding', electrons: 2, ao: [
+        { atom: 0, n: 5, l: 2, m: 0, zeff: 9.00, c: 0.35 }, { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 }, { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
+      ]},
+      { name: 'σ₂ (Eu-O bond)', type: 'bonding', electrons: 2, ao: [
+        { atom: 1, n: 5, l: 2, m: 0, zeff: 9.00, c: 0.35 }, { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 }, { atom: 4, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
+      ]},
+      { name: 'Eu 4f nonbonding (12e)', type: 'nonbonding', electrons: 12, ao: [
+        { atom: 0, n: 4, l: 3, m: -3, zeff: 9.00, c: 0.289 }, { atom: 0, n: 4, l: 3, m: -2, zeff: 9.00, c: 0.289 }, { atom: 0, n: 4, l: 3, m: -1, zeff: 9.00, c: 0.289 }, { atom: 0, n: 4, l: 3, m: 0, zeff: 9.00, c: 0.289 }, { atom: 0, n: 4, l: 3, m: 1, zeff: 9.00, c: 0.289 }, { atom: 0, n: 4, l: 3, m: 2, zeff: 9.00, c: 0.289 },
+        { atom: 1, n: 4, l: 3, m: -3, zeff: 9.00, c: 0.289 }, { atom: 1, n: 4, l: 3, m: -2, zeff: 9.00, c: 0.289 }, { atom: 1, n: 4, l: 3, m: -1, zeff: 9.00, c: 0.289 }, { atom: 1, n: 4, l: 3, m: 0, zeff: 9.00, c: 0.289 }, { atom: 1, n: 4, l: 3, m: 1, zeff: 9.00, c: 0.289 }, { atom: 1, n: 4, l: 3, m: 2, zeff: 9.00, c: 0.289 },
+      ]},
+      { name: 'O lone pairs', type: 'nonbonding', electrons: 6, ao: [
+        { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 }, { atom: 3, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 }, { atom: 4, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 },
+      ]},
+    ],
+  },
+
+  'Gd₂O₃': {
+    orbitals: [
+      { name: 'σ₁ (Gd-O bond)', type: 'bonding', electrons: 2, ao: [
+        { atom: 0, n: 5, l: 2, m: 0, zeff: 9.35, c: 0.35 }, { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 }, { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
+      ]},
+      { name: 'σ₂ (Gd-O bond)', type: 'bonding', electrons: 2, ao: [
+        { atom: 1, n: 5, l: 2, m: 0, zeff: 9.35, c: 0.35 }, { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 }, { atom: 4, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
+      ]},
+      { name: 'Gd 4f nonbonding (14e)', type: 'nonbonding', electrons: 14, ao: [
+        { atom: 0, n: 4, l: 3, m: -3, zeff: 9.35, c: 0.267 }, { atom: 0, n: 4, l: 3, m: -2, zeff: 9.35, c: 0.267 }, { atom: 0, n: 4, l: 3, m: -1, zeff: 9.35, c: 0.267 }, { atom: 0, n: 4, l: 3, m: 0, zeff: 9.35, c: 0.267 }, { atom: 0, n: 4, l: 3, m: 1, zeff: 9.35, c: 0.267 }, { atom: 0, n: 4, l: 3, m: 2, zeff: 9.35, c: 0.267 }, { atom: 0, n: 4, l: 3, m: 3, zeff: 9.35, c: 0.267 },
+        { atom: 1, n: 4, l: 3, m: -3, zeff: 9.35, c: 0.267 }, { atom: 1, n: 4, l: 3, m: -2, zeff: 9.35, c: 0.267 }, { atom: 1, n: 4, l: 3, m: -1, zeff: 9.35, c: 0.267 }, { atom: 1, n: 4, l: 3, m: 0, zeff: 9.35, c: 0.267 }, { atom: 1, n: 4, l: 3, m: 1, zeff: 9.35, c: 0.267 }, { atom: 1, n: 4, l: 3, m: 2, zeff: 9.35, c: 0.267 }, { atom: 1, n: 4, l: 3, m: 3, zeff: 9.35, c: 0.267 },
+      ]},
+      { name: 'O lone pairs', type: 'nonbonding', electrons: 6, ao: [
+        { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 }, { atom: 3, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 }, { atom: 4, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 },
+      ]},
+    ],
+  },
+
+  'Tb₂O₃': {
+    orbitals: [
+      { name: 'σ₁ (Tb-O bond)', type: 'bonding', electrons: 2, ao: [
+        { atom: 0, n: 5, l: 2, m: 0, zeff: 9.70, c: 0.35 }, { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 }, { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
+      ]},
+      { name: 'σ₂ (Tb-O bond)', type: 'bonding', electrons: 2, ao: [
+        { atom: 1, n: 5, l: 2, m: 0, zeff: 9.70, c: 0.35 }, { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 }, { atom: 4, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
+      ]},
+      { name: 'Tb 4f nonbonding (16e)', type: 'nonbonding', electrons: 16, ao: [
+        { atom: 0, n: 4, l: 3, m: -3, zeff: 9.70, c: 0.250 }, { atom: 0, n: 4, l: 3, m: -2, zeff: 9.70, c: 0.250 }, { atom: 0, n: 4, l: 3, m: -1, zeff: 9.70, c: 0.250 }, { atom: 0, n: 4, l: 3, m: 0, zeff: 9.70, c: 0.250 }, { atom: 0, n: 4, l: 3, m: 1, zeff: 9.70, c: 0.250 }, { atom: 0, n: 4, l: 3, m: 2, zeff: 9.70, c: 0.250 }, { atom: 0, n: 4, l: 3, m: 3, zeff: 9.70, c: 0.250 }, { atom: 0, n: 4, l: 3, m: -3, zeff: 9.70, c: 0.250 },
+        { atom: 1, n: 4, l: 3, m: -3, zeff: 9.70, c: 0.250 }, { atom: 1, n: 4, l: 3, m: -2, zeff: 9.70, c: 0.250 }, { atom: 1, n: 4, l: 3, m: -1, zeff: 9.70, c: 0.250 }, { atom: 1, n: 4, l: 3, m: 0, zeff: 9.70, c: 0.250 }, { atom: 1, n: 4, l: 3, m: 1, zeff: 9.70, c: 0.250 }, { atom: 1, n: 4, l: 3, m: 2, zeff: 9.70, c: 0.250 }, { atom: 1, n: 4, l: 3, m: 3, zeff: 9.70, c: 0.250 }, { atom: 1, n: 4, l: 3, m: -3, zeff: 9.70, c: 0.250 },
+      ]},
+      { name: 'O lone pairs', type: 'nonbonding', electrons: 6, ao: [
+        { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 }, { atom: 3, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 }, { atom: 4, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 },
+      ]},
+    ],
+  },
+
+  'Dy₂O₃': {
+    orbitals: [
+      { name: 'σ₁ (Dy-O bond)', type: 'bonding', electrons: 2, ao: [
+        { atom: 0, n: 5, l: 2, m: 0, zeff: 10.05, c: 0.35 }, { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 }, { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
+      ]},
+      { name: 'σ₂ (Dy-O bond)', type: 'bonding', electrons: 2, ao: [
+        { atom: 1, n: 5, l: 2, m: 0, zeff: 10.05, c: 0.35 }, { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 }, { atom: 4, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
+      ]},
+      { name: 'Dy 4f nonbonding (18e)', type: 'nonbonding', electrons: 18, ao: [
+        { atom: 0, n: 4, l: 3, m: -3, zeff: 10.05, c: 0.236 }, { atom: 0, n: 4, l: 3, m: -2, zeff: 10.05, c: 0.236 }, { atom: 0, n: 4, l: 3, m: -1, zeff: 10.05, c: 0.236 }, { atom: 0, n: 4, l: 3, m: 0, zeff: 10.05, c: 0.236 }, { atom: 0, n: 4, l: 3, m: 1, zeff: 10.05, c: 0.236 }, { atom: 0, n: 4, l: 3, m: 2, zeff: 10.05, c: 0.236 }, { atom: 0, n: 4, l: 3, m: 3, zeff: 10.05, c: 0.236 },
+        { atom: 0, n: 4, l: 3, m: -3, zeff: 10.05, c: 0.236 }, { atom: 0, n: 4, l: 3, m: -2, zeff: 10.05, c: 0.236 },
+        { atom: 1, n: 4, l: 3, m: -3, zeff: 10.05, c: 0.236 }, { atom: 1, n: 4, l: 3, m: -2, zeff: 10.05, c: 0.236 }, { atom: 1, n: 4, l: 3, m: -1, zeff: 10.05, c: 0.236 }, { atom: 1, n: 4, l: 3, m: 0, zeff: 10.05, c: 0.236 }, { atom: 1, n: 4, l: 3, m: 1, zeff: 10.05, c: 0.236 }, { atom: 1, n: 4, l: 3, m: 2, zeff: 10.05, c: 0.236 }, { atom: 1, n: 4, l: 3, m: 3, zeff: 10.05, c: 0.236 },
+        { atom: 1, n: 4, l: 3, m: -3, zeff: 10.05, c: 0.236 }, { atom: 1, n: 4, l: 3, m: -2, zeff: 10.05, c: 0.236 },
+      ]},
+      { name: 'O lone pairs', type: 'nonbonding', electrons: 6, ao: [
+        { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 }, { atom: 3, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 }, { atom: 4, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 },
+      ]},
+    ],
+  },
+
+  'Ho₂O₃': {
+    orbitals: [
+      { name: 'σ₁ (Ho-O bond)', type: 'bonding', electrons: 2, ao: [
+        { atom: 0, n: 5, l: 2, m: 0, zeff: 10.40, c: 0.35 }, { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 }, { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
+      ]},
+      { name: 'σ₂ (Ho-O bond)', type: 'bonding', electrons: 2, ao: [
+        { atom: 1, n: 5, l: 2, m: 0, zeff: 10.40, c: 0.35 }, { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 }, { atom: 4, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
+      ]},
+      { name: 'Ho 4f nonbonding (20e)', type: 'nonbonding', electrons: 20, ao: [
+        { atom: 0, n: 4, l: 3, m: -3, zeff: 10.40, c: 0.224 }, { atom: 0, n: 4, l: 3, m: -2, zeff: 10.40, c: 0.224 }, { atom: 0, n: 4, l: 3, m: -1, zeff: 10.40, c: 0.224 }, { atom: 0, n: 4, l: 3, m: 0, zeff: 10.40, c: 0.224 }, { atom: 0, n: 4, l: 3, m: 1, zeff: 10.40, c: 0.224 }, { atom: 0, n: 4, l: 3, m: 2, zeff: 10.40, c: 0.224 }, { atom: 0, n: 4, l: 3, m: 3, zeff: 10.40, c: 0.224 },
+        { atom: 0, n: 4, l: 3, m: -3, zeff: 10.40, c: 0.224 }, { atom: 0, n: 4, l: 3, m: -2, zeff: 10.40, c: 0.224 }, { atom: 0, n: 4, l: 3, m: -1, zeff: 10.40, c: 0.224 },
+        { atom: 1, n: 4, l: 3, m: -3, zeff: 10.40, c: 0.224 }, { atom: 1, n: 4, l: 3, m: -2, zeff: 10.40, c: 0.224 }, { atom: 1, n: 4, l: 3, m: -1, zeff: 10.40, c: 0.224 }, { atom: 1, n: 4, l: 3, m: 0, zeff: 10.40, c: 0.224 }, { atom: 1, n: 4, l: 3, m: 1, zeff: 10.40, c: 0.224 }, { atom: 1, n: 4, l: 3, m: 2, zeff: 10.40, c: 0.224 }, { atom: 1, n: 4, l: 3, m: 3, zeff: 10.40, c: 0.224 },
+        { atom: 1, n: 4, l: 3, m: -3, zeff: 10.40, c: 0.224 }, { atom: 1, n: 4, l: 3, m: -2, zeff: 10.40, c: 0.224 }, { atom: 1, n: 4, l: 3, m: -1, zeff: 10.40, c: 0.224 },
+      ]},
+      { name: 'O lone pairs', type: 'nonbonding', electrons: 6, ao: [
+        { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 }, { atom: 3, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 }, { atom: 4, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 },
+      ]},
+    ],
+  },
+
+  'Er₂O₃': {
+    orbitals: [
+      { name: 'σ₁ (Er-O bond)', type: 'bonding', electrons: 2, ao: [
+        { atom: 0, n: 5, l: 2, m: 0, zeff: 10.75, c: 0.35 }, { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 }, { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
+      ]},
+      { name: 'σ₂ (Er-O bond)', type: 'bonding', electrons: 2, ao: [
+        { atom: 1, n: 5, l: 2, m: 0, zeff: 10.75, c: 0.35 }, { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 }, { atom: 4, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
+      ]},
+      { name: 'Er 4f nonbonding (22e)', type: 'nonbonding', electrons: 22, ao: [
+        { atom: 0, n: 4, l: 3, m: -3, zeff: 10.75, c: 0.213 }, { atom: 0, n: 4, l: 3, m: -2, zeff: 10.75, c: 0.213 }, { atom: 0, n: 4, l: 3, m: -1, zeff: 10.75, c: 0.213 }, { atom: 0, n: 4, l: 3, m: 0, zeff: 10.75, c: 0.213 }, { atom: 0, n: 4, l: 3, m: 1, zeff: 10.75, c: 0.213 }, { atom: 0, n: 4, l: 3, m: 2, zeff: 10.75, c: 0.213 }, { atom: 0, n: 4, l: 3, m: 3, zeff: 10.75, c: 0.213 },
+        { atom: 0, n: 4, l: 3, m: -3, zeff: 10.75, c: 0.213 }, { atom: 0, n: 4, l: 3, m: -2, zeff: 10.75, c: 0.213 }, { atom: 0, n: 4, l: 3, m: -1, zeff: 10.75, c: 0.213 }, { atom: 0, n: 4, l: 3, m: 0, zeff: 10.75, c: 0.213 },
+        { atom: 1, n: 4, l: 3, m: -3, zeff: 10.75, c: 0.213 }, { atom: 1, n: 4, l: 3, m: -2, zeff: 10.75, c: 0.213 }, { atom: 1, n: 4, l: 3, m: -1, zeff: 10.75, c: 0.213 }, { atom: 1, n: 4, l: 3, m: 0, zeff: 10.75, c: 0.213 }, { atom: 1, n: 4, l: 3, m: 1, zeff: 10.75, c: 0.213 }, { atom: 1, n: 4, l: 3, m: 2, zeff: 10.75, c: 0.213 }, { atom: 1, n: 4, l: 3, m: 3, zeff: 10.75, c: 0.213 },
+        { atom: 1, n: 4, l: 3, m: -3, zeff: 10.75, c: 0.213 }, { atom: 1, n: 4, l: 3, m: -2, zeff: 10.75, c: 0.213 }, { atom: 1, n: 4, l: 3, m: -1, zeff: 10.75, c: 0.213 }, { atom: 1, n: 4, l: 3, m: 0, zeff: 10.75, c: 0.213 },
+      ]},
+      { name: 'O lone pairs', type: 'nonbonding', electrons: 6, ao: [
+        { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 }, { atom: 3, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 }, { atom: 4, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 },
+      ]},
+    ],
+  },
+
+  'Tm₂O₃': {
+    orbitals: [
+      { name: 'σ₁ (Tm-O bond)', type: 'bonding', electrons: 2, ao: [
+        { atom: 0, n: 5, l: 2, m: 0, zeff: 11.10, c: 0.35 }, { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 }, { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
+      ]},
+      { name: 'σ₂ (Tm-O bond)', type: 'bonding', electrons: 2, ao: [
+        { atom: 1, n: 5, l: 2, m: 0, zeff: 11.10, c: 0.35 }, { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 }, { atom: 4, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
+      ]},
+      { name: 'Tm 4f nonbonding (24e)', type: 'nonbonding', electrons: 24, ao: [
+        { atom: 0, n: 4, l: 3, m: -3, zeff: 11.10, c: 0.204 }, { atom: 0, n: 4, l: 3, m: -2, zeff: 11.10, c: 0.204 }, { atom: 0, n: 4, l: 3, m: -1, zeff: 11.10, c: 0.204 }, { atom: 0, n: 4, l: 3, m: 0, zeff: 11.10, c: 0.204 }, { atom: 0, n: 4, l: 3, m: 1, zeff: 11.10, c: 0.204 }, { atom: 0, n: 4, l: 3, m: 2, zeff: 11.10, c: 0.204 }, { atom: 0, n: 4, l: 3, m: 3, zeff: 11.10, c: 0.204 },
+        { atom: 0, n: 4, l: 3, m: -3, zeff: 11.10, c: 0.204 }, { atom: 0, n: 4, l: 3, m: -2, zeff: 11.10, c: 0.204 }, { atom: 0, n: 4, l: 3, m: -1, zeff: 11.10, c: 0.204 }, { atom: 0, n: 4, l: 3, m: 0, zeff: 11.10, c: 0.204 }, { atom: 0, n: 4, l: 3, m: 1, zeff: 11.10, c: 0.204 },
+        { atom: 1, n: 4, l: 3, m: -3, zeff: 11.10, c: 0.204 }, { atom: 1, n: 4, l: 3, m: -2, zeff: 11.10, c: 0.204 }, { atom: 1, n: 4, l: 3, m: -1, zeff: 11.10, c: 0.204 }, { atom: 1, n: 4, l: 3, m: 0, zeff: 11.10, c: 0.204 }, { atom: 1, n: 4, l: 3, m: 1, zeff: 11.10, c: 0.204 }, { atom: 1, n: 4, l: 3, m: 2, zeff: 11.10, c: 0.204 }, { atom: 1, n: 4, l: 3, m: 3, zeff: 11.10, c: 0.204 },
+        { atom: 1, n: 4, l: 3, m: -3, zeff: 11.10, c: 0.204 }, { atom: 1, n: 4, l: 3, m: -2, zeff: 11.10, c: 0.204 }, { atom: 1, n: 4, l: 3, m: -1, zeff: 11.10, c: 0.204 }, { atom: 1, n: 4, l: 3, m: 0, zeff: 11.10, c: 0.204 }, { atom: 1, n: 4, l: 3, m: 1, zeff: 11.10, c: 0.204 },
+      ]},
+      { name: 'O lone pairs', type: 'nonbonding', electrons: 6, ao: [
+        { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 }, { atom: 3, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 }, { atom: 4, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 },
+      ]},
+    ],
+  },
+
+  'Yb₂O₃': {
+    orbitals: [
+      { name: 'σ₁ (Yb-O bond)', type: 'bonding', electrons: 2, ao: [
+        { atom: 0, n: 5, l: 2, m: 0, zeff: 11.45, c: 0.35 }, { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 }, { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
+      ]},
+      { name: 'σ₂ (Yb-O bond)', type: 'bonding', electrons: 2, ao: [
+        { atom: 1, n: 5, l: 2, m: 0, zeff: 11.45, c: 0.35 }, { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 }, { atom: 4, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
+      ]},
+      { name: 'Yb 4f nonbonding (26e)', type: 'nonbonding', electrons: 26, ao: [
+        { atom: 0, n: 4, l: 3, m: -3, zeff: 11.45, c: 0.196 }, { atom: 0, n: 4, l: 3, m: -2, zeff: 11.45, c: 0.196 }, { atom: 0, n: 4, l: 3, m: -1, zeff: 11.45, c: 0.196 }, { atom: 0, n: 4, l: 3, m: 0, zeff: 11.45, c: 0.196 }, { atom: 0, n: 4, l: 3, m: 1, zeff: 11.45, c: 0.196 }, { atom: 0, n: 4, l: 3, m: 2, zeff: 11.45, c: 0.196 }, { atom: 0, n: 4, l: 3, m: 3, zeff: 11.45, c: 0.196 },
+        { atom: 0, n: 4, l: 3, m: -3, zeff: 11.45, c: 0.196 }, { atom: 0, n: 4, l: 3, m: -2, zeff: 11.45, c: 0.196 }, { atom: 0, n: 4, l: 3, m: -1, zeff: 11.45, c: 0.196 }, { atom: 0, n: 4, l: 3, m: 0, zeff: 11.45, c: 0.196 }, { atom: 0, n: 4, l: 3, m: 1, zeff: 11.45, c: 0.196 }, { atom: 0, n: 4, l: 3, m: 2, zeff: 11.45, c: 0.196 },
+        { atom: 1, n: 4, l: 3, m: -3, zeff: 11.45, c: 0.196 }, { atom: 1, n: 4, l: 3, m: -2, zeff: 11.45, c: 0.196 }, { atom: 1, n: 4, l: 3, m: -1, zeff: 11.45, c: 0.196 }, { atom: 1, n: 4, l: 3, m: 0, zeff: 11.45, c: 0.196 }, { atom: 1, n: 4, l: 3, m: 1, zeff: 11.45, c: 0.196 }, { atom: 1, n: 4, l: 3, m: 2, zeff: 11.45, c: 0.196 }, { atom: 1, n: 4, l: 3, m: 3, zeff: 11.45, c: 0.196 },
+        { atom: 1, n: 4, l: 3, m: -3, zeff: 11.45, c: 0.196 }, { atom: 1, n: 4, l: 3, m: -2, zeff: 11.45, c: 0.196 }, { atom: 1, n: 4, l: 3, m: -1, zeff: 11.45, c: 0.196 }, { atom: 1, n: 4, l: 3, m: 0, zeff: 11.45, c: 0.196 }, { atom: 1, n: 4, l: 3, m: 1, zeff: 11.45, c: 0.196 }, { atom: 1, n: 4, l: 3, m: 2, zeff: 11.45, c: 0.196 },
+      ]},
+      { name: 'O lone pairs', type: 'nonbonding', electrons: 6, ao: [
+        { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 }, { atom: 3, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 }, { atom: 4, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 },
+      ]},
+    ],
+  },
+
+  'Lu₂O₃': {
+    orbitals: [
+      { name: 'σ₁ (Lu-O bond)', type: 'bonding', electrons: 2, ao: [
+        { atom: 0, n: 5, l: 2, m: 0, zeff: 11.80, c: 0.35 }, { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 }, { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
+      ]},
+      { name: 'σ₂ (Lu-O bond)', type: 'bonding', electrons: 2, ao: [
+        { atom: 1, n: 5, l: 2, m: 0, zeff: 11.80, c: 0.35 }, { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 }, { atom: 4, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
+      ]},
+      { name: 'O lone pairs', type: 'nonbonding', electrons: 6, ao: [
+        { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 }, { atom: 3, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 }, { atom: 4, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 },
+      ]},
+    ],
+  },
+
+  // ─── Actinide sesquioxides ───
+
+  'Ac₂O₃': {
+    orbitals: [
+      { name: 'σ₁ (Ac-O bond)', type: 'bonding', electrons: 2, ao: [
+        { atom: 0, n: 6, l: 2, m: 0, zeff: 8.50, c: 0.35 }, { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 }, { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
+      ]},
+      { name: 'σ₂ (Ac-O bond)', type: 'bonding', electrons: 2, ao: [
+        { atom: 1, n: 6, l: 2, m: 0, zeff: 8.50, c: 0.35 }, { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 }, { atom: 4, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
+      ]},
+      { name: 'O lone pairs', type: 'nonbonding', electrons: 6, ao: [
+        { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 }, { atom: 3, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 }, { atom: 4, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 },
+      ]},
+    ],
+  },
+
+  'Cm₂O₃': {
+    orbitals: [
+      { name: 'σ₁ (Cm-O bond)', type: 'bonding', electrons: 2, ao: [
+        { atom: 0, n: 6, l: 2, m: 0, zeff: 11.50, c: 0.35 }, { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 }, { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
+      ]},
+      { name: 'σ₂ (Cm-O bond)', type: 'bonding', electrons: 2, ao: [
+        { atom: 1, n: 6, l: 2, m: 0, zeff: 11.50, c: 0.35 }, { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 }, { atom: 4, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
+      ]},
+      { name: 'Cm 5f nonbonding (14e)', type: 'nonbonding', electrons: 14, ao: [
+        { atom: 0, n: 5, l: 3, m: -3, zeff: 9.10, c: 0.267 }, { atom: 0, n: 5, l: 3, m: -2, zeff: 9.10, c: 0.267 }, { atom: 0, n: 5, l: 3, m: -1, zeff: 9.10, c: 0.267 }, { atom: 0, n: 5, l: 3, m: 0, zeff: 9.10, c: 0.267 }, { atom: 0, n: 5, l: 3, m: 1, zeff: 9.10, c: 0.267 }, { atom: 0, n: 5, l: 3, m: 2, zeff: 9.10, c: 0.267 }, { atom: 0, n: 5, l: 3, m: 3, zeff: 9.10, c: 0.267 },
+        { atom: 1, n: 5, l: 3, m: -3, zeff: 9.10, c: 0.267 }, { atom: 1, n: 5, l: 3, m: -2, zeff: 9.10, c: 0.267 }, { atom: 1, n: 5, l: 3, m: -1, zeff: 9.10, c: 0.267 }, { atom: 1, n: 5, l: 3, m: 0, zeff: 9.10, c: 0.267 }, { atom: 1, n: 5, l: 3, m: 1, zeff: 9.10, c: 0.267 }, { atom: 1, n: 5, l: 3, m: 2, zeff: 9.10, c: 0.267 }, { atom: 1, n: 5, l: 3, m: 3, zeff: 9.10, c: 0.267 },
+      ]},
+      { name: 'O lone pairs', type: 'nonbonding', electrons: 6, ao: [
+        { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 }, { atom: 3, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 }, { atom: 4, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 },
+      ]},
+    ],
+  },
+
+  'PmCl₃': {
+    // atoms: Pm(0), Cl(1), Cl(2), Cl(3) — trigonal pyramidal
+    orbitals: [
+      { name: 'σ₁ (Pm-Cl bond)', type: 'bonding', electrons: 2, ao: [
+        { atom: 0, n: 5, l: 2, m: 0, zeff: 8.30, c: 0.35 }, { atom: 1, n: 3, l: 1, m: 1, zeff: 6.10, c: 0.70 },
+      ]},
+      { name: 'σ₂ (Pm-Cl bond)', type: 'bonding', electrons: 2, ao: [
+        { atom: 0, n: 5, l: 2, m: 2, zeff: 8.30, c: 0.35 }, { atom: 2, n: 3, l: 1, m: -1, zeff: 6.10, c: 0.70 },
+      ]},
+      { name: 'σ₃ (Pm-Cl bond)', type: 'bonding', electrons: 2, ao: [
+        { atom: 0, n: 5, l: 2, m: -2, zeff: 8.30, c: 0.35 }, { atom: 3, n: 3, l: 1, m: 0, zeff: 6.10, c: 0.70 },
+      ]},
+      { name: 'Pm 4f nonbonding (8e)', type: 'nonbonding', electrons: 8, ao: [
+        { atom: 0, n: 4, l: 3, m: -3, zeff: 8.30, c: 0.354 }, { atom: 0, n: 4, l: 3, m: -2, zeff: 8.30, c: 0.354 }, { atom: 0, n: 4, l: 3, m: -1, zeff: 8.30, c: 0.354 }, { atom: 0, n: 4, l: 3, m: 0, zeff: 8.30, c: 0.354 },
+        { atom: 0, n: 4, l: 3, m: 1, zeff: 8.30, c: 0.354 }, { atom: 0, n: 4, l: 3, m: 2, zeff: 8.30, c: 0.354 }, { atom: 0, n: 4, l: 3, m: 3, zeff: 8.30, c: 0.354 }, { atom: 0, n: 4, l: 3, m: -3, zeff: 8.30, c: 0.354 },
+      ]},
+      { name: 'Cl lone pairs (12e)', type: 'nonbonding', electrons: 12, ao: [
+        { atom: 1, n: 3, l: 1, m: 0, zeff: 6.10, c: 0.408 }, { atom: 1, n: 3, l: 1, m: -1, zeff: 6.10, c: 0.408 },
+        { atom: 2, n: 3, l: 1, m: 0, zeff: 6.10, c: 0.408 }, { atom: 2, n: 3, l: 1, m: 1, zeff: 6.10, c: 0.408 },
+        { atom: 3, n: 3, l: 1, m: 1, zeff: 6.10, c: 0.408 }, { atom: 3, n: 3, l: 1, m: -1, zeff: 6.10, c: 0.408 },
+      ]},
+    ],
+  },
 };

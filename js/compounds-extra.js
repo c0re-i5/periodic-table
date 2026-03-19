@@ -1639,6 +1639,324 @@ const EXTRA_COMPOUNDS = {
       bonds: [{ from: 0, to: 1, order: 2 }, { from: 0, to: 2, order: 2 }],
     },
   ],
+
+  // ═══════════════════════════════════════════════════════════
+  //  BATCH 2 — Additional element geometry entries
+  // ═══════════════════════════════════════════════════════════
+
+  // ─── Praseodymium (59) ───
+  59: [
+    {
+      name: 'Praseodymium Oxide',
+      formula: 'Pr₂O₃',
+      description: 'Used in special glass for welder\'s goggles, yellow ceramic pigment.',
+      atoms: [
+        { sym: 'Pr', x: -0.9, y: 0.5, z: 0 },
+        { sym: 'Pr', x: 0.9, y: 0.5, z: 0 },
+        { sym: 'O', x: 0, y: 0, z: 0 },
+        { sym: 'O', x: -1.2, y: -0.4, z: 0 },
+        { sym: 'O', x: 1.2, y: -0.4, z: 0 },
+      ],
+      bonds: [
+        { from: 0, to: 2, order: 1 }, { from: 1, to: 2, order: 1 },
+        { from: 0, to: 3, order: 1 }, { from: 1, to: 4, order: 1 },
+      ],
+    },
+  ],
+
+  // ─── Promethium (61) ───
+  61: [
+    {
+      name: 'Promethium Chloride',
+      formula: 'PmCl₃',
+      description: 'Radioactive — formerly used in luminous paint for watch dials.',
+      atoms: [
+        { sym: 'Pm', x: 0, y: 0.5, z: 0 },
+        { sym: 'Cl', x: 1.1, y: -0.3, z: 0 },
+        { sym: 'Cl', x: -1.1, y: -0.3, z: 0 },
+        { sym: 'Cl', x: 0, y: -0.3, z: 1.1 },
+      ],
+      bonds: [
+        { from: 0, to: 1, order: 1 }, { from: 0, to: 2, order: 1 },
+        { from: 0, to: 3, order: 1 },
+      ],
+    },
+  ],
+
+  // ─── Samarium (62) ───
+  62: [
+    {
+      name: 'Samarium Oxide',
+      formula: 'Sm₂O₃',
+      description: 'Used in optical glass, neutron absorber in nuclear reactors.',
+      atoms: [
+        { sym: 'Sm', x: -0.9, y: 0.5, z: 0 },
+        { sym: 'Sm', x: 0.9, y: 0.5, z: 0 },
+        { sym: 'O', x: 0, y: 0, z: 0 },
+        { sym: 'O', x: -1.2, y: -0.4, z: 0 },
+        { sym: 'O', x: 1.2, y: -0.4, z: 0 },
+      ],
+      bonds: [
+        { from: 0, to: 2, order: 1 }, { from: 1, to: 2, order: 1 },
+        { from: 0, to: 3, order: 1 }, { from: 1, to: 4, order: 1 },
+      ],
+    },
+  ],
+
+  // ─── Europium (63) ───
+  63: [
+    {
+      name: 'Europium Oxide',
+      formula: 'Eu₂O₃',
+      description: 'Red phosphor in CRT displays, euro banknote anti-forgery marks.',
+      atoms: [
+        { sym: 'Eu', x: -0.9, y: 0.5, z: 0 },
+        { sym: 'Eu', x: 0.9, y: 0.5, z: 0 },
+        { sym: 'O', x: 0, y: 0, z: 0 },
+        { sym: 'O', x: -1.2, y: -0.4, z: 0 },
+        { sym: 'O', x: 1.2, y: -0.4, z: 0 },
+      ],
+      bonds: [
+        { from: 0, to: 2, order: 1 }, { from: 1, to: 2, order: 1 },
+        { from: 0, to: 3, order: 1 }, { from: 1, to: 4, order: 1 },
+      ],
+    },
+  ],
+
+  // ─── Terbium (65) ───
+  65: [
+    {
+      name: 'Terbium Oxide',
+      formula: 'Tb₂O₃',
+      description: 'Green phosphor in fluorescent lamps and solid-state devices.',
+      atoms: [
+        { sym: 'Tb', x: -0.9, y: 0.5, z: 0 },
+        { sym: 'Tb', x: 0.9, y: 0.5, z: 0 },
+        { sym: 'O', x: 0, y: 0, z: 0 },
+        { sym: 'O', x: -1.2, y: -0.4, z: 0 },
+        { sym: 'O', x: 1.2, y: -0.4, z: 0 },
+      ],
+      bonds: [
+        { from: 0, to: 2, order: 1 }, { from: 1, to: 2, order: 1 },
+        { from: 0, to: 3, order: 1 }, { from: 1, to: 4, order: 1 },
+      ],
+    },
+  ],
+
+  // ─── Dysprosium (66) ───
+  66: [
+    {
+      name: 'Dysprosium Oxide',
+      formula: 'Dy₂O₃',
+      description: 'Used in nuclear control rods due to high neutron absorption cross-section.',
+      atoms: [
+        { sym: 'Dy', x: -0.9, y: 0.5, z: 0 },
+        { sym: 'Dy', x: 0.9, y: 0.5, z: 0 },
+        { sym: 'O', x: 0, y: 0, z: 0 },
+        { sym: 'O', x: -1.2, y: -0.4, z: 0 },
+        { sym: 'O', x: 1.2, y: -0.4, z: 0 },
+      ],
+      bonds: [
+        { from: 0, to: 2, order: 1 }, { from: 1, to: 2, order: 1 },
+        { from: 0, to: 3, order: 1 }, { from: 1, to: 4, order: 1 },
+      ],
+    },
+  ],
+
+  // ─── Holmium (67) ───
+  67: [
+    {
+      name: 'Holmium Oxide',
+      formula: 'Ho₂O₃',
+      description: 'Strongest magnetic moment of any element. Used in MRI magnets and YAG lasers.',
+      atoms: [
+        { sym: 'Ho', x: -0.9, y: 0.5, z: 0 },
+        { sym: 'Ho', x: 0.9, y: 0.5, z: 0 },
+        { sym: 'O', x: 0, y: 0, z: 0 },
+        { sym: 'O', x: -1.2, y: -0.4, z: 0 },
+        { sym: 'O', x: 1.2, y: -0.4, z: 0 },
+      ],
+      bonds: [
+        { from: 0, to: 2, order: 1 }, { from: 1, to: 2, order: 1 },
+        { from: 0, to: 3, order: 1 }, { from: 1, to: 4, order: 1 },
+      ],
+    },
+  ],
+
+  // ─── Erbium (68) ───
+  68: [
+    {
+      name: 'Erbium Oxide',
+      formula: 'Er₂O₃',
+      description: 'Pink coloring in glass. Erbium-doped fiber amplifiers enable the entire internet.',
+      atoms: [
+        { sym: 'Er', x: -0.9, y: 0.5, z: 0 },
+        { sym: 'Er', x: 0.9, y: 0.5, z: 0 },
+        { sym: 'O', x: 0, y: 0, z: 0 },
+        { sym: 'O', x: -1.2, y: -0.4, z: 0 },
+        { sym: 'O', x: 1.2, y: -0.4, z: 0 },
+      ],
+      bonds: [
+        { from: 0, to: 2, order: 1 }, { from: 1, to: 2, order: 1 },
+        { from: 0, to: 3, order: 1 }, { from: 1, to: 4, order: 1 },
+      ],
+    },
+  ],
+
+  // ─── Thulium (69) ───
+  69: [
+    {
+      name: 'Thulium Oxide',
+      formula: 'Tm₂O₃',
+      description: 'Rarest stable lanthanide. Used in portable X-ray devices.',
+      atoms: [
+        { sym: 'Tm', x: -0.9, y: 0.5, z: 0 },
+        { sym: 'Tm', x: 0.9, y: 0.5, z: 0 },
+        { sym: 'O', x: 0, y: 0, z: 0 },
+        { sym: 'O', x: -1.2, y: -0.4, z: 0 },
+        { sym: 'O', x: 1.2, y: -0.4, z: 0 },
+      ],
+      bonds: [
+        { from: 0, to: 2, order: 1 }, { from: 1, to: 2, order: 1 },
+        { from: 0, to: 3, order: 1 }, { from: 1, to: 4, order: 1 },
+      ],
+    },
+  ],
+
+  // ─── Ytterbium (70) ───
+  70: [
+    {
+      name: 'Ytterbium Oxide',
+      formula: 'Yb₂O₃',
+      description: 'Used in stainless steel improvement, thermal barrier coatings.',
+      atoms: [
+        { sym: 'Yb', x: -0.9, y: 0.5, z: 0 },
+        { sym: 'Yb', x: 0.9, y: 0.5, z: 0 },
+        { sym: 'O', x: 0, y: 0, z: 0 },
+        { sym: 'O', x: -1.2, y: -0.4, z: 0 },
+        { sym: 'O', x: 1.2, y: -0.4, z: 0 },
+      ],
+      bonds: [
+        { from: 0, to: 2, order: 1 }, { from: 1, to: 2, order: 1 },
+        { from: 0, to: 3, order: 1 }, { from: 1, to: 4, order: 1 },
+      ],
+    },
+  ],
+
+  // ─── Lutetium (71) ───
+  71: [
+    {
+      name: 'Lutetium Oxide',
+      formula: 'Lu₂O₃',
+      description: 'Used in PET scan detectors (Lu₂SiO₅ scintillators).',
+      atoms: [
+        { sym: 'Lu', x: -0.9, y: 0.5, z: 0 },
+        { sym: 'Lu', x: 0.9, y: 0.5, z: 0 },
+        { sym: 'O', x: 0, y: 0, z: 0 },
+        { sym: 'O', x: -1.2, y: -0.4, z: 0 },
+        { sym: 'O', x: 1.2, y: -0.4, z: 0 },
+      ],
+      bonds: [
+        { from: 0, to: 2, order: 1 }, { from: 1, to: 2, order: 1 },
+        { from: 0, to: 3, order: 1 }, { from: 1, to: 4, order: 1 },
+      ],
+    },
+  ],
+
+  // ─── Radium (88) ───
+  88: [
+    {
+      name: 'Radium Chloride',
+      formula: 'RaCl₂',
+      description: 'First radium compound isolated by Marie Curie. Historically used in luminous paint.',
+      atoms: [
+        { sym: 'Ra', x: 0, y: 0.4, z: 0 },
+        { sym: 'Cl', x: 1.2, y: -0.3, z: 0 },
+        { sym: 'Cl', x: -1.2, y: -0.3, z: 0 },
+      ],
+      bonds: [{ from: 0, to: 1, order: 1 }, { from: 0, to: 2, order: 1 }],
+    },
+  ],
+
+  // ─── Actinium (89) ───
+  89: [
+    {
+      name: 'Actinium Oxide',
+      formula: 'Ac₂O₃',
+      description: 'Intensely radioactive. ²²⁵Ac used in targeted alpha therapy for cancer.',
+      atoms: [
+        { sym: 'Ac', x: -0.9, y: 0.5, z: 0 },
+        { sym: 'Ac', x: 0.9, y: 0.5, z: 0 },
+        { sym: 'O', x: 0, y: 0, z: 0 },
+        { sym: 'O', x: -1.2, y: -0.4, z: 0 },
+        { sym: 'O', x: 1.2, y: -0.4, z: 0 },
+      ],
+      bonds: [
+        { from: 0, to: 2, order: 1 }, { from: 1, to: 2, order: 1 },
+        { from: 0, to: 3, order: 1 }, { from: 1, to: 4, order: 1 },
+      ],
+    },
+  ],
+
+  // ─── Protactinium (91) ───
+  91: [
+    {
+      name: 'Protactinium Dioxide',
+      formula: 'PaO₂',
+      description: 'Extremely rare actinide. Pa-231/U-235 ratio used for ocean sediment dating.',
+      atoms: [
+        { sym: 'Pa', x: 0, y: 0, z: 0 },
+        { sym: 'O', x: 1.0, y: 0.5, z: 0 },
+        { sym: 'O', x: -1.0, y: 0.5, z: 0 },
+      ],
+      bonds: [{ from: 0, to: 1, order: 2 }, { from: 0, to: 2, order: 2 }],
+    },
+  ],
+
+  // ─── Neptunium (93) ───
+  93: [
+    {
+      name: 'Neptunium Dioxide',
+      formula: 'NpO₂',
+      description: 'Most stable Np compound. Generated in nuclear reactors from U-238.',
+      atoms: [
+        { sym: 'Np', x: 0, y: 0, z: 0 },
+        { sym: 'O', x: 1.0, y: 0.5, z: 0 },
+        { sym: 'O', x: -1.0, y: 0.5, z: 0 },
+      ],
+      bonds: [{ from: 0, to: 1, order: 2 }, { from: 0, to: 2, order: 2 }],
+    },
+  ],
+
+  // ─── Americium (95) ───
+  95: [
+    {
+      name: 'Americium Dioxide',
+      formula: 'AmO₂',
+      description: 'Am-241 used in every household smoke detector.',
+      atoms: [
+        { sym: 'Am', x: 0, y: 0, z: 0 },
+        { sym: 'O', x: 1.0, y: 0.5, z: 0 },
+        { sym: 'O', x: -1.0, y: 0.5, z: 0 },
+      ],
+      bonds: [{ from: 0, to: 1, order: 2 }, { from: 0, to: 2, order: 2 }],
+    },
+  ],
+
+  // ─── Curium (96) ───
+  96: [
+    {
+      name: 'Curium Dioxide',
+      formula: 'CmO₂',
+      description: 'Named after Marie & Pierre Curie. Used in alpha particle X-ray spectrometry on Mars rovers.',
+      atoms: [
+        { sym: 'Cm', x: 0, y: 0, z: 0 },
+        { sym: 'O', x: 1.0, y: 0.5, z: 0 },
+        { sym: 'O', x: -1.0, y: 0.5, z: 0 },
+      ],
+      bonds: [{ from: 0, to: 1, order: 2 }, { from: 0, to: 2, order: 2 }],
+    },
+  ],
 };
 
 // Merge extra compounds into ELEMENT_COMPOUNDS (skip duplicates by formula)
