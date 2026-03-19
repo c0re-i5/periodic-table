@@ -1610,7 +1610,7 @@
       html += `<div class="bohr2d-shell-label" style="left:${cx + r - 6}px;top:${cy - 8}px;">${count}e⁻</div>`;
 
       // Animated electrons placed along the circle
-      const electronCount = Math.min(count, 12); // cap visible electrons for performance
+      const electronCount = Math.min(count, 32); // cap visible electrons for performance
       const speed = 3 + i * 1.5; // outer shells orbit slower
       for (let e = 0; e < electronCount; e++) {
         const startAngle = (360 / electronCount) * e;
@@ -1802,7 +1802,7 @@
 
     const pts = [];
     let attempts = 0;
-    const maxAttempts = numPoints * 120;
+    const maxAttempts = numPoints * 200;
     while (pts.length < numPoints && attempts < maxAttempts) {
       attempts++;
       // Importance-weighted radial sampling: bias toward peak
@@ -1853,7 +1853,7 @@
     const cacheKey = `${orb.n}${orb.l}${orb.m}`;
     if (cloud3d.pointCache[cacheKey]) return cloud3d.pointCache[cacheKey];
 
-    const numPts = 15000;
+    const numPts = 50000;
     const raw = sampleOrbital(orb.n, orb.l, orb.m, orb.Zeff, numPts);
     const colors = LOBE_COLORS[orb.lChar] || { pos: [180,180,180], neg: [180,180,180] };
 
@@ -1864,8 +1864,8 @@
       return {
         x: p.x * orbScale, y: p.y * orbScale, z: p.z * orbScale,
         r: col[0], g: col[1], b: col[2],
-        alpha: 0.30,
-        size: 1.5,
+        alpha: 0.25,
+        size: 0.9,
       };
     });
     cloud3d.pointCache[cacheKey] = points;
@@ -1877,7 +1877,7 @@
     if (cloud3d.pointCache['__all__']) return cloud3d.pointCache['__all__'];
 
     const totalOrbs = orbData.length;
-    const ptsPerOrb = Math.max(400, Math.floor(15000 / Math.max(1, totalOrbs)));
+    const ptsPerOrb = Math.max(800, Math.floor(50000 / Math.max(1, totalOrbs)));
 
     const allPoints = [];
     for (const orb of orbData) {
@@ -1888,8 +1888,8 @@
         allPoints.push({
           x: p.x * scale, y: p.y * scale, z: p.z * scale,
           r: col[0], g: col[1], b: col[2],
-          alpha: 0.18 + 0.07 * (orb.n / 7),
-          size: 1.0 + 0.2 * (orb.n / 7),
+          alpha: 0.14 + 0.06 * (orb.n / 7),
+          size: 0.6 + 0.15 * (orb.n / 7),
         });
       }
     }
@@ -2063,14 +2063,14 @@
             if (!cloud3d.pointCache[cacheKey]) {
               const pts = [];
               for (const orb of orbs) {
-                const raw = sampleOrbital(orb.n, orb.l, orb.m, orb.Zeff, Math.floor(12000 / orbs.length));
+                const raw = sampleOrbital(orb.n, orb.l, orb.m, orb.Zeff, Math.floor(40000 / orbs.length));
                 const colors = LOBE_COLORS[orb.lChar];
                 const subScale = orb.rExt > 0 ? 200 / orb.rExt : scale;
                 for (const p of raw) {
                   const col = p.sign >= 0 ? colors.pos : colors.neg;
                   pts.push({
                     x: p.x * subScale, y: p.y * subScale, z: p.z * subScale,
-                    r: col[0], g: col[1], b: col[2], alpha: 0.28, size: 1.3,
+                    r: col[0], g: col[1], b: col[2], alpha: 0.22, size: 0.8,
                   });
                 }
               }
@@ -2213,8 +2213,8 @@
     ctx.globalCompositeOperation = 'source-over';
     for (let i = 0; i < projected.length; i++) {
       const p = projected[i];
-      const sz = Math.max(0.5, p.size);
-      const a = Math.min(0.45, p.alpha * 0.40);
+      const sz = Math.max(0.4, p.size);
+      const a = Math.min(0.35, p.alpha * 0.30);
       ctx.fillStyle = `rgba(${p.r},${p.g},${p.b},${a.toFixed(3)})`;
       ctx.beginPath();
       ctx.arc(p.sx, p.sy, sz, 0, Math.PI * 2);
@@ -2499,8 +2499,8 @@
       return {
         x: p.x * scale, y: p.y * scale, z: p.z * scale,
         r: col[0], g: col[1], b: col[2],
-        alpha: 0.30,
-        size: 1.5,
+        alpha: 0.25,
+        size: 0.9,
       };
     });
     molCloud.pointCache[cacheKey] = points;
@@ -2512,7 +2512,7 @@
     if (molCloud.pointCache['__all__']) return molCloud.pointCache['__all__'];
 
     const occupied = moData.orbitals.filter(mo => mo.electrons > 0 && mo.type !== 'core');
-    const ptsPerMO = Math.max(200, Math.floor(10000 / Math.max(1, occupied.length)));
+    const ptsPerMO = Math.max(500, Math.floor(35000 / Math.max(1, occupied.length)));
     const gExt = molCloud.globalExtent;
 
     // Assign distinct hues to each MO, with adaptive size/alpha for compact orbitals
@@ -2526,8 +2526,8 @@
       const compaction = gExt / moExt;
       // Boost size and alpha for compact orbitals (log scale)
       const boost = Math.max(1, Math.log2(compaction));
-      const sz = 1.0 * (1 + 0.5 * (boost - 1));
-      const al = 0.20 * (1 + 0.4 * (boost - 1));
+      const sz = 0.6 * (1 + 0.5 * (boost - 1));
+      const al = 0.16 * (1 + 0.4 * (boost - 1));
       for (const p of raw) {
         allPoints.push({
           x: p.x * scale, y: p.y * scale, z: p.z * scale,
@@ -2562,7 +2562,7 @@
     }
     const mo = moData.orbitals.find(o => o.name === filter);
     if (!mo) return buildAllMolOrbPoints(moData, atomsBohr, scale);
-    const numPts = mo.electrons > 0 ? 15000 : 10000;
+    const numPts = mo.electrons > 0 ? 50000 : 35000;
     return buildMolOrbPoints(mo, atomsBohr, scale, numPts);
   }
 
@@ -2650,8 +2650,8 @@
     ctx.globalCompositeOperation = 'source-over';
     for (let i = 0; i < projected.length; i++) {
       const p = projected[i];
-      const sz = Math.max(0.5, p.size);
-      const a = Math.min(0.45, p.alpha * 0.40);
+      const sz = Math.max(0.4, p.size);
+      const a = Math.min(0.35, p.alpha * 0.30);
       ctx.fillStyle = `rgba(${p.r},${p.g},${p.b},${a.toFixed(3)})`;
       ctx.beginPath();
       ctx.arc(p.sx, p.sy, sz, 0, Math.PI * 2);
