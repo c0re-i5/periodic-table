@@ -2378,11 +2378,14 @@
     camPhi: 0.4,
     fov: 600,
     zoom: 1.0,
+    viewZoom: 1.0,
     autoRotate: true,
     dragging: false,
     lastMouse: { x: 0, y: 0 },
     dpr: 1, w: 0, h: 0,
     scale: 1,
+    orbExtents: {},
+    globalExtent: 1,
   };
 
   // Evaluate atomic orbital wavefunction (unnormalized) at point (x,y,z) in Bohr
@@ -2510,19 +2513,27 @@
 
     const occupied = moData.orbitals.filter(mo => mo.electrons > 0 && mo.type !== 'core');
     const ptsPerMO = Math.max(200, Math.floor(10000 / Math.max(1, occupied.length)));
+    const gExt = molCloud.globalExtent;
 
-    // Assign distinct hues to each MO
+    // Assign distinct hues to each MO, with adaptive size/alpha for compact orbitals
     const allPoints = [];
     occupied.forEach((mo, idx) => {
       const raw = sampleMolOrbital(mo, atomsBohr, ptsPerMO);
       const hue = (idx / occupied.length) * 360;
       const rgb = hslToRgb(hue, 0.7, 0.6);
+      // Compaction ratio: how much smaller this orbital is vs the global extent
+      const moExt = molCloud.orbExtents[mo.name] || gExt;
+      const compaction = gExt / moExt;
+      // Boost size and alpha for compact orbitals (log scale)
+      const boost = Math.max(1, Math.log2(compaction));
+      const sz = 1.0 * (1 + 0.5 * (boost - 1));
+      const al = 0.20 * (1 + 0.4 * (boost - 1));
       for (const p of raw) {
         allPoints.push({
           x: p.x * scale, y: p.y * scale, z: p.z * scale,
           r: rgb[0], g: rgb[1], b: rgb[2],
-          alpha: 0.20,
-          size: 1.0,
+          alpha: al,
+          size: sz,
         });
       }
     });
@@ -2559,7 +2570,7 @@
   function drawMolCloud(ctx) {
     const W = molCloud.w, H = molCloud.h;
     const cx = W / 2, cy = H / 2;
-    const zm = molCloud.zoom;
+    const zm = molCloud.zoom * (molCloud.viewZoom || 1);
 
     // Inline camera transform using molCloud's own angles
     function mcTransform(p) {
@@ -2652,14 +2663,39 @@
     if (molCloud.activeFilter !== 'all') {
       const mo = molCloud.moData.orbitals.find(o => o.name === molCloud.activeFilter);
       if (mo) {
+        const { homo, lumo } = findHOMOLUMO(molCloud.moData);
         ctx.font = `bold 18px 'Inter', sans-serif`;
         ctx.fillStyle = 'rgba(255,255,255,0.5)';
-        ctx.fillText(mo.name, 16, W - 16);
+        let nameStr = mo.name;
+        if (mo.name === homo) nameStr += '  HOMO';
+        if (mo.name === lumo) nameStr += '  LUMO';
+        ctx.fillText(nameStr, 16, W - 16);
         ctx.font = `12px 'JetBrains Mono', monospace`;
         ctx.fillStyle = 'rgba(255,255,255,0.3)';
         const typeLabel = mo.type + (mo.electrons > 0 ? ` (${mo.electrons}e⁻)` : ' (empty)');
         ctx.fillText(typeLabel, 16, W - 36);
+        if (mo.desc) {
+          ctx.font = `11px 'Inter', sans-serif`;
+          ctx.fillStyle = 'rgba(255,255,255,0.22)';
+          // Word-wrap desc to ~50 chars per line
+          const words = mo.desc.split(' ');
+          let lines = [], cur = '';
+          for (const w of words) {
+            if ((cur + ' ' + w).length > 55 && cur) { lines.push(cur); cur = w; }
+            else { cur = cur ? cur + ' ' + w : w; }
+          }
+          if (cur) lines.push(cur);
+          for (let li = 0; li < Math.min(lines.length, 3); li++) {
+            ctx.fillText(lines[li], 16, W - 56 - (lines.length - 1 - li) * 14);
+          }
+        }
       }
+    } else {
+      // Show bond order on "all" view
+      const bondOrder = computeBondOrder(molCloud.moData);
+      ctx.font = `bold 14px 'Inter', sans-serif`;
+      ctx.fillStyle = 'rgba(255,255,255,0.35)';
+      ctx.fillText(`Bond Order: ${bondOrder % 1 === 0 ? bondOrder : bondOrder.toFixed(1)}`, 16, W - 16);
     }
   }
 
@@ -2776,6 +2812,8 @@
         <canvas id="mol-canvas" width="${size*2}" height="${size*2}"
                 style="width:${size}px;height:${size}px;cursor:grab;"></canvas>
         <div class="mol-cloud-selector" id="mol-cloud-selector" style="display:none;"></div>
+        <div class="mo-info-panel" id="mo-info-panel" style="display:none;"></div>
+        <div class="mo-energy-diagram" id="mo-energy-diagram" style="display:none;"></div>
         <p class="mol-desc" id="mol-desc">${compound.description}</p>
         <div class="mol-legend" id="mol-legend"></div>
         <div class="mol-hint">Drag to rotate &middot; Scroll to zoom</div>
@@ -2867,6 +2905,17 @@
             buildMolCloudSelector(selector);
           }
 
+          // Build energy diagram + info panel
+          const diagEl = document.getElementById('mo-energy-diagram');
+          const infoEl = document.getElementById('mo-info-panel');
+          if (diagEl) {
+            diagEl.style.display = 'block';
+            buildMOEnergyDiagram(diagEl, molCloud.moData, 'all');
+          }
+          if (infoEl) {
+            updateMOInfoPanel('all');
+          }
+
           // Restart animation in cloud mode
           startMolCloudAnimation();
         } else {
@@ -2890,6 +2939,10 @@
 
           molCloud.active = false;
           if (selector) selector.style.display = 'none';
+          const diagEl2 = document.getElementById('mo-energy-diagram');
+          const infoEl2 = document.getElementById('mo-info-panel');
+          if (diagEl2) diagEl2.style.display = 'none';
+          if (infoEl2) infoEl2.style.display = 'none';
 
           // Restart sticks animation
           molState.autoRotate = true;
@@ -2937,15 +2990,176 @@
     }
     // Add orbital extent: largest rCut from any contributing AO
     let maxOrbR = 0;
+    const orbExtents = {};
     for (const mo of moData.orbitals) {
+      let moExtent = 0;
       for (const ao of mo.ao) {
         const atomR = Math.sqrt(bohrCoords[ao.atom].x ** 2 + bohrCoords[ao.atom].y ** 2 + bohrCoords[ao.atom].z ** 2);
         const rCut = Math.max(4, (5 * ao.n * ao.n) / ao.zeff);
-        if (atomR + rCut > maxOrbR) maxOrbR = atomR + rCut;
+        const ext = atomR + rCut;
+        if (ext > maxOrbR) maxOrbR = ext;
+        if (ext > moExtent) moExtent = ext;
       }
+      orbExtents[mo.name] = Math.max(moExtent, 4);
     }
-    molCloud.scale = 180 / Math.max(maxR + 3, maxOrbR, 4);
+    const globalExtent = Math.max(maxR + 3, maxOrbR, 4);
+    molCloud.scale = 180 / globalExtent;
+    molCloud.globalExtent = globalExtent;
+    molCloud.orbExtents = orbExtents;
     molCloud.zoom = 1.0;
+    molCloud.viewZoom = 1.0;
+  }
+
+  // ─── HOMO/LUMO Detection ───
+  function findHOMOLUMO(moData) {
+    const orbs = moData.orbitals;
+    let homo = null, lumo = null;
+    // Sort by energy rank if available, else use array order
+    const sorted = orbs.map((o, i) => ({ ...o, _idx: i }));
+    if (orbs[0] && orbs[0].energy != null) {
+      sorted.sort((a, b) => a.energy - b.energy);
+    }
+    for (const o of sorted) {
+      if (o.electrons > 0 && o.type !== 'core') homo = o;
+      if (o.electrons === 0 && !lumo) lumo = o;
+    }
+    return { homo: homo ? homo.name : null, lumo: lumo ? lumo.name : null };
+  }
+
+  // ─── Bond Order Computation ───
+  function computeBondOrder(moData) {
+    let bonding = 0, antibonding = 0;
+    for (const o of moData.orbitals) {
+      if (o.type === 'bonding') bonding += o.electrons;
+      else if (o.type === 'antibonding') antibonding += o.electrons;
+    }
+    return (bonding - antibonding) / 2;
+  }
+
+  // ─── Build MO Energy Diagram ───
+  function buildMOEnergyDiagram(container, moData, activeFilter) {
+    if (!container) return;
+    const orbs = moData.orbitals;
+    const { homo, lumo } = findHOMOLUMO(moData);
+    const bondOrder = computeBondOrder(moData);
+
+    // Separate by type for layout
+    const sorted = orbs.slice();
+    if (sorted[0] && sorted[0].energy != null) {
+      sorted.sort((a, b) => a.energy - b.energy);
+    }
+
+    const typeColors = {
+      bonding: '#4a96ff', antibonding: '#ff5a3c',
+      nonbonding: '#32c87a', core: '#8c8ca0',
+    };
+
+    let html = '<div class="mo-diagram-header">';
+    html += `<span class="mo-diagram-title">MO Energy Levels</span>`;
+    html += `<span class="mo-diagram-bond-order">Bond Order: <strong>${bondOrder % 1 === 0 ? bondOrder : bondOrder.toFixed(1)}</strong></span>`;
+    html += '</div>';
+    html += '<div class="mo-diagram-levels">';
+
+    // Draw levels bottom to top
+    const reversed = sorted.slice().reverse();
+    for (const mo of reversed) {
+      const isActive = activeFilter === mo.name;
+      const isHomo = mo.name === homo;
+      const isLumo = mo.name === lumo;
+      const col = typeColors[mo.type] || '#888';
+      const cls = ['mo-level', isActive ? 'mo-level-active' : '', isHomo ? 'mo-level-homo' : '', isLumo ? 'mo-level-lumo' : ''].filter(Boolean).join(' ');
+
+      html += `<div class="${cls}" data-mo-diagram="${mo.name}" style="--mo-color:${col}">`;
+      html += `<span class="mo-level-line" style="background:${col}"></span>`;
+      // Electron arrows
+      html += '<span class="mo-level-electrons">';
+      if (mo.electrons >= 1) html += '<span class="mo-e-arrow">↑</span>';
+      if (mo.electrons >= 2) html += '<span class="mo-e-arrow mo-e-down">↓</span>';
+      html += '</span>';
+      html += `<span class="mo-level-label">${mo.name}</span>`;
+      if (isHomo) html += '<span class="mo-badge mo-badge-homo">HOMO</span>';
+      if (isLumo) html += '<span class="mo-badge mo-badge-lumo">LUMO</span>';
+      html += '</div>';
+    }
+    html += '</div>';
+    container.innerHTML = html;
+
+    // Click levels to select orbital
+    container.querySelectorAll('[data-mo-diagram]').forEach(el => {
+      el.addEventListener('click', () => {
+        const name = el.dataset.moDiagram;
+        molCloud.activeFilter = name;
+        // Auto-zoom
+        if (molCloud.orbExtents[name]) {
+          const ratio = molCloud.globalExtent / molCloud.orbExtents[name];
+          molCloud.viewZoom = Math.min(ratio, 6);
+        }
+        // Sync selector buttons
+        const selector = document.getElementById('mol-cloud-selector');
+        if (selector) {
+          selector.querySelectorAll('.mol-cloud-btn').forEach(b => {
+            b.classList.toggle('active', b.dataset.moName === name);
+          });
+        }
+        // Update info panel
+        updateMOInfoPanel(name);
+        // Rebuild diagram with new active
+        buildMOEnergyDiagram(container, molCloud.moData, name);
+        molCloud.pointCache = {};
+      });
+    });
+  }
+
+  // ─── Update MO Info Panel ───
+  function updateMOInfoPanel(moName) {
+    const panel = document.getElementById('mo-info-panel');
+    if (!panel || !molCloud.moData) return;
+    panel.style.display = 'block';
+
+    if (moName === 'all') {
+      const moData = molCloud.moData;
+      const bondOrder = computeBondOrder(moData);
+      const { homo, lumo } = findHOMOLUMO(moData);
+      const totalE = moData.orbitals.reduce((s, o) => s + o.electrons, 0);
+      let html = `<div class="mo-info-summary">`;
+      html += `<span class="mo-info-stat">${totalE}e⁻ total</span>`;
+      html += `<span class="mo-info-stat">Bond order: <strong>${bondOrder % 1 === 0 ? bondOrder : bondOrder.toFixed(1)}</strong></span>`;
+      if (homo) html += `<span class="mo-info-stat">HOMO: <strong>${homo}</strong></span>`;
+      if (lumo) html += `<span class="mo-info-stat">LUMO: <strong>${lumo}</strong></span>`;
+      html += '</div>';
+      if (moData.notes) {
+        html += `<p class="mo-info-notes">${moData.notes}</p>`;
+      }
+      panel.innerHTML = html;
+      return;
+    }
+
+    const mo = molCloud.moData.orbitals.find(o => o.name === moName);
+    if (!mo) { panel.style.display = 'none'; return; }
+
+    const { homo, lumo } = findHOMOLUMO(molCloud.moData);
+    let badges = '';
+    if (mo.name === homo) badges += '<span class="mo-badge mo-badge-homo">HOMO</span>';
+    if (mo.name === lumo) badges += '<span class="mo-badge mo-badge-lumo">LUMO</span>';
+
+    let html = `<div class="mo-info-header">`;
+    html += `<span class="mo-info-name">${mo.name}</span>`;
+    html += `<span class="mo-info-type mo-info-type-${mo.type}">${mo.type}</span>`;
+    html += badges;
+    html += `<span class="mo-info-stat">${mo.electrons}e⁻</span>`;
+    html += '</div>';
+    if (mo.desc) {
+      html += `<p class="mo-info-desc">${mo.desc}</p>`;
+    }
+    // Show AO composition
+    const aoSummary = mo.ao.map(a => {
+      const atomSym = molCloud.compound ? molCloud.compound.atoms[a.atom].sym : `#${a.atom}`;
+      const orbLabel = ['s','p','d','f'][a.l] || '?';
+      return `${atomSym} ${a.n}${orbLabel}`;
+    });
+    const unique = [...new Set(aoSummary)];
+    html += `<div class="mo-info-ao">Composition: ${unique.join(' + ')}</div>`;
+    panel.innerHTML = html;
   }
 
   // Build MO selector buttons
@@ -2953,10 +3167,13 @@
     if (!molCloud.moData) return;
     const orbs = molCloud.moData.orbitals;
     const occupied = orbs.filter(o => o.electrons > 0);
+    const { homo, lumo } = findHOMOLUMO(molCloud.moData);
 
     let html = `<button class="mol-cloud-btn active" data-mo-name="all">All Occupied</button>`;
     occupied.forEach(mo => {
-      const label = mo.name + ` (${mo.electrons}e⁻)`;
+      let label = mo.name + ` (${mo.electrons}e⁻)`;
+      if (mo.name === homo) label += ' <span class="mo-badge mo-badge-homo mo-badge-sm">H</span>';
+      if (mo.name === lumo) label += ' <span class="mo-badge mo-badge-lumo mo-badge-sm">L</span>';
       html += `<button class="mol-cloud-btn" data-mo-name="${mo.name}">${label}</button>`;
     });
     // Also show unoccupied (antibonding) if any
@@ -2964,7 +3181,9 @@
     if (unoccupied.length > 0) {
       html += '<span class="mol-cloud-sep">|</span>';
       unoccupied.forEach(mo => {
-        html += `<button class="mol-cloud-btn" data-mo-name="${mo.name}">${mo.name} (empty)</button>`;
+        let label = mo.name + ' (empty)';
+        if (mo.name === lumo) label += ' <span class="mo-badge mo-badge-lumo mo-badge-sm">L</span>';
+        html += `<button class="mol-cloud-btn" data-mo-name="${mo.name}">${label}</button>`;
       });
     }
 
@@ -2974,9 +3193,19 @@
       btn.addEventListener('click', () => {
         el.querySelectorAll('.mol-cloud-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-        molCloud.activeFilter = btn.dataset.moName;
-        // Clear only the specific cache key if switching
-        // No need to clear — we cache by name
+        const moName = btn.dataset.moName;
+        molCloud.activeFilter = moName;
+        // Auto-zoom: fill canvas when viewing a single orbital
+        if (moName !== 'all' && molCloud.orbExtents[moName]) {
+          const ratio = molCloud.globalExtent / molCloud.orbExtents[moName];
+          molCloud.viewZoom = Math.min(ratio, 6);
+        } else {
+          molCloud.viewZoom = 1.0;
+        }
+        // Update info panel and energy diagram
+        updateMOInfoPanel(moName);
+        const diagEl = document.getElementById('mo-energy-diagram');
+        if (diagEl) buildMOEnergyDiagram(diagEl, molCloud.moData, moName);
       });
     });
   }
@@ -3032,6 +3261,10 @@
       });
     }
     if (selector) selector.style.display = 'none';
+    const diagEl3 = document.getElementById('mo-energy-diagram');
+    const infoEl3 = document.getElementById('mo-info-panel');
+    if (diagEl3) diagEl3.style.display = 'none';
+    if (infoEl3) infoEl3.style.display = 'none';
 
     // Restore sticks canvas size and event listeners
     const canvas = molState.canvas;

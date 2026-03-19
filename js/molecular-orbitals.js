@@ -72,11 +72,14 @@ const MOLECULAR_ORBITALS = {
   // Simplest molecule. Shows σ bonding vs σ* antibonding perfectly.
   // Atoms: H₁(-0.37,0,0) H₂(0.37,0,0) — bond along x-axis
   'H₂': {
+    notes: 'The simplest molecule — a textbook example of σ bonding and σ* antibonding. The constructive overlap of two 1s orbitals creates the bond.',
     orbitals: [
       {
         name: 'σ₁s',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding between He — head-on s overlap along the bond axis.',
+      energy: 1, desc: 'σ bonding between H — head-on s overlap along the bond axis.',
         ao: [
           { atom: 0, n: 1, l: 0, m: 0, zeff: 1.24, c:  0.707 },
           { atom: 1, n: 1, l: 0, m: 0, zeff: 1.24, c:  0.707 },
@@ -86,6 +89,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ*₁s',
         type: 'antibonding',
         electrons: 0,
+      energy: 2, desc: 'σ* antibonding — destructive overlap creates a nodal plane between H. Occupying this weakens the bond.',
         ao: [
           { atom: 0, n: 1, l: 0, m: 0, zeff: 1.24, c:  0.707 },
           { atom: 1, n: 1, l: 0, m: 0, zeff: 1.24, c: -0.707 },
@@ -98,11 +102,13 @@ const MOLECULAR_ORBITALS = {
   // Polar bond: F is much more electronegative. MO coefficients asymmetric.
   // Atoms: H(-0.46,0,0) F(0.46,0,0) — bond along x-axis
   'HF': {
+    notes: 'A highly polar covalent bond where fluorine dominates the electron density. The MO coefficients are asymmetric, reflecting the electronegativity difference.',
     orbitals: [
       {
         name: '1σ (F 1s core)',
         type: 'core',
         electrons: 2,
+      energy: 1, desc: 'Core electrons on F — tightly bound and not involved in bonding.',
         ao: [
           { atom: 1, n: 1, l: 0, m: 0, zeff: 8.65, c: 1.0 },
         ],
@@ -111,6 +117,9 @@ const MOLECULAR_ORBITALS = {
         name: '2σ (F 2s)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 1, desc: 'Non-bonding orbital — electrons that don\'t significantly contribute to bond formation.',
+      energy: 2, desc: 'Non-bonding orbital — electrons that don\'t significantly contribute to bond formation.',
+      energy: 2, desc: 'Non-bonding orbital — electrons that don\'t significantly contribute to bond formation.',
         ao: [
           { atom: 1, n: 2, l: 0, m: 0, zeff: 5.13, c: 0.95 },
           { atom: 0, n: 1, l: 0, m: 0, zeff: 1.24, c: 0.10 },
@@ -120,6 +129,8 @@ const MOLECULAR_ORBITALS = {
         name: '3σ (bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding from p/s overlap between Cl and H. Head-on overlap concentrates electron density along the bond axis.',
+      energy: 3, desc: 'σ bonding from p/s overlap between F and H. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 1, n: 2, l: 1, m: 1, zeff: 5.13, c: 0.70 },  // F 2px along bond
           { atom: 0, n: 1, l: 0, m: 0, zeff: 1.24, c: 0.52 },  // H 1s
@@ -129,6 +140,8 @@ const MOLECULAR_ORBITALS = {
         name: '1π (F lone pair)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 4, desc: 'Lone pair localized on F. Non-bonding electrons that can act as a Lewis base.',
+      energy: 4, desc: 'Lone pair localized on F. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 1, n: 2, l: 1, m: -1, zeff: 5.13, c: 1.0 },  // F 2py
         ],
@@ -137,6 +150,7 @@ const MOLECULAR_ORBITALS = {
         name: '1π\' (F lone pair)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 5, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 1, n: 2, l: 1, m: 0, zeff: 5.13, c: 1.0 },   // F 2pz
         ],
@@ -147,11 +161,13 @@ const MOLECULAR_ORBITALS = {
   // ═══════════════════ HCl — Hydrochloric Acid ═══════════════════
   // Atoms: H(-0.64,0,0) Cl(0.64,0,0) — bond along x-axis
   'HCl': {
+    notes: 'Similar to HF but less polar. The bond MO shows more equal sharing between H 1s and Cl 3p.',
     orbitals: [
       {
         name: '3σ (bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding — head-on p/s overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 1, n: 3, l: 1, m: 1, zeff: 6.12, c: 0.65 },  // Cl 3px along bond
           { atom: 0, n: 1, l: 0, m: 0, zeff: 1.24, c: 0.55 },  // H 1s
@@ -161,6 +177,7 @@ const MOLECULAR_ORBITALS = {
         name: '1π (Cl lone pair)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 2, desc: 'Lone pair localized on Cl. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 1, n: 3, l: 1, m: -1, zeff: 6.12, c: 1.0 },  // Cl 3py
         ],
@@ -169,6 +186,7 @@ const MOLECULAR_ORBITALS = {
         name: '1π\' (Cl lone pair)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 3, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 1, n: 3, l: 1, m: 0, zeff: 6.12, c: 1.0 },   // Cl 3pz
         ],
@@ -177,6 +195,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Cl 3s (inner)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 4, desc: 'Non-bonding orbital localized on Cl.',
         ao: [
           { atom: 1, n: 3, l: 0, m: 0, zeff: 6.12, c: 1.0 },
         ],
@@ -188,11 +207,13 @@ const MOLECULAR_ORBITALS = {
   // Triple bond! σ + 2π. Strongest homonuclear diatomic bond.
   // Atoms: N₁(-0.55,0,0) N₂(0.55,0,0) — bond along x-axis
   'N₂': {
+    notes: 'Triple bond (σ + 2π). One of the strongest bonds known (945 kJ/mol). The MO ordering shows σ₂p below π₂p — a key teaching point.',
     orbitals: [
       {
         name: '2σ_g',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding between N — head-on s overlap along the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 0, m: 0, zeff: 3.90, c:  0.707 },
           { atom: 1, n: 2, l: 0, m: 0, zeff: 3.90, c:  0.707 },
@@ -202,6 +223,7 @@ const MOLECULAR_ORBITALS = {
         name: '2σ*_u',
         type: 'antibonding',
         electrons: 2,
+      energy: 2, desc: 'σ* antibonding — destructive overlap creates a nodal plane between N. Occupying this weakens the bond.',
         ao: [
           { atom: 0, n: 2, l: 0, m: 0, zeff: 3.90, c:  0.707 },
           { atom: 1, n: 2, l: 0, m: 0, zeff: 3.90, c: -0.707 },
@@ -211,6 +233,8 @@ const MOLECULAR_ORBITALS = {
         name: '1π_u (y)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'π bonding — lateral p overlap between C and O. Electron density above and below the bond axis.',
+      energy: 3, desc: 'π bonding — lateral p overlap between N. Electron density above and below the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 1, m: -1, zeff: 3.90, c:  0.707 },  // N₁ 2py
           { atom: 1, n: 2, l: 1, m: -1, zeff: 3.90, c:  0.707 },  // N₂ 2py
@@ -220,6 +244,8 @@ const MOLECULAR_ORBITALS = {
         name: '1π_u (z)',
         type: 'bonding',
         electrons: 2,
+      energy: 4, desc: 'π bonding — lateral p overlap between C and O. Electron density above and below the bond axis.',
+      energy: 4, desc: 'π bonding — lateral p overlap between N. Electron density above and below the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 1, m: 0, zeff: 3.90, c:  0.707 },  // N₁ 2pz
           { atom: 1, n: 2, l: 1, m: 0, zeff: 3.90, c:  0.707 },  // N₂ 2pz
@@ -229,6 +255,7 @@ const MOLECULAR_ORBITALS = {
         name: '3σ_g',
         type: 'bonding',
         electrons: 2,
+      energy: 5, desc: 'σ bonding between N — head-on p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 1, m: 1, zeff: 3.90, c:  0.707 },  // N₁ 2px (σ along bond)
           { atom: 1, n: 2, l: 1, m: 1, zeff: 3.90, c:  0.707 },  // N₂ 2px
@@ -248,11 +275,18 @@ const MOLECULAR_ORBITALS = {
   // Atoms: O(0,0,0) H₁(-0.76,0.59,0) H₂(0.76,0.59,0)
   // Molecular plane: xy. C₂ axis along y. Out-of-plane: z.
   'H₂O': {
+    notes: 'Bent geometry (104.5°) creates two distinct lone pairs visible in the 3a₁ and 1b₁ orbitals. The sp³-like hybridization explains the angle.',
     orbitals: [
       {
         name: '2a₁ (inner valence)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'Bonding orbital — constructive s overlap between Si and H concentrates electron density between the nuclei.',
+      energy: 1, desc: 'Bonding orbital — constructive s overlap between P and H concentrates electron density between the nuclei.',
+      energy: 1, desc: 'Bonding orbital — constructive s overlap between S and H concentrates electron density between the nuclei.',
+      energy: 1, desc: 'Bonding orbital — constructive s overlap between C and H concentrates electron density between the nuclei.',
+      energy: 1, desc: 'Bonding orbital — constructive s/p overlap between N and H concentrates electron density between the nuclei.',
+      energy: 1, desc: 'Bonding orbital — constructive s/p overlap between O and H concentrates electron density between the nuclei.',
         ao: [
           { atom: 0, n: 2, l: 0, m: 0,  zeff: 4.45, c: -0.83 },  // O 2s
           { atom: 0, n: 2, l: 1, m: -1, zeff: 4.45, c:  0.14 },  // O 2py (toward Hs)
@@ -264,6 +298,7 @@ const MOLECULAR_ORBITALS = {
         name: '1b₂ (O-H bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'Bonding orbital — constructive p/s overlap between O and H concentrates electron density between the nuclei.',
         ao: [
           { atom: 0, n: 2, l: 1, m: 1,  zeff: 4.45, c:  0.62 },  // O 2px (antisymmetric)
           { atom: 1, n: 1, l: 0, m: 0,  zeff: 1.24, c:  0.45 },  // H₁ 1s
@@ -274,6 +309,10 @@ const MOLECULAR_ORBITALS = {
         name: '3a₁ (lone pair)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 4, desc: 'Lone pair localized on P. Non-bonding electrons that can act as a Lewis base.',
+      energy: 3, desc: 'Lone pair localized on S. Non-bonding electrons that can act as a Lewis base.',
+      energy: 4, desc: 'Lone pair localized on N. Non-bonding electrons that can act as a Lewis base.',
+      energy: 3, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 0, n: 2, l: 0, m: 0,  zeff: 4.45, c:  0.48 },  // O 2s
           { atom: 0, n: 2, l: 1, m: -1, zeff: 4.45, c:  0.75 },  // O 2py (points between Hs)
@@ -285,6 +324,8 @@ const MOLECULAR_ORBITALS = {
         name: '1b₁ (lone pair)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 4, desc: 'Lone pair localized on S. Non-bonding electrons that can act as a Lewis base.',
+      energy: 4, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 0, n: 2, l: 1, m: 0, zeff: 4.45, c: 1.0 },    // O 2pz (out of plane)
         ],
@@ -297,11 +338,13 @@ const MOLECULAR_ORBITALS = {
   // Atoms: N(0,0,0.12) H₁(0,0.94,-0.36) H₂(0.81,-0.47,-0.36) H₃(-0.81,-0.47,-0.36)
   // The lone pair points along +z. N-H bonds point downward.
   'NH₃': {
+    notes: 'Pyramidal geometry with one lone pair. The inversion barrier creates the famous "nitrogen umbrella" effect.',
     orbitals: [
       {
         name: '2a₁ (inner valence)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'Bonding orbital with s/p character.',
         ao: [
           { atom: 0, n: 2, l: 0, m: 0,  zeff: 3.90, c: -0.80 },  // N 2s
           { atom: 0, n: 2, l: 1, m: 0,  zeff: 3.90, c:  0.15 },  // N 2pz
@@ -314,6 +357,7 @@ const MOLECULAR_ORBITALS = {
         name: '1e (bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'Bonding orbital — constructive p/s overlap between N and H concentrates electron density between the nuclei.',
         ao: [
           { atom: 0, n: 2, l: 1, m: 1,  zeff: 3.90, c:  0.55 },  // N 2px
           { atom: 1, n: 1, l: 0, m: 0,  zeff: 1.24, c: -0.15 },  // H₁ (small)
@@ -325,6 +369,7 @@ const MOLECULAR_ORBITALS = {
         name: '1e\' (bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'σ bonding — head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 1, m: -1, zeff: 3.90, c:  0.55 },  // N 2py
           { atom: 1, n: 1, l: 0, m: 0,  zeff: 1.24, c:  0.50 },  // H₁
@@ -336,6 +381,7 @@ const MOLECULAR_ORBITALS = {
         name: '3a₁ (lone pair)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 4, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 0, n: 2, l: 0, m: 0, zeff: 3.90, c:  0.42 },  // N 2s
           { atom: 0, n: 2, l: 1, m: 0, zeff: 3.90, c:  0.82 },  // N 2pz (lone pair up)
@@ -349,11 +395,13 @@ const MOLECULAR_ORBITALS = {
   // Atoms: C(0,0,0) H₁(0.63,0.63,0.63) H₂(-0.63,-0.63,0.63)
   //        H₃(-0.63,0.63,-0.63) H₄(0.63,-0.63,-0.63)
   'CH₄': {
+    notes: 'Perfect tetrahedral symmetry. Four equivalent C-H bonds arise from sp³ hybridization of carbon.',
     orbitals: [
       {
         name: '2a₁ (inner valence)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'Bonding orbital with s character.',
         ao: [
           { atom: 0, n: 2, l: 0, m: 0, zeff: 3.25, c: -0.75 },  // C 2s
           { atom: 1, n: 1, l: 0, m: 0, zeff: 1.24, c:  0.28 },  // H₁
@@ -366,6 +414,8 @@ const MOLECULAR_ORBITALS = {
         name: '1t₂ (bond, x)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'Bonding orbital — constructive p/s overlap between Si and H concentrates electron density between the nuclei.',
+      energy: 2, desc: 'Bonding orbital — constructive p/s overlap between C and H concentrates electron density between the nuclei.',
         ao: [
           { atom: 0, n: 2, l: 1, m: 1,  zeff: 3.25, c:  0.58 },  // C 2px
           { atom: 1, n: 1, l: 0, m: 0,  zeff: 1.24, c:  0.35 },  // H₁ (+x)
@@ -378,6 +428,8 @@ const MOLECULAR_ORBITALS = {
         name: '1t₂ (bond, y)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'Bonding orbital — constructive p/s overlap between Si and H concentrates electron density between the nuclei.',
+      energy: 3, desc: 'Bonding orbital — constructive p/s overlap between C and H concentrates electron density between the nuclei.',
         ao: [
           { atom: 0, n: 2, l: 1, m: -1, zeff: 3.25, c:  0.58 },  // C 2py
           { atom: 1, n: 1, l: 0, m: 0,  zeff: 1.24, c:  0.35 },  // H₁ (+y)
@@ -390,6 +442,8 @@ const MOLECULAR_ORBITALS = {
         name: '1t₂ (bond, z)',
         type: 'bonding',
         electrons: 2,
+      energy: 4, desc: 'Bonding orbital — constructive p/s overlap between Si and H concentrates electron density between the nuclei.',
+      energy: 4, desc: 'Bonding orbital — constructive p/s overlap between C and H concentrates electron density between the nuclei.',
         ao: [
           { atom: 0, n: 2, l: 1, m: 0,  zeff: 3.25, c:  0.58 },  // C 2pz
           { atom: 1, n: 1, l: 0, m: 0,  zeff: 1.24, c:  0.35 },  // H₁ (+z)
@@ -405,11 +459,13 @@ const MOLECULAR_ORBITALS = {
   // Linear molecule. σ bonds + π bonds perpendicular.
   // Atoms: O₁(-1.16,0,0) C(0,0,0) O₂(1.16,0,0) — bond along x-axis
   'CO₂': {
+    notes: 'Linear molecule with two π systems perpendicular to each other. A classic example of sp hybridization and delocalized π bonding.',
     orbitals: [
       {
         name: '3σ_g (C-O σ bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding from s/p overlap between C and O. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 1, n: 2, l: 0, m: 0, zeff: 3.25, c: -0.70 },  // C 2s
           { atom: 0, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.42 },  // O₁ 2px (toward C)
@@ -420,6 +476,7 @@ const MOLECULAR_ORBITALS = {
         name: '4σ_u (C-O σ bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding between C and O — head-on p overlap along the bond axis.',
         ao: [
           { atom: 1, n: 2, l: 1, m: 1, zeff: 3.25, c:  0.58 },  // C 2px (σ along bond)
           { atom: 0, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.42 },  // O₁ 2px
@@ -430,6 +487,7 @@ const MOLECULAR_ORBITALS = {
         name: '1π_u (y)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'π bonding — lateral p overlap. Electron density above and below the bond axis.',
         ao: [
           { atom: 1, n: 2, l: 1, m: -1, zeff: 3.25, c:  0.60 },  // C 2py
           { atom: 0, n: 2, l: 1, m: -1, zeff: 4.45, c:  0.40 },  // O₁ 2py
@@ -440,6 +498,7 @@ const MOLECULAR_ORBITALS = {
         name: '1π_u (z)',
         type: 'bonding',
         electrons: 2,
+      energy: 4, desc: 'π bonding — lateral p overlap. Electron density above and below the bond axis.',
         ao: [
           { atom: 1, n: 2, l: 1, m: 0, zeff: 3.25, c:  0.60 },  // C 2pz
           { atom: 0, n: 2, l: 1, m: 0, zeff: 4.45, c:  0.40 },  // O₁ 2pz
@@ -450,6 +509,7 @@ const MOLECULAR_ORBITALS = {
         name: '1π_g (O lone pair, y)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 5, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 0, n: 2, l: 1, m: -1, zeff: 4.45, c:  0.707 },  // O₁ 2py
           { atom: 2, n: 2, l: 1, m: -1, zeff: 4.45, c: -0.707 },  // O₂ 2py
@@ -459,6 +519,7 @@ const MOLECULAR_ORBITALS = {
         name: '1π_g (O lone pair, z)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 6, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 0, n: 2, l: 1, m: 0, zeff: 4.45, c:  0.707 },  // O₁ 2pz
           { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: -0.707 },  // O₂ 2pz
@@ -473,11 +534,13 @@ const MOLECULAR_ORBITALS = {
   //        H₃(1.24,0.93,0) H₄(1.24,-0.93,0)
   // Molecule is in xy plane. π bond lobes above/below in z.
   'C₂H₄': {
+    notes: 'Ethylene — the simplest alkene. The π bond restricts rotation around the C=C axis, enabling cis/trans isomerism.',
     orbitals: [
       {
         name: 'σ_CC (C-C σ)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding from p/s overlap between C. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 1, m: 1, zeff: 3.25, c:  0.50 },  // C₁ 2px (along bond)
           { atom: 1, n: 2, l: 1, m: 1, zeff: 3.25, c:  0.50 },  // C₂ 2px
@@ -489,6 +552,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ_CH (C₁-H)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding from p/s overlap between C and H. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 1, m: -1, zeff: 3.25, c:  0.55 },  // C₁ 2py (toward Hs)
           { atom: 2, n: 1, l: 0, m: 0,  zeff: 1.24, c:  0.42 },  // H₁
@@ -499,6 +563,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ_CH\' (C₂-H)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'σ bonding — head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 1, n: 2, l: 1, m: -1, zeff: 3.25, c:  0.55 },  // C₂ 2py
           { atom: 4, n: 1, l: 0, m: 0,  zeff: 1.24, c:  0.42 },  // H₃
@@ -509,6 +574,7 @@ const MOLECULAR_ORBITALS = {
         name: 'π (C=C π bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 4, desc: 'π bonding — lateral p overlap between C. Electron density above and below the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 1, m: 0, zeff: 3.25, c:  0.707 },  // C₁ 2pz (⊥ to plane)
           { atom: 1, n: 2, l: 1, m: 0, zeff: 3.25, c:  0.707 },  // C₂ 2pz
@@ -518,6 +584,7 @@ const MOLECULAR_ORBITALS = {
         name: 'π* (C=C π* antibond)',
         type: 'antibonding',
         electrons: 0,
+      energy: 5, desc: 'π* antibonding — a node between C in the π system. Occupation reduces bond order.',
         ao: [
           { atom: 0, n: 2, l: 1, m: 0, zeff: 3.25, c:  0.707 },  // C₁ 2pz
           { atom: 1, n: 2, l: 1, m: 0, zeff: 3.25, c: -0.707 },  // C₂ 2pz
@@ -530,11 +597,19 @@ const MOLECULAR_ORBITALS = {
   // Ionic bond. Electrons almost entirely on Cl.
   // Atoms: Na(-1.18,0,0) Cl(1.18,0,0)
   'NaCl': {
+    notes: 'Ionic bonding: Na donates its 3s electron almost entirely to Cl. The MO coefficients show extreme polarization.',
     orbitals: [
       {
         name: 'σ (ionic bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding from s/p overlap between Cs and Cl. Head-on overlap concentrates electron density along the bond axis.',
+      energy: 1, desc: 'σ bonding from s/p overlap between Rb and Cl. Head-on overlap concentrates electron density along the bond axis.',
+      energy: 1, desc: 'σ bonding from s/p overlap between K and Cl. Head-on overlap concentrates electron density along the bond axis.',
+      energy: 1, desc: 'σ bonding from s/p overlap between Ca and O. Head-on overlap concentrates electron density along the bond axis.',
+      energy: 1, desc: 'σ bonding from s/p overlap between Mg and O. Head-on overlap concentrates electron density along the bond axis.',
+      energy: 2, desc: 'σ bonding from p/s overlap between F and Na. Head-on overlap concentrates electron density along the bond axis.',
+      energy: 1, desc: 'σ bonding from s/p overlap between Na and Cl. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 3, l: 0, m: 0, zeff: 2.20, c:  0.15 },  // Na 3s (tiny contribution)
           { atom: 1, n: 3, l: 1, m: 1, zeff: 6.12, c:  0.90 },  // Cl 3px (almost all on Cl)
@@ -544,6 +619,11 @@ const MOLECULAR_ORBITALS = {
         name: 'Cl 3py (lone pair)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 2, desc: 'Lone pair localized on Cl. Non-bonding electrons that can act as a Lewis base.',
+      energy: 2, desc: 'Lone pair localized on Cl. Non-bonding electrons that can act as a Lewis base.',
+      energy: 2, desc: 'Lone pair localized on Cl. Non-bonding electrons that can act as a Lewis base.',
+      energy: 2, desc: 'Lone pair localized on Cl. Non-bonding electrons that can act as a Lewis base.',
+      energy: 2, desc: 'Lone pair localized on Cl. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 1, n: 3, l: 1, m: -1, zeff: 6.12, c: 1.0 },
         ],
@@ -552,6 +632,11 @@ const MOLECULAR_ORBITALS = {
         name: 'Cl 3pz (lone pair)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 3, desc: 'Lone pair localized on Cl. Non-bonding electrons that can act as a Lewis base.',
+      energy: 3, desc: 'Lone pair localized on Cl. Non-bonding electrons that can act as a Lewis base.',
+      energy: 3, desc: 'Lone pair localized on Cl. Non-bonding electrons that can act as a Lewis base.',
+      energy: 3, desc: 'Lone pair localized on Cl. Non-bonding electrons that can act as a Lewis base.',
+      energy: 3, desc: 'Lone pair localized on Cl. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 1, n: 3, l: 1, m: 0, zeff: 6.12, c: 1.0 },
         ],
@@ -560,6 +645,12 @@ const MOLECULAR_ORBITALS = {
         name: 'Cl 3s',
         type: 'nonbonding',
         electrons: 2,
+      energy: 3, desc: 'Non-bonding orbital localized on undefined.',
+      energy: 4, desc: 'Non-bonding orbital localized on Cl.',
+      energy: 4, desc: 'Non-bonding orbital localized on Cl.',
+      energy: 4, desc: 'Non-bonding orbital localized on Cl.',
+      energy: 4, desc: 'Non-bonding orbital localized on Cl.',
+      energy: 4, desc: 'Non-bonding orbital localized on Cl.',
         ao: [
           { atom: 1, n: 3, l: 0, m: 0, zeff: 6.12, c: 1.0 },
         ],
@@ -572,11 +663,14 @@ const MOLECULAR_ORBITALS = {
   // Bond along x-axis. Atoms: O₁(-0.6,0,0) O₂(0.6,0,0)
   // Bond order = (8 bonding − 4 antibonding)/2 = 2 (double bond)
   'O₂': {
+    notes: 'Paramagnetic! Two unpaired electrons in degenerate π* orbitals explain why liquid oxygen is attracted to magnets.',
     orbitals: [
       {
         name: '2σg',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding between F — head-on s overlap along the bond axis.',
+      energy: 1, desc: 'σ bonding between O — head-on s overlap along the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 0, m: 0, zeff: 4.45, c:  0.707 },
           { atom: 1, n: 2, l: 0, m: 0, zeff: 4.45, c:  0.707 },
@@ -586,6 +680,8 @@ const MOLECULAR_ORBITALS = {
         name: '2σ*u',
         type: 'antibonding',
         electrons: 2,
+      energy: 2, desc: 'σ* antibonding — destructive overlap creates a nodal plane between F. Occupying this weakens the bond.',
+      energy: 2, desc: 'σ* antibonding — destructive overlap creates a nodal plane between O. Occupying this weakens the bond.',
         ao: [
           { atom: 0, n: 2, l: 0, m: 0, zeff: 4.45, c:  0.707 },
           { atom: 1, n: 2, l: 0, m: 0, zeff: 4.45, c: -0.707 },
@@ -595,6 +691,9 @@ const MOLECULAR_ORBITALS = {
         name: '3σg',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding between Cl — head-on s overlap along the bond axis.',
+      energy: 3, desc: 'σ bonding between F — head-on p overlap along the bond axis.',
+      energy: 3, desc: 'σ bonding between O — head-on p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.707 },
           { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c: -0.707 },
@@ -604,6 +703,11 @@ const MOLECULAR_ORBITALS = {
         name: '1πu (y)',
         type: 'bonding',
         electrons: 2,
+      energy: 4, desc: 'π bonding — lateral p overlap between C. Electron density above and below the bond axis.',
+      energy: 3, desc: 'π bonding — lateral p overlap between Si and O. Electron density above and below the bond axis.',
+      energy: 4, desc: 'π bonding — lateral p overlap between Cl. Electron density above and below the bond axis.',
+      energy: 4, desc: 'π bonding — lateral p overlap between F. Electron density above and below the bond axis.',
+      energy: 4, desc: 'π bonding — lateral p overlap between O. Electron density above and below the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.707 },
           { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.707 },
@@ -613,6 +717,11 @@ const MOLECULAR_ORBITALS = {
         name: '1πu (z)',
         type: 'bonding',
         electrons: 2,
+      energy: 5, desc: 'π bonding — lateral p overlap between C. Electron density above and below the bond axis.',
+      energy: 4, desc: 'π bonding — lateral p overlap between Si and O. Electron density above and below the bond axis.',
+      energy: 5, desc: 'π bonding — lateral p overlap between Cl. Electron density above and below the bond axis.',
+      energy: 5, desc: 'π bonding — lateral p overlap between F. Electron density above and below the bond axis.',
+      energy: 5, desc: 'π bonding — lateral p overlap between O. Electron density above and below the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.707 },
           { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.707 },
@@ -622,6 +731,7 @@ const MOLECULAR_ORBITALS = {
         name: '1π*g (y) ↑',
         type: 'antibonding',
         electrons: 1,
+      energy: 6, desc: 'π* antibonding — a node between O in the π system. Occupation reduces bond order.',
         ao: [
           { atom: 0, n: 2, l: 1, m: -1, zeff: 4.45, c:  0.707 },
           { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c: -0.707 },
@@ -631,6 +741,7 @@ const MOLECULAR_ORBITALS = {
         name: '1π*g (z) ↑',
         type: 'antibonding',
         electrons: 1,
+      energy: 7, desc: 'π* antibonding — a node between O in the π system. Occupation reduces bond order.',
         ao: [
           { atom: 0, n: 2, l: 1, m: 0, zeff: 4.45, c:  0.707 },
           { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c: -0.707 },
@@ -643,11 +754,13 @@ const MOLECULAR_ORBITALS = {
   // 18e. All π* filled → weak single bond. Bond order 1.
   // Atoms: F₁(-0.71,0,0) F₂(0.71,0,0)
   'F₂': {
+    notes: 'Weak single bond despite high electronegativity. Lone pair repulsion weakens the bond — F₂ is actually less stable than expected.',
     orbitals: [
       {
         name: '2σg',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding — head-on s overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 0, m: 0, zeff: 5.13, c:  0.707 },
           { atom: 1, n: 2, l: 0, m: 0, zeff: 5.13, c:  0.707 },
@@ -657,6 +770,7 @@ const MOLECULAR_ORBITALS = {
         name: '2σ*u',
         type: 'antibonding',
         electrons: 2,
+      energy: 2, desc: 'σ* antibonding — destructive overlap with a nodal plane between atoms. Occupation weakens the bond.',
         ao: [
           { atom: 0, n: 2, l: 0, m: 0, zeff: 5.13, c:  0.707 },
           { atom: 1, n: 2, l: 0, m: 0, zeff: 5.13, c: -0.707 },
@@ -666,6 +780,7 @@ const MOLECULAR_ORBITALS = {
         name: '3σg',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'σ bonding — head-on p overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 1, m: 1, zeff: 5.13, c:  0.707 },
           { atom: 1, n: 2, l: 1, m: 1, zeff: 5.13, c: -0.707 },
@@ -675,6 +790,7 @@ const MOLECULAR_ORBITALS = {
         name: '1πu (y)',
         type: 'bonding',
         electrons: 2,
+      energy: 4, desc: 'π bonding — lateral p overlap. Electron density above and below the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 1, m: -1, zeff: 5.13, c: 0.707 },
           { atom: 1, n: 2, l: 1, m: -1, zeff: 5.13, c: 0.707 },
@@ -684,6 +800,7 @@ const MOLECULAR_ORBITALS = {
         name: '1πu (z)',
         type: 'bonding',
         electrons: 2,
+      energy: 5, desc: 'π bonding — lateral p overlap. Electron density above and below the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 1, m: 0, zeff: 5.13, c: 0.707 },
           { atom: 1, n: 2, l: 1, m: 0, zeff: 5.13, c: 0.707 },
@@ -693,6 +810,8 @@ const MOLECULAR_ORBITALS = {
         name: '1π*g (y)',
         type: 'antibonding',
         electrons: 2,
+      energy: 6, desc: 'π* antibonding — a node between Cl in the π system. Occupation reduces bond order.',
+      energy: 6, desc: 'π* antibonding — a node between F in the π system. Occupation reduces bond order.',
         ao: [
           { atom: 0, n: 2, l: 1, m: -1, zeff: 5.13, c:  0.707 },
           { atom: 1, n: 2, l: 1, m: -1, zeff: 5.13, c: -0.707 },
@@ -702,6 +821,8 @@ const MOLECULAR_ORBITALS = {
         name: '1π*g (z)',
         type: 'antibonding',
         electrons: 2,
+      energy: 7, desc: 'π* antibonding — a node between Cl in the π system. Occupation reduces bond order.',
+      energy: 7, desc: 'π* antibonding — a node between F in the π system. Occupation reduces bond order.',
         ao: [
           { atom: 0, n: 2, l: 1, m: 0, zeff: 5.13, c:  0.707 },
           { atom: 1, n: 2, l: 1, m: 0, zeff: 5.13, c: -0.707 },
@@ -714,11 +835,13 @@ const MOLECULAR_ORBITALS = {
   // 14e, isoelectronic with N₂. 5σ HOMO is the C lone pair (σ-donor).
   // Atoms: C(-0.56,0,0) O(0.56,0,0)
   'CO': {
+    notes: 'Isoelectronic with N₂. The carbon lone pair acts as a strong σ-donor in metal carbonyls. HOMO is surprisingly carbon-centered.',
     orbitals: [
       {
         name: '3σ (O inner)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 1, desc: 'Non-bonding orbital — electrons that don\'t significantly contribute to bond formation.',
         ao: [
           { atom: 1, n: 2, l: 0, m: 0, zeff: 4.45, c: 0.90 },
           { atom: 0, n: 2, l: 0, m: 0, zeff: 3.25, c: 0.20 },
@@ -728,6 +851,8 @@ const MOLECULAR_ORBITALS = {
         name: '4σ (bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding between  — head-on p overlap along the bond axis.',
+      energy: 2, desc: 'σ bonding from s/p overlap between C and O. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 0, m: 0, zeff: 3.25, c:  0.65 },
           { atom: 1, n: 2, l: 0, m: 0, zeff: 4.45, c: -0.55 },
@@ -738,6 +863,9 @@ const MOLECULAR_ORBITALS = {
         name: '1π (y)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'π bonding — lateral p overlap between . Electron density above and below the bond axis.',
+      energy: 3, desc: 'π bonding — lateral p overlap between N and O. Electron density above and below the bond axis.',
+      energy: 3, desc: 'π bonding — lateral p overlap between C and O. Electron density above and below the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 1, m: -1, zeff: 3.25, c: 0.55 },
           { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.63 },
@@ -747,6 +875,8 @@ const MOLECULAR_ORBITALS = {
         name: '1π (z)',
         type: 'bonding',
         electrons: 2,
+      energy: 4, desc: 'π bonding — lateral p overlap between N and O. Electron density above and below the bond axis.',
+      energy: 4, desc: 'π bonding — lateral p overlap between C and O. Electron density above and below the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 1, m: 0, zeff: 3.25, c: 0.55 },
           { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.63 },
@@ -756,6 +886,7 @@ const MOLECULAR_ORBITALS = {
         name: '5σ (C lone pair)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 5, desc: 'Lone pair localized on C. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 0, n: 2, l: 1, m: 1, zeff: 3.25, c: -0.80 },
           { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.30 },
@@ -768,11 +899,13 @@ const MOLECULAR_ORBITALS = {
   // 12e. Highly ionic (>90% on F). One of the most polar diatomics.
   // Atoms: Li(-0.8,0,0) F(0.8,0,0)
   'LiF': {
+    notes: 'Highly ionic. Li 2s electron transfers almost completely to F, creating one of the largest dipole moments among diatomics.',
     orbitals: [
       {
         name: '1σ (Li core)',
         type: 'core',
         electrons: 2,
+      energy: 1, desc: 'Core electrons on Li — tightly bound and not involved in bonding.',
         ao: [
           { atom: 0, n: 1, l: 0, m: 0, zeff: 2.70, c: 1.0 },
         ],
@@ -781,6 +914,7 @@ const MOLECULAR_ORBITALS = {
         name: '2σ (F 2s)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 2, desc: 'Non-bonding orbital — electrons not significantly involved in bond formation.',
         ao: [
           { atom: 1, n: 2, l: 0, m: 0, zeff: 5.13, c: 0.95 },
           { atom: 0, n: 2, l: 0, m: 0, zeff: 1.30, c: 0.10 },
@@ -790,6 +924,7 @@ const MOLECULAR_ORBITALS = {
         name: '3σ (ionic bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'σ bonding from p/s overlap between F and Li. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 1, n: 2, l: 1, m: 1, zeff: 5.13, c: 0.92 },
           { atom: 0, n: 2, l: 0, m: 0, zeff: 1.30, c: 0.25 },
@@ -799,6 +934,7 @@ const MOLECULAR_ORBITALS = {
         name: '1π (F lone pair)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 4, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 1, n: 2, l: 1, m: -1, zeff: 5.13, c: 1.0 },
         ],
@@ -807,6 +943,7 @@ const MOLECULAR_ORBITALS = {
         name: '1π\' (F lone pair)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 5, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 1, n: 2, l: 1, m: 0, zeff: 5.13, c: 1.0 },
         ],
@@ -818,11 +955,13 @@ const MOLECULAR_ORBITALS = {
   // 34e total, showing 3s3p valence (14e). Bond order 1.
   // Atoms: Cl₁(-0.99,0,0) Cl₂(0.99,0,0)
   'Cl₂': {
+    notes: 'Single σ bond between two 3p orbitals. The four lone pairs per atom are non-bonding.',
     orbitals: [
       {
         name: '3σg',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding — head-on s overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 3, l: 0, m: 0, zeff: 6.12, c:  0.707 },
           { atom: 1, n: 3, l: 0, m: 0, zeff: 6.12, c:  0.707 },
@@ -832,6 +971,7 @@ const MOLECULAR_ORBITALS = {
         name: '3σ*u',
         type: 'antibonding',
         electrons: 2,
+      energy: 2, desc: 'σ* antibonding — destructive overlap creates a nodal plane between Cl. Occupying this weakens the bond.',
         ao: [
           { atom: 0, n: 3, l: 0, m: 0, zeff: 6.12, c:  0.707 },
           { atom: 1, n: 3, l: 0, m: 0, zeff: 6.12, c: -0.707 },
@@ -841,6 +981,7 @@ const MOLECULAR_ORBITALS = {
         name: '4σg',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'σ bonding between Cl — head-on p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 3, l: 1, m: 1, zeff: 6.12, c:  0.707 },
           { atom: 1, n: 3, l: 1, m: 1, zeff: 6.12, c: -0.707 },
@@ -850,6 +991,7 @@ const MOLECULAR_ORBITALS = {
         name: '1πu (y)',
         type: 'bonding',
         electrons: 2,
+      energy: 4, desc: 'π bonding — lateral p overlap. Electron density above and below the bond axis.',
         ao: [
           { atom: 0, n: 3, l: 1, m: -1, zeff: 6.12, c: 0.707 },
           { atom: 1, n: 3, l: 1, m: -1, zeff: 6.12, c: 0.707 },
@@ -859,6 +1001,7 @@ const MOLECULAR_ORBITALS = {
         name: '1πu (z)',
         type: 'bonding',
         electrons: 2,
+      energy: 5, desc: 'π bonding — lateral p overlap. Electron density above and below the bond axis.',
         ao: [
           { atom: 0, n: 3, l: 1, m: 0, zeff: 6.12, c: 0.707 },
           { atom: 1, n: 3, l: 1, m: 0, zeff: 6.12, c: 0.707 },
@@ -868,6 +1011,7 @@ const MOLECULAR_ORBITALS = {
         name: '1π*g (y)',
         type: 'antibonding',
         electrons: 2,
+      energy: 6, desc: 'π* antibonding — a node in the π system. Occupation reduces bond order.',
         ao: [
           { atom: 0, n: 3, l: 1, m: -1, zeff: 6.12, c:  0.707 },
           { atom: 1, n: 3, l: 1, m: -1, zeff: 6.12, c: -0.707 },
@@ -877,6 +1021,7 @@ const MOLECULAR_ORBITALS = {
         name: '1π*g (z)',
         type: 'antibonding',
         electrons: 2,
+      energy: 7, desc: 'π* antibonding — a node in the π system. Occupation reduces bond order.',
         ao: [
           { atom: 0, n: 3, l: 1, m: 0, zeff: 6.12, c:  0.707 },
           { atom: 1, n: 3, l: 1, m: 0, zeff: 6.12, c: -0.707 },
@@ -889,11 +1034,29 @@ const MOLECULAR_ORBITALS = {
   // 36e total, showing valence (8e). Completes H-halide series.
   // Atoms: H(-0.71,0,0) Br(0.71,0,0)
   'HBr': {
+    notes: 'Weaker bond than HCl — the trend HF › HCl › HBr › HI shows how orbital size mismatch reduces overlap.',
     orbitals: [
       {
         name: 'σ (bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding from s/p overlap between K and I. Head-on overlap concentrates electron density along the bond axis.',
+      energy: 1, desc: 'σ bonding between  — head-on p overlap along the bond axis.',
+      energy: 1, desc: 'σ bonding from s/p overlap between . Head-on overlap concentrates electron density along the bond axis.',
+      energy: 1, desc: 'σ bonding from s/p overlap between . Head-on overlap concentrates electron density along the bond axis.',
+      energy: 1, desc: 'σ bonding from s/p overlap between . Head-on overlap concentrates electron density along the bond axis.',
+      energy: 1, desc: 'σ bonding between  — head-on p overlap along the bond axis.',
+      energy: 1, desc: 'σ bonding between  — head-on p overlap along the bond axis.',
+      energy: 1, desc: 'σ bonding from s/p overlap between W and C. Head-on overlap concentrates electron density along the bond axis.',
+      energy: 1, desc: 'σ bonding between Pb and O — head-on p overlap along the bond axis.',
+      energy: 1, desc: 'σ bonding from s/p overlap between Cu and O. Head-on overlap concentrates electron density along the bond axis.',
+      energy: 1, desc: 'σ bonding from s/p overlap between Ni and O. Head-on overlap concentrates electron density along the bond axis.',
+      energy: 1, desc: 'σ bonding from s/p overlap between Fe and O. Head-on overlap concentrates electron density along the bond axis.',
+      energy: 1, desc: 'σ bonding from s/p overlap between Zn and S. Head-on overlap concentrates electron density along the bond axis.',
+      energy: 1, desc: 'σ bonding from s/p overlap between Zn and O. Head-on overlap concentrates electron density along the bond axis.',
+      energy: 1, desc: 'σ bonding from s/p overlap between Cd and S. Head-on overlap concentrates electron density along the bond axis.',
+      energy: 1, desc: 'σ bonding from s/p overlap between Ag and Cl. Head-on overlap concentrates electron density along the bond axis.',
+      energy: 1, desc: 'σ bonding from p/s overlap between Br and H. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 1, n: 4, l: 1, m: 1, zeff: 7.60, c: 0.70 },
           { atom: 0, n: 1, l: 0, m: 0, zeff: 1.24, c: 0.52 },
@@ -903,6 +1066,7 @@ const MOLECULAR_ORBITALS = {
         name: '1π (Br lone pair)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 2, desc: 'Lone pair localized on Br. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 1, n: 4, l: 1, m: -1, zeff: 7.60, c: 1.0 },
         ],
@@ -911,6 +1075,7 @@ const MOLECULAR_ORBITALS = {
         name: '1π\' (Br lone pair)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 3, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 1, n: 4, l: 1, m: 0, zeff: 7.60, c: 1.0 },
         ],
@@ -919,6 +1084,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Br 4s (inner)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 4, desc: 'Non-bonding orbital localized on Br.',
         ao: [
           { atom: 1, n: 4, l: 0, m: 0, zeff: 7.60, c: 1.0 },
         ],
@@ -930,11 +1096,13 @@ const MOLECULAR_ORBITALS = {
   // Strongly ionic. Almost all electron density on F.
   // Atoms: Na(-0.96,0,0) F(0.96,0,0)
   'NaF': {
+    notes: 'Nearly pure ionic bond. Useful comparison with NaCl to show the effect of anion electronegativity.',
     orbitals: [
       {
         name: '2σ (F 2s)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 1, desc: 'Non-bonding orbital — electrons not significantly involved in bond formation.',
         ao: [
           { atom: 1, n: 2, l: 0, m: 0, zeff: 5.13, c: 0.96 },
           { atom: 0, n: 3, l: 0, m: 0, zeff: 2.20, c: 0.08 },
@@ -944,6 +1112,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ (ionic bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding — head-on p/s overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 1, n: 2, l: 1, m: 1, zeff: 5.13, c: 0.93 },
           { atom: 0, n: 3, l: 0, m: 0, zeff: 2.20, c: 0.20 },
@@ -953,6 +1122,7 @@ const MOLECULAR_ORBITALS = {
         name: 'F 2py (lone pair)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 3, desc: 'Lone pair localized on F. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 1, n: 2, l: 1, m: -1, zeff: 5.13, c: 1.0 },
         ],
@@ -961,6 +1131,7 @@ const MOLECULAR_ORBITALS = {
         name: 'F 2pz (lone pair)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 4, desc: 'Lone pair localized on F. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 1, n: 2, l: 1, m: 0, zeff: 5.13, c: 1.0 },
         ],
@@ -973,11 +1144,15 @@ const MOLECULAR_ORBITALS = {
   // Bent: O₁(-1.08,0.34,0) O₂(0,0,0) O₃(1.08,0.34,0) — mol in xy plane.
   // π system uses pz (m=0, perpendicular to molecular plane).
   'O₃': {
+    notes: 'Ozone — bent molecule with delocalized π electrons across all three oxygens. Resonance structures explain the equal O-O bond lengths.',
     orbitals: [
       {
         name: 'π₁ (bonding)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'π bonding — lateral p overlap between Se and O. Electron density above and below the bond axis.',
+      energy: 1, desc: 'π bonding — lateral p overlap between S and O. Electron density above and below the bond axis.',
+      energy: 1, desc: 'π bonding — lateral p overlap between O. Electron density above and below the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 1, m: 0, zeff: 4.45, c:  0.50 },
           { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c:  0.707 },
@@ -988,6 +1163,10 @@ const MOLECULAR_ORBITALS = {
         name: 'π₂ (nonbonding)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 5, desc: 'Non-bonding orbital localized on O.',
+      energy: 2, desc: 'Non-bonding orbital localized on O.',
+      energy: 2, desc: 'Non-bonding orbital localized on O.',
+      energy: 2, desc: 'Non-bonding orbital localized on O.',
         ao: [
           { atom: 0, n: 2, l: 1, m: 0, zeff: 4.45, c:  0.707 },
           { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: -0.707 },
@@ -997,6 +1176,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ₁ (O-O bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'σ bonding from p/s overlap between O. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.55 },
           { atom: 1, n: 2, l: 0, m: 0, zeff: 4.45, c:  0.60 },
@@ -1007,6 +1187,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ₂ (O-O bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 4, desc: 'σ bonding from s/p overlap between O. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 0, m: 0, zeff: 4.45, c:  0.55 },
           { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.65 },
@@ -1017,6 +1198,17 @@ const MOLECULAR_ORBITALS = {
         name: 'O₁ lone pair',
         type: 'nonbonding',
         electrons: 2,
+      energy: 4, desc: 'Lone pair localized on ?. Non-bonding electrons that can act as a Lewis base.',
+      energy: 5, desc: 'Lone pair localized on Ti. Non-bonding electrons that can act as a Lewis base.',
+      energy: 5, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
+      energy: 6, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
+      energy: 6, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
+      energy: 6, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
+      energy: 4, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
+      energy: 5, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
+      energy: 5, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
+      energy: 6, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
+      energy: 5, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 0, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.85 },
           { atom: 0, n: 2, l: 0, m: 0, zeff: 4.45, c: 0.40 },
@@ -1026,6 +1218,10 @@ const MOLECULAR_ORBITALS = {
         name: 'O₃ lone pair',
         type: 'nonbonding',
         electrons: 2,
+      energy: 6, desc: 'Lone pair localized on ?. Non-bonding electrons that can act as a Lewis base.',
+      energy: 8, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
+      energy: 7, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
+      energy: 6, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 2, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.85 },
           { atom: 2, n: 2, l: 0, m: 0, zeff: 4.45, c: 0.40 },
@@ -1035,6 +1231,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Central O lone pair',
         type: 'nonbonding',
         electrons: 2,
+      energy: 7, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.70 },
           { atom: 1, n: 2, l: 0, m: 0, zeff: 4.45, c: 0.55 },
@@ -1044,6 +1241,10 @@ const MOLECULAR_ORBITALS = {
         name: 'π* (empty)',
         type: 'antibonding',
         electrons: 0,
+      energy: 8, desc: 'π* antibonding — a node between Se and O in the π system. Occupation reduces bond order.',
+      energy: 9, desc: 'π* antibonding — a node between N and O in the π system. Occupation reduces bond order.',
+      energy: 8, desc: 'π* antibonding — a node between S and O in the π system. Occupation reduces bond order.',
+      energy: 8, desc: 'π* antibonding — a node between O in the π system. Occupation reduces bond order.',
         ao: [
           { atom: 0, n: 2, l: 1, m: 0, zeff: 4.45, c:  0.50 },
           { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c: -0.707 },
@@ -1057,11 +1258,13 @@ const MOLECULAR_ORBITALS = {
   // 18e total, valence 8e. Bent like H₂O but 92° bond angle.
   // Atoms: S(0,0,0) H₁(-0.96,0.58,0) H₂(0.96,0.58,0) — mol in xy plane
   'H₂S': {
+    notes: 'Bent like water but with a smaller bond angle (92°) due to less s-p mixing in sulfur.',
     orbitals: [
       {
         name: '2a₁ (inner valence)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'Bonding orbital with s character.',
         ao: [
           { atom: 0, n: 3, l: 0, m: 0, zeff: 5.45, c: 0.75 },
           { atom: 1, n: 1, l: 0, m: 0, zeff: 1.24, c: 0.35 },
@@ -1072,6 +1275,7 @@ const MOLECULAR_ORBITALS = {
         name: '1b₂ (S-H bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'Bonding orbital — constructive p/s overlap between S and H concentrates electron density between the nuclei.',
         ao: [
           { atom: 0, n: 3, l: 1, m: 1, zeff: 5.45, c: 0.50 },
           { atom: 1, n: 1, l: 0, m: 0, zeff: 1.24, c:-0.50 },
@@ -1082,6 +1286,7 @@ const MOLECULAR_ORBITALS = {
         name: '3a₁ (lone pair)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 3, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 0, n: 3, l: 1, m: -1, zeff: 5.45, c: 0.85 },
           { atom: 0, n: 3, l: 0, m: 0, zeff: 5.45, c: 0.35 },
@@ -1091,6 +1296,7 @@ const MOLECULAR_ORBITALS = {
         name: '1b₁ (lone pair)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 4, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 0, n: 3, l: 1, m: 0, zeff: 5.45, c: 1.0 },
         ],
@@ -1103,11 +1309,13 @@ const MOLECULAR_ORBITALS = {
   // Atoms: S(0,0,0) O₁(-1.05,0.6,0) O₂(1.05,0.6,0) — mol in xy plane
   // π uses pz (m=0). Zeff: S 3s/3p=5.45, O 2s/2p=4.45
   'SO₂': {
+    notes: 'Bent molecule with resonance — sulfur uses d-orbital participation for expanded octet.',
     orbitals: [
       {
         name: 'π₁ (bonding)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding — head-on p overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 3, l: 1, m: 0, zeff: 5.45, c:  0.60 },
           { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c:  0.55 },
@@ -1118,6 +1326,7 @@ const MOLECULAR_ORBITALS = {
         name: 'π₂ (nonbonding)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 2, desc: 'Non-bonding orbital — electrons not significantly involved in bond formation.',
         ao: [
           { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c:  0.707 },
           { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: -0.707 },
@@ -1127,6 +1336,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ₁ (S-O bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'σ bonding between S and O — head-on p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 3, l: 1, m: 1, zeff: 5.45, c:  0.50 },
           { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c: -0.55 },
@@ -1137,6 +1347,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ₂ (S-O bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 4, desc: 'σ bonding between S and O — head-on s overlap along the bond axis.',
         ao: [
           { atom: 0, n: 3, l: 0, m: 0, zeff: 5.45, c:  0.60 },
           { atom: 1, n: 2, l: 0, m: 0, zeff: 4.45, c:  0.50 },
@@ -1147,6 +1358,7 @@ const MOLECULAR_ORBITALS = {
         name: 'S lone pair',
         type: 'nonbonding',
         electrons: 2,
+      energy: 5, desc: 'Lone pair localized on S. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 0, n: 3, l: 1, m: -1, zeff: 5.45, c: 0.90 },
         ],
@@ -1155,6 +1367,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O₁ lone pair',
         type: 'nonbonding',
         electrons: 2,
+      energy: 6, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.80 },
           { atom: 1, n: 2, l: 0, m: 0, zeff: 4.45, c: 0.45 },
@@ -1164,6 +1377,16 @@ const MOLECULAR_ORBITALS = {
         name: 'O₂ lone pair',
         type: 'nonbonding',
         electrons: 2,
+      energy: 5, desc: 'Lone pair localized on ?. Non-bonding electrons that can act as a Lewis base.',
+      energy: 6, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
+      energy: 6, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
+      energy: 7, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
+      energy: 7, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
+      energy: 7, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
+      energy: 5, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
+      energy: 6, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
+      energy: 6, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
+      energy: 7, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 2, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.80 },
           { atom: 2, n: 2, l: 0, m: 0, zeff: 4.45, c: 0.45 },
@@ -1173,6 +1396,7 @@ const MOLECULAR_ORBITALS = {
         name: 'π* (empty)',
         type: 'antibonding',
         electrons: 0,
+      energy: 8, desc: 'π* antibonding — a node in the π system. Occupation reduces bond order.',
         ao: [
           { atom: 0, n: 3, l: 1, m: 0, zeff: 5.45, c: -0.707 },
           { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c:  0.50 },
@@ -1186,11 +1410,13 @@ const MOLECULAR_ORBITALS = {
   // 22e. Linear N=N=O. Asymmetric — interesting MO structure.
   // Atoms: N₁(-1.13,0,0) N₂(0,0,0) O(1.19,0,0)
   'N₂O': {
+    notes: 'Linear but asymmetric (N-N-O). A greenhouse gas with resonance structures: N=N=O ↔ N≡N⁻-O⁺.',
     orbitals: [
       {
         name: '4σ (bonding)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding between N and O — head-on s overlap along the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 0, m: 0, zeff: 3.90, c: 0.45 },
           { atom: 1, n: 2, l: 0, m: 0, zeff: 3.90, c: 0.55 },
@@ -1201,6 +1427,7 @@ const MOLECULAR_ORBITALS = {
         name: '5σ (bonding)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding between N and O — head-on p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 1, m: 1, zeff: 3.90, c:  0.55 },
           { atom: 1, n: 2, l: 1, m: 1, zeff: 3.90, c: -0.20 },
@@ -1211,6 +1438,7 @@ const MOLECULAR_ORBITALS = {
         name: '1π (y)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'π bonding — lateral p overlap. Electron density above and below the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 1, m: -1, zeff: 3.90, c: 0.45 },
           { atom: 1, n: 2, l: 1, m: -1, zeff: 3.90, c: 0.60 },
@@ -1221,6 +1449,7 @@ const MOLECULAR_ORBITALS = {
         name: '1π (z)',
         type: 'bonding',
         electrons: 2,
+      energy: 4, desc: 'π bonding — lateral p overlap. Electron density above and below the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 1, m: 0, zeff: 3.90, c: 0.45 },
           { atom: 1, n: 2, l: 1, m: 0, zeff: 3.90, c: 0.60 },
@@ -1231,6 +1460,7 @@ const MOLECULAR_ORBITALS = {
         name: '6σ (N₁ lone pair)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 5, desc: 'Lone pair localized on N. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 0, n: 2, l: 1, m: 1, zeff: 3.90, c: -0.80 },
           { atom: 0, n: 2, l: 0, m: 0, zeff: 3.90, c:  0.40 },
@@ -1240,6 +1470,7 @@ const MOLECULAR_ORBITALS = {
         name: '2π (y, nonbonding)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 6, desc: 'Non-bonding orbital — electrons that don\'t significantly contribute to bond formation.',
         ao: [
           { atom: 0, n: 2, l: 1, m: -1, zeff: 3.90, c:  0.65 },
           { atom: 2, n: 2, l: 1, m: -1, zeff: 4.45, c: -0.65 },
@@ -1249,6 +1480,7 @@ const MOLECULAR_ORBITALS = {
         name: '2π (z, nonbonding)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 7, desc: 'Non-bonding orbital — electrons that don\'t significantly contribute to bond formation.',
         ao: [
           { atom: 0, n: 2, l: 1, m: 0, zeff: 3.90, c:  0.65 },
           { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: -0.65 },
@@ -1261,11 +1493,17 @@ const MOLECULAR_ORBITALS = {
   // Linear, sp hybridized Be. 3c bonding.
   // Atoms: Cl₁(-1.75,0,0) Be(0,0,0) Cl₂(1.75,0,0)
   'BeCl₂': {
+    notes: 'Linear — sp hybridization produces 180° bond angle. An electron-deficient compound (only 4 valence electrons on Be).',
     orbitals: [
       {
         name: 'σg (bonding)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding from s/p overlap between . Head-on overlap concentrates electron density along the bond axis.',
+      energy: 1, desc: 'σ bonding from s/p overlap between Mg and Cl. Head-on overlap concentrates electron density along the bond axis.',
+      energy: 1, desc: 'σ bonding between I — head-on p overlap along the bond axis.',
+      energy: 1, desc: 'σ bonding between Br — head-on p overlap along the bond axis.',
+      energy: 1, desc: 'σ bonding from s/p overlap between Be and Cl. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 1, n: 2, l: 0, m: 0, zeff: 1.95, c:  0.55 },
           { atom: 0, n: 3, l: 1, m: 1, zeff: 6.12, c:  0.50 },
@@ -1276,6 +1514,9 @@ const MOLECULAR_ORBITALS = {
         name: 'σu (bonding)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding between  — head-on p overlap along the bond axis.',
+      energy: 2, desc: 'σ bonding between Mg and Cl — head-on p overlap along the bond axis.',
+      energy: 2, desc: 'σ bonding between Be and Cl — head-on p overlap along the bond axis.',
         ao: [
           { atom: 1, n: 2, l: 1, m: 1, zeff: 1.95, c:  0.55 },
           { atom: 0, n: 3, l: 1, m: 1, zeff: 6.12, c:  0.50 },
@@ -1286,6 +1527,8 @@ const MOLECULAR_ORBITALS = {
         name: 'Cl₁ π (y)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 3, desc: 'Non-bonding orbital localized on Cl.',
+      energy: 3, desc: 'Non-bonding orbital localized on Cl.',
         ao: [
           { atom: 0, n: 3, l: 1, m: -1, zeff: 6.12, c: 1.0 },
         ],
@@ -1294,6 +1537,8 @@ const MOLECULAR_ORBITALS = {
         name: 'Cl₁ π (z)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 4, desc: 'Non-bonding orbital localized on Cl.',
+      energy: 4, desc: 'Non-bonding orbital localized on Cl.',
         ao: [
           { atom: 0, n: 3, l: 1, m: 0, zeff: 6.12, c: 1.0 },
         ],
@@ -1302,6 +1547,8 @@ const MOLECULAR_ORBITALS = {
         name: 'Cl₂ π (y)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 5, desc: 'Non-bonding orbital localized on Cl.',
+      energy: 5, desc: 'Non-bonding orbital localized on Cl.',
         ao: [
           { atom: 2, n: 3, l: 1, m: -1, zeff: 6.12, c: 1.0 },
         ],
@@ -1310,6 +1557,8 @@ const MOLECULAR_ORBITALS = {
         name: 'Cl₂ π (z)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 6, desc: 'Non-bonding orbital localized on Cl.',
+      energy: 6, desc: 'Non-bonding orbital localized on Cl.',
         ao: [
           { atom: 2, n: 3, l: 1, m: 0, zeff: 6.12, c: 1.0 },
         ],
@@ -1318,6 +1567,8 @@ const MOLECULAR_ORBITALS = {
         name: 'Cl₁ 3s',
         type: 'nonbonding',
         electrons: 2,
+      energy: 7, desc: 'Non-bonding orbital localized on Cl.',
+      energy: 7, desc: 'Non-bonding orbital localized on Cl.',
         ao: [
           { atom: 0, n: 3, l: 0, m: 0, zeff: 6.12, c: 1.0 },
         ],
@@ -1326,6 +1577,8 @@ const MOLECULAR_ORBITALS = {
         name: 'Cl₂ 3s',
         type: 'nonbonding',
         electrons: 2,
+      energy: 8, desc: 'Non-bonding orbital localized on Cl.',
+      energy: 8, desc: 'Non-bonding orbital localized on Cl.',
         ao: [
           { atom: 2, n: 3, l: 0, m: 0, zeff: 6.12, c: 1.0 },
         ],
@@ -1337,11 +1590,15 @@ const MOLECULAR_ORBITALS = {
   // Noble gas compound! 3-center-4-electron bond (hypervalent).
   // Linear: F₁(-1.5,0,0) Xe(0,0,0) F₂(1.5,0,0)
   'XeF₂': {
+    notes: 'Linear noble gas compound — the 1962 discovery of XeF₂ overturned the "inert gas" dogma. Three-center four-electron bond.',
     orbitals: [
       {
         name: '3c-σ (bonding)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding between Kr and F — head-on p overlap along the bond axis.',
+      energy: 1, desc: 'σ bonding from s/p overlap between H and Ar and F. Head-on overlap concentrates electron density along the bond axis.',
+      energy: 1, desc: 'σ bonding between F and Xe — head-on p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 1, m: 1, zeff: 5.13, c:  0.50 },
           { atom: 1, n: 5, l: 1, m: 1, zeff: 8.25, c:  0.707 },
@@ -1352,6 +1609,8 @@ const MOLECULAR_ORBITALS = {
         name: '3c-nb (nonbonding)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 2, desc: 'Non-bonding orbital — electrons that don\'t significantly contribute to bond formation.',
+      energy: 2, desc: 'Non-bonding orbital localized on F.',
         ao: [
           { atom: 0, n: 2, l: 1, m: 1, zeff: 5.13, c:  0.707 },
           { atom: 2, n: 2, l: 1, m: 1, zeff: 5.13, c:  0.707 },
@@ -1361,6 +1620,8 @@ const MOLECULAR_ORBITALS = {
         name: 'F₁ lone pair (y)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 3, desc: 'Lone pair localized on Kr. Non-bonding electrons that can act as a Lewis base.',
+      energy: 3, desc: 'Lone pair localized on F. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 0, n: 2, l: 1, m: -1, zeff: 5.13, c: 1.0 },
         ],
@@ -1369,6 +1630,8 @@ const MOLECULAR_ORBITALS = {
         name: 'F₁ lone pair (z)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 4, desc: 'Lone pair localized on Kr. Non-bonding electrons that can act as a Lewis base.',
+      energy: 4, desc: 'Lone pair localized on F. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 0, n: 2, l: 1, m: 0, zeff: 5.13, c: 1.0 },
         ],
@@ -1377,6 +1640,8 @@ const MOLECULAR_ORBITALS = {
         name: 'F₂ lone pair (y)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 5, desc: 'Lone pair localized on F. Non-bonding electrons that can act as a Lewis base.',
+      energy: 5, desc: 'Lone pair localized on F. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 2, n: 2, l: 1, m: -1, zeff: 5.13, c: 1.0 },
         ],
@@ -1385,6 +1650,8 @@ const MOLECULAR_ORBITALS = {
         name: 'F₂ lone pair (z)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 6, desc: 'Lone pair localized on F. Non-bonding electrons that can act as a Lewis base.',
+      energy: 6, desc: 'Lone pair localized on F. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 2, n: 2, l: 1, m: 0, zeff: 5.13, c: 1.0 },
         ],
@@ -1393,6 +1660,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Xe 5s',
         type: 'nonbonding',
         electrons: 2,
+      energy: 7, desc: 'Non-bonding orbital localized on Xe.',
         ao: [
           { atom: 1, n: 5, l: 0, m: 0, zeff: 8.25, c: 1.0 },
         ],
@@ -1401,6 +1669,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Xe 5py',
         type: 'nonbonding',
         electrons: 2,
+      energy: 8, desc: 'Non-bonding orbital localized on Xe.',
         ao: [
           { atom: 1, n: 5, l: 1, m: -1, zeff: 8.25, c: 1.0 },
         ],
@@ -1409,6 +1678,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Xe 5pz',
         type: 'nonbonding',
         electrons: 2,
+      energy: 9, desc: 'Non-bonding orbital localized on Xe.',
         ao: [
           { atom: 1, n: 5, l: 1, m: 0, zeff: 8.25, c: 1.0 },
         ],
@@ -1417,6 +1687,8 @@ const MOLECULAR_ORBITALS = {
         name: '3c-σ* (empty)',
         type: 'antibonding',
         electrons: 0,
+      energy: 10, desc: 'σ* antibonding — destructive overlap creates a nodal plane between Kr and F. Occupying this weakens the bond.',
+      energy: 10, desc: 'σ* antibonding — destructive overlap creates a nodal plane between F and Xe. Occupying this weakens the bond.',
         ao: [
           { atom: 0, n: 2, l: 1, m: 1, zeff: 5.13, c:  0.50 },
           { atom: 1, n: 5, l: 1, m: 1, zeff: 8.25, c: -0.707 },
@@ -1430,11 +1702,13 @@ const MOLECULAR_ORBITALS = {
   // Linear O=Si=O. Si uses sp hybrid + two π bonds.
   // Atoms: O₁(-1.16,0,0) Si(0,0,0) O₂(1.16,0,0)
   'SiO₂': {
+    notes: 'Silicon dioxide — building block of glass and quartz. Strong Si-O σ and π bonds.',
     orbitals: [
       {
         name: 'σg (Si-O bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding from s/p overlap between Si and O. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 1, n: 3, l: 0, m: 0, zeff: 4.15, c:  0.55 },
           { atom: 0, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.50 },
@@ -1445,6 +1719,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σu (Si-O bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding between Si and O — head-on p overlap along the bond axis.',
         ao: [
           { atom: 1, n: 3, l: 1, m: 1, zeff: 4.15, c:  0.55 },
           { atom: 0, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.50 },
@@ -1455,6 +1730,7 @@ const MOLECULAR_ORBITALS = {
         name: '1πu (y)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'π bonding — lateral p overlap. Electron density above and below the bond axis.',
         ao: [
           { atom: 1, n: 3, l: 1, m: -1, zeff: 4.15, c: 0.55 },
           { atom: 0, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.50 },
@@ -1465,6 +1741,7 @@ const MOLECULAR_ORBITALS = {
         name: '1πu (z)',
         type: 'bonding',
         electrons: 2,
+      energy: 4, desc: 'π bonding — lateral p overlap. Electron density above and below the bond axis.',
         ao: [
           { atom: 1, n: 3, l: 1, m: 0, zeff: 4.15, c: 0.55 },
           { atom: 0, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
@@ -1475,6 +1752,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O₁ lone pair',
         type: 'nonbonding',
         electrons: 2,
+      energy: 5, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 0, n: 2, l: 0, m: 0, zeff: 4.45, c: 0.85 },
           { atom: 0, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.40 },
@@ -1484,6 +1762,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O₂ lone pair',
         type: 'nonbonding',
         electrons: 2,
+      energy: 6, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 2, n: 2, l: 0, m: 0, zeff: 4.45, c: 0.85 },
           { atom: 2, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.40 },
@@ -1496,11 +1775,13 @@ const MOLECULAR_ORBITALS = {
   // 24 valence e. Trigonal planar, empty p orbital → Lewis acid.
   // B(0,0,0) F₁(1.3,0,0) F₂(-0.65,1.13,0) F₃(-0.65,-1.13,0) — mol in xy
   'BF₃': {
+    notes: 'Trigonal planar, electron-deficient. The empty p orbital on boron creates a classic Lewis acid.',
     orbitals: [
       {
         name: 'a₁\' (σ symmetric)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding — head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 0, m: 0, zeff: 2.60, c:  0.60 },
           { atom: 1, n: 2, l: 1, m: 1, zeff: 5.13, c: -0.40 },
@@ -1512,6 +1793,7 @@ const MOLECULAR_ORBITALS = {
         name: 'e\' (σ, x)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding — head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 1, m: 1, zeff: 2.60, c:  0.55 },
           { atom: 1, n: 2, l: 1, m: 1, zeff: 5.13, c: -0.55 },
@@ -1523,6 +1805,7 @@ const MOLECULAR_ORBITALS = {
         name: 'e\' (σ, y)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'σ bonding — head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 1, m: -1, zeff: 2.60, c: 0.55 },
           { atom: 2, n: 2, l: 1, m: -1, zeff: 5.13, c: 0.55 },
@@ -1533,6 +1816,7 @@ const MOLECULAR_ORBITALS = {
         name: 'F₁ lone pairs',
         type: 'nonbonding',
         electrons: 2,
+      energy: 4, desc: 'Lone pair localized on F. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 1, n: 2, l: 1, m: -1, zeff: 5.13, c: 1.0 },
         ],
@@ -1541,6 +1825,7 @@ const MOLECULAR_ORBITALS = {
         name: 'F₂ lone pairs',
         type: 'nonbonding',
         electrons: 2,
+      energy: 5, desc: 'Lone pair localized on F. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 2, n: 2, l: 0, m: 0, zeff: 5.13, c: 0.85 },
           { atom: 2, n: 2, l: 1, m: 1, zeff: 5.13, c: 0.40 },
@@ -1550,6 +1835,7 @@ const MOLECULAR_ORBITALS = {
         name: 'F₃ lone pairs',
         type: 'nonbonding',
         electrons: 2,
+      energy: 6, desc: 'Lone pair localized on F. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 3, n: 2, l: 0, m: 0, zeff: 5.13, c: 0.85 },
           { atom: 3, n: 2, l: 1, m: 1, zeff: 5.13, c: 0.40 },
@@ -1559,6 +1845,7 @@ const MOLECULAR_ORBITALS = {
         name: 'F 2s (inner)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 7, desc: 'Non-bonding orbital localized on F.',
         ao: [
           { atom: 1, n: 2, l: 0, m: 0, zeff: 5.13, c: 0.58 },
           { atom: 2, n: 2, l: 1, m: -1, zeff: 5.13, c: 0.45 },
@@ -1569,6 +1856,7 @@ const MOLECULAR_ORBITALS = {
         name: 'F pz (lone pairs)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 8, desc: 'Lone pair localized on F. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 1, n: 2, l: 1, m: 0, zeff: 5.13, c: 0.58 },
           { atom: 2, n: 2, l: 1, m: 0, zeff: 5.13, c: 0.58 },
@@ -1579,6 +1867,7 @@ const MOLECULAR_ORBITALS = {
         name: 'a₂\'\' (empty B pz)',
         type: 'antibonding',
         electrons: 0,
+      energy: 9, desc: 'Antibonding — electron density pushed away from the internuclear region.',
         ao: [
           { atom: 0, n: 2, l: 1, m: 0, zeff: 2.60, c:  0.707 },
           { atom: 1, n: 2, l: 1, m: 0, zeff: 5.13, c: -0.30 },
@@ -1593,11 +1882,13 @@ const MOLECULAR_ORBITALS = {
   // 14e. Triple bond: 1σ + 2π. Linear molecule.
   // C₁(-0.6,0,0) C₂(0.6,0,0) H₁(-1.66,0,0) H₂(1.66,0,0)
   'C₂H₂': {
+    notes: 'Acetylene — sp hybridized carbons with two orthogonal π bonds forming the triple bond.',
     orbitals: [
       {
         name: '2σg (C-H bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding between C and H — head-on s overlap along the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 0, m: 0, zeff: 3.25, c:  0.50 },
           { atom: 1, n: 2, l: 0, m: 0, zeff: 3.25, c:  0.50 },
@@ -1609,6 +1900,7 @@ const MOLECULAR_ORBITALS = {
         name: '2σu (C-H bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding between C and H — head-on s overlap along the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 0, m: 0, zeff: 3.25, c:  0.50 },
           { atom: 1, n: 2, l: 0, m: 0, zeff: 3.25, c: -0.50 },
@@ -1620,6 +1912,7 @@ const MOLECULAR_ORBITALS = {
         name: '3σg (C≡C σ)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'σ bonding between C — head-on p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 1, m: 1, zeff: 3.25, c:  0.707 },
           { atom: 1, n: 2, l: 1, m: 1, zeff: 3.25, c: -0.707 },
@@ -1629,6 +1922,7 @@ const MOLECULAR_ORBITALS = {
         name: '1πu (y)',
         type: 'bonding',
         electrons: 2,
+      energy: 4, desc: 'π bonding — lateral p overlap. Electron density above and below the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 1, m: -1, zeff: 3.25, c: 0.707 },
           { atom: 1, n: 2, l: 1, m: -1, zeff: 3.25, c: 0.707 },
@@ -1638,6 +1932,7 @@ const MOLECULAR_ORBITALS = {
         name: '1πu (z)',
         type: 'bonding',
         electrons: 2,
+      energy: 5, desc: 'π bonding — lateral p overlap. Electron density above and below the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 1, m: 0, zeff: 3.25, c: 0.707 },
           { atom: 1, n: 2, l: 1, m: 0, zeff: 3.25, c: 0.707 },
@@ -1647,6 +1942,7 @@ const MOLECULAR_ORBITALS = {
         name: '1π*g (y)',
         type: 'antibonding',
         electrons: 0,
+      energy: 6, desc: 'π* antibonding — a node between C in the π system. Occupation reduces bond order.',
         ao: [
           { atom: 0, n: 2, l: 1, m: -1, zeff: 3.25, c:  0.707 },
           { atom: 1, n: 2, l: 1, m: -1, zeff: 3.25, c: -0.707 },
@@ -1656,6 +1952,7 @@ const MOLECULAR_ORBITALS = {
         name: '1π*g (z)',
         type: 'antibonding',
         electrons: 0,
+      energy: 7, desc: 'π* antibonding — a node between C in the π system. Occupation reduces bond order.',
         ao: [
           { atom: 0, n: 2, l: 1, m: 0, zeff: 3.25, c:  0.707 },
           { atom: 1, n: 2, l: 1, m: 0, zeff: 3.25, c: -0.707 },
@@ -1668,11 +1965,13 @@ const MOLECULAR_ORBITALS = {
   // 18e total, 8 valence. Pyramidal like NH₃. Lone pair on P.
   // P(0,0,0.14) H₁(0,1.02,-0.42) H₂(0.88,-0.51,-0.42) H₃(-0.88,-0.51,-0.42)
   'PH₃': {
+    notes: 'Pyramidal like NH₃ but with a much smaller bond angle (~93°) — almost pure p bonding with minimal s mixing.',
     orbitals: [
       {
         name: '2a₁ (inner valence)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'Bonding orbital with s character.',
         ao: [
           { atom: 0, n: 3, l: 0, m: 0, zeff: 4.80, c: 0.70 },
           { atom: 1, n: 1, l: 0, m: 0, zeff: 1.24, c: 0.35 },
@@ -1684,6 +1983,7 @@ const MOLECULAR_ORBITALS = {
         name: '1e (P-H bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'Bonding orbital — constructive p/s overlap between P and H concentrates electron density between the nuclei.',
         ao: [
           { atom: 0, n: 3, l: 1, m: 1, zeff: 4.80, c: 0.55 },
           { atom: 2, n: 1, l: 0, m: 0, zeff: 1.24, c: 0.50 },
@@ -1694,6 +1994,7 @@ const MOLECULAR_ORBITALS = {
         name: '1e\' (P-H bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'σ bonding — head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 3, l: 1, m: -1, zeff: 4.80, c: 0.55 },
           { atom: 1, n: 1, l: 0, m: 0, zeff: 1.24, c: 0.55 },
@@ -1705,6 +2006,7 @@ const MOLECULAR_ORBITALS = {
         name: '3a₁ (lone pair)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 4, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 0, n: 3, l: 1, m: 0, zeff: 4.80, c: 0.85 },
           { atom: 0, n: 3, l: 0, m: 0, zeff: 4.80, c: 0.35 },
@@ -1717,11 +2019,13 @@ const MOLECULAR_ORBITALS = {
   // Trigonal planar. Delocalized π system.
   // S(0,0,0) O₁(1.2,0,0) O₂(-0.6,1.04,0) O₃(-0.6,-1.04,0) — mol in xy
   'SO₃': {
+    notes: 'Trigonal planar with resonating π bonds across all S-O linkages. A strong Lewis acid and precursor to sulfuric acid.',
     orbitals: [
       {
         name: 'a₁\' (σ framework)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding — head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 3, l: 0, m: 0, zeff: 5.45, c:  0.55 },
           { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c: -0.45 },
@@ -1733,6 +2037,7 @@ const MOLECULAR_ORBITALS = {
         name: 'e\' (σ, x)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding — head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 3, l: 1, m: 1, zeff: 5.45, c:  0.50 },
           { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c: -0.55 },
@@ -1744,6 +2049,7 @@ const MOLECULAR_ORBITALS = {
         name: 'e\' (σ, y)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'σ bonding — head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 3, l: 1, m: -1, zeff: 5.45, c: 0.50 },
           { atom: 2, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.55 },
@@ -1754,6 +2060,7 @@ const MOLECULAR_ORBITALS = {
         name: 'a₂\'\' (π bonding)',
         type: 'bonding',
         electrons: 2,
+      energy: 4, desc: 'σ bonding — head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 3, l: 1, m: 0, zeff: 5.45, c:  0.55 },
           { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c:  0.45 },
@@ -1765,6 +2072,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O₁ lone pair',
         type: 'nonbonding',
         electrons: 2,
+      energy: 5, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 1, n: 2, l: 0, m: 0, zeff: 4.45, c: 0.85 },
           { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.40 },
@@ -1774,6 +2082,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O₂ lone pair',
         type: 'nonbonding',
         electrons: 2,
+      energy: 6, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 2, n: 2, l: 0, m: 0, zeff: 4.45, c: 0.85 },
           { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.40 },
@@ -1783,6 +2092,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O₃ lone pair',
         type: 'nonbonding',
         electrons: 2,
+      energy: 7, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 3, n: 2, l: 0, m: 0, zeff: 4.45, c: 0.85 },
           { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.40 },
@@ -1792,6 +2102,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O pz (lone pairs)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 8, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.707 },
           { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c:-0.707 },
@@ -1804,11 +2115,13 @@ const MOLECULAR_ORBITALS = {
   // 18e. O-O single bond + lone pairs. Gauche conformation.
   // O₁(-0.37,0.33,0.2) O₂(0.37,-0.33,0.2) H₁(-0.85,-0.28,-0.3) H₂(0.85,0.28,-0.3)
   'H₂O₂': {
+    notes: 'Hydrogen peroxide — the weak O-O single bond and non-planar geometry explain its reactivity as an oxidizer.',
     orbitals: [
       {
         name: 'σ (O-O bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding from s/p overlap between O. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 0, m: 0, zeff: 4.45, c:  0.55 },
           { atom: 1, n: 2, l: 0, m: 0, zeff: 4.45, c:  0.55 },
@@ -1820,6 +2133,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ (O₁-H₁)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding from p/s overlap between O and H. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.60 },
           { atom: 2, n: 1, l: 0, m: 0, zeff: 1.24, c: 0.65 },
@@ -1829,6 +2143,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ (O₂-H₂)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'σ bonding from p/s overlap between O and H. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.60 },
           { atom: 3, n: 1, l: 0, m: 0, zeff: 1.24, c: 0.65 },
@@ -1838,6 +2153,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O₁ lone pair',
         type: 'nonbonding',
         electrons: 2,
+      energy: 4, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 0, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.90 },
         ],
@@ -1846,6 +2162,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O₂ lone pair',
         type: 'nonbonding',
         electrons: 2,
+      energy: 5, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.90 },
         ],
@@ -1858,11 +2175,13 @@ const MOLECULAR_ORBITALS = {
   // Si(0,0,0) H₁(0.85,0.85,0.85) H₂(-0.85,-0.85,0.85)
   // H₃(-0.85,0.85,-0.85) H₄(0.85,-0.85,-0.85)
   'SiH₄': {
+    notes: 'Silane — tetrahedral like CH₄. The longer Si-H bonds and lower electronegativity difference affect terminal orbital shapes.',
     orbitals: [
       {
         name: '2a₁ (inner valence)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'Bonding orbital with s character.',
         ao: [
           { atom: 0, n: 3, l: 0, m: 0, zeff: 4.15, c: 0.70 },
           { atom: 1, n: 1, l: 0, m: 0, zeff: 1.24, c: 0.32 },
@@ -1875,6 +2194,7 @@ const MOLECULAR_ORBITALS = {
         name: '1t₂ (bond, x)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding — head-on p/s overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 3, l: 1, m: 1, zeff: 4.15, c: 0.60 },
           { atom: 1, n: 1, l: 0, m: 0, zeff: 1.24, c: 0.40 },
@@ -1887,6 +2207,7 @@ const MOLECULAR_ORBITALS = {
         name: '1t₂ (bond, y)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'σ bonding — head-on p/s overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 3, l: 1, m: -1, zeff: 4.15, c: 0.60 },
           { atom: 1, n: 1, l: 0, m: 0, zeff: 1.24, c: 0.40 },
@@ -1899,6 +2220,7 @@ const MOLECULAR_ORBITALS = {
         name: '1t₂ (bond, z)',
         type: 'bonding',
         electrons: 2,
+      energy: 4, desc: 'σ bonding — head-on p/s overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 3, l: 1, m: 0, zeff: 4.15, c: 0.60 },
           { atom: 1, n: 1, l: 0, m: 0, zeff: 1.24, c: 0.40 },
@@ -1915,11 +2237,13 @@ const MOLECULAR_ORBITALS = {
   // B₁(-0.88,0,0) B₂(0.88,0,0) Ht₁(-1.6,0.8,0) Ht₂(-1.6,-0.8,0)
   // Hbr₁(0,0.5,0) Hbr₂(0,-0.5,0) Ht₃(1.6,0.8,0) Ht₄(1.6,-0.8,0)
   'B₂H₆': {
+    notes: 'Diborane features unusual three-center two-electron bonds — electron-deficient "banana bonds" bridging the two borons.',
     orbitals: [
       {
         name: 'σg (B-Ht sym)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding between B and H — head-on s overlap along the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 0, m: 0, zeff: 2.60, c:  0.45 },
           { atom: 1, n: 2, l: 0, m: 0, zeff: 2.60, c:  0.45 },
@@ -1933,6 +2257,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σu (B-Ht anti)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding between B and H — head-on s overlap along the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 0, m: 0, zeff: 2.60, c:  0.45 },
           { atom: 1, n: 2, l: 0, m: 0, zeff: 2.60, c: -0.45 },
@@ -1946,6 +2271,7 @@ const MOLECULAR_ORBITALS = {
         name: 'B-Ht (py)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'Bonding orbital — constructive p/s overlap between B and H concentrates electron density between the nuclei.',
         ao: [
           { atom: 0, n: 2, l: 1, m: -1, zeff: 2.60, c: 0.55 },
           { atom: 1, n: 2, l: 1, m: -1, zeff: 2.60, c: 0.55 },
@@ -1959,6 +2285,7 @@ const MOLECULAR_ORBITALS = {
         name: '3c2e bridge (sym)',
         type: 'bonding',
         electrons: 2,
+      energy: 4, desc: 'Bonding orbital — constructive p/s overlap between B and H concentrates electron density between the nuclei.',
         ao: [
           { atom: 0, n: 2, l: 1, m: -1, zeff: 2.60, c: 0.50 },
           { atom: 1, n: 2, l: 1, m: -1, zeff: 2.60, c: 0.50 },
@@ -1970,6 +2297,7 @@ const MOLECULAR_ORBITALS = {
         name: '3c2e bridge (anti)',
         type: 'bonding',
         electrons: 2,
+      energy: 5, desc: 'Bonding orbital — constructive p/s overlap between B and H concentrates electron density between the nuclei.',
         ao: [
           { atom: 0, n: 2, l: 1, m: 1, zeff: 2.60, c:  0.50 },
           { atom: 1, n: 2, l: 1, m: 1, zeff: 2.60, c: -0.50 },
@@ -1981,6 +2309,7 @@ const MOLECULAR_ORBITALS = {
         name: 'B pz (empty)',
         type: 'antibonding',
         electrons: 0,
+      energy: 6, desc: 'Antibonding orbital — electron density pushed away from the internuclear region.',
         ao: [
           { atom: 0, n: 2, l: 1, m: 0, zeff: 2.60, c: 0.707 },
           { atom: 1, n: 2, l: 1, m: 0, zeff: 2.60, c: 0.707 },
@@ -1994,11 +2323,13 @@ const MOLECULAR_ORBITALS = {
   // Atoms: N(0,0,0) O₁(-1.0,0.65,0) O₂(1.0,0.65,0) — mol in xy plane
   // π uses pz (m=0). Zeff: N 2s/2p=3.90, O 2s/2p=4.45
   'NO₂': {
+    notes: 'Bent radical with one unpaired electron. Brown gas responsible for smog. Dimerizes to N₂O₄.',
     orbitals: [
       {
         name: 'σ₁ (s framework)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding between N and O — head-on s overlap along the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 0, m: 0, zeff: 3.90, c:  0.55 },
           { atom: 1, n: 2, l: 0, m: 0, zeff: 4.45, c:  0.50 },
@@ -2009,6 +2340,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ₂ (N-O bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding between N and O — head-on p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 1, m: 1, zeff: 3.90, c:  0.50 },
           { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c: -0.55 },
@@ -2019,6 +2351,7 @@ const MOLECULAR_ORBITALS = {
         name: 'π (bonding)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'π bonding — lateral p overlap between N and O. Electron density above and below the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 1, m: 0, zeff: 3.90, c:  0.60 },
           { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c:  0.55 },
@@ -2029,6 +2362,7 @@ const MOLECULAR_ORBITALS = {
         name: 'π (nonbonding)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 4, desc: 'Non-bonding orbital localized on O.',
         ao: [
           { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c:  0.707 },
           { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: -0.707 },
@@ -2038,6 +2372,7 @@ const MOLECULAR_ORBITALS = {
         name: 'N lone pair (y)',
         type: 'nonbonding',
         electrons: 1,
+      energy: 5, desc: 'Lone pair localized on N. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 0, n: 2, l: 1, m: -1, zeff: 3.90, c: 0.90 },
         ],
@@ -2046,6 +2381,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O₁ lone pair',
         type: 'nonbonding',
         electrons: 2,
+      energy: 6, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.80 },
           { atom: 1, n: 2, l: 0, m: 0, zeff: 4.45, c: 0.45 },
@@ -2055,6 +2391,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O₂ lone pair',
         type: 'nonbonding',
         electrons: 2,
+      energy: 7, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 2, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.80 },
           { atom: 2, n: 2, l: 0, m: 0, zeff: 4.45, c: 0.45 },
@@ -2064,6 +2401,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ (N-O antibond)',
         type: 'bonding',
         electrons: 2,
+      energy: 8, desc: 'σ bonding from s/p overlap between N and O. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 0, m: 0, zeff: 3.90, c:  0.60 },
           { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c: -0.40 },
@@ -2074,6 +2412,7 @@ const MOLECULAR_ORBITALS = {
         name: 'π* (empty)',
         type: 'antibonding',
         electrons: 0,
+      energy: 9, desc: 'π* antibonding — a node in the π system. Occupation reduces bond order.',
         ao: [
           { atom: 0, n: 2, l: 1, m: 0, zeff: 3.90, c: -0.707 },
           { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c:  0.50 },
@@ -2087,11 +2426,13 @@ const MOLECULAR_ORBITALS = {
   // 14e total. Bent. Strongly ionic: Li⁺ Li⁺ O²⁻
   // Atoms: Li₁(-1.0,0.5,0) O(0,0,0) Li₂(1.0,0.5,0)
   'Li₂O': {
+    notes: 'Ionic compound where two Li atoms donate to oxygen. The O 2p orbitals dominate the bonding MOs.',
     orbitals: [
       {
         name: 'σ₁ (ionic bonding)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding between O and Li — head-on s overlap along the bond axis.',
         ao: [
           { atom: 1, n: 2, l: 0, m: 0, zeff: 4.45, c:  0.85 },
           { atom: 0, n: 2, l: 0, m: 0, zeff: 1.30, c:  0.15 },
@@ -2102,6 +2443,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ₂ (ionic bonding)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding from p/s overlap between O and Li. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.85 },
           { atom: 0, n: 2, l: 0, m: 0, zeff: 1.30, c:  0.15 },
@@ -2112,6 +2454,9 @@ const MOLECULAR_ORBITALS = {
         name: 'O 2py',
         type: 'nonbonding',
         electrons: 2,
+      energy: 3, desc: 'Non-bonding orbital localized on undefined.',
+      energy: 3, desc: 'Non-bonding orbital localized on undefined.',
+      energy: 3, desc: 'Non-bonding orbital localized on O.',
         ao: [
           { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c: 1.0 },
         ],
@@ -2120,6 +2465,9 @@ const MOLECULAR_ORBITALS = {
         name: 'O 2pz',
         type: 'nonbonding',
         electrons: 2,
+      energy: 4, desc: 'Non-bonding orbital localized on undefined.',
+      energy: 4, desc: 'Non-bonding orbital localized on undefined.',
+      energy: 4, desc: 'Non-bonding orbital localized on O.',
         ao: [
           { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c: 1.0 },
         ],
@@ -2128,6 +2476,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Li₁ 1s (core)',
         type: 'core',
         electrons: 2,
+      energy: 5, desc: 'Core electrons on Li — tightly bound and not involved in bonding.',
         ao: [
           { atom: 0, n: 1, l: 0, m: 0, zeff: 2.70, c: 1.0 },
         ],
@@ -2136,6 +2485,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Li₂ 1s (core)',
         type: 'core',
         electrons: 2,
+      energy: 6, desc: 'Core electrons on Li — tightly bound and not involved in bonding.',
         ao: [
           { atom: 2, n: 1, l: 0, m: 0, zeff: 2.70, c: 1.0 },
         ],
@@ -2147,11 +2497,14 @@ const MOLECULAR_ORBITALS = {
   // 12e total. Polar diatomic, bond along x.
   // Atoms: Be(-0.65,0,0) O(0.65,0,0). Zeff: Be 2s=1.95, O 2s/2p=4.45
   'BeO': {
+    notes: 'One of the most refractory oxides. Predominantly ionic with partial covalent character.',
     orbitals: [
       {
         name: 'σ (bonding)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding between Ga and As — head-on p overlap along the bond axis.',
+      energy: 1, desc: 'σ bonding from s/p overlap between Be and O. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 0, m: 0, zeff: 1.95, c:  0.45 },
           { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.75 },
@@ -2161,6 +2514,8 @@ const MOLECULAR_ORBITALS = {
         name: 'π (bonding, y)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'π bonding — lateral p overlap between Ga and As. Electron density above and below the bond axis.',
+      energy: 2, desc: 'π bonding — lateral p overlap between Be and O. Electron density above and below the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 1, m: -1, zeff: 1.95, c:  0.40 },
           { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c:  0.80 },
@@ -2170,6 +2525,8 @@ const MOLECULAR_ORBITALS = {
         name: 'π (bonding, z)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'π bonding — lateral p overlap between Ga and As. Electron density above and below the bond axis.',
+      energy: 3, desc: 'π bonding — lateral p overlap between Be and O. Electron density above and below the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 1, m: 0, zeff: 1.95, c:  0.40 },
           { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c:  0.80 },
@@ -2179,6 +2536,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O 2s (lone pair)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 4, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 1, n: 2, l: 0, m: 0, zeff: 4.45, c: 0.90 },
         ],
@@ -2187,6 +2545,8 @@ const MOLECULAR_ORBITALS = {
         name: 'σ* (empty)',
         type: 'antibonding',
         electrons: 0,
+      energy: 6, desc: 'σ* antibonding — destructive overlap creates a nodal plane between Ga and As. Occupying this weakens the bond.',
+      energy: 5, desc: 'σ* antibonding — destructive overlap creates a nodal plane between Be and O. Occupying this weakens the bond.',
         ao: [
           { atom: 0, n: 2, l: 0, m: 0, zeff: 1.95, c:  0.75 },
           { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c: -0.45 },
@@ -2199,11 +2559,13 @@ const MOLECULAR_ORBITALS = {
   // 20e total. Ionic diatomic, bond along x.
   // Atoms: Mg(-0.87,0,0) O(0.87,0,0). Zeff: Mg 3s=2.85, O 2s/2p=4.45
   'MgO': {
+    notes: 'Highly ionic — wide bandgap (7.8 eV) makes it an excellent insulator. Isoelectronic with NaF.',
     orbitals: [
       {
         name: 'σ (ionic bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding — head-on s/p overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 3, l: 0, m: 0, zeff: 2.85, c:  0.20 },
           { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.88 },
@@ -2213,6 +2575,10 @@ const MOLECULAR_ORBITALS = {
         name: 'O 2py (lone pair)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 3, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
+      energy: 2, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
+      energy: 2, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
+      energy: 2, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c: 1.0 },
         ],
@@ -2221,6 +2587,12 @@ const MOLECULAR_ORBITALS = {
         name: 'O 2pz (lone pair)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 3, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
+      energy: 3, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
+      energy: 4, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
+      energy: 3, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
+      energy: 3, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
+      energy: 3, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c: 1.0 },
         ],
@@ -2229,6 +2601,18 @@ const MOLECULAR_ORBITALS = {
         name: 'O 2s',
         type: 'nonbonding',
         electrons: 2,
+      energy: 2, desc: 'Non-bonding orbital localized on undefined.',
+      energy: 2, desc: 'Non-bonding orbital localized on undefined.',
+      energy: 4, desc: 'Non-bonding orbital localized on undefined.',
+      energy: 4, desc: 'Non-bonding orbital localized on O.',
+      energy: 4, desc: 'Non-bonding orbital localized on O.',
+      energy: 5, desc: 'Non-bonding orbital localized on O.',
+      energy: 4, desc: 'Non-bonding orbital localized on O.',
+      energy: 4, desc: 'Non-bonding orbital localized on O.',
+      energy: 4, desc: 'Non-bonding orbital localized on O.',
+      energy: 4, desc: 'Non-bonding orbital localized on O.',
+      energy: 4, desc: 'Non-bonding orbital localized on O.',
+      energy: 4, desc: 'Non-bonding orbital localized on O.',
         ao: [
           { atom: 1, n: 2, l: 0, m: 0, zeff: 4.45, c: 1.0 },
         ],
@@ -2240,11 +2624,13 @@ const MOLECULAR_ORBITALS = {
   // 28e total. Ionic diatomic, bond along x.
   // Atoms: Ca(-0.96,0,0) O(0.96,0,0). Zeff: Ca 4s=2.85, O 2s/2p=4.45
   'CaO': {
+    notes: 'Quicklime — important industrial chemical. Ionic bonding with Ca 4s → O 2p electron transfer.',
     orbitals: [
       {
         name: 'σ (ionic bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding — head-on s/p overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 4, l: 0, m: 0, zeff: 2.85, c:  0.18 },
           { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.90 },
@@ -2254,6 +2640,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O 2py (lone pair)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 2, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c: 1.0 },
         ],
@@ -2262,6 +2649,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O 2pz (lone pair)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 3, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c: 1.0 },
         ],
@@ -2270,6 +2658,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O 2s',
         type: 'nonbonding',
         electrons: 2,
+      energy: 4, desc: 'Non-bonding orbital — electrons not significantly involved in bond formation.',
         ao: [
           { atom: 1, n: 2, l: 0, m: 0, zeff: 4.45, c: 1.0 },
         ],
@@ -2281,11 +2670,13 @@ const MOLECULAR_ORBITALS = {
   // 36e total. Ionic, bond along x.
   // Atoms: K(-1.33,0,0) Cl(1.33,0,0). Zeff: K 4s=2.20, Cl 3s/3p=6.12
   'KCl': {
+    notes: 'Model ionic compound. The potassium 4s electron transfers almost completely to chlorine 3p.',
     orbitals: [
       {
         name: 'σ (ionic bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding — head-on s/p overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 4, l: 0, m: 0, zeff: 2.20, c:  0.12 },
           { atom: 1, n: 3, l: 1, m: 1, zeff: 6.12, c:  0.92 },
@@ -2295,6 +2686,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Cl 3py (lone pair)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 2, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 1, n: 3, l: 1, m: -1, zeff: 6.12, c: 1.0 },
         ],
@@ -2303,6 +2695,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Cl 3pz (lone pair)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 3, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 1, n: 3, l: 1, m: 0, zeff: 6.12, c: 1.0 },
         ],
@@ -2311,6 +2704,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Cl 3s',
         type: 'nonbonding',
         electrons: 2,
+      energy: 4, desc: 'Non-bonding orbital — electrons not significantly involved in bond formation.',
         ao: [
           { atom: 1, n: 3, l: 0, m: 0, zeff: 6.12, c: 1.0 },
         ],
@@ -2322,11 +2716,13 @@ const MOLECULAR_ORBITALS = {
   // 54e total. Ionic, bond along x.
   // Atoms: Rb(-1.30,0,0) Cl(1.30,0,0). Zeff: Rb 5s=2.20, Cl 3s/3p=6.12
   'RbCl': {
+    notes: 'Heavier alkali halide — comparing with KCl shows how larger atomic radii affect orbital overlap.',
     orbitals: [
       {
         name: 'σ (ionic bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding — head-on s/p overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 5, l: 0, m: 0, zeff: 2.20, c:  0.10 },
           { atom: 1, n: 3, l: 1, m: 1, zeff: 6.12, c:  0.93 },
@@ -2336,6 +2732,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Cl 3py (lone pair)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 2, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 1, n: 3, l: 1, m: -1, zeff: 6.12, c: 1.0 },
         ],
@@ -2344,6 +2741,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Cl 3pz (lone pair)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 3, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 1, n: 3, l: 1, m: 0, zeff: 6.12, c: 1.0 },
         ],
@@ -2352,6 +2750,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Cl 3s',
         type: 'nonbonding',
         electrons: 2,
+      energy: 4, desc: 'Non-bonding orbital — electrons not significantly involved in bond formation.',
         ao: [
           { atom: 1, n: 3, l: 0, m: 0, zeff: 6.12, c: 1.0 },
         ],
@@ -2363,11 +2762,13 @@ const MOLECULAR_ORBITALS = {
   // 72e total. Ionic, bond along x.
   // Atoms: Cs(-1.5,0,0) Cl(1.5,0,0). Zeff: Cs 6s=2.20, Cl 3s/3p=6.12
   'CsCl': {
+    notes: 'Famous for its body-centered cubic crystal structure. Extreme ionic character with the largest alkali cation.',
     orbitals: [
       {
         name: 'σ (ionic bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding — head-on s/p overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 6, l: 0, m: 0, zeff: 2.20, c:  0.08 },
           { atom: 1, n: 3, l: 1, m: 1, zeff: 6.12, c:  0.94 },
@@ -2377,6 +2778,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Cl 3py (lone pair)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 2, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 1, n: 3, l: 1, m: -1, zeff: 6.12, c: 1.0 },
         ],
@@ -2385,6 +2787,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Cl 3pz (lone pair)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 3, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 1, n: 3, l: 1, m: 0, zeff: 6.12, c: 1.0 },
         ],
@@ -2393,6 +2796,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Cl 3s',
         type: 'nonbonding',
         electrons: 2,
+      energy: 4, desc: 'Non-bonding orbital — electrons not significantly involved in bond formation.',
         ao: [
           { atom: 1, n: 3, l: 0, m: 0, zeff: 6.12, c: 1.0 },
         ],
@@ -2404,11 +2808,13 @@ const MOLECULAR_ORBITALS = {
   // 64e total. Ionic/covalent mix. Bond along x.
   // Atoms: Ag(-1.2,0,0) Cl(1.2,0,0). Zeff: Ag 5s=4.25, Cl 3s/3p=6.12
   'AgCl': {
+    notes: 'Silver chloride — a partially covalent "ionic" compound. Ag 4d participation gives it photosensitivity.',
     orbitals: [
       {
         name: 'σ (bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding — head-on s/p overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 5, l: 0, m: 0, zeff: 4.25, c:  0.30 },
           { atom: 1, n: 3, l: 1, m: 1, zeff: 6.12, c:  0.80 },
@@ -2418,6 +2824,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Cl 3py (lone pair)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 2, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 1, n: 3, l: 1, m: -1, zeff: 6.12, c: 1.0 },
         ],
@@ -2426,6 +2833,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Cl 3pz (lone pair)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 3, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 1, n: 3, l: 1, m: 0, zeff: 6.12, c: 1.0 },
         ],
@@ -2434,6 +2842,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Cl 3s',
         type: 'nonbonding',
         electrons: 2,
+      energy: 4, desc: 'Non-bonding orbital — electrons not significantly involved in bond formation.',
         ao: [
           { atom: 1, n: 3, l: 0, m: 0, zeff: 6.12, c: 1.0 },
         ],
@@ -2442,6 +2851,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Ag 5s (antibond)',
         type: 'antibonding',
         electrons: 0,
+      energy: 5, desc: 'Antibonding orbital — electron density pushed away from the internuclear region.',
         ao: [
           { atom: 0, n: 5, l: 0, m: 0, zeff: 4.25, c:  0.80 },
           { atom: 1, n: 3, l: 1, m: 1, zeff: 6.12, c: -0.30 },
@@ -2454,11 +2864,13 @@ const MOLECULAR_ORBITALS = {
   // 70e total. Homonuclear halogen, bond along x.
   // Atoms: Br₁(-1.14,0,0) Br₂(1.14,0,0). Zeff: Br 4s/4p=7.60
   'Br₂': {
+    notes: 'Bromine — the only liquid nonmetal at room temperature. Single σ bond between 4p orbitals.',
     orbitals: [
       {
         name: 'σg (bonding)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding — head-on p overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 4, l: 1, m: 1, zeff: 7.60, c:  0.707 },
           { atom: 1, n: 4, l: 1, m: 1, zeff: 7.60, c: -0.707 },
@@ -2468,6 +2880,13 @@ const MOLECULAR_ORBITALS = {
         name: 'πu (bonding, y)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'π bonding — lateral f/p overlap between O and Pa. Electron density above and below the bond axis.',
+      energy: 3, desc: 'π bonding — lateral f/p overlap between O and Cm. Electron density above and below the bond axis.',
+      energy: 3, desc: 'π bonding — lateral f/p overlap between O and Am. Electron density above and below the bond axis.',
+      energy: 3, desc: 'π bonding — lateral f/p overlap between O and Np. Electron density above and below the bond axis.',
+      energy: 3, desc: 'π bonding — lateral p overlap between . Electron density above and below the bond axis.',
+      energy: 2, desc: 'π bonding — lateral p overlap between I. Electron density above and below the bond axis.',
+      energy: 2, desc: 'π bonding — lateral p overlap between Br. Electron density above and below the bond axis.',
         ao: [
           { atom: 0, n: 4, l: 1, m: -1, zeff: 7.60, c:  0.707 },
           { atom: 1, n: 4, l: 1, m: -1, zeff: 7.60, c:  0.707 },
@@ -2477,6 +2896,13 @@ const MOLECULAR_ORBITALS = {
         name: 'πu (bonding, z)',
         type: 'bonding',
         electrons: 2,
+      energy: 4, desc: 'π bonding — lateral f/p overlap between O and Pa. Electron density above and below the bond axis.',
+      energy: 4, desc: 'π bonding — lateral f/p overlap between O and Cm. Electron density above and below the bond axis.',
+      energy: 4, desc: 'π bonding — lateral f/p overlap between O and Am. Electron density above and below the bond axis.',
+      energy: 4, desc: 'π bonding — lateral f/p overlap between O and Np. Electron density above and below the bond axis.',
+      energy: 4, desc: 'π bonding — lateral p overlap between . Electron density above and below the bond axis.',
+      energy: 3, desc: 'π bonding — lateral p overlap between I. Electron density above and below the bond axis.',
+      energy: 3, desc: 'π bonding — lateral p overlap between Br. Electron density above and below the bond axis.',
         ao: [
           { atom: 0, n: 4, l: 1, m: 0, zeff: 7.60, c:  0.707 },
           { atom: 1, n: 4, l: 1, m: 0, zeff: 7.60, c:  0.707 },
@@ -2486,6 +2912,8 @@ const MOLECULAR_ORBITALS = {
         name: 'πg* (antibond, y)',
         type: 'antibonding',
         electrons: 2,
+      energy: 4, desc: 'Antibonding orbital — electron density pushed away from the internuclear region.',
+      energy: 4, desc: 'Antibonding orbital — electron density pushed away from the internuclear region.',
         ao: [
           { atom: 0, n: 4, l: 1, m: -1, zeff: 7.60, c:  0.707 },
           { atom: 1, n: 4, l: 1, m: -1, zeff: 7.60, c: -0.707 },
@@ -2495,6 +2923,8 @@ const MOLECULAR_ORBITALS = {
         name: 'πg* (antibond, z)',
         type: 'antibonding',
         electrons: 2,
+      energy: 5, desc: 'Antibonding orbital — electron density pushed away from the internuclear region.',
+      energy: 5, desc: 'Antibonding orbital — electron density pushed away from the internuclear region.',
         ao: [
           { atom: 0, n: 4, l: 1, m: 0, zeff: 7.60, c:  0.707 },
           { atom: 1, n: 4, l: 1, m: 0, zeff: 7.60, c: -0.707 },
@@ -2504,6 +2934,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σg (4s bonding)',
         type: 'bonding',
         electrons: 2,
+      energy: 6, desc: 'σ bonding between Br — head-on s overlap along the bond axis.',
         ao: [
           { atom: 0, n: 4, l: 0, m: 0, zeff: 7.60, c:  0.707 },
           { atom: 1, n: 4, l: 0, m: 0, zeff: 7.60, c:  0.707 },
@@ -2513,6 +2944,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σu* (antibond)',
         type: 'antibonding',
         electrons: 0,
+      energy: 7, desc: 'Antibonding orbital — electron density pushed away from the internuclear region.',
         ao: [
           { atom: 0, n: 4, l: 1, m: 1, zeff: 7.60, c:  0.707 },
           { atom: 1, n: 4, l: 1, m: 1, zeff: 7.60, c:  0.707 },
@@ -2525,11 +2957,13 @@ const MOLECULAR_ORBITALS = {
   // 106e total. Homonuclear halogen, bond along x.
   // Atoms: I₁(-1.33,0,0) I₂(1.33,0,0). Zeff: I 5s/5p=7.00
   'I₂': {
+    notes: 'Iodine — a semiconductor in solid form. The weakest halogen-halogen bond due to poor 5p-5p overlap.',
     orbitals: [
       {
         name: 'σg (bonding)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding — head-on p overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 5, l: 1, m: 1, zeff: 7.00, c:  0.707 },
           { atom: 1, n: 5, l: 1, m: 1, zeff: 7.00, c: -0.707 },
@@ -2539,6 +2973,7 @@ const MOLECULAR_ORBITALS = {
         name: 'πu (bonding, y)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding — head-on p overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 5, l: 1, m: -1, zeff: 7.00, c:  0.707 },
           { atom: 1, n: 5, l: 1, m: -1, zeff: 7.00, c:  0.707 },
@@ -2548,6 +2983,7 @@ const MOLECULAR_ORBITALS = {
         name: 'πu (bonding, z)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'σ bonding — head-on p overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 5, l: 1, m: 0, zeff: 7.00, c:  0.707 },
           { atom: 1, n: 5, l: 1, m: 0, zeff: 7.00, c:  0.707 },
@@ -2557,6 +2993,7 @@ const MOLECULAR_ORBITALS = {
         name: 'πg* (antibond, y)',
         type: 'antibonding',
         electrons: 2,
+      energy: 4, desc: 'π* antibonding — a node in the π system. Occupation reduces bond order.',
         ao: [
           { atom: 0, n: 5, l: 1, m: -1, zeff: 7.00, c:  0.707 },
           { atom: 1, n: 5, l: 1, m: -1, zeff: 7.00, c: -0.707 },
@@ -2566,6 +3003,7 @@ const MOLECULAR_ORBITALS = {
         name: 'πg* (antibond, z)',
         type: 'antibonding',
         electrons: 2,
+      energy: 5, desc: 'π* antibonding — a node in the π system. Occupation reduces bond order.',
         ao: [
           { atom: 0, n: 5, l: 1, m: 0, zeff: 7.00, c:  0.707 },
           { atom: 1, n: 5, l: 1, m: 0, zeff: 7.00, c: -0.707 },
@@ -2575,6 +3013,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σg (5s bonding)',
         type: 'bonding',
         electrons: 2,
+      energy: 6, desc: 'σ bonding between I — head-on s overlap along the bond axis.',
         ao: [
           { atom: 0, n: 5, l: 0, m: 0, zeff: 7.00, c:  0.707 },
           { atom: 1, n: 5, l: 0, m: 0, zeff: 7.00, c:  0.707 },
@@ -2584,6 +3023,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σu* (empty)',
         type: 'antibonding',
         electrons: 0,
+      energy: 7, desc: 'Antibonding orbital — electron density pushed away from the internuclear region.',
         ao: [
           { atom: 0, n: 5, l: 1, m: 1, zeff: 7.00, c:  0.707 },
           { atom: 1, n: 5, l: 1, m: 1, zeff: 7.00, c:  0.707 },
@@ -2596,11 +3036,13 @@ const MOLECULAR_ORBITALS = {
   // 64e total. Semiconductor! Polar covalent, bond along x.
   // Atoms: Ga(-1.12,0,0) As(1.12,0,0). Zeff: Ga 4s/4p=5.00, As 4s/4p=5.80
   'GaAs': {
+    notes: 'Gallium arsenide — the semiconductor behind LEDs, solar cells, and fast transistors. Direct bandgap material.',
     orbitals: [
       {
         name: 'σ (bonding)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding — head-on p overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 4, l: 1, m: 1, zeff: 5.00, c:  0.55 },
           { atom: 1, n: 4, l: 1, m: 1, zeff: 5.80, c: -0.65 },
@@ -2610,6 +3052,7 @@ const MOLECULAR_ORBITALS = {
         name: 'π (bonding, y)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding — head-on p overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 4, l: 1, m: -1, zeff: 5.00, c:  0.50 },
           { atom: 1, n: 4, l: 1, m: -1, zeff: 5.80, c:  0.70 },
@@ -2619,6 +3062,7 @@ const MOLECULAR_ORBITALS = {
         name: 'π (bonding, z)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'σ bonding — head-on p overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 4, l: 1, m: 0, zeff: 5.00, c:  0.50 },
           { atom: 1, n: 4, l: 1, m: 0, zeff: 5.80, c:  0.70 },
@@ -2628,6 +3072,7 @@ const MOLECULAR_ORBITALS = {
         name: 'As lone pair',
         type: 'nonbonding',
         electrons: 2,
+      energy: 4, desc: 'Lone pair localized on As. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 1, n: 4, l: 0, m: 0, zeff: 5.80, c: 0.90 },
         ],
@@ -2636,6 +3081,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Ga 4s',
         type: 'nonbonding',
         electrons: 2,
+      energy: 5, desc: 'Non-bonding orbital localized on Ga.',
         ao: [
           { atom: 0, n: 4, l: 0, m: 0, zeff: 5.00, c: 1.0 },
         ],
@@ -2644,6 +3090,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ* (empty)',
         type: 'antibonding',
         electrons: 0,
+      energy: 6, desc: 'σ* antibonding — destructive overlap with a nodal plane between atoms. Occupation weakens the bond.',
         ao: [
           { atom: 0, n: 4, l: 1, m: 1, zeff: 5.00, c:  0.65 },
           { atom: 1, n: 4, l: 1, m: 1, zeff: 5.80, c:  0.55 },
@@ -2656,11 +3103,13 @@ const MOLECULAR_ORBITALS = {
   // 64e total. Semiconductor. Ionic-covalent, bond along x.
   // Atoms: Cd(-1.16,0,0) S(1.16,0,0). Zeff: Cd 5s=4.55, S 3s/3p=5.45
   'CdS': {
+    notes: 'Cadmium sulfide — a quantum dot material. The Cd 5s and S 3p orbitals form the band edges.',
     orbitals: [
       {
         name: 'σ (bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding — head-on s/p overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 5, l: 0, m: 0, zeff: 4.55, c:  0.30 },
           { atom: 1, n: 3, l: 1, m: 1, zeff: 5.45, c:  0.80 },
@@ -2670,6 +3119,8 @@ const MOLECULAR_ORBITALS = {
         name: 'S 3py (lone pair)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 2, desc: 'Lone pair localized on S. Non-bonding electrons that can act as a Lewis base.',
+      energy: 2, desc: 'Lone pair localized on S. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 1, n: 3, l: 1, m: -1, zeff: 5.45, c: 1.0 },
         ],
@@ -2678,6 +3129,8 @@ const MOLECULAR_ORBITALS = {
         name: 'S 3pz (lone pair)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 3, desc: 'Lone pair localized on S. Non-bonding electrons that can act as a Lewis base.',
+      energy: 3, desc: 'Lone pair localized on S. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 1, n: 3, l: 1, m: 0, zeff: 5.45, c: 1.0 },
         ],
@@ -2686,6 +3139,8 @@ const MOLECULAR_ORBITALS = {
         name: 'S 3s',
         type: 'nonbonding',
         electrons: 2,
+      energy: 4, desc: 'Non-bonding orbital localized on S.',
+      energy: 4, desc: 'Non-bonding orbital localized on S.',
         ao: [
           { atom: 1, n: 3, l: 0, m: 0, zeff: 5.45, c: 1.0 },
         ],
@@ -2697,11 +3152,13 @@ const MOLECULAR_ORBITALS = {
   // 38e total. Wide-bandgap semiconductor. Bond along x.
   // Atoms: Zn(-0.85,0,0) O(0.85,0,0). Zeff: Zn 4s=4.35, O 2s/2p=4.45
   'ZnO': {
+    notes: 'Zinc oxide — a wide-bandgap semiconductor used in sunscreen, LEDs, and varistors.',
     orbitals: [
       {
         name: 'σ (bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding — head-on s/p overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 4, l: 0, m: 0, zeff: 4.35, c:  0.30 },
           { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.80 },
@@ -2711,6 +3168,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O 2py (lone pair)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 2, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c: 1.0 },
         ],
@@ -2719,6 +3177,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O 2pz (lone pair)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 3, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c: 1.0 },
         ],
@@ -2727,6 +3186,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O 2s',
         type: 'nonbonding',
         electrons: 2,
+      energy: 4, desc: 'Non-bonding orbital — electrons not significantly involved in bond formation.',
         ao: [
           { atom: 1, n: 2, l: 0, m: 0, zeff: 4.45, c: 1.0 },
         ],
@@ -2738,11 +3198,13 @@ const MOLECULAR_ORBITALS = {
   // 46e total. Semiconductor (sphalerite). Bond along x.
   // Atoms: Zn(-1.0,0,0) S(1.0,0,0). Zeff: Zn 4s=4.35, S 3s/3p=5.45
   'ZnS': {
+    notes: 'Zinc sulfide — the phosphor in vintage TV screens. Two crystal forms: zinc blende and wurtzite.',
     orbitals: [
       {
         name: 'σ (bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding — head-on s/p overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 4, l: 0, m: 0, zeff: 4.35, c:  0.30 },
           { atom: 1, n: 3, l: 1, m: 1, zeff: 5.45, c:  0.80 },
@@ -2752,6 +3214,7 @@ const MOLECULAR_ORBITALS = {
         name: 'S 3py (lone pair)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 2, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 1, n: 3, l: 1, m: -1, zeff: 5.45, c: 1.0 },
         ],
@@ -2760,6 +3223,7 @@ const MOLECULAR_ORBITALS = {
         name: 'S 3pz (lone pair)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 3, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 1, n: 3, l: 1, m: 0, zeff: 5.45, c: 1.0 },
         ],
@@ -2768,6 +3232,7 @@ const MOLECULAR_ORBITALS = {
         name: 'S 3s',
         type: 'nonbonding',
         electrons: 2,
+      energy: 4, desc: 'Non-bonding orbital — electrons not significantly involved in bond formation.',
         ao: [
           { atom: 1, n: 3, l: 0, m: 0, zeff: 5.45, c: 1.0 },
         ],
@@ -2779,11 +3244,13 @@ const MOLECULAR_ORBITALS = {
   // 34e total. Transition metal oxide. Bond along x.
   // Atoms: Fe(-0.85,0,0) O(0.85,0,0). Zeff: Fe 3d=6.25, 4s=3.75, O 2s/2p=4.45
   'FeO': {
+    notes: 'Wüstite — always iron-deficient in nature. Fe 3d electrons create the magnetic and conducting properties.',
     orbitals: [
       {
         name: 'σ (bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding — head-on s/p overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 4, l: 0, m: 0, zeff: 3.75, c:  0.35 },
           { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.75 },
@@ -2793,6 +3260,11 @@ const MOLECULAR_ORBITALS = {
         name: 'π (d-p bond, y)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'π bonding from d-p lateral overlap between . Electron density above and below the bond axis.',
+      energy: 2, desc: 'π bonding from d-p lateral overlap between W and C. Electron density above and below the bond axis.',
+      energy: 2, desc: 'π bonding from d-p lateral overlap between Cu and O. Electron density above and below the bond axis.',
+      energy: 2, desc: 'π bonding from d-p lateral overlap between Ni and O. Electron density above and below the bond axis.',
+      energy: 2, desc: 'π bonding from d-p lateral overlap between Fe and O. Electron density above and below the bond axis.',
         ao: [
           { atom: 0, n: 3, l: 2, m: -1, zeff: 6.25, c:  0.45 },
           { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c:  0.75 },
@@ -2802,6 +3274,11 @@ const MOLECULAR_ORBITALS = {
         name: 'π (d-p bond, z)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'π bonding from d-p lateral overlap between . Electron density above and below the bond axis.',
+      energy: 3, desc: 'π bonding from d-p lateral overlap between W and C. Electron density above and below the bond axis.',
+      energy: 3, desc: 'π bonding from d-p lateral overlap between Cu and O. Electron density above and below the bond axis.',
+      energy: 3, desc: 'π bonding from d-p lateral overlap between Ni and O. Electron density above and below the bond axis.',
+      energy: 3, desc: 'π bonding from d-p lateral overlap between Fe and O. Electron density above and below the bond axis.',
         ao: [
           { atom: 0, n: 3, l: 2, m: 1, zeff: 6.25, c:  0.45 },
           { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c:  0.75 },
@@ -2811,6 +3288,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O 2s',
         type: 'nonbonding',
         electrons: 2,
+      energy: 4, desc: 'Non-bonding orbital — electrons not significantly involved in bond formation.',
         ao: [
           { atom: 1, n: 2, l: 0, m: 0, zeff: 4.45, c: 1.0 },
         ],
@@ -2819,6 +3297,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Fe dxy',
         type: 'nonbonding',
         electrons: 2,
+      energy: 5, desc: 'Non-bonding orbital localized on Fe.',
         ao: [
           { atom: 0, n: 3, l: 2, m: -2, zeff: 6.25, c: 1.0 },
         ],
@@ -2827,6 +3306,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Fe dx²-y²',
         type: 'nonbonding',
         electrons: 2,
+      energy: 6, desc: 'Non-bonding orbital localized on Fe.',
         ao: [
           { atom: 0, n: 3, l: 2, m: 2, zeff: 6.25, c: 1.0 },
         ],
@@ -2835,6 +3315,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Fe dz²',
         type: 'nonbonding',
         electrons: 1,
+      energy: 7, desc: 'Non-bonding orbital localized on Fe.',
         ao: [
           { atom: 0, n: 3, l: 2, m: 0, zeff: 6.25, c: 1.0 },
         ],
@@ -2846,11 +3327,13 @@ const MOLECULAR_ORBITALS = {
   // 36e total. Antiferromagnetic insulator. Bond along x.
   // Atoms: Ni(-0.85,0,0) O(0.85,0,0). Zeff: Ni 3d=7.55, 4s=4.05, O 2s/2p=4.45
   'NiO': {
+    notes: 'A textbook Mott insulator — should be metallic by band theory but electron correlations localize the d-electrons.',
     orbitals: [
       {
         name: 'σ (bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding — head-on s/p overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 4, l: 0, m: 0, zeff: 4.05, c:  0.35 },
           { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.75 },
@@ -2860,6 +3343,7 @@ const MOLECULAR_ORBITALS = {
         name: 'π (d-p bond, y)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding — head-on d/p overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 3, l: 2, m: -1, zeff: 7.55, c:  0.45 },
           { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c:  0.75 },
@@ -2869,6 +3353,7 @@ const MOLECULAR_ORBITALS = {
         name: 'π (d-p bond, z)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'σ bonding — head-on d/p overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 3, l: 2, m: 1, zeff: 7.55, c:  0.45 },
           { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c:  0.75 },
@@ -2878,6 +3363,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O 2s',
         type: 'nonbonding',
         electrons: 2,
+      energy: 4, desc: 'Non-bonding orbital — electrons not significantly involved in bond formation.',
         ao: [
           { atom: 1, n: 2, l: 0, m: 0, zeff: 4.45, c: 1.0 },
         ],
@@ -2886,6 +3372,8 @@ const MOLECULAR_ORBITALS = {
         name: 'Ni dxy',
         type: 'nonbonding',
         electrons: 2,
+      energy: 3, desc: 'Non-bonding orbital localized on undefined.',
+      energy: 5, desc: 'Non-bonding orbital localized on Ni.',
         ao: [
           { atom: 0, n: 3, l: 2, m: -2, zeff: 7.55, c: 1.0 },
         ],
@@ -2894,6 +3382,8 @@ const MOLECULAR_ORBITALS = {
         name: 'Ni dx²-y²',
         type: 'nonbonding',
         electrons: 2,
+      energy: 4, desc: 'Non-bonding orbital localized on undefined.',
+      energy: 6, desc: 'Non-bonding orbital localized on Ni.',
         ao: [
           { atom: 0, n: 3, l: 2, m: 2, zeff: 7.55, c: 1.0 },
         ],
@@ -2902,6 +3392,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Ni dz²',
         type: 'nonbonding',
         electrons: 2,
+      energy: 7, desc: 'Non-bonding orbital localized on Ni.',
         ao: [
           { atom: 0, n: 3, l: 2, m: 0, zeff: 7.55, c: 1.0 },
         ],
@@ -2913,11 +3404,13 @@ const MOLECULAR_ORBITALS = {
   // 37e total. Bond along x.
   // Atoms: Cu(-0.85,0,0) O(0.85,0,0). Zeff: Cu 3d=7.85, 4s=3.70, O 2s/2p=4.45
   'CuO': {
+    notes: 'Copper(II) oxide — important in high-temperature superconductor parent compounds.',
     orbitals: [
       {
         name: 'σ (bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding — head-on s/p overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 4, l: 0, m: 0, zeff: 3.70, c:  0.35 },
           { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.75 },
@@ -2927,6 +3420,7 @@ const MOLECULAR_ORBITALS = {
         name: 'π (d-p bond, y)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding — head-on d/p overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 3, l: 2, m: -1, zeff: 7.85, c:  0.45 },
           { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c:  0.75 },
@@ -2936,6 +3430,7 @@ const MOLECULAR_ORBITALS = {
         name: 'π (d-p bond, z)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'σ bonding — head-on d/p overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 3, l: 2, m: 1, zeff: 7.85, c:  0.45 },
           { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c:  0.75 },
@@ -2945,6 +3440,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O 2s',
         type: 'nonbonding',
         electrons: 2,
+      energy: 4, desc: 'Non-bonding orbital — electrons not significantly involved in bond formation.',
         ao: [
           { atom: 1, n: 2, l: 0, m: 0, zeff: 4.45, c: 1.0 },
         ],
@@ -2953,6 +3449,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Cu dxy',
         type: 'nonbonding',
         electrons: 2,
+      energy: 5, desc: 'Non-bonding orbital localized on Cu.',
         ao: [
           { atom: 0, n: 3, l: 2, m: -2, zeff: 7.85, c: 1.0 },
         ],
@@ -2961,6 +3458,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Cu dx²-y²',
         type: 'nonbonding',
         electrons: 1,
+      energy: 6, desc: 'Non-bonding orbital localized on Cu.',
         ao: [
           { atom: 0, n: 3, l: 2, m: 2, zeff: 7.85, c: 1.0 },
         ],
@@ -2969,6 +3467,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Cu dz²',
         type: 'nonbonding',
         electrons: 2,
+      energy: 7, desc: 'Non-bonding orbital localized on Cu.',
         ao: [
           { atom: 0, n: 3, l: 2, m: 0, zeff: 7.85, c: 1.0 },
         ],
@@ -2980,11 +3479,13 @@ const MOLECULAR_ORBITALS = {
   // 90e total. Heavy p-block oxide. Bond along x.
   // Atoms: Pb(-0.95,0,0) O(0.95,0,0). Zeff: Pb 6s/6p=6.50, O 2s/2p=4.45
   'PbO': {
+    notes: 'Lead(II) oxide — the Pb 6s² lone pair drives its unusual litharge crystal structure.',
     orbitals: [
       {
         name: 'σ (bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding — head-on p overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 6, l: 1, m: 1, zeff: 6.50, c:  0.45 },
           { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.75 },
@@ -2994,6 +3495,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Pb 6s (lone pair)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 2, desc: 'Lone pair localized on Pb. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 0, n: 6, l: 0, m: 0, zeff: 6.50, c: 1.0 },
         ],
@@ -3002,6 +3504,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O 2py (lone pair)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 3, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c: 1.0 },
         ],
@@ -3010,6 +3513,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O 2pz (lone pair)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 4, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c: 1.0 },
         ],
@@ -3018,6 +3522,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O 2s',
         type: 'nonbonding',
         electrons: 2,
+      energy: 5, desc: 'Non-bonding orbital — electrons not significantly involved in bond formation.',
         ao: [
           { atom: 1, n: 2, l: 0, m: 0, zeff: 4.45, c: 1.0 },
         ],
@@ -3029,11 +3534,13 @@ const MOLECULAR_ORBITALS = {
   // 80e total. Ultra-hard material. Bond along x.
   // Atoms: W(-0.8,0,0) C(0.8,0,0). Zeff: W 5d=8.50, 6s=4.35, C 2s/2p=3.25
   'WC': {
+    notes: 'Tungsten carbide — hardness approaching diamond. Strong W 5d — C 2p covalent bonds explain its properties.',
     orbitals: [
       {
         name: 'σ (bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding — head-on s/p overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 6, l: 0, m: 0, zeff: 4.35, c:  0.40 },
           { atom: 1, n: 2, l: 1, m: 1, zeff: 3.25, c:  0.70 },
@@ -3043,6 +3550,7 @@ const MOLECULAR_ORBITALS = {
         name: 'π (d-p bond, y)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding — head-on d/p overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 5, l: 2, m: -1, zeff: 8.50, c:  0.55 },
           { atom: 1, n: 2, l: 1, m: -1, zeff: 3.25, c:  0.65 },
@@ -3052,6 +3560,7 @@ const MOLECULAR_ORBITALS = {
         name: 'π (d-p bond, z)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'σ bonding — head-on d/p overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 5, l: 2, m: 1, zeff: 8.50, c:  0.55 },
           { atom: 1, n: 2, l: 1, m: 0, zeff: 3.25, c:  0.65 },
@@ -3061,6 +3570,7 @@ const MOLECULAR_ORBITALS = {
         name: 'C 2s',
         type: 'nonbonding',
         electrons: 2,
+      energy: 4, desc: 'Non-bonding orbital localized on C.',
         ao: [
           { atom: 1, n: 2, l: 0, m: 0, zeff: 3.25, c: 1.0 },
         ],
@@ -3069,6 +3579,7 @@ const MOLECULAR_ORBITALS = {
         name: 'W dxy',
         type: 'nonbonding',
         electrons: 2,
+      energy: 5, desc: 'Non-bonding orbital localized on W.',
         ao: [
           { atom: 0, n: 5, l: 2, m: -2, zeff: 8.50, c: 1.0 },
         ],
@@ -3077,6 +3588,7 @@ const MOLECULAR_ORBITALS = {
         name: 'W dx²-y²',
         type: 'nonbonding',
         electrons: 0,
+      energy: 6, desc: 'Non-bonding orbital localized on W.',
         ao: [
           { atom: 0, n: 5, l: 2, m: 2, zeff: 8.50, c: 1.0 },
         ],
@@ -3088,11 +3600,15 @@ const MOLECULAR_ORBITALS = {
   // 20e total. Ionic + O-H covalent. Na almost fully ionized.
   // Atoms: Na(-1.4,0,0) O(0,0,0) H(0.48,0.48,0)
   'NaOH': {
+    notes: 'Sodium hydroxide — the O-H bond and metal-oxygen interaction make this a strong base.',
     orbitals: [
       {
         name: 'σ (O-H bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'σ bonding from p/s overlap between O and H. Head-on overlap concentrates electron density along the bond axis.',
+      energy: 1, desc: 'σ bonding from p/s overlap between O and H. Head-on overlap concentrates electron density along the bond axis.',
+      energy: 1, desc: 'σ bonding from p/s overlap between O and H. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.60 },
           { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c:  0.30 },
@@ -3103,6 +3619,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ (Na-O ionic)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding from p/s overlap between O and Na. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.85 },
           { atom: 0, n: 3, l: 0, m: 0, zeff: 2.20, c:  0.10 },
@@ -3112,6 +3629,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O 2pz (lone pair)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 3, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c: 1.0 },
         ],
@@ -3120,6 +3638,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O 2s',
         type: 'nonbonding',
         electrons: 2,
+      energy: 4, desc: 'Non-bonding orbital — electrons not significantly involved in bond formation.',
         ao: [
           { atom: 1, n: 2, l: 0, m: 0, zeff: 4.45, c: 1.0 },
         ],
@@ -3131,11 +3650,13 @@ const MOLECULAR_ORBITALS = {
   // 12e total. Ionic Li + covalent O-H.
   // Atoms: Li(-1.2,0,0) O(0,0,0) H(0.48,0.48,0)
   'LiOH': {
+    notes: 'Lithium hydroxide — used in spacecraft CO₂ scrubbers. More covalent than NaOH.',
     orbitals: [
       {
         name: 'σ (O-H bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding — head-on p/s overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.60 },
           { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c:  0.30 },
@@ -3146,6 +3667,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ (Li-O ionic)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding from p/s overlap between O and Li. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.85 },
           { atom: 0, n: 2, l: 0, m: 0, zeff: 1.30, c:  0.12 },
@@ -3155,6 +3677,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O 2pz (lone pair)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 3, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c: 1.0 },
         ],
@@ -3163,6 +3686,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O 2s',
         type: 'nonbonding',
         electrons: 2,
+      energy: 4, desc: 'Non-bonding orbital — electrons not significantly involved in bond formation.',
         ao: [
           { atom: 1, n: 2, l: 0, m: 0, zeff: 4.45, c: 1.0 },
         ],
@@ -3171,6 +3695,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Li 1s (core)',
         type: 'core',
         electrons: 2,
+      energy: 5, desc: 'Core electrons on Li — tightly bound and not involved in bonding.',
         ao: [
           { atom: 0, n: 1, l: 0, m: 0, zeff: 2.70, c: 1.0 },
         ],
@@ -3183,11 +3708,13 @@ const MOLECULAR_ORBITALS = {
   // Atoms: Se(0,0,0) H₁(-0.92,0.60,0) H₂(0.92,0.60,0) — mol in xy plane
   // Zeff: Se 4s/4p=6.20
   'H₂Se': {
+    notes: 'Hydrogen selenide — toxic gas. Even smaller bond angle than H₂S (~91°), approaching pure p-orbital bonding.',
     orbitals: [
       {
         name: 'σ₁ (Se-H bonding)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding from p/s overlap between Se and H. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 4, l: 1, m: 1, zeff: 6.20, c:  0.55 },
           { atom: 1, n: 1, l: 0, m: 0, zeff: 1.24, c:  0.50 },
@@ -3198,6 +3725,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ₂ (Se-H bonding)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding from p/s overlap between Se and H. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 4, l: 1, m: -1, zeff: 6.20, c:  0.55 },
           { atom: 1, n: 1, l: 0, m: 0, zeff: 1.24, c:  0.50 },
@@ -3208,6 +3736,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Se lone pair (pz)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 3, desc: 'Lone pair localized on Se. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 0, n: 4, l: 1, m: 0, zeff: 6.20, c: 1.0 },
         ],
@@ -3216,6 +3745,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Se 4s (lone pair)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 4, desc: 'Lone pair localized on Se. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 0, n: 4, l: 0, m: 0, zeff: 6.20, c: 1.0 },
         ],
@@ -3228,11 +3758,13 @@ const MOLECULAR_ORBITALS = {
   // Atoms: Te(0,0,0) H₁(-1.0,0.60,0) H₂(1.0,0.60,0) — mol in xy plane
   // Zeff: Te 5s/5p=6.55
   'H₂Te': {
+    notes: 'Hydrogen telluride — bond angle ~90° shows almost pure p-orbital bonding with negligible hybridization.',
     orbitals: [
       {
         name: 'σ₁ (Te-H bonding)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding from p/s overlap between Te and H. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 5, l: 1, m: 1, zeff: 6.55, c:  0.55 },
           { atom: 1, n: 1, l: 0, m: 0, zeff: 1.24, c:  0.50 },
@@ -3243,6 +3775,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ₂ (Te-H bonding)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding from p/s overlap between Te and H. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 5, l: 1, m: -1, zeff: 6.55, c:  0.55 },
           { atom: 1, n: 1, l: 0, m: 0, zeff: 1.24, c:  0.50 },
@@ -3253,6 +3786,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Te lone pair (pz)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 3, desc: 'Lone pair localized on Te. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 0, n: 5, l: 1, m: 0, zeff: 6.55, c: 1.0 },
         ],
@@ -3261,6 +3795,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Te 5s (lone pair)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 4, desc: 'Lone pair localized on Te. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 0, n: 5, l: 0, m: 0, zeff: 6.55, c: 1.0 },
         ],
@@ -3272,11 +3807,13 @@ const MOLECULAR_ORBITALS = {
   // 50e total. Bent like SO₂. Mol in xy plane.
   // Atoms: Se(0,0,0) O₁(1.0,0.5,0) O₂(-1.0,0.5,0). Zeff: Se 4s/4p=6.20, O=4.45
   'SeO₂': {
+    notes: 'Selenium dioxide — polymeric chain in solid state. The Se=O double bond uses 4p-2p π overlap.',
     orbitals: [
       {
         name: 'π₁ (bonding)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding — head-on p overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 4, l: 1, m: 0, zeff: 6.20, c:  0.60 },
           { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c:  0.55 },
@@ -3287,6 +3824,7 @@ const MOLECULAR_ORBITALS = {
         name: 'π₂ (nonbonding)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 2, desc: 'Non-bonding orbital — electrons not significantly involved in bond formation.',
         ao: [
           { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c:  0.707 },
           { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: -0.707 },
@@ -3296,6 +3834,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ₁ (Se-O bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'σ bonding between Se and O — head-on p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 4, l: 1, m: 1, zeff: 6.20, c:  0.50 },
           { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c: -0.55 },
@@ -3306,6 +3845,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ₂ (Se-O bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 4, desc: 'σ bonding between Se and O — head-on s overlap along the bond axis.',
         ao: [
           { atom: 0, n: 4, l: 0, m: 0, zeff: 6.20, c:  0.60 },
           { atom: 1, n: 2, l: 0, m: 0, zeff: 4.45, c:  0.50 },
@@ -3316,6 +3856,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Se lone pair',
         type: 'nonbonding',
         electrons: 2,
+      energy: 5, desc: 'Lone pair localized on Se. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 0, n: 4, l: 1, m: -1, zeff: 6.20, c: 0.90 },
         ],
@@ -3324,6 +3865,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O₁ lone pair',
         type: 'nonbonding',
         electrons: 2,
+      energy: 6, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.80 },
           { atom: 1, n: 2, l: 0, m: 0, zeff: 4.45, c: 0.45 },
@@ -3333,6 +3875,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O₂ lone pair',
         type: 'nonbonding',
         electrons: 2,
+      energy: 7, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 2, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.80 },
           { atom: 2, n: 2, l: 0, m: 0, zeff: 4.45, c: 0.45 },
@@ -3342,6 +3885,7 @@ const MOLECULAR_ORBITALS = {
         name: 'π* (empty)',
         type: 'antibonding',
         electrons: 0,
+      energy: 8, desc: 'π* antibonding — a node in the π system. Occupation reduces bond order.',
         ao: [
           { atom: 0, n: 4, l: 1, m: 0, zeff: 6.20, c: -0.707 },
           { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c:  0.50 },
@@ -3355,11 +3899,13 @@ const MOLECULAR_ORBITALS = {
   // 28e total. Exotic noble gas compound! Linear: H-Ar-F along x.
   // Atoms: H(-1.3,0,0) Ar(0,0,0) F(1.3,0,0). Zeff: Ar 3s/3p=6.76, F=5.13
   'HArF': {
+    notes: 'Argon compound — one of few true Ar compounds, only stable below 17 K. Discovery in 2000 was groundbreaking.',
     orbitals: [
       {
         name: '3c-σ (bonding)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding — head-on s/p overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 1, l: 0, m: 0, zeff: 1.24, c:  0.40 },
           { atom: 1, n: 3, l: 1, m: 1, zeff: 6.76, c:  0.65 },
@@ -3370,6 +3916,7 @@ const MOLECULAR_ORBITALS = {
         name: '3c-σ₂ (Ar-F)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding between Ar and F — head-on p overlap along the bond axis.',
         ao: [
           { atom: 1, n: 3, l: 1, m: 1, zeff: 6.76, c:  0.50 },
           { atom: 2, n: 2, l: 1, m: 1, zeff: 5.13, c:  0.70 },
@@ -3379,6 +3926,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Ar 3s',
         type: 'nonbonding',
         electrons: 2,
+      energy: 3, desc: 'Non-bonding orbital localized on Ar.',
         ao: [
           { atom: 1, n: 3, l: 0, m: 0, zeff: 6.76, c: 1.0 },
         ],
@@ -3387,6 +3935,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Ar 3py',
         type: 'nonbonding',
         electrons: 2,
+      energy: 4, desc: 'Non-bonding orbital localized on Ar.',
         ao: [
           { atom: 1, n: 3, l: 1, m: -1, zeff: 6.76, c: 1.0 },
         ],
@@ -3395,6 +3944,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Ar 3pz',
         type: 'nonbonding',
         electrons: 2,
+      energy: 5, desc: 'Non-bonding orbital localized on Ar.',
         ao: [
           { atom: 1, n: 3, l: 1, m: 0, zeff: 6.76, c: 1.0 },
         ],
@@ -3403,6 +3953,7 @@ const MOLECULAR_ORBITALS = {
         name: 'F lone pair (y)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 6, desc: 'Lone pair localized on F. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 2, n: 2, l: 1, m: -1, zeff: 5.13, c: 1.0 },
         ],
@@ -3411,6 +3962,7 @@ const MOLECULAR_ORBITALS = {
         name: 'F lone pair (z)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 7, desc: 'Lone pair localized on F. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 2, n: 2, l: 1, m: 0, zeff: 5.13, c: 1.0 },
         ],
@@ -3422,11 +3974,13 @@ const MOLECULAR_ORBITALS = {
   // 54e total. Noble gas compound, 3c-4e bonds like XeF₂.
   // Atoms: F₁(-1.50,0,0) Kr(0,0,0) F₂(1.50,0,0). Zeff: Kr 4s/4p=8.25, F=5.13
   'KrF₂': {
+    notes: 'Krypton difluoride — a powerful fluorinating agent. Three-center four-electron bonding like XeF₂.',
     orbitals: [
       {
         name: '3c-σ (bonding)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding — head-on p overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 1, m: 1, zeff: 5.13, c:  0.50 },
           { atom: 1, n: 4, l: 1, m: 1, zeff: 8.25, c:  0.707 },
@@ -3437,6 +3991,7 @@ const MOLECULAR_ORBITALS = {
         name: '3c-nb (nonbonding)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 2, desc: 'Non-bonding orbital — electrons not significantly involved in bond formation.',
         ao: [
           { atom: 0, n: 2, l: 1, m: 1, zeff: 5.13, c:  0.707 },
           { atom: 2, n: 2, l: 1, m: 1, zeff: 5.13, c:  0.707 },
@@ -3446,6 +4001,7 @@ const MOLECULAR_ORBITALS = {
         name: 'F₁ lone pair (y)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 3, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 0, n: 2, l: 1, m: -1, zeff: 5.13, c: 1.0 },
         ],
@@ -3454,6 +4010,7 @@ const MOLECULAR_ORBITALS = {
         name: 'F₁ lone pair (z)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 4, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 0, n: 2, l: 1, m: 0, zeff: 5.13, c: 1.0 },
         ],
@@ -3462,6 +4019,7 @@ const MOLECULAR_ORBITALS = {
         name: 'F₂ lone pair (y)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 5, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 2, n: 2, l: 1, m: -1, zeff: 5.13, c: 1.0 },
         ],
@@ -3470,6 +4028,7 @@ const MOLECULAR_ORBITALS = {
         name: 'F₂ lone pair (z)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 6, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 2, n: 2, l: 1, m: 0, zeff: 5.13, c: 1.0 },
         ],
@@ -3478,6 +4037,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Kr 4s',
         type: 'nonbonding',
         electrons: 2,
+      energy: 7, desc: 'Non-bonding orbital localized on F.',
         ao: [
           { atom: 1, n: 4, l: 0, m: 0, zeff: 8.25, c: 1.0 },
         ],
@@ -3486,6 +4046,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Kr 4py',
         type: 'nonbonding',
         electrons: 2,
+      energy: 8, desc: 'Non-bonding orbital localized on F.',
         ao: [
           { atom: 1, n: 4, l: 1, m: -1, zeff: 8.25, c: 1.0 },
         ],
@@ -3494,6 +4055,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Kr 4pz',
         type: 'nonbonding',
         electrons: 2,
+      energy: 9, desc: 'Non-bonding orbital localized on F.',
         ao: [
           { atom: 1, n: 4, l: 1, m: 0, zeff: 8.25, c: 1.0 },
         ],
@@ -3502,6 +4064,7 @@ const MOLECULAR_ORBITALS = {
         name: '3c-σ* (empty)',
         type: 'antibonding',
         electrons: 0,
+      energy: 10, desc: 'σ* antibonding — destructive overlap with a nodal plane between atoms. Occupation weakens the bond.',
         ao: [
           { atom: 0, n: 2, l: 1, m: 1, zeff: 5.13, c:  0.50 },
           { atom: 1, n: 4, l: 1, m: 1, zeff: 8.25, c: -0.707 },
@@ -3515,11 +4078,13 @@ const MOLECULAR_ORBITALS = {
   // 46e total. Linear like BeCl₂. sp hybridized Mg.
   // Atoms: Cl₁(-1.8,0,0) Mg(0,0,0) Cl₂(1.8,0,0). Zeff: Mg 3s=2.85, Cl=6.12
   'MgCl₂': {
+    notes: 'Magnesium chloride — ionic bonding with two Cl atoms. Used as a Ziegler-Natta catalyst component.',
     orbitals: [
       {
         name: 'σg (bonding)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding — head-on s/p overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 1, n: 3, l: 0, m: 0, zeff: 2.85, c:  0.45 },
           { atom: 0, n: 3, l: 1, m: 1, zeff: 6.12, c:  0.55 },
@@ -3530,6 +4095,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σu (bonding)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding — head-on p overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 1, n: 3, l: 1, m: 1, zeff: 2.85, c:  0.45 },
           { atom: 0, n: 3, l: 1, m: 1, zeff: 6.12, c:  0.55 },
@@ -3540,6 +4106,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Cl₁ π (y)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 3, desc: 'Non-bonding orbital — electrons not significantly involved in bond formation.',
         ao: [
           { atom: 0, n: 3, l: 1, m: -1, zeff: 6.12, c: 1.0 },
         ],
@@ -3548,6 +4115,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Cl₁ π (z)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 4, desc: 'Non-bonding orbital — electrons not significantly involved in bond formation.',
         ao: [
           { atom: 0, n: 3, l: 1, m: 0, zeff: 6.12, c: 1.0 },
         ],
@@ -3556,6 +4124,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Cl₂ π (y)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 5, desc: 'Non-bonding orbital — electrons not significantly involved in bond formation.',
         ao: [
           { atom: 2, n: 3, l: 1, m: -1, zeff: 6.12, c: 1.0 },
         ],
@@ -3564,6 +4133,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Cl₂ π (z)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 6, desc: 'Non-bonding orbital — electrons not significantly involved in bond formation.',
         ao: [
           { atom: 2, n: 3, l: 1, m: 0, zeff: 6.12, c: 1.0 },
         ],
@@ -3572,6 +4142,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Cl₁ 3s',
         type: 'nonbonding',
         electrons: 2,
+      energy: 7, desc: 'Non-bonding orbital — electrons not significantly involved in bond formation.',
         ao: [
           { atom: 0, n: 3, l: 0, m: 0, zeff: 6.12, c: 1.0 },
         ],
@@ -3580,6 +4151,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Cl₂ 3s',
         type: 'nonbonding',
         electrons: 2,
+      energy: 8, desc: 'Non-bonding orbital — electrons not significantly involved in bond formation.',
         ao: [
           { atom: 2, n: 3, l: 0, m: 0, zeff: 6.12, c: 1.0 },
         ],
@@ -3592,11 +4164,13 @@ const MOLECULAR_ORBITALS = {
   // Al(0,0,0) Cl₁(1.4,0.8,0) Cl₂(-1.4,0.8,0) Cl₃(0,-1.2,0) — xy plane
   // Zeff: Al 3s/3p=3.50, Cl=6.12
   'AlCl₃': {
+    notes: 'Aluminum chloride — a Lewis acid catalyst crucial in Friedel-Crafts reactions. Dimeric (Al₂Cl₆) in gas phase.',
     orbitals: [
       {
         name: 'a₁\' (σ framework)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding — head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 3, l: 0, m: 0, zeff: 3.50, c:  0.55 },
           { atom: 1, n: 3, l: 1, m: 1, zeff: 6.12, c: -0.45 },
@@ -3608,6 +4182,7 @@ const MOLECULAR_ORBITALS = {
         name: 'e\' (σ, x)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding — head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 3, l: 1, m: 1, zeff: 3.50, c:  0.50 },
           { atom: 1, n: 3, l: 1, m: 1, zeff: 6.12, c: -0.55 },
@@ -3619,6 +4194,7 @@ const MOLECULAR_ORBITALS = {
         name: 'e\' (σ, y)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'σ bonding — head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 3, l: 1, m: -1, zeff: 3.50, c: 0.50 },
           { atom: 2, n: 3, l: 1, m: -1, zeff: 6.12, c: 0.55 },
@@ -3629,6 +4205,9 @@ const MOLECULAR_ORBITALS = {
         name: 'Cl₁ lone pair',
         type: 'nonbonding',
         electrons: 2,
+      energy: 5, desc: 'Lone pair localized on Cl. Non-bonding electrons that can act as a Lewis base.',
+      energy: 5, desc: 'Lone pair localized on Cl. Non-bonding electrons that can act as a Lewis base.',
+      energy: 4, desc: 'Lone pair localized on Cl. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 1, n: 3, l: 0, m: 0, zeff: 6.12, c: 0.85 },
           { atom: 1, n: 3, l: 1, m: -1, zeff: 6.12, c: 0.40 },
@@ -3638,6 +4217,9 @@ const MOLECULAR_ORBITALS = {
         name: 'Cl₂ lone pair',
         type: 'nonbonding',
         electrons: 2,
+      energy: 6, desc: 'Lone pair localized on Cl. Non-bonding electrons that can act as a Lewis base.',
+      energy: 6, desc: 'Lone pair localized on Cl. Non-bonding electrons that can act as a Lewis base.',
+      energy: 5, desc: 'Lone pair localized on Cl. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 2, n: 3, l: 0, m: 0, zeff: 6.12, c: 0.85 },
           { atom: 2, n: 3, l: 1, m: 1, zeff: 6.12, c: 0.40 },
@@ -3647,6 +4229,9 @@ const MOLECULAR_ORBITALS = {
         name: 'Cl₃ lone pair',
         type: 'nonbonding',
         electrons: 2,
+      energy: 7, desc: 'Lone pair localized on Cl. Non-bonding electrons that can act as a Lewis base.',
+      energy: 7, desc: 'Lone pair localized on Cl. Non-bonding electrons that can act as a Lewis base.',
+      energy: 6, desc: 'Lone pair localized on Cl. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 3, n: 3, l: 0, m: 0, zeff: 6.12, c: 0.85 },
           { atom: 3, n: 3, l: 1, m: 1, zeff: 6.12, c: 0.40 },
@@ -3656,6 +4241,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Cl pz (lone pairs)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 7, desc: 'Lone pair localized on Cl. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 1, n: 3, l: 1, m: 0, zeff: 6.12, c: 0.58 },
           { atom: 2, n: 3, l: 1, m: 0, zeff: 6.12, c: 0.58 },
@@ -3666,6 +4252,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Al pz (empty)',
         type: 'antibonding',
         electrons: 0,
+      energy: 8, desc: 'Antibonding orbital — electron density pushed away from the internuclear region.',
         ao: [
           { atom: 0, n: 3, l: 1, m: 0, zeff: 3.50, c: 1.0 },
         ],
@@ -3678,11 +4265,14 @@ const MOLECULAR_ORBITALS = {
   // P(0,0,0.16) Cl₁(0,1.40,-0.48) Cl₂(1.21,-0.70,-0.48) Cl₃(-1.21,-0.70,-0.48)
   // Zeff: P 3s/3p=4.80, Cl=6.12
   'PCl₃': {
+    notes: 'Phosphorus trichloride — pyramidal geometry like NH₃. The lone pair makes it a good nucleophile.',
     orbitals: [
       {
         name: 'a₁ (σ bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding from s/p overlap between Sn and Cl. Head-on overlap concentrates electron density along the bond axis.',
+      energy: 1, desc: 'σ bonding from s/p overlap between P and Cl. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 3, l: 0, m: 0, zeff: 4.80, c:  0.50 },
           { atom: 1, n: 3, l: 1, m: -1, zeff: 6.12, c: -0.50 },
@@ -3694,6 +4284,7 @@ const MOLECULAR_ORBITALS = {
         name: 'e (σ bond, x)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding between P and Cl — head-on p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 3, l: 1, m: 1, zeff: 4.80, c:  0.50 },
           { atom: 2, n: 3, l: 1, m: 1, zeff: 6.12, c: -0.55 },
@@ -3704,6 +4295,7 @@ const MOLECULAR_ORBITALS = {
         name: 'e (σ bond, y)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'σ bonding between P and Cl — head-on p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 3, l: 1, m: -1, zeff: 4.80, c:  0.50 },
           { atom: 1, n: 3, l: 1, m: -1, zeff: 6.12, c: -0.65 },
@@ -3715,6 +4307,7 @@ const MOLECULAR_ORBITALS = {
         name: 'P lone pair',
         type: 'nonbonding',
         electrons: 2,
+      energy: 4, desc: 'Lone pair localized on P. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 0, n: 3, l: 1, m: 0, zeff: 4.80, c:  0.85 },
           { atom: 0, n: 3, l: 0, m: 0, zeff: 4.80, c:  0.35 },
@@ -3724,6 +4317,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Cl₁ lone pair',
         type: 'nonbonding',
         electrons: 2,
+      energy: 5, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 1, n: 3, l: 0, m: 0, zeff: 6.12, c: 0.85 },
           { atom: 1, n: 3, l: 1, m: 0, zeff: 6.12, c: 0.40 },
@@ -3733,6 +4327,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Cl₂ lone pair',
         type: 'nonbonding',
         electrons: 2,
+      energy: 6, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 2, n: 3, l: 0, m: 0, zeff: 6.12, c: 0.85 },
           { atom: 2, n: 3, l: 1, m: 0, zeff: 6.12, c: 0.40 },
@@ -3742,6 +4337,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Cl₃ lone pair',
         type: 'nonbonding',
         electrons: 2,
+      energy: 7, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 3, n: 3, l: 0, m: 0, zeff: 6.12, c: 0.85 },
           { atom: 3, n: 3, l: 1, m: 0, zeff: 6.12, c: 0.40 },
@@ -3755,11 +4351,13 @@ const MOLECULAR_ORBITALS = {
   // N(0,0,0) O₁(1.05,0.65,0) O₂(-1.05,0.65,0) O₃(0,-1.0,0) H(0.7,-1.5,0)
   // Zeff: N=3.90, O=4.45
   'HNO₃': {
+    notes: 'Nitric acid — resonance-stabilized with delocalized π electrons across the N-O bonds.',
     orbitals: [
       {
         name: 'σ₁ (N-O₃-H chain)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding from p/s overlap between N and O and H. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 1, m: -1, zeff: 3.90, c:  0.45 },
           { atom: 3, n: 2, l: 1, m: -1, zeff: 4.45, c: -0.40 },
@@ -3771,6 +4369,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ₂ (N-O₁ bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding between N and O — head-on p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 1, m: 1, zeff: 3.90, c:  0.50 },
           { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c: -0.55 },
@@ -3781,6 +4380,8 @@ const MOLECULAR_ORBITALS = {
         name: 'σ₃ (s framework)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'σ bonding between Xe and F — head-on s overlap along the bond axis.',
+      energy: 3, desc: 'σ bonding between N and O — head-on s overlap along the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 0, m: 0, zeff: 3.90, c:  0.50 },
           { atom: 1, n: 2, l: 0, m: 0, zeff: 4.45, c:  0.40 },
@@ -3792,6 +4393,7 @@ const MOLECULAR_ORBITALS = {
         name: 'π (delocalized)',
         type: 'bonding',
         electrons: 2,
+      energy: 4, desc: 'π bonding — lateral p overlap between N and O. Electron density above and below the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 1, m: 0, zeff: 3.90, c:  0.55 },
           { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c:  0.50 },
@@ -3802,6 +4404,7 @@ const MOLECULAR_ORBITALS = {
         name: 'π₂ (nonbonding)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 5, desc: 'Non-bonding orbital — electrons not significantly involved in bond formation.',
         ao: [
           { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c:  0.707 },
           { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: -0.707 },
@@ -3811,6 +4414,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O₁ lone pair',
         type: 'nonbonding',
         electrons: 2,
+      energy: 6, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.80 },
           { atom: 1, n: 2, l: 0, m: 0, zeff: 4.45, c: 0.45 },
@@ -3820,6 +4424,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O₂ lone pair',
         type: 'nonbonding',
         electrons: 2,
+      energy: 7, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 2, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.80 },
           { atom: 2, n: 2, l: 0, m: 0, zeff: 4.45, c: 0.45 },
@@ -3829,6 +4434,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O₃ lone pair',
         type: 'nonbonding',
         electrons: 2,
+      energy: 8, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.80 },
         ],
@@ -3841,11 +4447,13 @@ const MOLECULAR_ORBITALS = {
   // Xe(0,0,0) F₁(1.2,1.2,0) F₂(-1.2,1.2,0) F₃(-1.2,-1.2,0) F₄(1.2,-1.2,0)
   // Zeff: Xe 5s/5p=8.25, F 2s/2p=5.13
   'XeF₄': {
+    notes: 'Square planar xenon compound. Six electron pairs but four bonds — two lone pairs occupy axial positions.',
     orbitals: [
       {
         name: 'σ₁ (Xe-F bond, +x)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding between Xe and F — head-on p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 5, l: 1, m: 1, zeff: 8.25, c:  0.55 },
           { atom: 1, n: 2, l: 1, m: 1, zeff: 5.13, c: -0.35 },
@@ -3858,6 +4466,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ₂ (Xe-F bond, +y)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding between Xe and F — head-on p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 5, l: 1, m: -1, zeff: 8.25, c:  0.55 },
           { atom: 1, n: 2, l: 1, m: -1, zeff: 5.13, c: -0.35 },
@@ -3870,6 +4479,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ₃ (s framework)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'σ bonding — head-on s overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 5, l: 0, m: 0, zeff: 8.25, c:  0.55 },
           { atom: 1, n: 2, l: 0, m: 0, zeff: 5.13, c:  0.30 },
@@ -3882,6 +4492,8 @@ const MOLECULAR_ORBITALS = {
         name: 'F₁ lone pair',
         type: 'nonbonding',
         electrons: 2,
+      energy: 7, desc: 'Lone pair localized on F. Non-bonding electrons that can act as a Lewis base.',
+      energy: 4, desc: 'Lone pair localized on F. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 1, n: 2, l: 1, m: 0, zeff: 5.13, c: 1.0 },
         ],
@@ -3890,6 +4502,8 @@ const MOLECULAR_ORBITALS = {
         name: 'F₂ lone pair',
         type: 'nonbonding',
         electrons: 2,
+      energy: 8, desc: 'Lone pair localized on F. Non-bonding electrons that can act as a Lewis base.',
+      energy: 5, desc: 'Lone pair localized on F. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 2, n: 2, l: 1, m: 0, zeff: 5.13, c: 1.0 },
         ],
@@ -3898,6 +4512,8 @@ const MOLECULAR_ORBITALS = {
         name: 'F₃ lone pair',
         type: 'nonbonding',
         electrons: 2,
+      energy: 9, desc: 'Lone pair localized on F. Non-bonding electrons that can act as a Lewis base.',
+      energy: 6, desc: 'Lone pair localized on F. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 3, n: 2, l: 1, m: 0, zeff: 5.13, c: 1.0 },
         ],
@@ -3906,6 +4522,8 @@ const MOLECULAR_ORBITALS = {
         name: 'F₄ lone pair',
         type: 'nonbonding',
         electrons: 2,
+      energy: 10, desc: 'Lone pair localized on F. Non-bonding electrons that can act as a Lewis base.',
+      energy: 7, desc: 'Lone pair localized on F. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 4, n: 2, l: 1, m: 0, zeff: 5.13, c: 1.0 },
         ],
@@ -3914,6 +4532,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Xe 5pz (lone pair)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 8, desc: 'Lone pair localized on Xe. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 0, n: 5, l: 1, m: 0, zeff: 8.25, c: 1.0 },
         ],
@@ -3926,11 +4545,13 @@ const MOLECULAR_ORBITALS = {
   // C₁(-0.76,0,0) C₂(0.76,0,0) O(1.52,1.0,0) H₃-₅(methyl) H₆-₇(CH₂) H₈(OH)
   // Zeff: C=3.25, O=4.45
   'C₂H₅OH': {
+    notes: 'Ethanol — the O-H and C-O bonds demonstrate how polarity varies within a single molecule.',
     orbitals: [
       {
         name: 'σ (C-C bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding between C — head-on p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 1, m: 1, zeff: 3.25, c:  0.55 },
           { atom: 1, n: 2, l: 1, m: 1, zeff: 3.25, c: -0.55 },
@@ -3940,6 +4561,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ (C-O bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding between C and O — head-on p overlap along the bond axis.',
         ao: [
           { atom: 1, n: 2, l: 1, m: 1, zeff: 3.25, c:  0.40 },
           { atom: 1, n: 2, l: 1, m: -1, zeff: 3.25, c:  0.30 },
@@ -3951,6 +4573,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ (O-H bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'σ bonding — head-on p/s overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.60 },
           { atom: 8, n: 1, l: 0, m: 0, zeff: 1.24, c:  0.55 },
@@ -3960,6 +4583,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ (C₁-H₃ bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 4, desc: 'σ bonding from p/s overlap between C and H. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 1, m: -1, zeff: 3.25, c: -0.50 },
           { atom: 3, n: 1, l: 0, m: 0, zeff: 1.24, c:  0.55 },
@@ -3969,6 +4593,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ (C₁-H₄ bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 5, desc: 'σ bonding from p/s overlap between C and H. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 1, m: -1, zeff: 3.25, c:  0.50 },
           { atom: 4, n: 1, l: 0, m: 0, zeff: 1.24, c:  0.55 },
@@ -3978,6 +4603,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ (C₁-H₅ bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 6, desc: 'σ bonding from p/s overlap between C and H. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 1, m: 0, zeff: 3.25, c: -0.50 },
           { atom: 5, n: 1, l: 0, m: 0, zeff: 1.24, c:  0.55 },
@@ -3987,6 +4613,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ (C₂-H₆ bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 7, desc: 'σ bonding from p/s overlap between C and H. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 1, n: 2, l: 1, m: 0, zeff: 3.25, c: -0.50 },
           { atom: 6, n: 1, l: 0, m: 0, zeff: 1.24, c:  0.55 },
@@ -3996,6 +4623,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ (C₂-H₇ bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 8, desc: 'σ bonding from p/s overlap between C and H. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 1, n: 2, l: 1, m: 0, zeff: 3.25, c:  0.50 },
           { atom: 7, n: 1, l: 0, m: 0, zeff: 1.24, c:  0.55 },
@@ -4005,6 +4633,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O lone pair (z)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 9, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 1.0 },
         ],
@@ -4013,6 +4642,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O lone pair (s mix)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 10, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 2, n: 2, l: 0, m: 0, zeff: 4.45, c: 0.90 },
         ],
@@ -4025,11 +4655,13 @@ const MOLECULAR_ORBITALS = {
   // Sn(0,0,0) Cl₁(1.0,1.0,0.5) Cl₂(-1.0,-1.0,0.5) Cl₃(-1.0,1.0,-0.5) Cl₄(1.0,-1.0,-0.5)
   // Zeff: Sn 5s/5p=6.20, Cl=6.12
   'SnCl₄': {
+    notes: 'Tin(IV) chloride — tetrahedral. The Sn 5s electrons participate in sp³ hybridization.',
     orbitals: [
       {
         name: 'a₁ (σ bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding — head-on s/p overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 5, l: 0, m: 0, zeff: 6.20, c:  0.50 },
           { atom: 1, n: 3, l: 1, m: 1, zeff: 6.12, c: -0.35 },
@@ -4042,6 +4674,7 @@ const MOLECULAR_ORBITALS = {
         name: 't₂ (σ, x)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding between Sn and Cl — head-on p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 5, l: 1, m: 1, zeff: 6.20, c:  0.50 },
           { atom: 1, n: 3, l: 1, m: 1, zeff: 6.12, c: -0.40 },
@@ -4054,6 +4687,7 @@ const MOLECULAR_ORBITALS = {
         name: 't₂ (σ, y)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'σ bonding between Sn and Cl — head-on p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 5, l: 1, m: -1, zeff: 6.20, c:  0.50 },
           { atom: 1, n: 3, l: 1, m: -1, zeff: 6.12, c: -0.40 },
@@ -4066,6 +4700,7 @@ const MOLECULAR_ORBITALS = {
         name: 't₂ (σ, z)',
         type: 'bonding',
         electrons: 2,
+      energy: 4, desc: 'σ bonding between Sn and Cl — head-on p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 5, l: 1, m: 0, zeff: 6.20, c:  0.50 },
           { atom: 1, n: 3, l: 1, m: 0, zeff: 6.12, c: -0.40 },
@@ -4078,6 +4713,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Cl₁ lone pair',
         type: 'nonbonding',
         electrons: 2,
+      energy: 5, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 1, n: 3, l: 0, m: 0, zeff: 6.12, c: 0.85 },
           { atom: 1, n: 3, l: 1, m: -1, zeff: 6.12, c: 0.40 },
@@ -4087,6 +4723,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Cl₂ lone pair',
         type: 'nonbonding',
         electrons: 2,
+      energy: 6, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 2, n: 3, l: 0, m: 0, zeff: 6.12, c: 0.85 },
           { atom: 2, n: 3, l: 1, m: -1, zeff: 6.12, c: 0.40 },
@@ -4096,6 +4733,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Cl₃ lone pair',
         type: 'nonbonding',
         electrons: 2,
+      energy: 7, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 3, n: 3, l: 0, m: 0, zeff: 6.12, c: 0.85 },
           { atom: 3, n: 3, l: 1, m: 0, zeff: 6.12, c: 0.40 },
@@ -4105,6 +4743,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Cl₄ lone pair',
         type: 'nonbonding',
         electrons: 2,
+      energy: 8, desc: 'Lone pair localized on Cl. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 4, n: 3, l: 0, m: 0, zeff: 6.12, c: 0.85 },
           { atom: 4, n: 3, l: 1, m: 0, zeff: 6.12, c: 0.40 },
@@ -4118,11 +4757,13 @@ const MOLECULAR_ORBITALS = {
   // U(0,0,0) F₁(1.2,0,0) F₂(-1.2,0,0) F₃(0,1.2,0) F₄(0,-1.2,0) F₅(0,0,1.2) F₆(0,0,-1.2)
   // Zeff: U 5f=9.20, U 6d=8.00, F 2s/2p=5.13
   'UF₆': {
+    notes: 'Uranium hexafluoride — the gas used in isotope enrichment. Octahedral with U 5f/6d participation.',
     orbitals: [
       {
         name: 'a₁g (σ bonding)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding from s/p overlap between U and F. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 7, l: 0, m: 0, zeff: 4.35, c:  0.50 },
           { atom: 1, n: 2, l: 1, m: 1, zeff: 5.13, c: -0.30 },
@@ -4137,6 +4778,7 @@ const MOLECULAR_ORBITALS = {
         name: 't₁u (σ, x)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding between U and F — head-on p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 6, l: 1, m: 1, zeff: 8.00, c:  0.55 },
           { atom: 1, n: 2, l: 1, m: 1, zeff: 5.13, c: -0.55 },
@@ -4147,6 +4789,7 @@ const MOLECULAR_ORBITALS = {
         name: 't₁u (σ, y)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'σ bonding between U and F — head-on p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 6, l: 1, m: -1, zeff: 8.00, c:  0.55 },
           { atom: 3, n: 2, l: 1, m: -1, zeff: 5.13, c: -0.55 },
@@ -4157,6 +4800,7 @@ const MOLECULAR_ORBITALS = {
         name: 't₁u (σ, z)',
         type: 'bonding',
         electrons: 2,
+      energy: 4, desc: 'σ bonding between U and F — head-on p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 6, l: 1, m: 0, zeff: 8.00, c:  0.55 },
           { atom: 5, n: 2, l: 1, m: 0, zeff: 5.13, c: -0.55 },
@@ -4167,6 +4811,7 @@ const MOLECULAR_ORBITALS = {
         name: 'eg (σ, dz²)',
         type: 'bonding',
         electrons: 2,
+      energy: 5, desc: 'σ bonding from d/p overlap between U and F. Head-on d-p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 6, l: 2, m: 0, zeff: 8.00, c:  0.55 },
           { atom: 5, n: 2, l: 1, m: 0, zeff: 5.13, c: -0.40 },
@@ -4177,6 +4822,7 @@ const MOLECULAR_ORBITALS = {
         name: 'eg (σ, dx²-y²)',
         type: 'bonding',
         electrons: 2,
+      energy: 6, desc: 'σ bonding from d/p overlap between U and F. Head-on d-p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 6, l: 2, m: 2, zeff: 8.00, c:  0.55 },
           { atom: 1, n: 2, l: 1, m: 1, zeff: 5.13, c: -0.40 },
@@ -4187,6 +4833,7 @@ const MOLECULAR_ORBITALS = {
         name: 'F₁ lone pair',
         type: 'nonbonding',
         electrons: 2,
+      energy: 7, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 1, n: 2, l: 1, m: -1, zeff: 5.13, c: 0.707 },
           { atom: 1, n: 2, l: 1, m: 0, zeff: 5.13, c: 0.707 },
@@ -4196,6 +4843,7 @@ const MOLECULAR_ORBITALS = {
         name: 'F₂ lone pair',
         type: 'nonbonding',
         electrons: 2,
+      energy: 8, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 2, n: 2, l: 1, m: -1, zeff: 5.13, c: 0.707 },
           { atom: 2, n: 2, l: 1, m: 0, zeff: 5.13, c: 0.707 },
@@ -4205,6 +4853,7 @@ const MOLECULAR_ORBITALS = {
         name: 'F₃ lone pair',
         type: 'nonbonding',
         electrons: 2,
+      energy: 9, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 3, n: 2, l: 1, m: 1, zeff: 5.13, c: 0.707 },
           { atom: 3, n: 2, l: 1, m: 0, zeff: 5.13, c: 0.707 },
@@ -4214,6 +4863,7 @@ const MOLECULAR_ORBITALS = {
         name: 'F₄ lone pair',
         type: 'nonbonding',
         electrons: 2,
+      energy: 10, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 4, n: 2, l: 1, m: 1, zeff: 5.13, c: 0.707 },
           { atom: 4, n: 2, l: 1, m: 0, zeff: 5.13, c: 0.707 },
@@ -4223,6 +4873,7 @@ const MOLECULAR_ORBITALS = {
         name: 'F₅ lone pair',
         type: 'nonbonding',
         electrons: 2,
+      energy: 11, desc: 'Lone pair localized on F. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 5, n: 2, l: 1, m: 1, zeff: 5.13, c: 0.707 },
           { atom: 5, n: 2, l: 1, m: -1, zeff: 5.13, c: 0.707 },
@@ -4232,6 +4883,7 @@ const MOLECULAR_ORBITALS = {
         name: 'F₆ lone pair',
         type: 'nonbonding',
         electrons: 2,
+      energy: 12, desc: 'Lone pair localized on F. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 6, n: 2, l: 1, m: 1, zeff: 5.13, c: 0.707 },
           { atom: 6, n: 2, l: 1, m: -1, zeff: 5.13, c: 0.707 },
@@ -4244,11 +4896,13 @@ const MOLECULAR_ORBITALS = {
   // Weakly bound van der Waals dimer. Bond order = 0 (σ cancels σ*).
   // Atoms: He₁(-1.5,0,0) He₂(1.5,0,0)
   'He₂': {
+    notes: 'Helium "molecule" — bond order zero! Equal bonding and antibonding cancels out. Not a stable species.',
     orbitals: [
       {
         name: 'σ₁s',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding — head-on s overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 1, l: 0, m: 0, zeff: 1.70, c: 0.707 },
           { atom: 1, n: 1, l: 0, m: 0, zeff: 1.70, c: 0.707 },
@@ -4258,6 +4912,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ*₁s',
         type: 'antibonding',
         electrons: 2,
+      energy: 2, desc: 'σ* antibonding — destructive overlap creates a nodal plane between He. Occupying this weakens the bond.',
         ao: [
           { atom: 0, n: 1, l: 0, m: 0, zeff: 1.70, c: 0.707 },
           { atom: 1, n: 1, l: 0, m: 0, zeff: 1.70, c: -0.707 },
@@ -4270,11 +4925,13 @@ const MOLECULAR_ORBITALS = {
   // Linear Au-Cl. Au 5d/6s bonding with Cl 3p.
   // Atoms: Au(-1,0,0) Cl(1,0,0) — bond along x-axis
   'AuCl': {
+    notes: 'Gold(I) chloride — relativistic contraction of Au 6s orbital strengthens the bond vs lighter coinage metals.',
     orbitals: [
       {
         name: 'σ (Au 6s–Cl 3p)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding from s/p overlap between Au and Cl. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 6, l: 0, m: 0, zeff: 4.20, c: 0.55 },
           { atom: 1, n: 3, l: 1, m: 1, zeff: 6.12, c: 0.60 },
@@ -4284,6 +4941,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ* (Au 6s–Cl 3p)',
         type: 'antibonding',
         electrons: 0,
+      energy: 2, desc: 'σ* antibonding — destructive overlap creates a nodal plane between Au and Cl. Occupying this weakens the bond.',
         ao: [
           { atom: 0, n: 6, l: 0, m: 0, zeff: 4.20, c: 0.60 },
           { atom: 1, n: 3, l: 1, m: 1, zeff: 6.12, c: -0.55 },
@@ -4293,6 +4951,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Au 5dσ',
         type: 'nonbonding',
         electrons: 2,
+      energy: 3, desc: 'Non-bonding d-electrons on Au contributing to magnetic and spectroscopic properties.',
         ao: [
           { atom: 0, n: 5, l: 2, m: 0, zeff: 10.50, c: 1.0 },
         ],
@@ -4301,6 +4960,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Au 5dπ',
         type: 'nonbonding',
         electrons: 4,
+      energy: 4, desc: 'Non-bonding d-electrons on Au contributing to magnetic and spectroscopic properties.',
         ao: [
           { atom: 0, n: 5, l: 2, m: 1, zeff: 10.50, c: 0.707 },
           { atom: 0, n: 5, l: 2, m: -1, zeff: 10.50, c: 0.707 },
@@ -4310,6 +4970,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Au 5dδ',
         type: 'nonbonding',
         electrons: 4,
+      energy: 5, desc: 'Non-bonding d-electrons on Au contributing to magnetic and spectroscopic properties.',
         ao: [
           { atom: 0, n: 5, l: 2, m: 2, zeff: 10.50, c: 0.707 },
           { atom: 0, n: 5, l: 2, m: -2, zeff: 10.50, c: 0.707 },
@@ -4319,6 +4980,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Cl 3p lone pairs',
         type: 'nonbonding',
         electrons: 4,
+      energy: 6, desc: 'Lone pair localized on Cl. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 1, n: 3, l: 1, m: 0, zeff: 6.12, c: 0.707 },
           { atom: 1, n: 3, l: 1, m: -1, zeff: 6.12, c: 0.707 },
@@ -4331,11 +4993,13 @@ const MOLECULAR_ORBITALS = {
   // II-VI semiconductor. Cd 5s – Te 5p σ bond along x.
   // Atoms: Cd(-0.7,0,0) Te(0.7,0,0)
   'CdTe': {
+    notes: 'Cadmium telluride — optimal bandgap (1.5 eV) for solar cells. Leading thin-film photovoltaic material.',
     orbitals: [
       {
         name: 'σ (Cd 5s–Te 5p)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding from s/p overlap between Cd and Te. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 5, l: 0, m: 0, zeff: 4.55, c: 0.55 },
           { atom: 1, n: 5, l: 1, m: 1, zeff: 6.55, c: 0.60 },
@@ -4345,6 +5009,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ* (Cd 5s–Te 5p)',
         type: 'antibonding',
         electrons: 0,
+      energy: 2, desc: 'σ* antibonding — destructive overlap creates a nodal plane between Cd and Te. Occupying this weakens the bond.',
         ao: [
           { atom: 0, n: 5, l: 0, m: 0, zeff: 4.55, c: 0.60 },
           { atom: 1, n: 5, l: 1, m: 1, zeff: 6.55, c: -0.55 },
@@ -4354,6 +5019,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Te 5p lone pairs',
         type: 'nonbonding',
         electrons: 4,
+      energy: 3, desc: 'Lone pair localized on Te. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 1, n: 5, l: 1, m: 0, zeff: 6.55, c: 0.707 },
           { atom: 1, n: 5, l: 1, m: -1, zeff: 6.55, c: 0.707 },
@@ -4363,6 +5029,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Te 5s lone pair',
         type: 'nonbonding',
         electrons: 2,
+      energy: 4, desc: 'Lone pair localized on Te. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 1, n: 5, l: 0, m: 0, zeff: 6.55, c: 1.0 },
         ],
@@ -4374,11 +5041,13 @@ const MOLECULAR_ORBITALS = {
   // Bent molecule (like H₂O). Sn at origin, F atoms at ±x shifted down.
   // Atoms: Sn(0,0,0) F₁(-0.9,-0.5,0) F₂(0.9,-0.5,0)
   'SnF₂': {
+    notes: 'Stannous fluoride — the active ingredient in many toothpastes. Bent geometry due to Sn 5s² lone pair.',
     orbitals: [
       {
         name: 'σ₁ (Sn 5sp–F₁ 2p)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding from s/p overlap between Sn and F. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 5, l: 0, m: 0, zeff: 6.20, c: 0.40 },
           { atom: 0, n: 5, l: 1, m: 1, zeff: 6.20, c: 0.30 },
@@ -4389,6 +5058,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ₂ (Sn 5sp–F₂ 2p)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding from s/p overlap between Sn and F. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 5, l: 0, m: 0, zeff: 6.20, c: 0.40 },
           { atom: 0, n: 5, l: 1, m: 1, zeff: 6.20, c: -0.30 },
@@ -4399,6 +5069,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Sn 5s lone pair',
         type: 'nonbonding',
         electrons: 2,
+      energy: 3, desc: 'Lone pair localized on Sn. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 0, n: 5, l: 0, m: 0, zeff: 6.20, c: 0.80 },
           { atom: 0, n: 5, l: 1, m: -1, zeff: 6.20, c: 0.45 },
@@ -4408,6 +5079,8 @@ const MOLECULAR_ORBITALS = {
         name: 'F₁ lone pairs',
         type: 'nonbonding',
         electrons: 4,
+      energy: 5, desc: 'Lone pair localized on F. Non-bonding electrons that can act as a Lewis base.',
+      energy: 4, desc: 'Lone pair localized on F. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 1, n: 2, l: 1, m: 0, zeff: 5.13, c: 0.707 },
           { atom: 1, n: 2, l: 1, m: -1, zeff: 5.13, c: 0.707 },
@@ -4417,6 +5090,8 @@ const MOLECULAR_ORBITALS = {
         name: 'F₂ lone pairs',
         type: 'nonbonding',
         electrons: 4,
+      energy: 6, desc: 'Lone pair localized on F. Non-bonding electrons that can act as a Lewis base.',
+      energy: 5, desc: 'Lone pair localized on F. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 2, n: 2, l: 1, m: 0, zeff: 5.13, c: 0.707 },
           { atom: 2, n: 2, l: 1, m: -1, zeff: 5.13, c: 0.707 },
@@ -4429,11 +5104,13 @@ const MOLECULAR_ORBITALS = {
   // Linear Cl-Pb-Cl along x-axis. Pb 6sp hybrid σ bonds.
   // Atoms: Cl₁(-1.6,0,0) Pb(0,0,0) Cl₂(1.6,0,0)
   'PbCl₂': {
+    notes: 'Lead(II) chloride — the "inert pair effect" leaves Pb 6s² electrons non-bonding.',
     orbitals: [
       {
         name: 'σg (Pb 6s–Cl 3p)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding from p/s overlap between Cl and Pb. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 3, l: 1, m: 1, zeff: 6.12, c: 0.50 },
           { atom: 1, n: 6, l: 0, m: 0, zeff: 6.50, c: 0.50 },
@@ -4444,6 +5121,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σu (Pb 6p–Cl 3p)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding between Cl and Pb — head-on p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 3, l: 1, m: 1, zeff: 6.12, c: 0.50 },
           { atom: 1, n: 6, l: 1, m: 1, zeff: 6.50, c: 0.50 },
@@ -4454,6 +5132,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Pb 6s lone pair',
         type: 'nonbonding',
         electrons: 2,
+      energy: 3, desc: 'Lone pair localized on Pb. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 1, n: 6, l: 0, m: 0, zeff: 6.50, c: 1.0 },
         ],
@@ -4462,6 +5141,12 @@ const MOLECULAR_ORBITALS = {
         name: 'Cl₁ lone pairs',
         type: 'nonbonding',
         electrons: 4,
+      energy: 3, desc: 'Lone pair localized on Cl. Non-bonding electrons that can act as a Lewis base.',
+      energy: 4, desc: 'Lone pair localized on Cl. Non-bonding electrons that can act as a Lewis base.',
+      energy: 3, desc: 'Lone pair localized on Cl. Non-bonding electrons that can act as a Lewis base.',
+      energy: 4, desc: 'Lone pair localized on Cl. Non-bonding electrons that can act as a Lewis base.',
+      energy: 4, desc: 'Lone pair localized on Cl. Non-bonding electrons that can act as a Lewis base.',
+      energy: 4, desc: 'Lone pair localized on Cl. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 0, n: 3, l: 1, m: 0, zeff: 6.12, c: 0.707 },
           { atom: 0, n: 3, l: 1, m: -1, zeff: 6.12, c: 0.707 },
@@ -4471,6 +5156,12 @@ const MOLECULAR_ORBITALS = {
         name: 'Cl₂ lone pairs',
         type: 'nonbonding',
         electrons: 4,
+      energy: 4, desc: 'Lone pair localized on Cl. Non-bonding electrons that can act as a Lewis base.',
+      energy: 5, desc: 'Lone pair localized on Cl. Non-bonding electrons that can act as a Lewis base.',
+      energy: 4, desc: 'Lone pair localized on Cl. Non-bonding electrons that can act as a Lewis base.',
+      energy: 5, desc: 'Lone pair localized on Cl. Non-bonding electrons that can act as a Lewis base.',
+      energy: 5, desc: 'Lone pair localized on Cl. Non-bonding electrons that can act as a Lewis base.',
+      energy: 5, desc: 'Lone pair localized on Cl. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 2, n: 3, l: 1, m: 0, zeff: 6.12, c: 0.707 },
           { atom: 2, n: 3, l: 1, m: -1, zeff: 6.12, c: 0.707 },
@@ -4483,11 +5174,13 @@ const MOLECULAR_ORBITALS = {
   // Linear O=Pb=O. Double bonds along x-axis.
   // Atoms: O₁(-1.1,0,0) Pb(0,0,0) O₂(1.1,0,0)
   'PbO₂': {
+    notes: 'Lead(IV) oxide — the key material in lead-acid car batteries.',
     orbitals: [
       {
         name: 'σg (Pb 6s–O 2p)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding from p/s overlap between O and Pb. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.50 },
           { atom: 1, n: 6, l: 0, m: 0, zeff: 6.50, c: 0.50 },
@@ -4498,6 +5191,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σu (Pb 6p–O 2p)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding between O and Pb — head-on p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.50 },
           { atom: 1, n: 6, l: 1, m: 1, zeff: 6.50, c: 0.50 },
@@ -4508,6 +5202,7 @@ const MOLECULAR_ORBITALS = {
         name: 'πg (Pb 6p–O 2p)',
         type: 'bonding',
         electrons: 4,
+      energy: 3, desc: 'π bonding — lateral p overlap between O and Pb. Electron density above and below the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
           { atom: 1, n: 6, l: 1, m: 0, zeff: 6.50, c: 0.50 },
@@ -4518,6 +5213,7 @@ const MOLECULAR_ORBITALS = {
         name: 'πu (Pb 6p–O 2p)',
         type: 'bonding',
         electrons: 4,
+      energy: 4, desc: 'π bonding — lateral p overlap between O and Pb. Electron density above and below the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.50 },
           { atom: 1, n: 6, l: 1, m: -1, zeff: 6.50, c: 0.50 },
@@ -4528,6 +5224,18 @@ const MOLECULAR_ORBITALS = {
         name: 'O lone pairs',
         type: 'nonbonding',
         electrons: 4,
+      energy: 6, desc: 'Lone pair localized on Pa. Non-bonding electrons that can act as a Lewis base.',
+      energy: 6, desc: 'Lone pair localized on Cm. Non-bonding electrons that can act as a Lewis base.',
+      energy: 6, desc: 'Lone pair localized on Am. Non-bonding electrons that can act as a Lewis base.',
+      energy: 6, desc: 'Lone pair localized on Np. Non-bonding electrons that can act as a Lewis base.',
+      energy: 5, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
+      energy: 4, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
+      energy: 5, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
+      energy: 4, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
+      energy: 4, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
+      energy: 4, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
+      energy: 5, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
+      energy: 5, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 0, n: 2, l: 0, m: 0, zeff: 4.45, c: 0.707 },
           { atom: 2, n: 2, l: 0, m: 0, zeff: 4.45, c: 0.707 },
@@ -4540,11 +5248,13 @@ const MOLECULAR_ORBITALS = {
   // Linear F-Rn-F, like XeF₂. 3-center 4-electron bond.
   // Atoms: Rn(0,0,0) F₁(-1,0,0) F₂(1,0,0)
   'RnF₂': {
+    notes: 'Radon difluoride — theoretically predicted, marginally stable. Three-center bonding like XeF₂ and KrF₂.',
     orbitals: [
       {
         name: 'σ (3c-4e bonding)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding between F and Rn — head-on p overlap along the bond axis.',
         ao: [
           { atom: 1, n: 2, l: 1, m: 1, zeff: 5.13, c: 0.50 },
           { atom: 0, n: 6, l: 1, m: 1, zeff: 9.20, c: 0.50 },
@@ -4555,6 +5265,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ nb (F–F)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 2, desc: 'Non-bonding orbital localized on F.',
         ao: [
           { atom: 1, n: 2, l: 1, m: 1, zeff: 5.13, c: 0.707 },
           { atom: 2, n: 2, l: 1, m: 1, zeff: 5.13, c: 0.707 },
@@ -4564,6 +5275,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Rn 6s lone pair',
         type: 'nonbonding',
         electrons: 2,
+      energy: 3, desc: 'Lone pair localized on Rn. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 0, n: 6, l: 0, m: 0, zeff: 9.20, c: 1.0 },
         ],
@@ -4572,6 +5284,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Rn 6p⊥ lone pairs',
         type: 'nonbonding',
         electrons: 4,
+      energy: 4, desc: 'Lone pair localized on Rn. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 0, n: 6, l: 1, m: 0, zeff: 9.20, c: 0.707 },
           { atom: 0, n: 6, l: 1, m: -1, zeff: 9.20, c: 0.707 },
@@ -4581,6 +5294,7 @@ const MOLECULAR_ORBITALS = {
         name: 'F₁ lone pairs',
         type: 'nonbonding',
         electrons: 4,
+      energy: 5, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 1, n: 2, l: 1, m: 0, zeff: 5.13, c: 0.707 },
           { atom: 1, n: 2, l: 1, m: -1, zeff: 5.13, c: 0.707 },
@@ -4590,6 +5304,7 @@ const MOLECULAR_ORBITALS = {
         name: 'F₂ lone pairs',
         type: 'nonbonding',
         electrons: 4,
+      energy: 6, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 2, n: 2, l: 1, m: 0, zeff: 5.13, c: 0.707 },
           { atom: 2, n: 2, l: 1, m: -1, zeff: 5.13, c: 0.707 },
@@ -4602,11 +5317,13 @@ const MOLECULAR_ORBITALS = {
   // Linear Cl-Pt-Cl. Pt 5d/6s bonding.
   // Atoms: Cl₁(-1.4,0,0) Pt(0,0,0) Cl₂(1.4,0,0)
   'PtCl₂': {
+    notes: 'Platinum(II) chloride — starting material for cisplatin, the breakthrough anticancer drug.',
     orbitals: [
       {
         name: 'σg (Pt 6s–Cl 3p)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding from p/s overlap between Cl and Pt. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 3, l: 1, m: 1, zeff: 6.12, c: 0.50 },
           { atom: 1, n: 6, l: 0, m: 0, zeff: 4.00, c: 0.50 },
@@ -4617,6 +5334,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σu (Pt 5dσ–Cl 3p)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding from p/d overlap between Cl and Pt. Head-on d-p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 3, l: 1, m: 1, zeff: 6.12, c: 0.50 },
           { atom: 1, n: 5, l: 2, m: 0, zeff: 10.20, c: 0.50 },
@@ -4627,6 +5345,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Pt 5d nonbonding',
         type: 'nonbonding',
         electrons: 6,
+      energy: 3, desc: 'Non-bonding d-electrons on Pt contributing to magnetic and spectroscopic properties.',
         ao: [
           { atom: 1, n: 5, l: 2, m: 1, zeff: 10.20, c: 0.577 },
           { atom: 1, n: 5, l: 2, m: -1, zeff: 10.20, c: 0.577 },
@@ -4637,6 +5356,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Cl₁ lone pairs',
         type: 'nonbonding',
         electrons: 4,
+      energy: 4, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 0, n: 3, l: 1, m: 0, zeff: 6.12, c: 0.707 },
           { atom: 0, n: 3, l: 1, m: -1, zeff: 6.12, c: 0.707 },
@@ -4646,6 +5366,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Cl₂ lone pairs',
         type: 'nonbonding',
         electrons: 4,
+      energy: 5, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 2, n: 3, l: 1, m: 0, zeff: 6.12, c: 0.707 },
           { atom: 2, n: 3, l: 1, m: -1, zeff: 6.12, c: 0.707 },
@@ -4658,11 +5379,13 @@ const MOLECULAR_ORBITALS = {
   // Linear Pd-Cl₂. Pd 4d/5s bonding.
   // Atoms: Pd(0,0,0) Cl₁(-1.2,0,0) Cl₂(1.2,0,0)
   'PdCl₂': {
+    notes: 'Palladium(II) chloride — the Wacker process catalyst. Pd 4d orbitals are central to its catalytic activity.',
     orbitals: [
       {
         name: 'σg (Pd 5s–Cl 3p)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding from p/s overlap between Cl and Pd. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 1, n: 3, l: 1, m: 1, zeff: 6.12, c: 0.50 },
           { atom: 0, n: 5, l: 0, m: 0, zeff: 4.30, c: 0.50 },
@@ -4673,6 +5396,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σu (Pd 4dσ–Cl 3p)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding from p/d overlap between Cl and Pd. Head-on d-p overlap along the bond axis.',
         ao: [
           { atom: 1, n: 3, l: 1, m: 1, zeff: 6.12, c: 0.50 },
           { atom: 0, n: 4, l: 2, m: 0, zeff: 8.85, c: 0.50 },
@@ -4683,6 +5407,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Pd 4d nonbonding',
         type: 'nonbonding',
         electrons: 6,
+      energy: 3, desc: 'Non-bonding d-electrons on Pd contributing to magnetic and spectroscopic properties.',
         ao: [
           { atom: 0, n: 4, l: 2, m: 1, zeff: 8.85, c: 0.577 },
           { atom: 0, n: 4, l: 2, m: -1, zeff: 8.85, c: 0.577 },
@@ -4693,6 +5418,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Cl₁ lone pairs',
         type: 'nonbonding',
         electrons: 4,
+      energy: 4, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 1, n: 3, l: 1, m: 0, zeff: 6.12, c: 0.707 },
           { atom: 1, n: 3, l: 1, m: -1, zeff: 6.12, c: 0.707 },
@@ -4702,6 +5428,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Cl₂ lone pairs',
         type: 'nonbonding',
         electrons: 4,
+      energy: 5, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 2, n: 3, l: 1, m: 0, zeff: 6.12, c: 0.707 },
           { atom: 2, n: 3, l: 1, m: -1, zeff: 6.12, c: 0.707 },
@@ -4714,11 +5441,13 @@ const MOLECULAR_ORBITALS = {
   // Linear Cl-Zn-Cl. Zn 4s bonding.
   // Atoms: Cl₁(-1.6,0,0) Zn(0,0,0) Cl₂(1.6,0,0)
   'ZnCl₂': {
+    notes: 'Zinc chloride — a Lewis acid and soldering flux. Zn 4s contributes to the bonding MOs.',
     orbitals: [
       {
         name: 'σg (Zn 4s–Cl 3p)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding from p/s overlap between Cl and Zn. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 3, l: 1, m: 1, zeff: 6.12, c: 0.50 },
           { atom: 1, n: 4, l: 0, m: 0, zeff: 4.35, c: 0.50 },
@@ -4729,6 +5458,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σu (Zn 4p–Cl 3p)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding between Cl and Zn — head-on p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 3, l: 1, m: 1, zeff: 6.12, c: 0.50 },
           { atom: 1, n: 4, l: 1, m: 1, zeff: 4.35, c: 0.50 },
@@ -4739,6 +5469,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Cl₁ lone pairs',
         type: 'nonbonding',
         electrons: 4,
+      energy: 3, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 0, n: 3, l: 1, m: 0, zeff: 6.12, c: 0.707 },
           { atom: 0, n: 3, l: 1, m: -1, zeff: 6.12, c: 0.707 },
@@ -4748,6 +5479,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Cl₂ lone pairs',
         type: 'nonbonding',
         electrons: 4,
+      energy: 4, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 2, n: 3, l: 1, m: 0, zeff: 6.12, c: 0.707 },
           { atom: 2, n: 3, l: 1, m: -1, zeff: 6.12, c: 0.707 },
@@ -4760,11 +5492,13 @@ const MOLECULAR_ORBITALS = {
   // Trigonal prismatic coordination in bulk, simplified as bent S-Mo-S.
   // Atoms: Mo(0,0,0) S₁(0.8,0.8,0) S₂(-0.8,-0.8,0)
   'MoS₂': {
+    notes: 'Molybdenite — a 2D layered material similar to graphene. Mo 4d states form the band edges.',
     orbitals: [
       {
         name: 'σ₁ (Mo 4d–S₁ 3p)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding from d/p overlap between Mo and S. Head-on d-p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 4, l: 2, m: 0, zeff: 7.40, c: 0.55 },
           { atom: 1, n: 3, l: 1, m: 1, zeff: 5.45, c: 0.50 },
@@ -4774,6 +5508,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ₂ (Mo 4d–S₂ 3p)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding from d/p overlap between Mo and S. Head-on d-p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 4, l: 2, m: 0, zeff: 7.40, c: 0.55 },
           { atom: 2, n: 3, l: 1, m: 1, zeff: 5.45, c: 0.50 },
@@ -4783,6 +5518,7 @@ const MOLECULAR_ORBITALS = {
         name: 'π (Mo 4d–S 3p)',
         type: 'bonding',
         electrons: 4,
+      energy: 3, desc: 'π bonding from d-p lateral overlap between Mo and S. Electron density above and below the bond axis.',
         ao: [
           { atom: 0, n: 4, l: 2, m: 1, zeff: 7.40, c: 0.50 },
           { atom: 1, n: 3, l: 1, m: 0, zeff: 5.45, c: 0.35 },
@@ -4793,6 +5529,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Mo 4d nonbonding',
         type: 'nonbonding',
         electrons: 2,
+      energy: 4, desc: 'Non-bonding d-electrons on Mo contributing to magnetic and spectroscopic properties.',
         ao: [
           { atom: 0, n: 4, l: 2, m: 2, zeff: 7.40, c: 0.707 },
           { atom: 0, n: 4, l: 2, m: -2, zeff: 7.40, c: 0.707 },
@@ -4802,6 +5539,8 @@ const MOLECULAR_ORBITALS = {
         name: 'S₁ lone pair',
         type: 'nonbonding',
         electrons: 2,
+      energy: 5, desc: 'Lone pair localized on ?. Non-bonding electrons that can act as a Lewis base.',
+      energy: 5, desc: 'Lone pair localized on S. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 1, n: 3, l: 1, m: -1, zeff: 5.45, c: 1.0 },
         ],
@@ -4810,6 +5549,8 @@ const MOLECULAR_ORBITALS = {
         name: 'S₂ lone pair',
         type: 'nonbonding',
         electrons: 2,
+      energy: 6, desc: 'Lone pair localized on ?. Non-bonding electrons that can act as a Lewis base.',
+      energy: 6, desc: 'Lone pair localized on S. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 2, n: 3, l: 1, m: -1, zeff: 5.45, c: 1.0 },
         ],
@@ -4821,11 +5562,13 @@ const MOLECULAR_ORBITALS = {
   // Linear O=Mn=O. Mn uses 3d/4s for bonding.
   // Atoms: O₁(-1.1,0,0) Mn(0,0,0) O₂(1.1,0,0)
   'MnO₂': {
+    notes: 'Manganese dioxide — the cathode in alkaline batteries. Mn 3d electrons drive its electrochemistry.',
     orbitals: [
       {
         name: 'σg (Mn 4s–O 2p)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding from p/s overlap between O and Mn. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.50 },
           { atom: 1, n: 4, l: 0, m: 0, zeff: 3.50, c: 0.50 },
@@ -4836,6 +5579,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σu (Mn 3dσ–O 2p)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding from p/d overlap between O and Mn. Head-on d-p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.50 },
           { atom: 1, n: 3, l: 2, m: 0, zeff: 5.60, c: 0.50 },
@@ -4846,6 +5590,7 @@ const MOLECULAR_ORBITALS = {
         name: 'πg (Mn 3dπ–O 2p)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'π bonding from d-p lateral overlap between O and Mn. Electron density above and below the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
           { atom: 1, n: 3, l: 2, m: 1, zeff: 5.60, c: 0.50 },
@@ -4856,6 +5601,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Mn 3d nonbonding',
         type: 'nonbonding',
         electrons: 1,
+      energy: 4, desc: 'Non-bonding d-electrons on Mn contributing to magnetic and spectroscopic properties.',
         ao: [
           { atom: 1, n: 3, l: 2, m: 2, zeff: 5.60, c: 1.0 },
         ],
@@ -4864,6 +5610,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O lone pairs',
         type: 'nonbonding',
         electrons: 4,
+      energy: 5, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 0, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.707 },
           { atom: 2, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.707 },
@@ -4876,11 +5623,13 @@ const MOLECULAR_ORBITALS = {
   // Bent O=Ge=O. Ge at origin, O atoms at (±1, 0.5, 0).
   // Atoms: Ge(0,0,0) O₁(1,0.5,0) O₂(-1,0.5,0)
   'GeO₂': {
+    notes: 'Germanium dioxide — shares glass-forming ability with SiO₂ but with Ge 4s/4p character.',
     orbitals: [
       {
         name: 'σ₁ (Ge 4sp–O₁ 2p)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding from s/p overlap between Ge and O. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 4, l: 0, m: 0, zeff: 5.50, c: 0.40 },
           { atom: 0, n: 4, l: 1, m: 1, zeff: 5.50, c: 0.30 },
@@ -4891,6 +5640,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ₂ (Ge 4sp–O₂ 2p)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding from s/p overlap between Ge and O. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 4, l: 0, m: 0, zeff: 5.50, c: 0.40 },
           { atom: 0, n: 4, l: 1, m: 1, zeff: 5.50, c: -0.30 },
@@ -4901,6 +5651,7 @@ const MOLECULAR_ORBITALS = {
         name: 'π₁ (Ge 4p–O₁ 2p)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'π bonding — lateral p overlap between Ge and O. Electron density above and below the bond axis.',
         ao: [
           { atom: 0, n: 4, l: 1, m: 0, zeff: 5.50, c: 0.50 },
           { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
@@ -4910,6 +5661,7 @@ const MOLECULAR_ORBITALS = {
         name: 'π₂ (Ge 4p–O₂ 2p)',
         type: 'bonding',
         electrons: 2,
+      energy: 4, desc: 'π bonding — lateral p overlap between Ge and O. Electron density above and below the bond axis.',
         ao: [
           { atom: 0, n: 4, l: 1, m: 0, zeff: 5.50, c: 0.50 },
           { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
@@ -4919,6 +5671,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O₁ lone pair',
         type: 'nonbonding',
         electrons: 2,
+      energy: 5, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c: 1.0 },
         ],
@@ -4927,6 +5680,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O₂ lone pair',
         type: 'nonbonding',
         electrons: 2,
+      energy: 6, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 2, n: 2, l: 1, m: -1, zeff: 4.45, c: 1.0 },
         ],
@@ -4938,11 +5692,13 @@ const MOLECULAR_ORBITALS = {
   // Bent O=Zr=O. 4d transition metal oxide.
   // Atoms: Zr(0,0,0) O₁(1,0.5,0) O₂(-1,0.5,0)
   'ZrO₂': {
+    notes: 'Zirconia — used in dental crowns and oxygen sensors. The Zr 4d — O 2p bonds are highly ionic.',
     orbitals: [
       {
         name: 'σ₁ (Zr 4d/5s–O₁ 2p)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding from s/d/p overlap between Zr and O. Head-on d-p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 5, l: 0, m: 0, zeff: 3.40, c: 0.40 },
           { atom: 0, n: 4, l: 2, m: 0, zeff: 6.80, c: 0.30 },
@@ -4953,6 +5709,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ₂ (Zr 4d/5s–O₂ 2p)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding from s/d/p overlap between Zr and O. Head-on d-p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 5, l: 0, m: 0, zeff: 3.40, c: 0.40 },
           { atom: 0, n: 4, l: 2, m: 0, zeff: 6.80, c: -0.30 },
@@ -4963,6 +5720,7 @@ const MOLECULAR_ORBITALS = {
         name: 'π (Zr 4dπ–O 2p)',
         type: 'bonding',
         electrons: 4,
+      energy: 3, desc: 'π bonding from d-p lateral overlap between Zr and O. Electron density above and below the bond axis.',
         ao: [
           { atom: 0, n: 4, l: 2, m: 1, zeff: 6.80, c: 0.50 },
           { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.35 },
@@ -4973,6 +5731,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O lone pairs',
         type: 'nonbonding',
         electrons: 4,
+      energy: 4, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.707 },
           { atom: 2, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.707 },
@@ -4985,11 +5744,13 @@ const MOLECULAR_ORBITALS = {
   // Bent O=Hf=O. Analogous to ZrO₂ (same group).
   // Atoms: Hf(0,0,0) O₁(1,0.5,0) O₂(-1,0.5,0)
   'HfO₂': {
+    notes: 'Hafnium dioxide — replaced SiO₂ as the gate dielectric in modern transistors due to its high-κ value.',
     orbitals: [
       {
         name: 'σ₁ (Hf 5d/6s–O₁ 2p)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding from s/d/p overlap between Hf and O. Head-on d-p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 6, l: 0, m: 0, zeff: 4.10, c: 0.40 },
           { atom: 0, n: 5, l: 2, m: 0, zeff: 9.00, c: 0.30 },
@@ -5000,6 +5761,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ₂ (Hf 5d/6s–O₂ 2p)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding from s/d/p overlap between Hf and O. Head-on d-p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 6, l: 0, m: 0, zeff: 4.10, c: 0.40 },
           { atom: 0, n: 5, l: 2, m: 0, zeff: 9.00, c: -0.30 },
@@ -5010,6 +5772,7 @@ const MOLECULAR_ORBITALS = {
         name: 'π (Hf 5dπ–O 2p)',
         type: 'bonding',
         electrons: 4,
+      energy: 3, desc: 'π bonding from d-p lateral overlap between Hf and O. Electron density above and below the bond axis.',
         ao: [
           { atom: 0, n: 5, l: 2, m: 1, zeff: 9.00, c: 0.50 },
           { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.35 },
@@ -5020,6 +5783,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O lone pairs',
         type: 'nonbonding',
         electrons: 4,
+      energy: 4, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.707 },
           { atom: 2, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.707 },
@@ -5032,11 +5796,13 @@ const MOLECULAR_ORBITALS = {
   // Bent O=Ce=O. Lanthanide 4f/5d bonding.
   // Atoms: Ce(0,0,0) O₁(1,0.5,0) O₂(-1,0.5,0)
   'CeO₂': {
+    notes: 'Ceria — Ce 4f electron shuttles between Ce³⁺/Ce⁴⁺, enabling its use in catalytic converters.',
     orbitals: [
       {
         name: 'σ₁ (Ce 5d/6s–O₁ 2p)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding from s/d/p overlap between Ce and O. Head-on d-p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 6, l: 0, m: 0, zeff: 3.80, c: 0.35 },
           { atom: 0, n: 5, l: 2, m: 0, zeff: 7.50, c: 0.35 },
@@ -5047,6 +5813,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ₂ (Ce 5d/6s–O₂ 2p)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding from s/d/p overlap between Ce and O. Head-on d-p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 6, l: 0, m: 0, zeff: 3.80, c: 0.35 },
           { atom: 0, n: 5, l: 2, m: 0, zeff: 7.50, c: -0.35 },
@@ -5057,6 +5824,7 @@ const MOLECULAR_ORBITALS = {
         name: 'π (Ce 5dπ–O 2p)',
         type: 'bonding',
         electrons: 4,
+      energy: 3, desc: 'π bonding from d-p lateral overlap between Ce and O. Electron density above and below the bond axis.',
         ao: [
           { atom: 0, n: 5, l: 2, m: 1, zeff: 7.50, c: 0.50 },
           { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.35 },
@@ -5067,6 +5835,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O lone pairs',
         type: 'nonbonding',
         electrons: 4,
+      energy: 4, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.707 },
           { atom: 2, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.707 },
@@ -5079,11 +5848,13 @@ const MOLECULAR_ORBITALS = {
   // Bent O=Ir=O. Ir 5d-O 2p bonding.
   // Atoms: Ir(0,0,0) O₁(1,0.5,0) O₂(-1,0.5,0)
   'IrO₂': {
+    notes: 'Iridium dioxide — the best-known electrocatalyst for oxygen evolution in water splitting.',
     orbitals: [
       {
         name: 'σ₁ (Ir 5dσ–O₁ 2p)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding from d/s/p overlap between Ir and O. Head-on d-p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 5, l: 2, m: 0, zeff: 10.00, c: 0.45 },
           { atom: 0, n: 6, l: 0, m: 0, zeff: 4.10, c: 0.25 },
@@ -5094,6 +5865,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ₂ (Ir 5dσ–O₂ 2p)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding from d/s/p overlap between Ir and O. Head-on d-p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 5, l: 2, m: 0, zeff: 10.00, c: -0.45 },
           { atom: 0, n: 6, l: 0, m: 0, zeff: 4.10, c: 0.25 },
@@ -5104,6 +5876,7 @@ const MOLECULAR_ORBITALS = {
         name: 'π (Ir 5dπ–O 2p)',
         type: 'bonding',
         electrons: 4,
+      energy: 3, desc: 'π bonding from d-p lateral overlap between Ir and O. Electron density above and below the bond axis.',
         ao: [
           { atom: 0, n: 5, l: 2, m: 1, zeff: 10.00, c: 0.50 },
           { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.35 },
@@ -5114,6 +5887,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Ir 5d nonbonding',
         type: 'nonbonding',
         electrons: 3,
+      energy: 4, desc: 'Non-bonding d-electrons on Ir contributing to magnetic and spectroscopic properties.',
         ao: [
           { atom: 0, n: 5, l: 2, m: -1, zeff: 10.00, c: 0.577 },
           { atom: 0, n: 5, l: 2, m: 2, zeff: 10.00, c: 0.577 },
@@ -5124,6 +5898,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O lone pairs',
         type: 'nonbonding',
         electrons: 4,
+      energy: 5, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.707 },
           { atom: 2, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.707 },
@@ -5136,11 +5911,13 @@ const MOLECULAR_ORBITALS = {
   // Linear O=U=O (uranyl). U 5f/6d participates in bonding.
   // Atoms: O₁(-1.1,0,0) U(0,0,0) O₂(1.1,0,0)
   'UO₂': {
+    notes: 'Uranium dioxide — the standard nuclear fuel. U 5f electrons create complex magnetic behavior.',
     orbitals: [
       {
         name: 'σg (U 6d–O 2p)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding from p/d overlap between O and U. Head-on d-p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.50 },
           { atom: 1, n: 6, l: 2, m: 0, zeff: 8.00, c: 0.50 },
@@ -5151,6 +5928,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σu (U 5fσ–O 2p)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding between O and U — head-on p/f overlap along the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.50 },
           { atom: 1, n: 5, l: 3, m: 0, zeff: 9.20, c: 0.50 },
@@ -5161,6 +5939,7 @@ const MOLECULAR_ORBITALS = {
         name: 'πg (U 5fπ–O 2p)',
         type: 'bonding',
         electrons: 4,
+      energy: 3, desc: 'π bonding — lateral p/f overlap between O and U. Electron density above and below the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
           { atom: 1, n: 5, l: 3, m: 1, zeff: 9.20, c: 0.50 },
@@ -5171,6 +5950,7 @@ const MOLECULAR_ORBITALS = {
         name: 'πu (U 6dπ–O 2p)',
         type: 'bonding',
         electrons: 4,
+      energy: 4, desc: 'π bonding from d-p lateral overlap between O and U. Electron density above and below the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.50 },
           { atom: 1, n: 6, l: 2, m: 1, zeff: 8.00, c: 0.50 },
@@ -5181,6 +5961,7 @@ const MOLECULAR_ORBITALS = {
         name: 'U 5f nonbonding',
         type: 'nonbonding',
         electrons: 0,
+      energy: 5, desc: 'Localized f-electrons on U — shielded from bonding by outer shells.',
         ao: [
           { atom: 1, n: 5, l: 3, m: 2, zeff: 9.20, c: 0.707 },
           { atom: 1, n: 5, l: 3, m: -2, zeff: 9.20, c: 0.707 },
@@ -5193,11 +5974,13 @@ const MOLECULAR_ORBITALS = {
   // Bent O=Th=O. Th 6d/7s bonding (no 5f contribution in Th⁴⁺).
   // Atoms: Th(0,0,0) O₁(1,0.5,0) O₂(-1,0.5,0)
   'ThO₂': {
+    notes: 'Thorium dioxide — the most refractory oxide (m.p. 3390°C). Potential thorium fuel cycle material.',
     orbitals: [
       {
         name: 'σ₁ (Th 6d/7s–O₁ 2p)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding from s/d/p overlap between Th and O. Head-on d-p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 7, l: 0, m: 0, zeff: 3.80, c: 0.35 },
           { atom: 0, n: 6, l: 2, m: 0, zeff: 7.50, c: 0.35 },
@@ -5208,6 +5991,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ₂ (Th 6d/7s–O₂ 2p)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding from s/d/p overlap between Th and O. Head-on d-p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 7, l: 0, m: 0, zeff: 3.80, c: 0.35 },
           { atom: 0, n: 6, l: 2, m: 0, zeff: 7.50, c: -0.35 },
@@ -5218,6 +6002,7 @@ const MOLECULAR_ORBITALS = {
         name: 'π (Th 6dπ–O 2p)',
         type: 'bonding',
         electrons: 4,
+      energy: 3, desc: 'π bonding from d-p lateral overlap between Th and O. Electron density above and below the bond axis.',
         ao: [
           { atom: 0, n: 6, l: 2, m: 1, zeff: 7.50, c: 0.50 },
           { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.35 },
@@ -5228,6 +6013,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O lone pairs',
         type: 'nonbonding',
         electrons: 4,
+      energy: 4, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.707 },
           { atom: 2, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.707 },
@@ -5240,11 +6026,13 @@ const MOLECULAR_ORBITALS = {
   // Bent O=Pu=O. Pu 5f/6d bonding.
   // Atoms: Pu(0,0,0) O₁(1,0.5,0) O₂(-1,0.5,0)
   'PuO₂': {
+    notes: 'Plutonium dioxide — used in MOX nuclear fuel and RTG power sources for space missions.',
     orbitals: [
       {
         name: 'σ₁ (Pu 5f/6d–O₁ 2p)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding from d/f/p overlap between Pu and O. Head-on d-p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 6, l: 2, m: 0, zeff: 8.20, c: 0.30 },
           { atom: 0, n: 5, l: 3, m: 0, zeff: 9.50, c: 0.30 },
@@ -5255,6 +6043,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ₂ (Pu 5f/6d–O₂ 2p)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding from d/f/p overlap between Pu and O. Head-on d-p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 6, l: 2, m: 0, zeff: 8.20, c: -0.30 },
           { atom: 0, n: 5, l: 3, m: 0, zeff: 9.50, c: -0.30 },
@@ -5265,6 +6054,7 @@ const MOLECULAR_ORBITALS = {
         name: 'π (Pu 5fπ–O 2p)',
         type: 'bonding',
         electrons: 4,
+      energy: 3, desc: 'π bonding — lateral f/p overlap between Pu and O. Electron density above and below the bond axis.',
         ao: [
           { atom: 0, n: 5, l: 3, m: 1, zeff: 9.50, c: 0.50 },
           { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.35 },
@@ -5275,6 +6065,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Pu 5f nonbonding',
         type: 'nonbonding',
         electrons: 4,
+      energy: 4, desc: 'Localized f-electrons on Pu — shielded from bonding by outer shells.',
         ao: [
           { atom: 0, n: 5, l: 3, m: 2, zeff: 9.50, c: 0.50 },
           { atom: 0, n: 5, l: 3, m: -2, zeff: 9.50, c: 0.50 },
@@ -5286,6 +6077,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O lone pairs',
         type: 'nonbonding',
         electrons: 4,
+      energy: 5, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.707 },
           { atom: 2, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.707 },
@@ -5298,11 +6090,13 @@ const MOLECULAR_ORBITALS = {
   // Linear Cu-O-Cu. Cu 4s/3d bonding with O 2p.
   // Atoms: Cu₁(-1,0.5,0) O(0,0,0) Cu₂(1,0.5,0)
   'Cu₂O': {
+    notes: 'Cuprous oxide — the first known semiconductor (1874). Cu 3d — O 2p hybridization creates a 2.1 eV bandgap.',
     orbitals: [
       {
         name: 'σg (Cu 4s–O 2p)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding from s/p overlap between Cu and O. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 4, l: 0, m: 0, zeff: 3.70, c: 0.45 },
           { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.45 },
@@ -5313,6 +6107,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σu (Cu 4s–O 2p)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding from s/p overlap between Cu and O. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 4, l: 0, m: 0, zeff: 3.70, c: 0.50 },
           { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.50 },
@@ -5323,6 +6118,8 @@ const MOLECULAR_ORBITALS = {
         name: 'O 2p lone pairs',
         type: 'nonbonding',
         electrons: 4,
+      energy: 3, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
+      energy: 3, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.707 },
           { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.707 },
@@ -5332,6 +6129,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Cu₁ 3d',
         type: 'nonbonding',
         electrons: 2,
+      energy: 4, desc: 'Non-bonding d-electrons on Cu contributing to magnetic and spectroscopic properties.',
         ao: [
           { atom: 0, n: 3, l: 2, m: 0, zeff: 7.85, c: 1.0 },
         ],
@@ -5340,6 +6138,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Cu₂ 3d',
         type: 'nonbonding',
         electrons: 2,
+      energy: 5, desc: 'Non-bonding d-electrons on Cu contributing to magnetic and spectroscopic properties.',
         ao: [
           { atom: 2, n: 3, l: 2, m: 0, zeff: 7.85, c: 1.0 },
         ],
@@ -5351,11 +6150,13 @@ const MOLECULAR_ORBITALS = {
   // Linear Ag-O-Ag. Ag 5s bonding with O 2p.
   // Atoms: Ag₁(-1.1,0.5,0) O(0,0,0) Ag₂(1.1,0.5,0)
   'Ag₂O': {
+    notes: 'Silver oxide — used in button batteries. The Ag 4d contribution is deeper than Cu₂O.',
     orbitals: [
       {
         name: 'σg (Ag 5s–O 2p)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding from s/p overlap between Ag and O. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 5, l: 0, m: 0, zeff: 4.25, c: 0.45 },
           { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.45 },
@@ -5366,6 +6167,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σu (Ag 5s–O 2p)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding from s/p overlap between Ag and O. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 5, l: 0, m: 0, zeff: 4.25, c: 0.50 },
           { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.50 },
@@ -5376,6 +6178,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O 2p lone pairs',
         type: 'nonbonding',
         electrons: 4,
+      energy: 3, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.707 },
           { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.707 },
@@ -5388,11 +6191,13 @@ const MOLECULAR_ORBITALS = {
   // Trigonal planar Fe-Cl₃. Fe 3d/4s–Cl 3p.
   // Atoms: Fe(0,0,0) Cl₁(1.4,0.8,0) Cl₂(-1.4,0.8,0) Cl₃(0,-1.2,0)
   'FeCl₃': {
+    notes: 'Iron(III) chloride — a Lewis acid and PCB etchant. Fe 3d orbitals are central to its chemistry.',
     orbitals: [
       {
         name: 'σ₁ (Fe–Cl₁)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding from s/d/p overlap between Fe and Cl. Head-on d-p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 4, l: 0, m: 0, zeff: 3.75, c: 0.35 },
           { atom: 0, n: 3, l: 2, m: 0, zeff: 6.25, c: 0.30 },
@@ -5403,6 +6208,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ₂ (Fe–Cl₂)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding from s/d/p overlap between Fe and Cl. Head-on d-p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 4, l: 0, m: 0, zeff: 3.75, c: 0.35 },
           { atom: 0, n: 3, l: 2, m: 0, zeff: 6.25, c: -0.30 },
@@ -5413,6 +6219,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ₃ (Fe–Cl₃)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'σ bonding from s/d/p overlap between Fe and Cl. Head-on d-p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 4, l: 0, m: 0, zeff: 3.75, c: 0.35 },
           { atom: 0, n: 3, l: 2, m: 1, zeff: 6.25, c: 0.30 },
@@ -5423,6 +6230,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Fe 3d nonbonding',
         type: 'nonbonding',
         electrons: 3,
+      energy: 4, desc: 'Non-bonding d-electrons on Fe contributing to magnetic and spectroscopic properties.',
         ao: [
           { atom: 0, n: 3, l: 2, m: 2, zeff: 6.25, c: 0.577 },
           { atom: 0, n: 3, l: 2, m: -1, zeff: 6.25, c: 0.577 },
@@ -5433,6 +6241,9 @@ const MOLECULAR_ORBITALS = {
         name: 'Cl lone pairs',
         type: 'nonbonding',
         electrons: 12,
+      energy: 5, desc: 'Lone pair localized on Cl. Non-bonding electrons that can act as a Lewis base.',
+      energy: 4, desc: 'Lone pair localized on Cl. Non-bonding electrons that can act as a Lewis base.',
+      energy: 5, desc: 'Lone pair localized on Cl. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 1, n: 3, l: 1, m: 0, zeff: 6.12, c: 0.408 },
           { atom: 1, n: 3, l: 1, m: -1, zeff: 6.12, c: 0.408 },
@@ -5449,11 +6260,13 @@ const MOLECULAR_ORBITALS = {
   // Trigonal planar. Ga 4s/4p–Cl 3p sp² bonding.
   // Atoms: Ga(0,0,0) Cl₁(1.2,0,0) Cl₂(-0.6,1.04,0) Cl₃(-0.6,-1.04,0)
   'GaCl₃': {
+    notes: 'Gallium trichloride — a strong Lewis acid. The empty Ga 4p orbital accepts electron pairs.',
     orbitals: [
       {
         name: 'σ₁ (Ga sp²–Cl₁ 3p)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding from s/p overlap between Ga and Cl. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 4, l: 0, m: 0, zeff: 5.00, c: 0.33 },
           { atom: 0, n: 4, l: 1, m: 1, zeff: 5.00, c: 0.47 },
@@ -5464,6 +6277,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ₂ (Ga sp²–Cl₂ 3p)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding from s/p overlap between Ga and Cl. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 4, l: 0, m: 0, zeff: 5.00, c: 0.33 },
           { atom: 0, n: 4, l: 1, m: -1, zeff: 5.00, c: 0.47 },
@@ -5474,6 +6288,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ₃ (Ga sp²–Cl₃ 3p)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'σ bonding from s/p overlap between Ga and Cl. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 4, l: 0, m: 0, zeff: 5.00, c: 0.33 },
           { atom: 0, n: 4, l: 1, m: -1, zeff: 5.00, c: -0.47 },
@@ -5484,6 +6299,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Cl lone pairs',
         type: 'nonbonding',
         electrons: 12,
+      energy: 4, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 1, n: 3, l: 1, m: 0, zeff: 6.12, c: 0.408 },
           { atom: 1, n: 3, l: 1, m: -1, zeff: 6.12, c: 0.408 },
@@ -5500,11 +6316,13 @@ const MOLECULAR_ORBITALS = {
   // Trigonal planar. Rh 4d/5s–Cl 3p bonding.
   // Atoms: Rh(0,0,0) Cl₁(1.3,0,0) Cl₂(-0.65,1.13,0) Cl₃(-0.65,-1.13,0)
   'RhCl₃': {
+    notes: 'Rhodium trichloride — precursor to Wilkinson\'s catalyst. Rh 4d orbital splitting enables catalytic selectivity.',
     orbitals: [
       {
         name: 'σ₁ (Rh–Cl₁)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding from s/d/p overlap between Rh and Cl. Head-on d-p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 5, l: 0, m: 0, zeff: 4.10, c: 0.35 },
           { atom: 0, n: 4, l: 2, m: 0, zeff: 8.50, c: 0.30 },
@@ -5515,6 +6333,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ₂ (Rh–Cl₂)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding from s/d/p overlap between Rh and Cl. Head-on d-p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 5, l: 0, m: 0, zeff: 4.10, c: 0.35 },
           { atom: 0, n: 4, l: 2, m: 1, zeff: 8.50, c: 0.30 },
@@ -5525,6 +6344,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ₃ (Rh–Cl₃)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'σ bonding from s/d/p overlap between Rh and Cl. Head-on d-p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 5, l: 0, m: 0, zeff: 4.10, c: 0.35 },
           { atom: 0, n: 4, l: 2, m: -1, zeff: 8.50, c: 0.30 },
@@ -5535,6 +6355,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Rh 4d nonbonding',
         type: 'nonbonding',
         electrons: 4,
+      energy: 4, desc: 'Non-bonding d-electrons on Rh contributing to magnetic and spectroscopic properties.',
         ao: [
           { atom: 0, n: 4, l: 2, m: 2, zeff: 8.50, c: 0.707 },
           { atom: 0, n: 4, l: 2, m: -2, zeff: 8.50, c: 0.707 },
@@ -5544,6 +6365,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Cl lone pairs',
         type: 'nonbonding',
         electrons: 12,
+      energy: 5, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 1, n: 3, l: 1, m: 0, zeff: 6.12, c: 0.408 },
           { atom: 1, n: 3, l: 1, m: -1, zeff: 6.12, c: 0.408 },
@@ -5560,11 +6382,13 @@ const MOLECULAR_ORBITALS = {
   // Trigonal planar. Mo 4d/5s double bonds to 3 O.
   // Atoms: Mo(0,0,0) O₁(1.2,0,0) O₂(-0.6,1.04,0) O₃(-0.6,-1.04,0)
   'MoO₃': {
+    notes: 'Molybdenum trioxide — a layered oxide used in catalysis. Mo 4d states near the Fermi level.',
     orbitals: [
       {
         name: 'σ₁ (Mo–O₁)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding from d/s/p overlap between Mo and O. Head-on d-p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 4, l: 2, m: 0, zeff: 7.40, c: 0.45 },
           { atom: 0, n: 5, l: 0, m: 0, zeff: 3.60, c: 0.25 },
@@ -5575,6 +6399,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ₂ (Mo–O₂)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding from d/s/p overlap between Mo and O. Head-on d-p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 4, l: 2, m: 1, zeff: 7.40, c: 0.45 },
           { atom: 0, n: 5, l: 0, m: 0, zeff: 3.60, c: 0.25 },
@@ -5585,6 +6410,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ₃ (Mo–O₃)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'σ bonding from d/s/p overlap between Mo and O. Head-on d-p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 4, l: 2, m: -1, zeff: 7.40, c: 0.45 },
           { atom: 0, n: 5, l: 0, m: 0, zeff: 3.60, c: 0.25 },
@@ -5595,6 +6421,7 @@ const MOLECULAR_ORBITALS = {
         name: 'π (Mo 4dπ–O 2p)',
         type: 'bonding',
         electrons: 6,
+      energy: 4, desc: 'π bonding from d-p lateral overlap between Mo and O. Electron density above and below the bond axis.',
         ao: [
           { atom: 0, n: 4, l: 2, m: 2, zeff: 7.40, c: 0.33 },
           { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.33 },
@@ -5606,6 +6433,30 @@ const MOLECULAR_ORBITALS = {
         name: 'O lone pairs',
         type: 'nonbonding',
         electrons: 6,
+      energy: 4, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
+      energy: 3, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
+      energy: 3, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
+      energy: 4, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
+      energy: 4, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
+      energy: 4, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
+      energy: 4, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
+      energy: 4, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
+      energy: 4, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
+      energy: 4, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
+      energy: 4, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
+      energy: 4, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
+      energy: 4, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
+      energy: 4, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
+      energy: 6, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
+      energy: 6, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
+      energy: 6, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
+      energy: 5, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
+      energy: 6, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
+      energy: 6, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
+      energy: 6, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
+      energy: 5, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
+      energy: 5, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
+      energy: 5, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.577 },
           { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.577 },
@@ -5619,11 +6470,13 @@ const MOLECULAR_ORBITALS = {
   // Trigonal planar. W 5d/6s double bonds to 3 O.
   // Atoms: W(0,0,0) O₁(1.2,0,0) O₂(-0.6,1.04,0) O₃(-0.6,-1.04,0)
   'WO₃': {
+    notes: 'Tungsten trioxide — electrochromic material for smart windows. W 5d electron density tunes the color.',
     orbitals: [
       {
         name: 'σ₁ (W–O₁)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding from d/s/p overlap between W and O. Head-on d-p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 5, l: 2, m: 0, zeff: 8.50, c: 0.45 },
           { atom: 0, n: 6, l: 0, m: 0, zeff: 4.35, c: 0.25 },
@@ -5634,6 +6487,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ₂ (W–O₂)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding from d/s/p overlap between W and O. Head-on d-p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 5, l: 2, m: 1, zeff: 8.50, c: 0.45 },
           { atom: 0, n: 6, l: 0, m: 0, zeff: 4.35, c: 0.25 },
@@ -5644,6 +6498,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ₃ (W–O₃)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'σ bonding from d/s/p overlap between W and O. Head-on d-p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 5, l: 2, m: -1, zeff: 8.50, c: 0.45 },
           { atom: 0, n: 6, l: 0, m: 0, zeff: 4.35, c: 0.25 },
@@ -5654,6 +6509,7 @@ const MOLECULAR_ORBITALS = {
         name: 'π (W 5dπ–O 2p)',
         type: 'bonding',
         electrons: 6,
+      energy: 4, desc: 'π bonding from d-p lateral overlap between W and O. Electron density above and below the bond axis.',
         ao: [
           { atom: 0, n: 5, l: 2, m: 2, zeff: 8.50, c: 0.33 },
           { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.33 },
@@ -5665,6 +6521,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O lone pairs',
         type: 'nonbonding',
         electrons: 6,
+      energy: 5, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.577 },
           { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.577 },
@@ -5678,11 +6535,13 @@ const MOLECULAR_ORBITALS = {
   // Linear Cl-Hg-Hg-Cl. Hg-Hg bond along x-axis.
   // Atoms: Cl₁(-2,0,0) Hg₁(-0.7,0,0) Hg₂(0.7,0,0) Cl₂(2,0,0)
   'Hg₂Cl₂': {
+    notes: 'Calomel — historic reference electrode. Contains the unusual [Hg-Hg]²⁺ metal-metal bond.',
     orbitals: [
       {
         name: 'σ (Hg-Hg)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding between Hg — head-on s overlap along the bond axis.',
         ao: [
           { atom: 1, n: 6, l: 0, m: 0, zeff: 4.35, c: 0.707 },
           { atom: 2, n: 6, l: 0, m: 0, zeff: 4.35, c: 0.707 },
@@ -5692,6 +6551,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ₁ (Hg₁–Cl₁)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding from s/p overlap between Hg and Cl. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 1, n: 6, l: 0, m: 0, zeff: 4.35, c: 0.50 },
           { atom: 0, n: 3, l: 1, m: 1, zeff: 6.12, c: 0.60 },
@@ -5701,6 +6561,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ₂ (Hg₂–Cl₂)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'σ bonding from s/p overlap between Hg and Cl. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 2, n: 6, l: 0, m: 0, zeff: 4.35, c: 0.50 },
           { atom: 3, n: 3, l: 1, m: 1, zeff: 6.12, c: -0.60 },
@@ -5710,6 +6571,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Cl₁ lone pairs',
         type: 'nonbonding',
         electrons: 4,
+      energy: 4, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 0, n: 3, l: 1, m: 0, zeff: 6.12, c: 0.707 },
           { atom: 0, n: 3, l: 1, m: -1, zeff: 6.12, c: 0.707 },
@@ -5719,6 +6581,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Cl₂ lone pairs',
         type: 'nonbonding',
         electrons: 4,
+      energy: 5, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 3, n: 3, l: 1, m: 0, zeff: 6.12, c: 0.707 },
           { atom: 3, n: 3, l: 1, m: -1, zeff: 6.12, c: 0.707 },
@@ -5731,11 +6594,13 @@ const MOLECULAR_ORBITALS = {
   // Tetrahedral. Ti 3d/4s sp³ bonding with 4 Cl.
   // Atoms: Ti(0,0,0) Cl₁(1.1,1.1,0.5) Cl₂(-1.1,-1.1,0.5) Cl₃(-1.1,1.1,-0.5) Cl₄(1.1,-1.1,-0.5)
   'TiCl₄': {
+    notes: 'Titanium tetrachloride — precursor for TiO₂ pigment and Ziegler-Natta polymerization catalysts.',
     orbitals: [
       {
         name: 'σ₁ (Ti–Cl₁)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding from s/d/p overlap between Ti and Cl. Head-on d-p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 4, l: 0, m: 0, zeff: 3.15, c: 0.35 },
           { atom: 0, n: 3, l: 2, m: 0, zeff: 4.80, c: 0.30 },
@@ -5746,6 +6611,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ₂ (Ti–Cl₂)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding from s/d/p overlap between Ti and Cl. Head-on d-p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 4, l: 0, m: 0, zeff: 3.15, c: 0.35 },
           { atom: 0, n: 3, l: 2, m: 0, zeff: 4.80, c: -0.30 },
@@ -5756,6 +6622,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ₃ (Ti–Cl₃)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'σ bonding from s/d/p overlap between Ti and Cl. Head-on d-p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 4, l: 0, m: 0, zeff: 3.15, c: 0.35 },
           { atom: 0, n: 3, l: 2, m: 1, zeff: 4.80, c: 0.30 },
@@ -5766,6 +6633,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ₄ (Ti–Cl₄)',
         type: 'bonding',
         electrons: 2,
+      energy: 4, desc: 'σ bonding from s/d/p overlap between Ti and Cl. Head-on d-p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 4, l: 0, m: 0, zeff: 3.15, c: 0.35 },
           { atom: 0, n: 3, l: 2, m: -1, zeff: 4.80, c: 0.30 },
@@ -5776,6 +6644,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Cl lone pairs',
         type: 'nonbonding',
         electrons: 16,
+      energy: 5, desc: 'Lone pair localized on Cl. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 1, n: 3, l: 1, m: 0, zeff: 6.12, c: 0.354 },
           { atom: 1, n: 3, l: 1, m: -1, zeff: 6.12, c: 0.354 },
@@ -5794,11 +6663,13 @@ const MOLECULAR_ORBITALS = {
   // Tetrahedral. Os 5d/6s bonds to 4 O (double bonds).
   // Atoms: Os(0,0,0) O₁(0.9,0.52,0.52) O₂(-0.9,-0.52,0.52) O₃(0.52,-0.9,-0.52) O₄(-0.52,0.9,-0.52)
   'OsO₄': {
+    notes: 'Osmium tetroxide — a powerful oxidizer for cis-dihydroxylation. Tetrahedral with Os 5d participation.',
     orbitals: [
       {
         name: 'σ₁ (Os–O₁)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding from d/s/p overlap between Os and O. Head-on d-p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 5, l: 2, m: 0, zeff: 9.60, c: 0.40 },
           { atom: 0, n: 6, l: 0, m: 0, zeff: 4.00, c: 0.25 },
@@ -5809,6 +6680,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ₂ (Os–O₂)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding from d/s/p overlap between Os and O. Head-on d-p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 5, l: 2, m: 0, zeff: 9.60, c: -0.40 },
           { atom: 0, n: 6, l: 0, m: 0, zeff: 4.00, c: 0.25 },
@@ -5819,6 +6691,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ₃ (Os–O₃)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'σ bonding from d/s/p overlap between Os and O. Head-on d-p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 5, l: 2, m: 1, zeff: 9.60, c: 0.40 },
           { atom: 0, n: 6, l: 0, m: 0, zeff: 4.00, c: 0.25 },
@@ -5829,6 +6702,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ₄ (Os–O₄)',
         type: 'bonding',
         electrons: 2,
+      energy: 4, desc: 'σ bonding from d/s/p overlap between Os and O. Head-on d-p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 5, l: 2, m: -1, zeff: 9.60, c: 0.40 },
           { atom: 0, n: 6, l: 0, m: 0, zeff: 4.00, c: 0.25 },
@@ -5839,6 +6713,7 @@ const MOLECULAR_ORBITALS = {
         name: 'π (Os 5d–O 2p)',
         type: 'bonding',
         electrons: 8,
+      energy: 5, desc: 'π bonding from d-p lateral overlap between Os and O. Electron density above and below the bond axis.',
         ao: [
           { atom: 0, n: 5, l: 2, m: 2, zeff: 9.60, c: 0.25 },
           { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.25 },
@@ -5854,11 +6729,13 @@ const MOLECULAR_ORBITALS = {
   // Tetrahedral. Ru 4d/5s bonds to 4 O. Analogous to OsO₄.
   // Atoms: Ru(0,0,0) O₁(0.9,0.52,0.52) O₂(-0.9,-0.52,0.52) O₃(0.52,-0.9,-0.52) O₄(-0.52,0.9,-0.52)
   'RuO₄': {
+    notes: 'Ruthenium tetroxide — volatile and toxic. Isovalent with OsO₄ but less thermally stable.',
     orbitals: [
       {
         name: 'σ₁ (Ru–O₁)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding from d/s/p overlap between Ru and O. Head-on d-p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 4, l: 2, m: 0, zeff: 7.55, c: 0.40 },
           { atom: 0, n: 5, l: 0, m: 0, zeff: 3.70, c: 0.25 },
@@ -5869,6 +6746,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ₂ (Ru–O₂)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding from d/s/p overlap between Ru and O. Head-on d-p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 4, l: 2, m: 0, zeff: 7.55, c: -0.40 },
           { atom: 0, n: 5, l: 0, m: 0, zeff: 3.70, c: 0.25 },
@@ -5879,6 +6757,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ₃ (Ru–O₃)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'σ bonding from d/s/p overlap between Ru and O. Head-on d-p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 4, l: 2, m: 1, zeff: 7.55, c: 0.40 },
           { atom: 0, n: 5, l: 0, m: 0, zeff: 3.70, c: 0.25 },
@@ -5889,6 +6768,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ₄ (Ru–O₄)',
         type: 'bonding',
         electrons: 2,
+      energy: 4, desc: 'σ bonding from d/s/p overlap between Ru and O. Head-on d-p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 4, l: 2, m: -1, zeff: 7.55, c: 0.40 },
           { atom: 0, n: 5, l: 0, m: 0, zeff: 3.70, c: 0.25 },
@@ -5899,6 +6779,7 @@ const MOLECULAR_ORBITALS = {
         name: 'π (Ru 4d–O 2p)',
         type: 'bonding',
         electrons: 8,
+      energy: 5, desc: 'π bonding from d-p lateral overlap between Ru and O. Electron density above and below the bond axis.',
         ao: [
           { atom: 0, n: 4, l: 2, m: 2, zeff: 7.55, c: 0.25 },
           { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.25 },
@@ -5914,11 +6795,13 @@ const MOLECULAR_ORBITALS = {
   // Ca bonded to 2 OH groups. Ca 4s ionic/covalent with O 2p.
   // Atoms: Ca(0,0,0) O₁(-1,0.8,0) O₂(1,0.8,0) H₁(-1.5,1.3,0) H₂(1.5,1.3,0)
   'Ca(OH)₂': {
+    notes: 'Slaked lime — pH buffer and mortar ingredient. The Ca-O bond is predominantly ionic.',
     orbitals: [
       {
         name: 'σ₁ (Ca 4s–O₁ 2p)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding from s/p overlap between Ca and O. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 4, l: 0, m: 0, zeff: 2.85, c: 0.40 },
           { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.65 },
@@ -5928,6 +6811,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ₂ (Ca 4s–O₂ 2p)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding from s/p overlap between Ca and O. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 4, l: 0, m: 0, zeff: 2.85, c: 0.40 },
           { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.65 },
@@ -5937,6 +6821,8 @@ const MOLECULAR_ORBITALS = {
         name: 'σ (O₁–H₁)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'σ bonding from p/s overlap between O and H. Head-on overlap concentrates electron density along the bond axis.',
+      energy: 3, desc: 'σ bonding from p/s overlap between O and H. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
           { atom: 3, n: 1, l: 0, m: 0, zeff: 1.24, c: 0.55 },
@@ -5946,6 +6832,8 @@ const MOLECULAR_ORBITALS = {
         name: 'σ (O₂–H₂)',
         type: 'bonding',
         electrons: 2,
+      energy: 4, desc: 'σ bonding from p/s overlap between O and H. Head-on overlap concentrates electron density along the bond axis.',
+      energy: 4, desc: 'σ bonding from p/s overlap between O and H. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
           { atom: 4, n: 1, l: 0, m: 0, zeff: 1.24, c: 0.55 },
@@ -5955,6 +6843,9 @@ const MOLECULAR_ORBITALS = {
         name: 'O₁ lone pairs',
         type: 'nonbonding',
         electrons: 4,
+      energy: 3, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
+      energy: 5, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
+      energy: 5, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.707 },
           { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.707 },
@@ -5964,6 +6855,9 @@ const MOLECULAR_ORBITALS = {
         name: 'O₂ lone pairs',
         type: 'nonbonding',
         electrons: 4,
+      energy: 4, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
+      energy: 6, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
+      energy: 6, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.707 },
           { atom: 2, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.707 },
@@ -5976,11 +6870,13 @@ const MOLECULAR_ORBITALS = {
   // Mg bonded to 2 OH groups. Mg 3s–O 2p bonding.
   // Atoms: Mg(0,0,0) O₁(-1,0.7,0) O₂(1,0.7,0) H₁(-1.5,1.2,0) H₂(1.5,1.2,0)
   'Mg(OH)₂': {
+    notes: 'Milk of magnesia — antacid. Layered brucite structure with Mg-O ionic bonds.',
     orbitals: [
       {
         name: 'σ₁ (Mg 3s–O₁ 2p)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding from s/p overlap between Mg and O. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 3, l: 0, m: 0, zeff: 2.85, c: 0.40 },
           { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.65 },
@@ -5990,6 +6886,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ₂ (Mg 3s–O₂ 2p)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding from s/p overlap between Mg and O. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 3, l: 0, m: 0, zeff: 2.85, c: 0.40 },
           { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.65 },
@@ -5999,6 +6896,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ (O₁–H₁)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'σ bonding — head-on p/s overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
           { atom: 3, n: 1, l: 0, m: 0, zeff: 1.24, c: 0.55 },
@@ -6008,6 +6906,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ (O₂–H₂)',
         type: 'bonding',
         electrons: 2,
+      energy: 4, desc: 'σ bonding — head-on p/s overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
           { atom: 4, n: 1, l: 0, m: 0, zeff: 1.24, c: 0.55 },
@@ -6017,6 +6916,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O₁ lone pairs',
         type: 'nonbonding',
         electrons: 4,
+      energy: 5, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.707 },
           { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.707 },
@@ -6026,6 +6926,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O₂ lone pairs',
         type: 'nonbonding',
         electrons: 4,
+      energy: 6, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.707 },
           { atom: 2, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.707 },
@@ -6038,11 +6939,13 @@ const MOLECULAR_ORBITALS = {
   // Trigonal bipyramidal. P sp³d hybridization.
   // Atoms: P(0,0,0) Cl₁(1.3,0,0) Cl₂(-0.65,1.13,0) Cl₃(-0.65,-1.13,0) Cl₄(0,0,1.3) Cl₅(0,0,-1.3)
   'PCl₅': {
+    notes: 'Phosphorus pentachloride — trigonal bipyramidal. Axial and equatorial bonds have different lengths.',
     orbitals: [
       {
         name: 'σ₁ᵉᑫ (P sp²–Cl₁)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding from s/p overlap between P and Cl. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 3, l: 0, m: 0, zeff: 4.80, c: 0.30 },
           { atom: 0, n: 3, l: 1, m: 1, zeff: 4.80, c: 0.40 },
@@ -6053,6 +6956,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ₂ᵉᑫ (P sp²–Cl₂)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding from s/p overlap between P and Cl. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 3, l: 0, m: 0, zeff: 4.80, c: 0.30 },
           { atom: 0, n: 3, l: 1, m: -1, zeff: 4.80, c: 0.40 },
@@ -6063,6 +6967,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ₃ᵉᑫ (P sp²–Cl₃)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'σ bonding from s/p overlap between P and Cl. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 3, l: 0, m: 0, zeff: 4.80, c: 0.30 },
           { atom: 0, n: 3, l: 1, m: -1, zeff: 4.80, c: -0.40 },
@@ -6073,6 +6978,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ₄ᵃˣ (P 3d–Cl₄)',
         type: 'bonding',
         electrons: 2,
+      energy: 4, desc: 'σ bonding from d/p overlap between P and Cl. Head-on d-p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 3, l: 2, m: 0, zeff: 4.80, c: 0.45 },
           { atom: 0, n: 3, l: 1, m: 0, zeff: 4.80, c: 0.30 },
@@ -6083,6 +6989,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ₅ᵃˣ (P 3d–Cl₅)',
         type: 'bonding',
         electrons: 2,
+      energy: 5, desc: 'σ bonding from d/p overlap between P and Cl. Head-on d-p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 3, l: 2, m: 0, zeff: 4.80, c: 0.45 },
           { atom: 0, n: 3, l: 1, m: 0, zeff: 4.80, c: -0.30 },
@@ -6093,6 +7000,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Cl lone pairs',
         type: 'nonbonding',
         electrons: 20,
+      energy: 6, desc: 'Lone pair localized on Cl. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 1, n: 3, l: 1, m: 0, zeff: 6.12, c: 0.316 },
           { atom: 1, n: 3, l: 1, m: -1, zeff: 6.12, c: 0.316 },
@@ -6113,11 +7021,13 @@ const MOLECULAR_ORBITALS = {
   // Two Sc bridged by O atoms. Sc 3d/4s–O 2p bonding.
   // Atoms: Sc₁(-0.9,0.5,0) O₁(0,0,0) Sc₂(0.9,0.5,0) O₂(-0.9,-0.5,0) O₃(0.9,-0.5,0)
   'Sc₂O₃': {
+    notes: 'Scandia — used in solid oxide fuel cells. Sc 3d participation in bonding is minimal (mostly ionic).',
     orbitals: [
       {
         name: 'σ (Sc₁–O₁)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding from s/d/p overlap between Sc and O. Head-on d-p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 4, l: 0, m: 0, zeff: 2.85, c: 0.40 },
           { atom: 0, n: 3, l: 2, m: 0, zeff: 4.35, c: 0.25 },
@@ -6128,6 +7038,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ (Sc₂–O₁)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding from s/d/p overlap between Sc and O. Head-on d-p overlap along the bond axis.',
         ao: [
           { atom: 2, n: 4, l: 0, m: 0, zeff: 2.85, c: 0.40 },
           { atom: 2, n: 3, l: 2, m: 0, zeff: 4.35, c: 0.25 },
@@ -6138,6 +7049,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ (Sc₁–O₂)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'σ bonding from s/p overlap between Sc and O. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 4, l: 0, m: 0, zeff: 2.85, c: 0.40 },
           { atom: 3, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.60 },
@@ -6147,6 +7059,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ (Sc₂–O₃)',
         type: 'bonding',
         electrons: 2,
+      energy: 4, desc: 'σ bonding from s/p overlap between Sc and O. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 2, n: 4, l: 0, m: 0, zeff: 2.85, c: 0.40 },
           { atom: 4, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.60 },
@@ -6156,6 +7069,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O lone pairs',
         type: 'nonbonding',
         electrons: 6,
+      energy: 5, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 },
           { atom: 3, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 },
@@ -6169,11 +7083,13 @@ const MOLECULAR_ORBITALS = {
   // Two Cr bridged by O. Cr 3d/4s–O 2p.
   // Atoms: Cr₁(-0.9,0.4,0) Cr₂(0.9,0.4,0) O₁(0,-0.4,0.3) O₂(-1.3,-0.5,-0.3) O₃(1.3,-0.5,-0.3)
   'Cr₂O₃': {
+    notes: 'Chromia — the green pigment. Cr 3d³ configuration creates strong crystal field effects.',
     orbitals: [
       {
         name: 'σ (Cr₁–O₁)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding from d/p overlap between Cr and O. Head-on d-p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 3, l: 2, m: 0, zeff: 5.20, c: 0.45 },
           { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.60 },
@@ -6183,6 +7099,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ (Cr₂–O₁)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding from d/p overlap between Cr and O. Head-on d-p overlap along the bond axis.',
         ao: [
           { atom: 1, n: 3, l: 2, m: 0, zeff: 5.20, c: 0.45 },
           { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: -0.60 },
@@ -6192,6 +7109,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ (Cr₁–O₂)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'σ bonding from s/p overlap between Cr and O. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 4, l: 0, m: 0, zeff: 3.30, c: 0.40 },
           { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
@@ -6201,6 +7119,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ (Cr₂–O₃)',
         type: 'bonding',
         electrons: 2,
+      energy: 4, desc: 'σ bonding from s/p overlap between Cr and O. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 1, n: 4, l: 0, m: 0, zeff: 3.30, c: 0.40 },
           { atom: 4, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
@@ -6210,6 +7129,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Cr 3d nonbonding',
         type: 'nonbonding',
         electrons: 6,
+      energy: 5, desc: 'Non-bonding d-electrons on Cr contributing to magnetic and spectroscopic properties.',
         ao: [
           { atom: 0, n: 3, l: 2, m: 2, zeff: 5.20, c: 0.50 },
           { atom: 0, n: 3, l: 2, m: -2, zeff: 5.20, c: 0.50 },
@@ -6221,6 +7141,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O lone pairs',
         type: 'nonbonding',
         electrons: 6,
+      energy: 6, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 2, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.577 },
           { atom: 3, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.577 },
@@ -6234,11 +7155,13 @@ const MOLECULAR_ORBITALS = {
   // Two As bridged by O atoms. As 4s/4p–O 2p.
   // Atoms: As₁(-0.8,0.5,0) As₂(0.8,0.5,0) O₁(0,0,0) O₂(-1.2,-0.4,0) O₃(1.2,-0.4,0)
   'As₂O₃': {
+    notes: 'Arsenious oxide — the "inheritance powder." Molecular As₄O₆ cages in vapor phase.',
     orbitals: [
       {
         name: 'σ (As₁–O₁)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding between As and O — head-on p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 4, l: 1, m: 1, zeff: 5.80, c: 0.50 },
           { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.55 },
@@ -6248,6 +7171,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ (As₂–O₁)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding between As and O — head-on p overlap along the bond axis.',
         ao: [
           { atom: 1, n: 4, l: 1, m: 1, zeff: 5.80, c: 0.50 },
           { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: -0.55 },
@@ -6257,6 +7181,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ (As₁–O₂)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'σ bonding from s/p overlap between As and O. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 4, l: 0, m: 0, zeff: 5.80, c: 0.45 },
           { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.55 },
@@ -6266,6 +7191,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ (As₂–O₃)',
         type: 'bonding',
         electrons: 2,
+      energy: 4, desc: 'σ bonding from s/p overlap between As and O. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 1, n: 4, l: 0, m: 0, zeff: 5.80, c: 0.45 },
           { atom: 4, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.55 },
@@ -6275,6 +7201,7 @@ const MOLECULAR_ORBITALS = {
         name: 'As lone pairs',
         type: 'nonbonding',
         electrons: 4,
+      energy: 5, desc: 'Lone pair localized on As. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 0, n: 4, l: 0, m: 0, zeff: 5.80, c: 0.707 },
           { atom: 1, n: 4, l: 0, m: 0, zeff: 5.80, c: 0.707 },
@@ -6284,6 +7211,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O lone pairs',
         type: 'nonbonding',
         electrons: 6,
+      energy: 6, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 },
           { atom: 3, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.577 },
@@ -6297,11 +7225,13 @@ const MOLECULAR_ORBITALS = {
   // Analogous to As₂O₃ — Sb 5s/5p–O 2p.
   // Atoms: Sb₁(-0.8,0.5,0) Sb₂(0.8,0.5,0) O₁(0,0,0) O₂(-1.2,-0.4,0) O₃(1.2,-0.4,0)
   'Sb₂O₃': {
+    notes: 'Antimony trioxide — a flame retardant. Sb 5s lone pair influences crystal structure.',
     orbitals: [
       {
         name: 'σ (Sb₁–O₁)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding between Sb and O — head-on p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 5, l: 1, m: 1, zeff: 6.10, c: 0.50 },
           { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.55 },
@@ -6311,6 +7241,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ (Sb₂–O₁)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding between Sb and O — head-on p overlap along the bond axis.',
         ao: [
           { atom: 1, n: 5, l: 1, m: 1, zeff: 6.10, c: 0.50 },
           { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: -0.55 },
@@ -6320,6 +7251,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ (Sb₁–O₂)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'σ bonding from s/p overlap between Sb and O. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 5, l: 0, m: 0, zeff: 6.10, c: 0.45 },
           { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.55 },
@@ -6329,6 +7261,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ (Sb₂–O₃)',
         type: 'bonding',
         electrons: 2,
+      energy: 4, desc: 'σ bonding from s/p overlap between Sb and O. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 1, n: 5, l: 0, m: 0, zeff: 6.10, c: 0.45 },
           { atom: 4, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.55 },
@@ -6338,6 +7271,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Sb lone pairs',
         type: 'nonbonding',
         electrons: 4,
+      energy: 5, desc: 'Lone pair localized on Sb. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 0, n: 5, l: 0, m: 0, zeff: 6.10, c: 0.707 },
           { atom: 1, n: 5, l: 0, m: 0, zeff: 6.10, c: 0.707 },
@@ -6347,6 +7281,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O lone pairs',
         type: 'nonbonding',
         electrons: 6,
+      energy: 6, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 },
           { atom: 3, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.577 },
@@ -6360,11 +7295,13 @@ const MOLECULAR_ORBITALS = {
   // Two La bridged by O. La 5d/6s–O 2p.
   // Atoms: La₁(-0.9,0.5,0) La₂(0.9,0.5,0) O₁(0,0,0) O₂(-1.2,-0.4,0) O₃(1.2,-0.4,0)
   'La₂O₃': {
+    notes: 'Lanthanum oxide — strong base, reacts exothermically with water and CO₂. La 5d contributes to La-O bonds.',
     orbitals: [
       {
         name: 'σ (La₁–O₁)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding from d/s/p overlap between La and O. Head-on d-p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 5, l: 2, m: 0, zeff: 7.40, c: 0.35 },
           { atom: 0, n: 6, l: 0, m: 0, zeff: 3.60, c: 0.30 },
@@ -6375,6 +7312,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ (La₂–O₁)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding from d/s/p overlap between La and O. Head-on d-p overlap along the bond axis.',
         ao: [
           { atom: 1, n: 5, l: 2, m: 0, zeff: 7.40, c: 0.35 },
           { atom: 1, n: 6, l: 0, m: 0, zeff: 3.60, c: 0.30 },
@@ -6385,6 +7323,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ (La₁–O₂)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'σ bonding from s/p overlap between La and O. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 6, l: 0, m: 0, zeff: 3.60, c: 0.40 },
           { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
@@ -6394,6 +7333,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ (La₂–O₃)',
         type: 'bonding',
         electrons: 2,
+      energy: 4, desc: 'σ bonding from s/p overlap between La and O. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 1, n: 6, l: 0, m: 0, zeff: 3.60, c: 0.40 },
           { atom: 4, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
@@ -6403,6 +7343,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O lone pairs',
         type: 'nonbonding',
         electrons: 6,
+      energy: 5, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 },
           { atom: 3, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.577 },
@@ -6416,11 +7357,13 @@ const MOLECULAR_ORBITALS = {
   // Two V, bridging O, plus terminal O=V. 7 atoms.
   // Atoms: V₁(-0.8,0,0) V₂(0.8,0,0) O_br(0,0.6,0) O₁(-1.4,0.7,0) O₂(1.4,0.7,0) O₃(-1.4,-0.7,0) O₄(1.4,-0.7,0)
   'V₂O₅': {
+    notes: 'Vanadium pentoxide — catalyst for the contact process (H₂SO₄). Layered structure with mixed V-O bonding.',
     orbitals: [
       {
         name: 'σ (V₁–O_br)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding from d/p overlap between V and O. Head-on d-p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 3, l: 2, m: 0, zeff: 5.20, c: 0.45 },
           { atom: 2, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.60 },
@@ -6430,6 +7373,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ (V₂–O_br)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding from d/p overlap between V and O. Head-on d-p overlap along the bond axis.',
         ao: [
           { atom: 1, n: 3, l: 2, m: 0, zeff: 5.20, c: 0.45 },
           { atom: 2, n: 2, l: 1, m: -1, zeff: 4.45, c: -0.60 },
@@ -6439,6 +7383,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ (V₁=O₁)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'σ bonding from s/p overlap between V and O. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 4, l: 0, m: 0, zeff: 3.30, c: 0.40 },
           { atom: 3, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.60 },
@@ -6448,6 +7393,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ (V₂=O₂)',
         type: 'bonding',
         electrons: 2,
+      energy: 4, desc: 'σ bonding from s/p overlap between V and O. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 1, n: 4, l: 0, m: 0, zeff: 3.30, c: 0.40 },
           { atom: 4, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.60 },
@@ -6457,6 +7403,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ (V₁–O₃)',
         type: 'bonding',
         electrons: 2,
+      energy: 5, desc: 'σ bonding from d/p overlap between V and O. Head-on d-p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 3, l: 2, m: 1, zeff: 5.20, c: 0.45 },
           { atom: 5, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.60 },
@@ -6466,6 +7413,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ (V₂–O₄)',
         type: 'bonding',
         electrons: 2,
+      energy: 6, desc: 'σ bonding from d/p overlap between V and O. Head-on d-p overlap along the bond axis.',
         ao: [
           { atom: 1, n: 3, l: 2, m: -1, zeff: 5.20, c: 0.45 },
           { atom: 6, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.60 },
@@ -6475,6 +7423,7 @@ const MOLECULAR_ORBITALS = {
         name: 'π (V=O terminal)',
         type: 'bonding',
         electrons: 4,
+      energy: 7, desc: 'π bonding from d-p lateral overlap between V and O. Electron density above and below the bond axis.',
         ao: [
           { atom: 0, n: 3, l: 2, m: -2, zeff: 5.20, c: 0.35 },
           { atom: 1, n: 3, l: 2, m: 2, zeff: 5.20, c: 0.35 },
@@ -6486,6 +7435,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O lone pairs',
         type: 'nonbonding',
         electrons: 10,
+      energy: 8, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.316 },
           { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.316 },
@@ -6501,11 +7451,13 @@ const MOLECULAR_ORBITALS = {
   // Two Nb bridged by O, plus terminal O.
   // Atoms: Nb₁(-0.7,0,0) Nb₂(0.7,0,0) O_br(0,0.6,0) O₁(-1.3,0.6,0) O₂(1.3,0.6,0)
   'Nb₂O₅': {
+    notes: 'Niobium pentoxide — used in optical coatings and lithium-ion battery anodes.',
     orbitals: [
       {
         name: 'σ (Nb₁–O_br)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding from d/p overlap between Nb and O. Head-on d-p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 4, l: 2, m: 0, zeff: 6.40, c: 0.45 },
           { atom: 2, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.60 },
@@ -6515,6 +7467,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ (Nb₂–O_br)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding from d/p overlap between Nb and O. Head-on d-p overlap along the bond axis.',
         ao: [
           { atom: 1, n: 4, l: 2, m: 0, zeff: 6.40, c: 0.45 },
           { atom: 2, n: 2, l: 1, m: -1, zeff: 4.45, c: -0.60 },
@@ -6524,6 +7477,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ (Nb₁=O₁)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'σ bonding from s/p overlap between Nb and O. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 5, l: 0, m: 0, zeff: 3.30, c: 0.40 },
           { atom: 3, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.60 },
@@ -6533,6 +7487,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ (Nb₂=O₂)',
         type: 'bonding',
         electrons: 2,
+      energy: 4, desc: 'σ bonding from s/p overlap between Nb and O. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 1, n: 5, l: 0, m: 0, zeff: 3.30, c: 0.40 },
           { atom: 4, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.60 },
@@ -6542,6 +7497,7 @@ const MOLECULAR_ORBITALS = {
         name: 'π (Nb=O terminal)',
         type: 'bonding',
         electrons: 4,
+      energy: 5, desc: 'π bonding from d-p lateral overlap between Nb and O. Electron density above and below the bond axis.',
         ao: [
           { atom: 0, n: 4, l: 2, m: 1, zeff: 6.40, c: 0.50 },
           { atom: 1, n: 4, l: 2, m: -1, zeff: 6.40, c: 0.50 },
@@ -6553,6 +7509,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O lone pairs',
         type: 'nonbonding',
         electrons: 6,
+      energy: 6, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 },
           { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.577 },
@@ -6566,11 +7523,13 @@ const MOLECULAR_ORBITALS = {
   // Analogous to Nb₂O₅. Ta 5d/6s–O 2p.
   // Atoms: Ta₁(-0.7,0,0) Ta₂(0.7,0,0) O_br(0,0.6,0) O₁(-1.3,0.6,0) O₂(1.3,0.6,0)
   'Ta₂O₅': {
+    notes: 'Tantalum pentoxide — high-κ dielectric used in capacitors. Very similar to Nb₂O₅.',
     orbitals: [
       {
         name: 'σ (Ta₁–O_br)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding from d/p overlap between Ta and O. Head-on d-p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 5, l: 2, m: 0, zeff: 8.80, c: 0.45 },
           { atom: 2, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.60 },
@@ -6580,6 +7539,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ (Ta₂–O_br)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding from d/p overlap between Ta and O. Head-on d-p overlap along the bond axis.',
         ao: [
           { atom: 1, n: 5, l: 2, m: 0, zeff: 8.80, c: 0.45 },
           { atom: 2, n: 2, l: 1, m: -1, zeff: 4.45, c: -0.60 },
@@ -6589,6 +7549,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ (Ta₁=O₁)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'σ bonding from s/p overlap between Ta and O. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 6, l: 0, m: 0, zeff: 4.15, c: 0.40 },
           { atom: 3, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.60 },
@@ -6598,6 +7559,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ (Ta₂=O₂)',
         type: 'bonding',
         electrons: 2,
+      energy: 4, desc: 'σ bonding from s/p overlap between Ta and O. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 1, n: 6, l: 0, m: 0, zeff: 4.15, c: 0.40 },
           { atom: 4, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.60 },
@@ -6607,6 +7569,7 @@ const MOLECULAR_ORBITALS = {
         name: 'π (Ta=O terminal)',
         type: 'bonding',
         electrons: 4,
+      energy: 5, desc: 'π bonding from d-p lateral overlap between Ta and O. Electron density above and below the bond axis.',
         ao: [
           { atom: 0, n: 5, l: 2, m: 1, zeff: 8.80, c: 0.50 },
           { atom: 1, n: 5, l: 2, m: -1, zeff: 8.80, c: 0.50 },
@@ -6618,6 +7581,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O lone pairs',
         type: 'nonbonding',
         electrons: 6,
+      energy: 6, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 },
           { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.577 },
@@ -6631,11 +7595,13 @@ const MOLECULAR_ORBITALS = {
   // Two Re bridged by O, plus terminal O.
   // Atoms: Re₁(-0.7,0,0) Re₂(0.7,0,0) O_br(0,0.5,0) O₁(-1.3,0.6,0) O₂(1.3,0.6,0)
   'Re₂O₇': {
+    notes: 'Rhenium heptoxide — one of the few molecular metal oxides. Re in its highest oxidation state (+7).',
     orbitals: [
       {
         name: 'σ (Re₁–O_br)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding from d/p overlap between Re and O. Head-on d-p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 5, l: 2, m: 0, zeff: 9.20, c: 0.45 },
           { atom: 2, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.60 },
@@ -6645,6 +7611,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ (Re₂–O_br)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding from d/p overlap between Re and O. Head-on d-p overlap along the bond axis.',
         ao: [
           { atom: 1, n: 5, l: 2, m: 0, zeff: 9.20, c: 0.45 },
           { atom: 2, n: 2, l: 1, m: -1, zeff: 4.45, c: -0.60 },
@@ -6654,6 +7621,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ (Re₁=O₁)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'σ bonding from s/p overlap between Re and O. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 6, l: 0, m: 0, zeff: 4.20, c: 0.40 },
           { atom: 3, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.60 },
@@ -6663,6 +7631,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ (Re₂=O₂)',
         type: 'bonding',
         electrons: 2,
+      energy: 4, desc: 'σ bonding from s/p overlap between Re and O. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 1, n: 6, l: 0, m: 0, zeff: 4.20, c: 0.40 },
           { atom: 4, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.60 },
@@ -6672,6 +7641,7 @@ const MOLECULAR_ORBITALS = {
         name: 'π (Re=O terminal)',
         type: 'bonding',
         electrons: 4,
+      energy: 5, desc: 'π bonding from d-p lateral overlap between Re and O. Electron density above and below the bond axis.',
         ao: [
           { atom: 0, n: 5, l: 2, m: 1, zeff: 9.20, c: 0.50 },
           { atom: 1, n: 5, l: 2, m: -1, zeff: 9.20, c: 0.50 },
@@ -6683,6 +7653,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O lone pairs',
         type: 'nonbonding',
         electrons: 6,
+      energy: 6, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 },
           { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.577 },
@@ -6700,11 +7671,13 @@ const MOLECULAR_ORBITALS = {
 
   'HCN': {
     // atoms: H(0), C(1), N(2) — linear, along x-axis
+    notes: 'Hydrogen cyanide — the C≡N triple bond is isoelectronic with N₂. The carbon lone pair acts as a ligand in metal complexes.',
     orbitals: [
       {
         name: '3σ (C-H bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding from p/s overlap between . Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 1, n: 2, l: 1, m: 1, zeff: 3.25, c: -0.60 },
           { atom: 0, n: 1, l: 0, m: 0, zeff: 1.24, c:  0.55 },
@@ -6715,6 +7688,7 @@ const MOLECULAR_ORBITALS = {
         name: '4σ (C-N bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding between  — head-on p overlap along the bond axis.',
         ao: [
           { atom: 1, n: 2, l: 1, m: 1, zeff: 3.25, c:  0.55 },
           { atom: 2, n: 2, l: 1, m: 1, zeff: 3.90, c:  0.65 },
@@ -6724,6 +7698,7 @@ const MOLECULAR_ORBITALS = {
         name: '1π (C≡N, y)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'π bonding — lateral p overlap between . Electron density above and below the bond axis.',
         ao: [
           { atom: 1, n: 2, l: 1, m: -1, zeff: 3.25, c: 0.55 },
           { atom: 2, n: 2, l: 1, m: -1, zeff: 3.90, c: 0.65 },
@@ -6733,6 +7708,7 @@ const MOLECULAR_ORBITALS = {
         name: '1π\' (C≡N, z)',
         type: 'bonding',
         electrons: 2,
+      energy: 4, desc: 'π bonding — lateral overlap creates electron density above and below the bond axis.',
         ao: [
           { atom: 1, n: 2, l: 1, m: 0, zeff: 3.25, c: 0.55 },
           { atom: 2, n: 2, l: 1, m: 0, zeff: 3.90, c: 0.65 },
@@ -6742,6 +7718,7 @@ const MOLECULAR_ORBITALS = {
         name: '5σ (N lone pair)',
         type: 'nonbonding',
         electrons: 2,
+      energy: 5, desc: 'Lone pair localized on ?. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 2, n: 2, l: 0, m: 0, zeff: 3.90, c: 0.80 },
           { atom: 2, n: 2, l: 1, m: 1, zeff: 3.90, c: -0.35 },
@@ -6752,11 +7729,13 @@ const MOLECULAR_ORBITALS = {
 
   'CCl₄': {
     // atoms: C(0), Cl(1-4) — tetrahedral
+    notes: 'Carbon tetrachloride — formerly a dry-cleaning solvent. Perfect tetrahedral symmetry like CH₄.',
     orbitals: [
       {
         name: 'a₁ (inner valence)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'Bonding orbital — constructive s/p overlap between  concentrates electron density between the nuclei.',
         ao: [
           { atom: 0, n: 2, l: 0, m: 0, zeff: 3.25, c: -0.75 },
           { atom: 1, n: 3, l: 1, m: 1, zeff: 6.10, c:  0.30 },
@@ -6769,6 +7748,7 @@ const MOLECULAR_ORBITALS = {
         name: 't₂ (C-Cl bond 1)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'Bonding orbital — constructive p overlap between  concentrates electron density between the nuclei.',
         ao: [
           { atom: 0, n: 2, l: 1, m: 1, zeff: 3.25, c:  0.50 },
           { atom: 1, n: 3, l: 1, m: 1, zeff: 6.10, c:  0.55 },
@@ -6781,6 +7761,7 @@ const MOLECULAR_ORBITALS = {
         name: 't₂ (C-Cl bond 2)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'Bonding orbital — constructive p overlap between  concentrates electron density between the nuclei.',
         ao: [
           { atom: 0, n: 2, l: 1, m: -1, zeff: 3.25, c:  0.50 },
           { atom: 2, n: 3, l: 1, m: -1, zeff: 6.10, c:  0.55 },
@@ -6793,6 +7774,7 @@ const MOLECULAR_ORBITALS = {
         name: 't₂ (C-Cl bond 3)',
         type: 'bonding',
         electrons: 2,
+      energy: 4, desc: 'Bonding orbital — constructive p overlap between  concentrates electron density between the nuclei.',
         ao: [
           { atom: 0, n: 2, l: 1, m: 0, zeff: 3.25, c:  0.50 },
           { atom: 3, n: 3, l: 1, m: 0, zeff: 6.10, c:  0.55 },
@@ -6805,6 +7787,10 @@ const MOLECULAR_ORBITALS = {
         name: 'Cl lone pairs (12e)',
         type: 'nonbonding',
         electrons: 12,
+      energy: 5, desc: 'Lone pair localized on Cl. Non-bonding electrons that can act as a Lewis base.',
+      energy: 5, desc: 'Lone pair localized on ?. Non-bonding electrons that can act as a Lewis base.',
+      energy: 5, desc: 'Lone pair localized on ?. Non-bonding electrons that can act as a Lewis base.',
+      energy: 5, desc: 'Lone pair localized on ?. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 1, n: 3, l: 1, m: 0, zeff: 6.10, c: 0.50 },
           { atom: 2, n: 3, l: 1, m: -1, zeff: 6.10, c: 0.50 },
@@ -6817,11 +7803,13 @@ const MOLECULAR_ORBITALS = {
 
   'NO': {
     // atoms: N(0), O(1) — along x-axis
+    notes: 'Nitric oxide — a radical with one unpaired electron in π*. A crucial biological signaling molecule.',
     orbitals: [
       {
         name: '3σ (inner valence)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding between  — head-on s overlap along the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 0, m: 0, zeff: 3.90, c: -0.65 },
           { atom: 1, n: 2, l: 0, m: 0, zeff: 4.45, c:  0.58 },
@@ -6831,6 +7819,7 @@ const MOLECULAR_ORBITALS = {
         name: '4σ (bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding — head-on p overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 1, m: 1, zeff: 3.90, c:  0.60 },
           { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.65 },
@@ -6840,6 +7829,7 @@ const MOLECULAR_ORBITALS = {
         name: '1π (y)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'π bonding — lateral p overlap. Electron density above and below the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 1, m: -1, zeff: 3.90, c: 0.55 },
           { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.65 },
@@ -6849,6 +7839,7 @@ const MOLECULAR_ORBITALS = {
         name: '1π\' (z)',
         type: 'bonding',
         electrons: 2,
+      energy: 4, desc: 'π bonding — lateral overlap creates electron density above and below the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 1, m: 0, zeff: 3.90, c: 0.55 },
           { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.65 },
@@ -6858,6 +7849,7 @@ const MOLECULAR_ORBITALS = {
         name: '2π* (radical)',
         type: 'antibonding',
         electrons: 1,
+      energy: 5, desc: 'π* antibonding — a node between  in the π system. Occupation reduces bond order.',
         ao: [
           { atom: 0, n: 2, l: 1, m: -1, zeff: 3.90, c:  0.65 },
           { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c: -0.55 },
@@ -6868,11 +7860,13 @@ const MOLECULAR_ORBITALS = {
 
   'CS₂': {
     // atoms: C(0), S(1), S(2) — linear, along x-axis
+    notes: 'Carbon disulfide — linear like CO₂ but with weaker π bonding due to poorer C 2p — S 3p overlap.',
     orbitals: [
       {
         name: 'σg (bonding)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding — head-on s/p overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 0, m: 0, zeff: 3.25, c: -0.70 },
           { atom: 1, n: 3, l: 1, m: 1, zeff: 5.45, c:  0.45 },
@@ -6883,6 +7877,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σu (bonding)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding — head-on p overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 1, m: 1, zeff: 3.25, c:  0.55 },
           { atom: 1, n: 3, l: 1, m: 1, zeff: 5.45, c:  0.50 },
@@ -6893,6 +7888,7 @@ const MOLECULAR_ORBITALS = {
         name: 'πu (bonding, y)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'σ bonding — head-on p overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 1, m: -1, zeff: 3.25, c:  0.55 },
           { atom: 1, n: 3, l: 1, m: -1, zeff: 5.45, c:  0.50 },
@@ -6903,6 +7899,7 @@ const MOLECULAR_ORBITALS = {
         name: 'πu (bonding, z)',
         type: 'bonding',
         electrons: 2,
+      energy: 4, desc: 'σ bonding — head-on p overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 1, m: 0, zeff: 3.25, c:  0.55 },
           { atom: 1, n: 3, l: 1, m: 0, zeff: 5.45, c:  0.50 },
@@ -6913,6 +7910,7 @@ const MOLECULAR_ORBITALS = {
         name: 'S₁ lone pair',
         type: 'nonbonding',
         electrons: 2,
+      energy: 5, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 1, n: 3, l: 0, m: 0, zeff: 5.45, c: 0.85 },
           { atom: 1, n: 3, l: 1, m: 1, zeff: 5.45, c: -0.35 },
@@ -6922,6 +7920,7 @@ const MOLECULAR_ORBITALS = {
         name: 'S₂ lone pair',
         type: 'nonbonding',
         electrons: 2,
+      energy: 6, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 2, n: 3, l: 0, m: 0, zeff: 5.45, c: 0.85 },
           { atom: 2, n: 3, l: 1, m: 1, zeff: 5.45, c:  0.35 },
@@ -6932,11 +7931,13 @@ const MOLECULAR_ORBITALS = {
 
   'SF₆': {
     // atoms: S(0), F(1-6) — octahedral
+    notes: 'Sulfur hexafluoride — inert gas used as electrical insulator. Octahedral hypervalent compound.',
     orbitals: [
       {
         name: 'a₁g (inner valence)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'Bonding orbital — constructive s/p overlap between  concentrates electron density between the nuclei.',
         ao: [
           { atom: 0, n: 3, l: 0, m: 0, zeff: 5.45, c: -0.70 },
           { atom: 1, n: 2, l: 1, m: 1, zeff: 5.13, c:  0.27 },
@@ -6951,6 +7952,7 @@ const MOLECULAR_ORBITALS = {
         name: 't₁u (S-F bond, x)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'Bonding orbital — constructive p overlap between  concentrates electron density between the nuclei.',
         ao: [
           { atom: 0, n: 3, l: 1, m: 1, zeff: 5.45, c:  0.50 },
           { atom: 1, n: 2, l: 1, m: 1, zeff: 5.13, c:  0.55 },
@@ -6961,6 +7963,7 @@ const MOLECULAR_ORBITALS = {
         name: 't₁u (S-F bond, y)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'Bonding orbital — constructive p overlap between  concentrates electron density between the nuclei.',
         ao: [
           { atom: 0, n: 3, l: 1, m: -1, zeff: 5.45, c: 0.50 },
           { atom: 3, n: 2, l: 1, m: -1, zeff: 5.13, c: 0.55 },
@@ -6971,6 +7974,7 @@ const MOLECULAR_ORBITALS = {
         name: 't₁u (S-F bond, z)',
         type: 'bonding',
         electrons: 2,
+      energy: 4, desc: 'Bonding orbital — constructive p overlap between  concentrates electron density between the nuclei.',
         ao: [
           { atom: 0, n: 3, l: 1, m: 0, zeff: 5.45, c:  0.50 },
           { atom: 5, n: 2, l: 1, m: 0, zeff: 5.13, c:  0.55 },
@@ -6981,6 +7985,7 @@ const MOLECULAR_ORBITALS = {
         name: 'eg (S-F d-hybrid, dz²)',
         type: 'bonding',
         electrons: 2,
+      energy: 5, desc: 'Bonding orbital — constructive d/p overlap between  concentrates electron density between the nuclei.',
         ao: [
           { atom: 0, n: 3, l: 2, m: 0, zeff: 5.45, c:  0.45 },
           { atom: 5, n: 2, l: 1, m: 0, zeff: 5.13, c:  0.50 },
@@ -6991,6 +7996,7 @@ const MOLECULAR_ORBITALS = {
         name: 'eg (S-F d-hybrid, dx²-y²)',
         type: 'bonding',
         electrons: 2,
+      energy: 6, desc: 'Bonding orbital — constructive d/p overlap between  concentrates electron density between the nuclei.',
         ao: [
           { atom: 0, n: 3, l: 2, m: 2, zeff: 5.45, c:  0.45 },
           { atom: 1, n: 2, l: 1, m: 1, zeff: 5.13, c:  0.50 },
@@ -7001,6 +8007,7 @@ const MOLECULAR_ORBITALS = {
         name: 'F lone pairs (24e)',
         type: 'nonbonding',
         electrons: 24,
+      energy: 7, desc: 'Lone pair localized on ?. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 1, n: 2, l: 1, m: 0, zeff: 5.13, c: 0.408 },
           { atom: 2, n: 2, l: 1, m: 0, zeff: 5.13, c: 0.408 },
@@ -7015,11 +8022,13 @@ const MOLECULAR_ORBITALS = {
 
   'BN': {
     // atoms: B(0), N(1) — along x-axis
+    notes: 'Boron nitride — isoelectronic with carbon. Forms both diamond-like (cubic BN) and graphite-like (hBN) phases.',
     orbitals: [
       {
         name: 'σ (bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding — head-on p overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 1, m: 1, zeff: 2.60, c:  0.45 },
           { atom: 1, n: 2, l: 1, m: 1, zeff: 3.90, c:  0.70 },
@@ -7029,6 +8038,8 @@ const MOLECULAR_ORBITALS = {
         name: 'π (y)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'π bonding — lateral p overlap between . Electron density above and below the bond axis.',
+      energy: 2, desc: 'π bonding — lateral p overlap between . Electron density above and below the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 1, m: -1, zeff: 2.60, c: 0.45 },
           { atom: 1, n: 2, l: 1, m: -1, zeff: 3.90, c: 0.70 },
@@ -7038,6 +8049,7 @@ const MOLECULAR_ORBITALS = {
         name: 'π\' (z)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'π bonding — lateral overlap creates electron density above and below the bond axis.',
         ao: [
           { atom: 0, n: 2, l: 1, m: 0, zeff: 2.60, c: 0.45 },
           { atom: 1, n: 2, l: 1, m: 0, zeff: 3.90, c: 0.70 },
@@ -7047,6 +8059,7 @@ const MOLECULAR_ORBITALS = {
         name: 'N lone pair',
         type: 'nonbonding',
         electrons: 2,
+      energy: 4, desc: 'Lone pair localized on ?. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 1, n: 2, l: 0, m: 0, zeff: 3.90, c: 0.85 },
           { atom: 1, n: 2, l: 1, m: 1, zeff: 3.90, c: -0.30 },
@@ -7057,11 +8070,13 @@ const MOLECULAR_ORBITALS = {
 
   'SiC': {
     // atoms: Si(0), C(1) — along x-axis
+    notes: 'Silicon carbide — a wide-bandgap semiconductor for power electronics. Tetrahedral Si-C σ bonds.',
     orbitals: [
       {
         name: 'σ (bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding — head-on p overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 3, l: 1, m: 1, zeff: 4.15, c:  0.50 },
           { atom: 1, n: 2, l: 1, m: 1, zeff: 3.25, c:  0.65 },
@@ -7071,6 +8086,7 @@ const MOLECULAR_ORBITALS = {
         name: 'π (y)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'π bonding — lateral p overlap. Electron density above and below the bond axis.',
         ao: [
           { atom: 0, n: 3, l: 1, m: -1, zeff: 4.15, c: 0.45 },
           { atom: 1, n: 2, l: 1, m: -1, zeff: 3.25, c: 0.70 },
@@ -7080,6 +8096,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Si lone pair',
         type: 'nonbonding',
         electrons: 2,
+      energy: 3, desc: 'Lone pair localized on ?. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 0, n: 3, l: 0, m: 0, zeff: 4.15, c: 0.85 },
           { atom: 0, n: 3, l: 1, m: 1, zeff: 4.15, c: -0.30 },
@@ -7089,6 +8106,7 @@ const MOLECULAR_ORBITALS = {
         name: 'C lone pair',
         type: 'nonbonding',
         electrons: 2,
+      energy: 4, desc: 'Lone pair localized on ?. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 1, n: 2, l: 0, m: 0, zeff: 3.25, c: 0.85 },
           { atom: 1, n: 2, l: 1, m: 1, zeff: 3.25, c:  0.30 },
@@ -7099,11 +8117,13 @@ const MOLECULAR_ORBITALS = {
 
   'TiO₂': {
     // atoms: Ti(0), O(1), O(2) — bent, Ti in center
+    notes: 'Titanium dioxide — the world\'s most important white pigment. Ti 3d — O 2p bonding creates a 3.2 eV bandgap.',
     orbitals: [
       {
         name: 'σ₁ (Ti-O bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding from d/p overlap between O and Ti. Head-on d-p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 3, l: 2, m: 0, zeff: 4.82, c:  0.40 },
           { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.60 },
@@ -7114,6 +8134,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ₂ (Ti-O bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding from s/p overlap between O and Ti. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 4, l: 0, m: 0, zeff: 3.15, c:  0.40 },
           { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.55 },
@@ -7124,6 +8145,7 @@ const MOLECULAR_ORBITALS = {
         name: 'π₁ (d-p, y)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'π bonding from d-p lateral overlap between O and Ti. Electron density above and below the bond axis.',
         ao: [
           { atom: 0, n: 3, l: 2, m: -1, zeff: 4.82, c: 0.40 },
           { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.60 },
@@ -7134,6 +8156,7 @@ const MOLECULAR_ORBITALS = {
         name: 'π₂ (d-p, z)',
         type: 'bonding',
         electrons: 2,
+      energy: 4, desc: 'π bonding from d-p lateral overlap between O and Ti. Electron density above and below the bond axis.',
         ao: [
           { atom: 0, n: 3, l: 2, m: 1, zeff: 4.82, c:  0.40 },
           { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c:  0.60 },
@@ -7144,6 +8167,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O₁ lone pair',
         type: 'nonbonding',
         electrons: 2,
+      energy: 5, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 1, n: 2, l: 0, m: 0, zeff: 4.45, c: 0.80 },
           { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.45 },
@@ -7153,6 +8177,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O₂ lone pair',
         type: 'nonbonding',
         electrons: 2,
+      energy: 6, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 2, n: 2, l: 0, m: 0, zeff: 4.45, c: 0.80 },
           { atom: 2, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.45 },
@@ -7163,11 +8188,13 @@ const MOLECULAR_ORBITALS = {
 
   'CrO₃': {
     // atoms: Cr(0), O(1), O(2), O(3) — trigonal planar
+    notes: 'Chromium trioxide — a powerful oxidizer. Cr 3d participation enables the +6 oxidation state.',
     orbitals: [
       {
         name: 'σ₁ (Cr-O bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding from d/p overlap between . Head-on d-p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 3, l: 2, m: 0, zeff: 5.13, c:  0.40 },
           { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.55 },
@@ -7179,6 +8206,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ₂ (Cr-O antisym)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding from s/p overlap between . Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 4, l: 0, m: 0, zeff: 3.45, c:  0.35 },
           { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.55 },
@@ -7190,6 +8218,7 @@ const MOLECULAR_ORBITALS = {
         name: 'π (d-p, out-of-plane)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'π bonding from d-p lateral overlap between . Electron density above and below the bond axis.',
         ao: [
           { atom: 0, n: 3, l: 2, m: 1, zeff: 5.13, c:  0.45 },
           { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c:  0.55 },
@@ -7201,6 +8230,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O₁ lone pair',
         type: 'nonbonding',
         electrons: 2,
+      energy: 4, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 1, n: 2, l: 0, m: 0, zeff: 4.45, c: 0.80 },
           { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.45 },
@@ -7210,6 +8240,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O₂ lone pair',
         type: 'nonbonding',
         electrons: 2,
+      energy: 5, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 2, n: 2, l: 0, m: 0, zeff: 4.45, c: 0.80 },
           { atom: 2, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.45 },
@@ -7219,6 +8250,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O₃ lone pair',
         type: 'nonbonding',
         electrons: 2,
+      energy: 6, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 3, n: 2, l: 0, m: 0, zeff: 4.45, c: 0.80 },
           { atom: 3, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.45 },
@@ -7229,11 +8261,13 @@ const MOLECULAR_ORBITALS = {
 
   'NiCl₂': {
     // atoms: Ni(0), Cl(1), Cl(2) — linear
+    notes: 'Nickel(II) chloride — catalyst precursor. Ni 3d⁸ configuration creates the characteristic green color.',
     orbitals: [
       {
         name: 'σ₁ (Ni-Cl bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding from s/p overlap between . Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 4, l: 0, m: 0, zeff: 4.05, c:  0.35 },
           { atom: 1, n: 3, l: 1, m: 1, zeff: 6.10, c:  0.55 },
@@ -7244,6 +8278,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ₂ (Ni-Cl antisym)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding from d/p overlap between . Head-on d-p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 3, l: 2, m: 0, zeff: 7.55, c:  0.35 },
           { atom: 1, n: 3, l: 1, m: 1, zeff: 6.10, c:  0.55 },
@@ -7254,6 +8289,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Ni dxy',
         type: 'nonbonding',
         electrons: 2,
+      energy: 3, desc: 'Non-bonding orbital — electrons not significantly involved in bond formation.',
         ao: [
           { atom: 0, n: 3, l: 2, m: -2, zeff: 7.55, c: 1.0 },
         ],
@@ -7262,6 +8298,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Ni dx²-y²',
         type: 'nonbonding',
         electrons: 2,
+      energy: 4, desc: 'Non-bonding orbital — electrons not significantly involved in bond formation.',
         ao: [
           { atom: 0, n: 3, l: 2, m: 2, zeff: 7.55, c: 1.0 },
         ],
@@ -7270,6 +8307,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Ni dyz',
         type: 'nonbonding',
         electrons: 2,
+      energy: 5, desc: 'Non-bonding orbital localized on undefined.',
         ao: [
           { atom: 0, n: 3, l: 2, m: -1, zeff: 7.55, c: 1.0 },
         ],
@@ -7278,6 +8316,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Ni dxz',
         type: 'nonbonding',
         electrons: 2,
+      energy: 6, desc: 'Non-bonding orbital localized on undefined.',
         ao: [
           { atom: 0, n: 3, l: 2, m: 1, zeff: 7.55, c: 1.0 },
         ],
@@ -7286,6 +8325,8 @@ const MOLECULAR_ORBITALS = {
         name: 'Cl lone pairs (8e)',
         type: 'nonbonding',
         electrons: 8,
+      energy: 7, desc: 'Lone pair localized on Co. Non-bonding electrons that can act as a Lewis base.',
+      energy: 7, desc: 'Lone pair localized on ?. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 1, n: 3, l: 1, m: 0, zeff: 6.10, c: 0.50 },
           { atom: 1, n: 3, l: 1, m: -1, zeff: 6.10, c: 0.50 },
@@ -7300,11 +8341,13 @@ const MOLECULAR_ORBITALS = {
 
   'CoO': {
     // atoms: Co(0), O(1) — along x-axis, Co²⁺ d7
+    notes: 'Cobalt(II) oxide — antiferromagnetic. Co 3d⁷ electrons split in the octahedral crystal field.',
     orbitals: [
       {
         name: 'σ (bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding — head-on s/p overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 4, l: 0, m: 0, zeff: 3.90, c:  0.35 },
           { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.75 },
@@ -7314,6 +8357,7 @@ const MOLECULAR_ORBITALS = {
         name: 'π (d-p bond, y)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding — head-on d/p overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 3, l: 2, m: -1, zeff: 6.90, c:  0.45 },
           { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c:  0.75 },
@@ -7323,6 +8367,7 @@ const MOLECULAR_ORBITALS = {
         name: 'π (d-p bond, z)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'σ bonding — head-on d/p overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 3, l: 2, m: 1, zeff: 6.90, c:  0.45 },
           { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c:  0.75 },
@@ -7332,6 +8377,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O 2s',
         type: 'nonbonding',
         electrons: 2,
+      energy: 4, desc: 'Non-bonding orbital — electrons not significantly involved in bond formation.',
         ao: [
           { atom: 1, n: 2, l: 0, m: 0, zeff: 4.45, c: 1.0 },
         ],
@@ -7340,6 +8386,8 @@ const MOLECULAR_ORBITALS = {
         name: 'Co dxy',
         type: 'nonbonding',
         electrons: 2,
+      energy: 3, desc: 'Non-bonding orbital localized on Cl.',
+      energy: 5, desc: 'Non-bonding orbital localized on undefined.',
         ao: [
           { atom: 0, n: 3, l: 2, m: -2, zeff: 6.90, c: 1.0 },
         ],
@@ -7348,6 +8396,8 @@ const MOLECULAR_ORBITALS = {
         name: 'Co dx²-y²',
         type: 'nonbonding',
         electrons: 2,
+      energy: 4, desc: 'Non-bonding orbital localized on Cl.',
+      energy: 6, desc: 'Non-bonding orbital localized on undefined.',
         ao: [
           { atom: 0, n: 3, l: 2, m: 2, zeff: 6.90, c: 1.0 },
         ],
@@ -7356,6 +8406,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Co dz²',
         type: 'nonbonding',
         electrons: 1,
+      energy: 7, desc: 'Non-bonding orbital localized on undefined.',
         ao: [
           { atom: 0, n: 3, l: 2, m: 0, zeff: 6.90, c: 1.0 },
         ],
@@ -7365,11 +8416,13 @@ const MOLECULAR_ORBITALS = {
 
   'CoCl₂': {
     // atoms: Co(0), Cl(1), Cl(2) — linear, Co²⁺ d7
+    notes: 'Cobalt(II) chloride — blue when dry, pink when hydrated. A classic humidity indicator.',
     orbitals: [
       {
         name: 'σ₁ (Co-Cl bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding from s/p overlap between Cl and Co. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 4, l: 0, m: 0, zeff: 3.90, c:  0.35 },
           { atom: 1, n: 3, l: 1, m: 1, zeff: 6.10, c:  0.55 },
@@ -7380,6 +8433,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ₂ (Co-Cl antisym)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding from d/p overlap between Cl and Co. Head-on d-p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 3, l: 2, m: 0, zeff: 6.90, c:  0.35 },
           { atom: 1, n: 3, l: 1, m: 1, zeff: 6.10, c:  0.55 },
@@ -7390,6 +8444,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Co dxy',
         type: 'nonbonding',
         electrons: 2,
+      energy: 3, desc: 'Non-bonding orbital — electrons not significantly involved in bond formation.',
         ao: [
           { atom: 0, n: 3, l: 2, m: -2, zeff: 6.90, c: 1.0 },
         ],
@@ -7398,6 +8453,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Co dx²-y²',
         type: 'nonbonding',
         electrons: 2,
+      energy: 4, desc: 'Non-bonding orbital — electrons not significantly involved in bond formation.',
         ao: [
           { atom: 0, n: 3, l: 2, m: 2, zeff: 6.90, c: 1.0 },
         ],
@@ -7406,6 +8462,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Co dyz',
         type: 'nonbonding',
         electrons: 1,
+      energy: 5, desc: 'Non-bonding orbital localized on Cl.',
         ao: [
           { atom: 0, n: 3, l: 2, m: -1, zeff: 6.90, c: 1.0 },
         ],
@@ -7414,6 +8471,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Co dxz',
         type: 'nonbonding',
         electrons: 2,
+      energy: 6, desc: 'Non-bonding orbital localized on Cl.',
         ao: [
           { atom: 0, n: 3, l: 2, m: 1, zeff: 6.90, c: 1.0 },
         ],
@@ -7422,6 +8480,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Cl lone pairs (8e)',
         type: 'nonbonding',
         electrons: 8,
+      energy: 7, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 1, n: 3, l: 1, m: 0, zeff: 6.10, c: 0.50 },
           { atom: 1, n: 3, l: 1, m: -1, zeff: 6.10, c: 0.50 },
@@ -7434,11 +8493,13 @@ const MOLECULAR_ORBITALS = {
 
   'SrO': {
     // atoms: Sr(0), O(1) — along x-axis, ionic Sr²⁺O²⁻
+    notes: 'Strontium oxide — a strong base. Comparing CaO/SrO/BaO shows increasing ionic character down Group 2.',
     orbitals: [
       {
         name: 'σ (bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding — head-on s/p overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 5, l: 0, m: 0, zeff: 2.85, c:  0.30 },
           { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.80 },
@@ -7448,6 +8509,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O 2s',
         type: 'nonbonding',
         electrons: 2,
+      energy: 2, desc: 'Non-bonding orbital — electrons not significantly involved in bond formation.',
         ao: [
           { atom: 1, n: 2, l: 0, m: 0, zeff: 4.45, c: 1.0 },
         ],
@@ -7456,6 +8518,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O 2py',
         type: 'nonbonding',
         electrons: 2,
+      energy: 3, desc: 'Non-bonding orbital — electrons not significantly involved in bond formation.',
         ao: [
           { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c: 1.0 },
         ],
@@ -7464,6 +8527,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O 2pz',
         type: 'nonbonding',
         electrons: 2,
+      energy: 4, desc: 'Non-bonding orbital — electrons not significantly involved in bond formation.',
         ao: [
           { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c: 1.0 },
         ],
@@ -7473,11 +8537,13 @@ const MOLECULAR_ORBITALS = {
 
   'Y₂O₃': {
     // atoms: Y(0), Y(1), O(2), O(3), O(4) — bixbyite unit
+    notes: 'Yttria — the host material for YAG lasers. Y 4d contributes weakly to bonding.',
     orbitals: [
       {
         name: 'σ₁ (Y-O bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding from d/p overlap between Y and O. Head-on d-p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 4, l: 2, m: 0, zeff: 6.26, c:  0.35 },
           { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.60 },
@@ -7488,6 +8554,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ₂ (Y-O bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding from d/p overlap between Y and O. Head-on d-p overlap along the bond axis.',
         ao: [
           { atom: 1, n: 4, l: 2, m: 0, zeff: 6.26, c:  0.35 },
           { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.60 },
@@ -7498,6 +8565,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O₁ lone pairs',
         type: 'nonbonding',
         electrons: 4,
+      energy: 3, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 2, n: 2, l: 0, m: 0, zeff: 4.45, c: 0.70 },
           { atom: 2, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.70 },
@@ -7507,6 +8575,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O₂ lone pairs',
         type: 'nonbonding',
         electrons: 4,
+      energy: 4, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 3, n: 2, l: 0, m: 0, zeff: 4.45, c: 0.70 },
           { atom: 3, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.70 },
@@ -7516,6 +8585,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O₃ lone pairs',
         type: 'nonbonding',
         electrons: 4,
+      energy: 5, desc: 'Lone pair localized on O. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 4, n: 2, l: 0, m: 0, zeff: 4.45, c: 0.70 },
           { atom: 4, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.70 },
@@ -7526,11 +8596,13 @@ const MOLECULAR_ORBITALS = {
 
   'InCl₃': {
     // atoms: In(0), Cl(1), Cl(2), Cl(3) — trigonal planar
+    notes: 'Indium trichloride — used in organic synthesis. In 5s/5p electrons form the In-Cl bonds.',
     orbitals: [
       {
         name: 'σ₁ (In-Cl bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding from s/p overlap between . Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 5, l: 0, m: 0, zeff: 5.00, c:  0.35 },
           { atom: 1, n: 3, l: 1, m: 1, zeff: 6.10, c:  0.55 },
@@ -7542,6 +8614,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ₂ (In-Cl bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding between  — head-on p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 5, l: 1, m: 1, zeff: 5.00, c:  0.40 },
           { atom: 1, n: 3, l: 1, m: 1, zeff: 6.10, c:  0.55 },
@@ -7553,6 +8626,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ₃ (In-Cl bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'σ bonding between  — head-on p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 5, l: 1, m: -1, zeff: 5.00, c: 0.40 },
           { atom: 2, n: 3, l: 1, m: -1, zeff: 6.10, c: 0.55 },
@@ -7563,6 +8637,7 @@ const MOLECULAR_ORBITALS = {
         name: 'In 5s lone pair',
         type: 'nonbonding',
         electrons: 2,
+      energy: 4, desc: 'Lone pair localized on ?. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 0, n: 5, l: 0, m: 0, zeff: 5.00, c: 0.85 },
         ],
@@ -7571,6 +8646,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Cl lone pairs (12e)',
         type: 'nonbonding',
         electrons: 12,
+      energy: 5, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 1, n: 3, l: 1, m: 0, zeff: 6.10, c: 0.408 },
           { atom: 1, n: 3, l: 1, m: -1, zeff: 6.10, c: 0.408 },
@@ -7585,11 +8661,13 @@ const MOLECULAR_ORBITALS = {
 
   'BaO': {
     // atoms: Ba(0), O(1) — along x-axis, ionic Ba²⁺O²⁻
+    notes: 'Barium oxide — desiccant and cathode coating. The most ionic of the alkaline earth oxides.',
     orbitals: [
       {
         name: 'σ (bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding — head-on s/p overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 6, l: 0, m: 0, zeff: 2.85, c:  0.25 },
           { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.82 },
@@ -7599,6 +8677,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O 2s',
         type: 'nonbonding',
         electrons: 2,
+      energy: 2, desc: 'Non-bonding orbital — electrons not significantly involved in bond formation.',
         ao: [
           { atom: 1, n: 2, l: 0, m: 0, zeff: 4.45, c: 1.0 },
         ],
@@ -7607,6 +8686,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O 2py',
         type: 'nonbonding',
         electrons: 2,
+      energy: 3, desc: 'Non-bonding orbital — electrons not significantly involved in bond formation.',
         ao: [
           { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c: 1.0 },
         ],
@@ -7615,6 +8695,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O 2pz',
         type: 'nonbonding',
         electrons: 2,
+      energy: 4, desc: 'Non-bonding orbital — electrons not significantly involved in bond formation.',
         ao: [
           { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c: 1.0 },
         ],
@@ -7624,11 +8705,13 @@ const MOLECULAR_ORBITALS = {
 
   'TlCl': {
     // atoms: Tl(0), Cl(1) — along x-axis, Tl⁺ [Xe]4f¹⁴5d¹⁰6s²
+    notes: 'Thallium(I) chloride — the inert pair effect leaves Tl 6s² electrons non-bonding.',
     orbitals: [
       {
         name: 'σ (bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding — head-on p overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 6, l: 1, m: 1, zeff: 6.95, c:  0.35 },
           { atom: 1, n: 3, l: 1, m: 1, zeff: 6.10, c:  0.75 },
@@ -7638,6 +8721,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Tl 6s lone pair',
         type: 'nonbonding',
         electrons: 2,
+      energy: 2, desc: 'Lone pair localized on ?. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 0, n: 6, l: 0, m: 0, zeff: 6.95, c: 1.0 },
         ],
@@ -7646,6 +8730,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Cl 3s',
         type: 'nonbonding',
         electrons: 2,
+      energy: 3, desc: 'Non-bonding orbital — electrons not significantly involved in bond formation.',
         ao: [
           { atom: 1, n: 3, l: 0, m: 0, zeff: 6.10, c: 1.0 },
         ],
@@ -7654,6 +8739,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Cl lone pairs',
         type: 'nonbonding',
         electrons: 4,
+      energy: 4, desc: 'Lone pair localized on ?. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 1, n: 3, l: 1, m: -1, zeff: 6.10, c: 0.707 },
           { atom: 1, n: 3, l: 1, m: 0, zeff: 6.10, c: 0.707 },
@@ -7664,11 +8750,13 @@ const MOLECULAR_ORBITALS = {
 
   'BiCl₃': {
     // atoms: Bi(0), Cl(1), Cl(2), Cl(3) — trigonal pyramidal (like NH₃)
+    notes: 'Bismuth trichloride — pyramidal geometry. Bi 6s² lone pair is stereochemically active.',
     orbitals: [
       {
         name: 'σ₁ (Bi-Cl bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding between  — head-on p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 6, l: 1, m: 1, zeff: 7.41, c:  0.40 },
           { atom: 1, n: 3, l: 1, m: 1, zeff: 6.10, c:  0.70 },
@@ -7678,6 +8766,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ₂ (Bi-Cl bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding between  — head-on p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 6, l: 1, m: -1, zeff: 7.41, c: 0.40 },
           { atom: 2, n: 3, l: 1, m: -1, zeff: 6.10, c: 0.70 },
@@ -7687,6 +8776,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ₃ (Bi-Cl bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'σ bonding between  — head-on p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 6, l: 1, m: 0, zeff: 7.41, c:  0.40 },
           { atom: 3, n: 3, l: 1, m: 0, zeff: 6.10, c:  0.70 },
@@ -7696,6 +8786,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Bi 6s² lone pair',
         type: 'nonbonding',
         electrons: 2,
+      energy: 4, desc: 'Lone pair localized on ?. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 0, n: 6, l: 0, m: 0, zeff: 7.41, c: 1.0 },
         ],
@@ -7704,6 +8795,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Cl lone pairs (12e)',
         type: 'nonbonding',
         electrons: 12,
+      energy: 5, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 1, n: 3, l: 1, m: 0, zeff: 6.10, c: 0.408 },
           { atom: 1, n: 3, l: 1, m: -1, zeff: 6.10, c: 0.408 },
@@ -7718,11 +8810,13 @@ const MOLECULAR_ORBITALS = {
 
   'RaCl₂': {
     // atoms: Ra(0), Cl(1), Cl(2) — bent/linear
+    notes: 'Radium chloride — the compound Marie Curie first isolated to discover radium.',
     orbitals: [
       {
         name: 'σ₁ (Ra-Cl bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding from s/p overlap between Ra and Cl. Head-on overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 7, l: 0, m: 0, zeff: 2.85, c:  0.25 },
           { atom: 1, n: 3, l: 1, m: 1, zeff: 6.10, c:  0.55 },
@@ -7733,6 +8827,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σ₂ (Ra-Cl antisym)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding between Ra and Cl — head-on p overlap along the bond axis.',
         ao: [
           { atom: 0, n: 7, l: 1, m: 1, zeff: 2.85, c:  0.25 },
           { atom: 1, n: 3, l: 1, m: 1, zeff: 6.10, c:  0.55 },
@@ -7743,6 +8838,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Cl₁ lone pairs',
         type: 'nonbonding',
         electrons: 4,
+      energy: 3, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 1, n: 3, l: 1, m: 0, zeff: 6.10, c: 0.707 },
           { atom: 1, n: 3, l: 1, m: -1, zeff: 6.10, c: 0.707 },
@@ -7752,6 +8848,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Cl₂ lone pairs',
         type: 'nonbonding',
         electrons: 4,
+      energy: 4, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 2, n: 3, l: 1, m: 0, zeff: 6.10, c: 0.707 },
           { atom: 2, n: 3, l: 1, m: -1, zeff: 6.10, c: 0.707 },
@@ -7762,11 +8859,13 @@ const MOLECULAR_ORBITALS = {
 
   'KI': {
     // atoms: K(0), I(1) — along x-axis, ionic
+    notes: 'Potassium iodide — used to protect thyroid from radioactive iodine. Highly ionic K⁺I⁻.',
     orbitals: [
       {
         name: 'σ (bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding — head-on s/p overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 0, n: 4, l: 0, m: 0, zeff: 2.20, c:  0.25 },
           { atom: 1, n: 5, l: 1, m: 1, zeff: 7.60, c:  0.80 },
@@ -7776,6 +8875,7 @@ const MOLECULAR_ORBITALS = {
         name: 'I 5s',
         type: 'nonbonding',
         electrons: 2,
+      energy: 2, desc: 'Non-bonding orbital localized on I.',
         ao: [
           { atom: 1, n: 5, l: 0, m: 0, zeff: 7.60, c: 1.0 },
         ],
@@ -7784,6 +8884,7 @@ const MOLECULAR_ORBITALS = {
         name: 'I lone pairs (4e)',
         type: 'nonbonding',
         electrons: 4,
+      energy: 3, desc: 'Lone pair localized on I. Non-bonding electrons that can act as a Lewis base.',
         ao: [
           { atom: 1, n: 5, l: 1, m: -1, zeff: 7.60, c: 0.707 },
           { atom: 1, n: 5, l: 1, m: 0, zeff: 7.60, c: 0.707 },
@@ -7796,11 +8897,16 @@ const MOLECULAR_ORBITALS = {
 
   'NpO₂': {
     // atoms: O(0), Np(1), O(2) — linear, Np⁴⁺ 5f³
+    notes: 'Neptunium dioxide — fluorite structure like UO₂. Np 5f electrons create complex magnetic behavior.',
     orbitals: [
       {
         name: 'σg (bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding from d/p overlap between O and Pa. Head-on d-p overlap along the bond axis.',
+      energy: 1, desc: 'σ bonding from d/p overlap between O and Cm. Head-on d-p overlap along the bond axis.',
+      energy: 1, desc: 'σ bonding from d/p overlap between O and Am. Head-on d-p overlap along the bond axis.',
+      energy: 1, desc: 'σ bonding from d/p overlap between O and Np. Head-on d-p overlap along the bond axis.',
         ao: [
           { atom: 1, n: 6, l: 2, m: 0, zeff: 10.6, c:  0.30 },
           { atom: 0, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.60 },
@@ -7811,6 +8917,10 @@ const MOLECULAR_ORBITALS = {
         name: 'σu (bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding between O and Pa — head-on f/p overlap along the bond axis.',
+      energy: 2, desc: 'σ bonding between O and Cm — head-on f/p overlap along the bond axis.',
+      energy: 2, desc: 'σ bonding between O and Am — head-on f/p overlap along the bond axis.',
+      energy: 2, desc: 'σ bonding between O and Np — head-on f/p overlap along the bond axis.',
         ao: [
           { atom: 1, n: 5, l: 3, m: 0, zeff: 8.20, c:  0.35 },
           { atom: 0, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.55 },
@@ -7821,6 +8931,7 @@ const MOLECULAR_ORBITALS = {
         name: 'πu (bonding, y)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'σ bonding — head-on f/p overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 1, n: 5, l: 3, m: -1, zeff: 8.20, c: 0.35 },
           { atom: 0, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.60 },
@@ -7831,6 +8942,7 @@ const MOLECULAR_ORBITALS = {
         name: 'πu (bonding, z)',
         type: 'bonding',
         electrons: 2,
+      energy: 4, desc: 'σ bonding — head-on f/p overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 1, n: 5, l: 3, m: 1, zeff: 8.20, c:  0.35 },
           { atom: 0, n: 2, l: 1, m: 0, zeff: 4.45, c:  0.60 },
@@ -7841,6 +8953,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Np 5f nonbonding (3e)',
         type: 'nonbonding',
         electrons: 3,
+      energy: 5, desc: 'Localized f-electrons on O — shielded from bonding by outer shells.',
         ao: [
           { atom: 1, n: 5, l: 3, m: -2, zeff: 8.20, c: 0.577 },
           { atom: 1, n: 5, l: 3, m: 2, zeff: 8.20, c: 0.577 },
@@ -7851,6 +8964,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O lone pairs',
         type: 'nonbonding',
         electrons: 4,
+      energy: 6, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 0, n: 2, l: 0, m: 0, zeff: 4.45, c: 0.50 },
           { atom: 2, n: 2, l: 0, m: 0, zeff: 4.45, c: 0.50 },
@@ -7863,11 +8977,13 @@ const MOLECULAR_ORBITALS = {
 
   'AmO₂': {
     // atoms: O(0), Am(1), O(2) — linear, Am⁴⁺ 5f⁵
+    notes: 'Americium dioxide — used in smoke detectors (Am-241). Am 5f electrons are more localized than U/Np.',
     orbitals: [
       {
         name: 'σg (bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding — head-on d/p overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 1, n: 6, l: 2, m: 0, zeff: 11.2, c:  0.30 },
           { atom: 0, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.60 },
@@ -7878,6 +8994,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σu (bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding — head-on f/p overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 1, n: 5, l: 3, m: 0, zeff: 8.80, c:  0.35 },
           { atom: 0, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.55 },
@@ -7888,6 +9005,7 @@ const MOLECULAR_ORBITALS = {
         name: 'πu (bonding, y)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'σ bonding — head-on f/p overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 1, n: 5, l: 3, m: -1, zeff: 8.80, c: 0.35 },
           { atom: 0, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.60 },
@@ -7898,6 +9016,7 @@ const MOLECULAR_ORBITALS = {
         name: 'πu (bonding, z)',
         type: 'bonding',
         electrons: 2,
+      energy: 4, desc: 'σ bonding — head-on f/p overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 1, n: 5, l: 3, m: 1, zeff: 8.80, c:  0.35 },
           { atom: 0, n: 2, l: 1, m: 0, zeff: 4.45, c:  0.60 },
@@ -7908,6 +9027,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Am 5f nonbonding (5e)',
         type: 'nonbonding',
         electrons: 5,
+      energy: 5, desc: 'Localized f-electrons on O — shielded from bonding by outer shells.',
         ao: [
           { atom: 1, n: 5, l: 3, m: -2, zeff: 8.80, c: 0.447 },
           { atom: 1, n: 5, l: 3, m: 2, zeff: 8.80, c: 0.447 },
@@ -7920,6 +9040,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O lone pairs',
         type: 'nonbonding',
         electrons: 4,
+      energy: 6, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 0, n: 2, l: 0, m: 0, zeff: 4.45, c: 0.50 },
           { atom: 2, n: 2, l: 0, m: 0, zeff: 4.45, c: 0.50 },
@@ -7932,11 +9053,13 @@ const MOLECULAR_ORBITALS = {
 
   'CmO₂': {
     // atoms: O(0), Cm(1), O(2) — linear, Cm⁴⁺ 5f⁶
+    notes: 'Curium dioxide — intensely radioactive. Cm 5f⁷ half-filled shell creates unique magnetic properties.',
     orbitals: [
       {
         name: 'σg (bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding — head-on d/p overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 1, n: 6, l: 2, m: 0, zeff: 11.5, c:  0.30 },
           { atom: 0, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.60 },
@@ -7947,6 +9070,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σu (bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding — head-on f/p overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 1, n: 5, l: 3, m: 0, zeff: 9.10, c:  0.35 },
           { atom: 0, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.55 },
@@ -7957,6 +9081,7 @@ const MOLECULAR_ORBITALS = {
         name: 'πu (bonding, y)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'σ bonding — head-on f/p overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 1, n: 5, l: 3, m: -1, zeff: 9.10, c: 0.35 },
           { atom: 0, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.60 },
@@ -7967,6 +9092,7 @@ const MOLECULAR_ORBITALS = {
         name: 'πu (bonding, z)',
         type: 'bonding',
         electrons: 2,
+      energy: 4, desc: 'σ bonding — head-on f/p overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 1, n: 5, l: 3, m: 1, zeff: 9.10, c:  0.35 },
           { atom: 0, n: 2, l: 1, m: 0, zeff: 4.45, c:  0.60 },
@@ -7977,6 +9103,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Cm 5f nonbonding (6e)',
         type: 'nonbonding',
         electrons: 6,
+      energy: 5, desc: 'Localized f-electrons on O — shielded from bonding by outer shells.',
         ao: [
           { atom: 1, n: 5, l: 3, m: -2, zeff: 9.10, c: 0.408 },
           { atom: 1, n: 5, l: 3, m: 2, zeff: 9.10, c: 0.408 },
@@ -7990,6 +9117,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O lone pairs',
         type: 'nonbonding',
         electrons: 4,
+      energy: 6, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 0, n: 2, l: 0, m: 0, zeff: 4.45, c: 0.50 },
           { atom: 2, n: 2, l: 0, m: 0, zeff: 4.45, c: 0.50 },
@@ -8002,11 +9130,13 @@ const MOLECULAR_ORBITALS = {
 
   'PaO₂': {
     // atoms: O(0), Pa(1), O(2) — linear, Pa⁴⁺ 5f¹
+    notes: 'Protactinium dioxide — one of the rarest actinide compounds. Pa 5f contribution to bonding is debated.',
     orbitals: [
       {
         name: 'σg (bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 1, desc: 'σ bonding — head-on d/p overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 1, n: 6, l: 2, m: 0, zeff: 10.2, c:  0.30 },
           { atom: 0, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.60 },
@@ -8017,6 +9147,7 @@ const MOLECULAR_ORBITALS = {
         name: 'σu (bond)',
         type: 'bonding',
         electrons: 2,
+      energy: 2, desc: 'σ bonding — head-on f/p overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 1, n: 5, l: 3, m: 0, zeff: 7.80, c:  0.35 },
           { atom: 0, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.55 },
@@ -8027,6 +9158,7 @@ const MOLECULAR_ORBITALS = {
         name: 'πu (bonding, y)',
         type: 'bonding',
         electrons: 2,
+      energy: 3, desc: 'σ bonding — head-on f/p overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 1, n: 5, l: 3, m: -1, zeff: 7.80, c: 0.35 },
           { atom: 0, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.60 },
@@ -8037,6 +9169,7 @@ const MOLECULAR_ORBITALS = {
         name: 'πu (bonding, z)',
         type: 'bonding',
         electrons: 2,
+      energy: 4, desc: 'σ bonding — head-on f/p overlap concentrates electron density along the bond axis.',
         ao: [
           { atom: 1, n: 5, l: 3, m: 1, zeff: 7.80, c:  0.35 },
           { atom: 0, n: 2, l: 1, m: 0, zeff: 4.45, c:  0.60 },
@@ -8047,6 +9180,7 @@ const MOLECULAR_ORBITALS = {
         name: 'Pa 5f nonbonding (1e)',
         type: 'nonbonding',
         electrons: 1,
+      energy: 5, desc: 'Localized f-electrons on O — shielded from bonding by outer shells.',
         ao: [
           { atom: 1, n: 5, l: 3, m: -2, zeff: 7.80, c: 1.0 },
         ],
@@ -8055,6 +9189,7 @@ const MOLECULAR_ORBITALS = {
         name: 'O lone pairs',
         type: 'nonbonding',
         electrons: 4,
+      energy: 6, desc: 'Lone pair electrons — localized and can act as a Lewis base.',
         ao: [
           { atom: 0, n: 2, l: 0, m: 0, zeff: 4.45, c: 0.50 },
           { atom: 2, n: 2, l: 0, m: 0, zeff: 4.45, c: 0.50 },
@@ -8070,222 +9205,281 @@ const MOLECULAR_ORBITALS = {
   // 4f electrons are nonbonding, Zeff from Slater's rules for each Ln
 
   'Pr₂O₃': {
+    notes: 'Praseodymium sesquioxide — Pr 4f² electrons are localized and barely participate in bonding.',
     orbitals: [
-      { name: 'σ₁ (Pr-O bond)', type: 'bonding', electrons: 2, ao: [
+      { name: 'σ₁ (Pr-O bond)', type: 'bonding', electrons: 2,
+      energy: 1, desc: 'σ bonding — head-on d/p overlap concentrates electron density along the bond axis.', ao: [
         { atom: 0, n: 5, l: 2, m: 0, zeff: 7.60, c: 0.35 }, { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 }, { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
       ]},
-      { name: 'σ₂ (Pr-O bond)', type: 'bonding', electrons: 2, ao: [
+      { name: 'σ₂ (Pr-O bond)', type: 'bonding', electrons: 2,
+      energy: 2, desc: 'σ bonding — head-on d/p overlap concentrates electron density along the bond axis.', ao: [
         { atom: 1, n: 5, l: 2, m: 0, zeff: 7.60, c: 0.35 }, { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 }, { atom: 4, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
       ]},
-      { name: 'Pr 4f nonbonding (4e)', type: 'nonbonding', electrons: 4, ao: [
+      { name: 'Pr 4f nonbonding (4e)', type: 'nonbonding', electrons: 4,
+      energy: 3, desc: 'Localized f-electrons — shielded from bonding by outer electron shells.', ao: [
         { atom: 0, n: 4, l: 3, m: -3, zeff: 7.60, c: 0.50 }, { atom: 0, n: 4, l: 3, m: -2, zeff: 7.60, c: 0.50 },
         { atom: 1, n: 4, l: 3, m: -3, zeff: 7.60, c: 0.50 }, { atom: 1, n: 4, l: 3, m: -2, zeff: 7.60, c: 0.50 },
       ]},
-      { name: 'O lone pairs', type: 'nonbonding', electrons: 6, ao: [
+      { name: 'O lone pairs', type: 'nonbonding', electrons: 6,
+      energy: 4, desc: 'Lone pair electrons — localized and can act as a Lewis base.', ao: [
         { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 }, { atom: 3, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 }, { atom: 4, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 },
       ]},
     ],
   },
 
   'Nd₂O₃': {
+    notes: 'Neodymium sesquioxide — Nd is used in the strongest permanent magnets. 4f³ electrons are non-bonding.',
     orbitals: [
-      { name: 'σ₁ (Nd-O bond)', type: 'bonding', electrons: 2, ao: [
+      { name: 'σ₁ (Nd-O bond)', type: 'bonding', electrons: 2,
+      energy: 1, desc: 'σ bonding — head-on d/p overlap concentrates electron density along the bond axis.', ao: [
         { atom: 0, n: 5, l: 2, m: 0, zeff: 7.95, c: 0.35 }, { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 }, { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
       ]},
-      { name: 'σ₂ (Nd-O bond)', type: 'bonding', electrons: 2, ao: [
+      { name: 'σ₂ (Nd-O bond)', type: 'bonding', electrons: 2,
+      energy: 2, desc: 'σ bonding — head-on d/p overlap concentrates electron density along the bond axis.', ao: [
         { atom: 1, n: 5, l: 2, m: 0, zeff: 7.95, c: 0.35 }, { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 }, { atom: 4, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
       ]},
-      { name: 'Nd 4f nonbonding (6e)', type: 'nonbonding', electrons: 6, ao: [
+      { name: 'Nd 4f nonbonding (6e)', type: 'nonbonding', electrons: 6,
+      energy: 3, desc: 'Localized f-electrons — shielded from bonding by outer electron shells.', ao: [
         { atom: 0, n: 4, l: 3, m: -3, zeff: 7.95, c: 0.408 }, { atom: 0, n: 4, l: 3, m: -2, zeff: 7.95, c: 0.408 }, { atom: 0, n: 4, l: 3, m: -1, zeff: 7.95, c: 0.408 },
         { atom: 1, n: 4, l: 3, m: -3, zeff: 7.95, c: 0.408 }, { atom: 1, n: 4, l: 3, m: -2, zeff: 7.95, c: 0.408 }, { atom: 1, n: 4, l: 3, m: -1, zeff: 7.95, c: 0.408 },
       ]},
-      { name: 'O lone pairs', type: 'nonbonding', electrons: 6, ao: [
+      { name: 'O lone pairs', type: 'nonbonding', electrons: 6,
+      energy: 4, desc: 'Lone pair electrons — localized and can act as a Lewis base.', ao: [
         { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 }, { atom: 3, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 }, { atom: 4, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 },
       ]},
     ],
   },
 
   'Sm₂O₃': {
+    notes: 'Samarium sesquioxide — Sm 4f⁵ near the half-filled shell. Used in nuclear reactor control rods.',
     orbitals: [
-      { name: 'σ₁ (Sm-O bond)', type: 'bonding', electrons: 2, ao: [
+      { name: 'σ₁ (Sm-O bond)', type: 'bonding', electrons: 2,
+      energy: 1, desc: 'σ bonding — head-on d/p overlap concentrates electron density along the bond axis.', ao: [
         { atom: 0, n: 5, l: 2, m: 0, zeff: 8.65, c: 0.35 }, { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 }, { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
       ]},
-      { name: 'σ₂ (Sm-O bond)', type: 'bonding', electrons: 2, ao: [
+      { name: 'σ₂ (Sm-O bond)', type: 'bonding', electrons: 2,
+      energy: 2, desc: 'σ bonding — head-on d/p overlap concentrates electron density along the bond axis.', ao: [
         { atom: 1, n: 5, l: 2, m: 0, zeff: 8.65, c: 0.35 }, { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 }, { atom: 4, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
       ]},
-      { name: 'Sm 4f nonbonding (10e)', type: 'nonbonding', electrons: 10, ao: [
+      { name: 'Sm 4f nonbonding (10e)', type: 'nonbonding', electrons: 10,
+      energy: 3, desc: 'Localized f-electrons — shielded from bonding by outer electron shells.', ao: [
         { atom: 0, n: 4, l: 3, m: -3, zeff: 8.65, c: 0.316 }, { atom: 0, n: 4, l: 3, m: -2, zeff: 8.65, c: 0.316 }, { atom: 0, n: 4, l: 3, m: -1, zeff: 8.65, c: 0.316 }, { atom: 0, n: 4, l: 3, m: 0, zeff: 8.65, c: 0.316 }, { atom: 0, n: 4, l: 3, m: 1, zeff: 8.65, c: 0.316 },
         { atom: 1, n: 4, l: 3, m: -3, zeff: 8.65, c: 0.316 }, { atom: 1, n: 4, l: 3, m: -2, zeff: 8.65, c: 0.316 }, { atom: 1, n: 4, l: 3, m: -1, zeff: 8.65, c: 0.316 }, { atom: 1, n: 4, l: 3, m: 0, zeff: 8.65, c: 0.316 }, { atom: 1, n: 4, l: 3, m: 1, zeff: 8.65, c: 0.316 },
       ]},
-      { name: 'O lone pairs', type: 'nonbonding', electrons: 6, ao: [
+      { name: 'O lone pairs', type: 'nonbonding', electrons: 6,
+      energy: 4, desc: 'Lone pair electrons — localized and can act as a Lewis base.', ao: [
         { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 }, { atom: 3, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 }, { atom: 4, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 },
       ]},
     ],
   },
 
   'Eu₂O₃': {
+    notes: 'Europium sesquioxide — red phosphor in displays. Eu 4f⁶→4f⁷ transitions produce sharp emission lines.',
     orbitals: [
-      { name: 'σ₁ (Eu-O bond)', type: 'bonding', electrons: 2, ao: [
+      { name: 'σ₁ (Eu-O bond)', type: 'bonding', electrons: 2,
+      energy: 1, desc: 'σ bonding — head-on d/p overlap concentrates electron density along the bond axis.', ao: [
         { atom: 0, n: 5, l: 2, m: 0, zeff: 9.00, c: 0.35 }, { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 }, { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
       ]},
-      { name: 'σ₂ (Eu-O bond)', type: 'bonding', electrons: 2, ao: [
+      { name: 'σ₂ (Eu-O bond)', type: 'bonding', electrons: 2,
+      energy: 2, desc: 'σ bonding — head-on d/p overlap concentrates electron density along the bond axis.', ao: [
         { atom: 1, n: 5, l: 2, m: 0, zeff: 9.00, c: 0.35 }, { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 }, { atom: 4, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
       ]},
-      { name: 'Eu 4f nonbonding (12e)', type: 'nonbonding', electrons: 12, ao: [
+      { name: 'Eu 4f nonbonding (12e)', type: 'nonbonding', electrons: 12,
+      energy: 3, desc: 'Localized f-electrons — shielded from bonding by outer electron shells.', ao: [
         { atom: 0, n: 4, l: 3, m: -3, zeff: 9.00, c: 0.289 }, { atom: 0, n: 4, l: 3, m: -2, zeff: 9.00, c: 0.289 }, { atom: 0, n: 4, l: 3, m: -1, zeff: 9.00, c: 0.289 }, { atom: 0, n: 4, l: 3, m: 0, zeff: 9.00, c: 0.289 }, { atom: 0, n: 4, l: 3, m: 1, zeff: 9.00, c: 0.289 }, { atom: 0, n: 4, l: 3, m: 2, zeff: 9.00, c: 0.289 },
         { atom: 1, n: 4, l: 3, m: -3, zeff: 9.00, c: 0.289 }, { atom: 1, n: 4, l: 3, m: -2, zeff: 9.00, c: 0.289 }, { atom: 1, n: 4, l: 3, m: -1, zeff: 9.00, c: 0.289 }, { atom: 1, n: 4, l: 3, m: 0, zeff: 9.00, c: 0.289 }, { atom: 1, n: 4, l: 3, m: 1, zeff: 9.00, c: 0.289 }, { atom: 1, n: 4, l: 3, m: 2, zeff: 9.00, c: 0.289 },
       ]},
-      { name: 'O lone pairs', type: 'nonbonding', electrons: 6, ao: [
+      { name: 'O lone pairs', type: 'nonbonding', electrons: 6,
+      energy: 4, desc: 'Lone pair electrons — localized and can act as a Lewis base.', ao: [
         { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 }, { atom: 3, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 }, { atom: 4, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 },
       ]},
     ],
   },
 
   'Gd₂O₃': {
+    notes: 'Gadolinium sesquioxide — Gd 4f⁷ half-filled shell gives the highest magnetic moment among lanthanides.',
     orbitals: [
-      { name: 'σ₁ (Gd-O bond)', type: 'bonding', electrons: 2, ao: [
+      { name: 'σ₁ (Gd-O bond)', type: 'bonding', electrons: 2,
+      energy: 1, desc: 'σ bonding — head-on d/p overlap concentrates electron density along the bond axis.', ao: [
         { atom: 0, n: 5, l: 2, m: 0, zeff: 9.35, c: 0.35 }, { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 }, { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
       ]},
-      { name: 'σ₂ (Gd-O bond)', type: 'bonding', electrons: 2, ao: [
+      { name: 'σ₂ (Gd-O bond)', type: 'bonding', electrons: 2,
+      energy: 2, desc: 'σ bonding — head-on d/p overlap concentrates electron density along the bond axis.', ao: [
         { atom: 1, n: 5, l: 2, m: 0, zeff: 9.35, c: 0.35 }, { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 }, { atom: 4, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
       ]},
-      { name: 'Gd 4f nonbonding (14e)', type: 'nonbonding', electrons: 14, ao: [
+      { name: 'Gd 4f nonbonding (14e)', type: 'nonbonding', electrons: 14,
+      energy: 3, desc: 'Localized f-electrons — shielded from bonding by outer electron shells.', ao: [
         { atom: 0, n: 4, l: 3, m: -3, zeff: 9.35, c: 0.267 }, { atom: 0, n: 4, l: 3, m: -2, zeff: 9.35, c: 0.267 }, { atom: 0, n: 4, l: 3, m: -1, zeff: 9.35, c: 0.267 }, { atom: 0, n: 4, l: 3, m: 0, zeff: 9.35, c: 0.267 }, { atom: 0, n: 4, l: 3, m: 1, zeff: 9.35, c: 0.267 }, { atom: 0, n: 4, l: 3, m: 2, zeff: 9.35, c: 0.267 }, { atom: 0, n: 4, l: 3, m: 3, zeff: 9.35, c: 0.267 },
         { atom: 1, n: 4, l: 3, m: -3, zeff: 9.35, c: 0.267 }, { atom: 1, n: 4, l: 3, m: -2, zeff: 9.35, c: 0.267 }, { atom: 1, n: 4, l: 3, m: -1, zeff: 9.35, c: 0.267 }, { atom: 1, n: 4, l: 3, m: 0, zeff: 9.35, c: 0.267 }, { atom: 1, n: 4, l: 3, m: 1, zeff: 9.35, c: 0.267 }, { atom: 1, n: 4, l: 3, m: 2, zeff: 9.35, c: 0.267 }, { atom: 1, n: 4, l: 3, m: 3, zeff: 9.35, c: 0.267 },
       ]},
-      { name: 'O lone pairs', type: 'nonbonding', electrons: 6, ao: [
+      { name: 'O lone pairs', type: 'nonbonding', electrons: 6,
+      energy: 4, desc: 'Lone pair electrons — localized and can act as a Lewis base.', ao: [
         { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 }, { atom: 3, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 }, { atom: 4, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 },
       ]},
     ],
   },
 
   'Tb₂O₃': {
+    notes: 'Terbium sesquioxide — green phosphor. Tb 4f⁸ is one electron beyond the half-filled stability point.',
     orbitals: [
-      { name: 'σ₁ (Tb-O bond)', type: 'bonding', electrons: 2, ao: [
+      { name: 'σ₁ (Tb-O bond)', type: 'bonding', electrons: 2,
+      energy: 1, desc: 'σ bonding — head-on d/p overlap concentrates electron density along the bond axis.', ao: [
         { atom: 0, n: 5, l: 2, m: 0, zeff: 9.70, c: 0.35 }, { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 }, { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
       ]},
-      { name: 'σ₂ (Tb-O bond)', type: 'bonding', electrons: 2, ao: [
+      { name: 'σ₂ (Tb-O bond)', type: 'bonding', electrons: 2,
+      energy: 2, desc: 'σ bonding — head-on d/p overlap concentrates electron density along the bond axis.', ao: [
         { atom: 1, n: 5, l: 2, m: 0, zeff: 9.70, c: 0.35 }, { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 }, { atom: 4, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
       ]},
-      { name: 'Tb 4f nonbonding (16e)', type: 'nonbonding', electrons: 16, ao: [
+      { name: 'Tb 4f nonbonding (16e)', type: 'nonbonding', electrons: 16,
+      energy: 3, desc: 'Localized f-electrons — shielded from bonding by outer electron shells.', ao: [
         { atom: 0, n: 4, l: 3, m: -3, zeff: 9.70, c: 0.250 }, { atom: 0, n: 4, l: 3, m: -2, zeff: 9.70, c: 0.250 }, { atom: 0, n: 4, l: 3, m: -1, zeff: 9.70, c: 0.250 }, { atom: 0, n: 4, l: 3, m: 0, zeff: 9.70, c: 0.250 }, { atom: 0, n: 4, l: 3, m: 1, zeff: 9.70, c: 0.250 }, { atom: 0, n: 4, l: 3, m: 2, zeff: 9.70, c: 0.250 }, { atom: 0, n: 4, l: 3, m: 3, zeff: 9.70, c: 0.250 }, { atom: 0, n: 4, l: 3, m: -3, zeff: 9.70, c: 0.250 },
         { atom: 1, n: 4, l: 3, m: -3, zeff: 9.70, c: 0.250 }, { atom: 1, n: 4, l: 3, m: -2, zeff: 9.70, c: 0.250 }, { atom: 1, n: 4, l: 3, m: -1, zeff: 9.70, c: 0.250 }, { atom: 1, n: 4, l: 3, m: 0, zeff: 9.70, c: 0.250 }, { atom: 1, n: 4, l: 3, m: 1, zeff: 9.70, c: 0.250 }, { atom: 1, n: 4, l: 3, m: 2, zeff: 9.70, c: 0.250 }, { atom: 1, n: 4, l: 3, m: 3, zeff: 9.70, c: 0.250 }, { atom: 1, n: 4, l: 3, m: -3, zeff: 9.70, c: 0.250 },
       ]},
-      { name: 'O lone pairs', type: 'nonbonding', electrons: 6, ao: [
+      { name: 'O lone pairs', type: 'nonbonding', electrons: 6,
+      energy: 4, desc: 'Lone pair electrons — localized and can act as a Lewis base.', ao: [
         { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 }, { atom: 3, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 }, { atom: 4, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 },
       ]},
     ],
   },
 
   'Dy₂O₃': {
+    notes: 'Dysprosium sesquioxide — Dy magnets outperform Nd magnets at high temperatures.',
     orbitals: [
-      { name: 'σ₁ (Dy-O bond)', type: 'bonding', electrons: 2, ao: [
+      { name: 'σ₁ (Dy-O bond)', type: 'bonding', electrons: 2,
+      energy: 1, desc: 'σ bonding — head-on d/p overlap concentrates electron density along the bond axis.', ao: [
         { atom: 0, n: 5, l: 2, m: 0, zeff: 10.05, c: 0.35 }, { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 }, { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
       ]},
-      { name: 'σ₂ (Dy-O bond)', type: 'bonding', electrons: 2, ao: [
+      { name: 'σ₂ (Dy-O bond)', type: 'bonding', electrons: 2,
+      energy: 2, desc: 'σ bonding — head-on d/p overlap concentrates electron density along the bond axis.', ao: [
         { atom: 1, n: 5, l: 2, m: 0, zeff: 10.05, c: 0.35 }, { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 }, { atom: 4, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
       ]},
-      { name: 'Dy 4f nonbonding (18e)', type: 'nonbonding', electrons: 18, ao: [
+      { name: 'Dy 4f nonbonding (18e)', type: 'nonbonding', electrons: 18,
+      energy: 3, desc: 'Localized f-electrons — shielded from bonding by outer electron shells.', ao: [
         { atom: 0, n: 4, l: 3, m: -3, zeff: 10.05, c: 0.236 }, { atom: 0, n: 4, l: 3, m: -2, zeff: 10.05, c: 0.236 }, { atom: 0, n: 4, l: 3, m: -1, zeff: 10.05, c: 0.236 }, { atom: 0, n: 4, l: 3, m: 0, zeff: 10.05, c: 0.236 }, { atom: 0, n: 4, l: 3, m: 1, zeff: 10.05, c: 0.236 }, { atom: 0, n: 4, l: 3, m: 2, zeff: 10.05, c: 0.236 }, { atom: 0, n: 4, l: 3, m: 3, zeff: 10.05, c: 0.236 },
         { atom: 0, n: 4, l: 3, m: -3, zeff: 10.05, c: 0.236 }, { atom: 0, n: 4, l: 3, m: -2, zeff: 10.05, c: 0.236 },
         { atom: 1, n: 4, l: 3, m: -3, zeff: 10.05, c: 0.236 }, { atom: 1, n: 4, l: 3, m: -2, zeff: 10.05, c: 0.236 }, { atom: 1, n: 4, l: 3, m: -1, zeff: 10.05, c: 0.236 }, { atom: 1, n: 4, l: 3, m: 0, zeff: 10.05, c: 0.236 }, { atom: 1, n: 4, l: 3, m: 1, zeff: 10.05, c: 0.236 }, { atom: 1, n: 4, l: 3, m: 2, zeff: 10.05, c: 0.236 }, { atom: 1, n: 4, l: 3, m: 3, zeff: 10.05, c: 0.236 },
         { atom: 1, n: 4, l: 3, m: -3, zeff: 10.05, c: 0.236 }, { atom: 1, n: 4, l: 3, m: -2, zeff: 10.05, c: 0.236 },
       ]},
-      { name: 'O lone pairs', type: 'nonbonding', electrons: 6, ao: [
+      { name: 'O lone pairs', type: 'nonbonding', electrons: 6,
+      energy: 4, desc: 'Lone pair electrons — localized and can act as a Lewis base.', ao: [
         { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 }, { atom: 3, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 }, { atom: 4, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 },
       ]},
     ],
   },
 
   'Ho₂O₃': {
+    notes: 'Holmium sesquioxide — Ho has the highest magnetic moment of any element.',
     orbitals: [
-      { name: 'σ₁ (Ho-O bond)', type: 'bonding', electrons: 2, ao: [
+      { name: 'σ₁ (Ho-O bond)', type: 'bonding', electrons: 2,
+      energy: 1, desc: 'σ bonding — head-on d/p overlap concentrates electron density along the bond axis.', ao: [
         { atom: 0, n: 5, l: 2, m: 0, zeff: 10.40, c: 0.35 }, { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 }, { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
       ]},
-      { name: 'σ₂ (Ho-O bond)', type: 'bonding', electrons: 2, ao: [
+      { name: 'σ₂ (Ho-O bond)', type: 'bonding', electrons: 2,
+      energy: 2, desc: 'σ bonding — head-on d/p overlap concentrates electron density along the bond axis.', ao: [
         { atom: 1, n: 5, l: 2, m: 0, zeff: 10.40, c: 0.35 }, { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 }, { atom: 4, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
       ]},
-      { name: 'Ho 4f nonbonding (20e)', type: 'nonbonding', electrons: 20, ao: [
+      { name: 'Ho 4f nonbonding (20e)', type: 'nonbonding', electrons: 20,
+      energy: 3, desc: 'Localized f-electrons — shielded from bonding by outer electron shells.', ao: [
         { atom: 0, n: 4, l: 3, m: -3, zeff: 10.40, c: 0.224 }, { atom: 0, n: 4, l: 3, m: -2, zeff: 10.40, c: 0.224 }, { atom: 0, n: 4, l: 3, m: -1, zeff: 10.40, c: 0.224 }, { atom: 0, n: 4, l: 3, m: 0, zeff: 10.40, c: 0.224 }, { atom: 0, n: 4, l: 3, m: 1, zeff: 10.40, c: 0.224 }, { atom: 0, n: 4, l: 3, m: 2, zeff: 10.40, c: 0.224 }, { atom: 0, n: 4, l: 3, m: 3, zeff: 10.40, c: 0.224 },
         { atom: 0, n: 4, l: 3, m: -3, zeff: 10.40, c: 0.224 }, { atom: 0, n: 4, l: 3, m: -2, zeff: 10.40, c: 0.224 }, { atom: 0, n: 4, l: 3, m: -1, zeff: 10.40, c: 0.224 },
         { atom: 1, n: 4, l: 3, m: -3, zeff: 10.40, c: 0.224 }, { atom: 1, n: 4, l: 3, m: -2, zeff: 10.40, c: 0.224 }, { atom: 1, n: 4, l: 3, m: -1, zeff: 10.40, c: 0.224 }, { atom: 1, n: 4, l: 3, m: 0, zeff: 10.40, c: 0.224 }, { atom: 1, n: 4, l: 3, m: 1, zeff: 10.40, c: 0.224 }, { atom: 1, n: 4, l: 3, m: 2, zeff: 10.40, c: 0.224 }, { atom: 1, n: 4, l: 3, m: 3, zeff: 10.40, c: 0.224 },
         { atom: 1, n: 4, l: 3, m: -3, zeff: 10.40, c: 0.224 }, { atom: 1, n: 4, l: 3, m: -2, zeff: 10.40, c: 0.224 }, { atom: 1, n: 4, l: 3, m: -1, zeff: 10.40, c: 0.224 },
       ]},
-      { name: 'O lone pairs', type: 'nonbonding', electrons: 6, ao: [
+      { name: 'O lone pairs', type: 'nonbonding', electrons: 6,
+      energy: 4, desc: 'Lone pair electrons — localized and can act as a Lewis base.', ao: [
         { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 }, { atom: 3, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 }, { atom: 4, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 },
       ]},
     ],
   },
 
   'Er₂O₃': {
+    notes: 'Erbium sesquioxide — Er-doped fiber amplifiers revolutionized telecommunications.',
     orbitals: [
-      { name: 'σ₁ (Er-O bond)', type: 'bonding', electrons: 2, ao: [
+      { name: 'σ₁ (Er-O bond)', type: 'bonding', electrons: 2,
+      energy: 1, desc: 'σ bonding — head-on d/p overlap concentrates electron density along the bond axis.', ao: [
         { atom: 0, n: 5, l: 2, m: 0, zeff: 10.75, c: 0.35 }, { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 }, { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
       ]},
-      { name: 'σ₂ (Er-O bond)', type: 'bonding', electrons: 2, ao: [
+      { name: 'σ₂ (Er-O bond)', type: 'bonding', electrons: 2,
+      energy: 2, desc: 'σ bonding — head-on d/p overlap concentrates electron density along the bond axis.', ao: [
         { atom: 1, n: 5, l: 2, m: 0, zeff: 10.75, c: 0.35 }, { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 }, { atom: 4, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
       ]},
-      { name: 'Er 4f nonbonding (22e)', type: 'nonbonding', electrons: 22, ao: [
+      { name: 'Er 4f nonbonding (22e)', type: 'nonbonding', electrons: 22,
+      energy: 3, desc: 'Localized f-electrons — shielded from bonding by outer electron shells.', ao: [
         { atom: 0, n: 4, l: 3, m: -3, zeff: 10.75, c: 0.213 }, { atom: 0, n: 4, l: 3, m: -2, zeff: 10.75, c: 0.213 }, { atom: 0, n: 4, l: 3, m: -1, zeff: 10.75, c: 0.213 }, { atom: 0, n: 4, l: 3, m: 0, zeff: 10.75, c: 0.213 }, { atom: 0, n: 4, l: 3, m: 1, zeff: 10.75, c: 0.213 }, { atom: 0, n: 4, l: 3, m: 2, zeff: 10.75, c: 0.213 }, { atom: 0, n: 4, l: 3, m: 3, zeff: 10.75, c: 0.213 },
         { atom: 0, n: 4, l: 3, m: -3, zeff: 10.75, c: 0.213 }, { atom: 0, n: 4, l: 3, m: -2, zeff: 10.75, c: 0.213 }, { atom: 0, n: 4, l: 3, m: -1, zeff: 10.75, c: 0.213 }, { atom: 0, n: 4, l: 3, m: 0, zeff: 10.75, c: 0.213 },
         { atom: 1, n: 4, l: 3, m: -3, zeff: 10.75, c: 0.213 }, { atom: 1, n: 4, l: 3, m: -2, zeff: 10.75, c: 0.213 }, { atom: 1, n: 4, l: 3, m: -1, zeff: 10.75, c: 0.213 }, { atom: 1, n: 4, l: 3, m: 0, zeff: 10.75, c: 0.213 }, { atom: 1, n: 4, l: 3, m: 1, zeff: 10.75, c: 0.213 }, { atom: 1, n: 4, l: 3, m: 2, zeff: 10.75, c: 0.213 }, { atom: 1, n: 4, l: 3, m: 3, zeff: 10.75, c: 0.213 },
         { atom: 1, n: 4, l: 3, m: -3, zeff: 10.75, c: 0.213 }, { atom: 1, n: 4, l: 3, m: -2, zeff: 10.75, c: 0.213 }, { atom: 1, n: 4, l: 3, m: -1, zeff: 10.75, c: 0.213 }, { atom: 1, n: 4, l: 3, m: 0, zeff: 10.75, c: 0.213 },
       ]},
-      { name: 'O lone pairs', type: 'nonbonding', electrons: 6, ao: [
+      { name: 'O lone pairs', type: 'nonbonding', electrons: 6,
+      energy: 4, desc: 'Lone pair electrons — localized and can act as a Lewis base.', ao: [
         { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 }, { atom: 3, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 }, { atom: 4, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 },
       ]},
     ],
   },
 
   'Tm₂O₃': {
+    notes: 'Thulium sesquioxide — Tm is the rarest lanthanide with stable isotopes. Used in X-ray sources.',
     orbitals: [
-      { name: 'σ₁ (Tm-O bond)', type: 'bonding', electrons: 2, ao: [
+      { name: 'σ₁ (Tm-O bond)', type: 'bonding', electrons: 2,
+      energy: 1, desc: 'σ bonding — head-on d/p overlap concentrates electron density along the bond axis.', ao: [
         { atom: 0, n: 5, l: 2, m: 0, zeff: 11.10, c: 0.35 }, { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 }, { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
       ]},
-      { name: 'σ₂ (Tm-O bond)', type: 'bonding', electrons: 2, ao: [
+      { name: 'σ₂ (Tm-O bond)', type: 'bonding', electrons: 2,
+      energy: 2, desc: 'σ bonding — head-on d/p overlap concentrates electron density along the bond axis.', ao: [
         { atom: 1, n: 5, l: 2, m: 0, zeff: 11.10, c: 0.35 }, { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 }, { atom: 4, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
       ]},
-      { name: 'Tm 4f nonbonding (24e)', type: 'nonbonding', electrons: 24, ao: [
+      { name: 'Tm 4f nonbonding (24e)', type: 'nonbonding', electrons: 24,
+      energy: 3, desc: 'Localized f-electrons — shielded from bonding by outer electron shells.', ao: [
         { atom: 0, n: 4, l: 3, m: -3, zeff: 11.10, c: 0.204 }, { atom: 0, n: 4, l: 3, m: -2, zeff: 11.10, c: 0.204 }, { atom: 0, n: 4, l: 3, m: -1, zeff: 11.10, c: 0.204 }, { atom: 0, n: 4, l: 3, m: 0, zeff: 11.10, c: 0.204 }, { atom: 0, n: 4, l: 3, m: 1, zeff: 11.10, c: 0.204 }, { atom: 0, n: 4, l: 3, m: 2, zeff: 11.10, c: 0.204 }, { atom: 0, n: 4, l: 3, m: 3, zeff: 11.10, c: 0.204 },
         { atom: 0, n: 4, l: 3, m: -3, zeff: 11.10, c: 0.204 }, { atom: 0, n: 4, l: 3, m: -2, zeff: 11.10, c: 0.204 }, { atom: 0, n: 4, l: 3, m: -1, zeff: 11.10, c: 0.204 }, { atom: 0, n: 4, l: 3, m: 0, zeff: 11.10, c: 0.204 }, { atom: 0, n: 4, l: 3, m: 1, zeff: 11.10, c: 0.204 },
         { atom: 1, n: 4, l: 3, m: -3, zeff: 11.10, c: 0.204 }, { atom: 1, n: 4, l: 3, m: -2, zeff: 11.10, c: 0.204 }, { atom: 1, n: 4, l: 3, m: -1, zeff: 11.10, c: 0.204 }, { atom: 1, n: 4, l: 3, m: 0, zeff: 11.10, c: 0.204 }, { atom: 1, n: 4, l: 3, m: 1, zeff: 11.10, c: 0.204 }, { atom: 1, n: 4, l: 3, m: 2, zeff: 11.10, c: 0.204 }, { atom: 1, n: 4, l: 3, m: 3, zeff: 11.10, c: 0.204 },
         { atom: 1, n: 4, l: 3, m: -3, zeff: 11.10, c: 0.204 }, { atom: 1, n: 4, l: 3, m: -2, zeff: 11.10, c: 0.204 }, { atom: 1, n: 4, l: 3, m: -1, zeff: 11.10, c: 0.204 }, { atom: 1, n: 4, l: 3, m: 0, zeff: 11.10, c: 0.204 }, { atom: 1, n: 4, l: 3, m: 1, zeff: 11.10, c: 0.204 },
       ]},
-      { name: 'O lone pairs', type: 'nonbonding', electrons: 6, ao: [
+      { name: 'O lone pairs', type: 'nonbonding', electrons: 6,
+      energy: 4, desc: 'Lone pair electrons — localized and can act as a Lewis base.', ao: [
         { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 }, { atom: 3, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 }, { atom: 4, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 },
       ]},
     ],
   },
 
   'Yb₂O₃': {
+    notes: 'Ytterbium sesquioxide — Yb 4f¹³ is one electron short of full. Used in atomic clocks.',
     orbitals: [
-      { name: 'σ₁ (Yb-O bond)', type: 'bonding', electrons: 2, ao: [
+      { name: 'σ₁ (Yb-O bond)', type: 'bonding', electrons: 2,
+      energy: 1, desc: 'σ bonding — head-on d/p overlap concentrates electron density along the bond axis.', ao: [
         { atom: 0, n: 5, l: 2, m: 0, zeff: 11.45, c: 0.35 }, { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 }, { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
       ]},
-      { name: 'σ₂ (Yb-O bond)', type: 'bonding', electrons: 2, ao: [
+      { name: 'σ₂ (Yb-O bond)', type: 'bonding', electrons: 2,
+      energy: 2, desc: 'σ bonding — head-on d/p overlap concentrates electron density along the bond axis.', ao: [
         { atom: 1, n: 5, l: 2, m: 0, zeff: 11.45, c: 0.35 }, { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 }, { atom: 4, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
       ]},
-      { name: 'Yb 4f nonbonding (26e)', type: 'nonbonding', electrons: 26, ao: [
+      { name: 'Yb 4f nonbonding (26e)', type: 'nonbonding', electrons: 26,
+      energy: 3, desc: 'Localized f-electrons — shielded from bonding by outer electron shells.', ao: [
         { atom: 0, n: 4, l: 3, m: -3, zeff: 11.45, c: 0.196 }, { atom: 0, n: 4, l: 3, m: -2, zeff: 11.45, c: 0.196 }, { atom: 0, n: 4, l: 3, m: -1, zeff: 11.45, c: 0.196 }, { atom: 0, n: 4, l: 3, m: 0, zeff: 11.45, c: 0.196 }, { atom: 0, n: 4, l: 3, m: 1, zeff: 11.45, c: 0.196 }, { atom: 0, n: 4, l: 3, m: 2, zeff: 11.45, c: 0.196 }, { atom: 0, n: 4, l: 3, m: 3, zeff: 11.45, c: 0.196 },
         { atom: 0, n: 4, l: 3, m: -3, zeff: 11.45, c: 0.196 }, { atom: 0, n: 4, l: 3, m: -2, zeff: 11.45, c: 0.196 }, { atom: 0, n: 4, l: 3, m: -1, zeff: 11.45, c: 0.196 }, { atom: 0, n: 4, l: 3, m: 0, zeff: 11.45, c: 0.196 }, { atom: 0, n: 4, l: 3, m: 1, zeff: 11.45, c: 0.196 }, { atom: 0, n: 4, l: 3, m: 2, zeff: 11.45, c: 0.196 },
         { atom: 1, n: 4, l: 3, m: -3, zeff: 11.45, c: 0.196 }, { atom: 1, n: 4, l: 3, m: -2, zeff: 11.45, c: 0.196 }, { atom: 1, n: 4, l: 3, m: -1, zeff: 11.45, c: 0.196 }, { atom: 1, n: 4, l: 3, m: 0, zeff: 11.45, c: 0.196 }, { atom: 1, n: 4, l: 3, m: 1, zeff: 11.45, c: 0.196 }, { atom: 1, n: 4, l: 3, m: 2, zeff: 11.45, c: 0.196 }, { atom: 1, n: 4, l: 3, m: 3, zeff: 11.45, c: 0.196 },
         { atom: 1, n: 4, l: 3, m: -3, zeff: 11.45, c: 0.196 }, { atom: 1, n: 4, l: 3, m: -2, zeff: 11.45, c: 0.196 }, { atom: 1, n: 4, l: 3, m: -1, zeff: 11.45, c: 0.196 }, { atom: 1, n: 4, l: 3, m: 0, zeff: 11.45, c: 0.196 }, { atom: 1, n: 4, l: 3, m: 1, zeff: 11.45, c: 0.196 }, { atom: 1, n: 4, l: 3, m: 2, zeff: 11.45, c: 0.196 },
       ]},
-      { name: 'O lone pairs', type: 'nonbonding', electrons: 6, ao: [
+      { name: 'O lone pairs', type: 'nonbonding', electrons: 6,
+      energy: 4, desc: 'Lone pair electrons — localized and can act as a Lewis base.', ao: [
         { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 }, { atom: 3, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 }, { atom: 4, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 },
       ]},
     ],
   },
 
   'Lu₂O₃': {
+    notes: 'Lutetium sesquioxide — Lu 4f¹⁴ is completely filled (lanthanide contraction makes Lu the smallest lanthanide).',
     orbitals: [
-      { name: 'σ₁ (Lu-O bond)', type: 'bonding', electrons: 2, ao: [
+      { name: 'σ₁ (Lu-O bond)', type: 'bonding', electrons: 2,
+      energy: 1, desc: 'σ bonding — head-on d/p overlap concentrates electron density along the bond axis.', ao: [
         { atom: 0, n: 5, l: 2, m: 0, zeff: 11.80, c: 0.35 }, { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 }, { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
       ]},
-      { name: 'σ₂ (Lu-O bond)', type: 'bonding', electrons: 2, ao: [
+      { name: 'σ₂ (Lu-O bond)', type: 'bonding', electrons: 2,
+      energy: 2, desc: 'σ bonding — head-on d/p overlap concentrates electron density along the bond axis.', ao: [
         { atom: 1, n: 5, l: 2, m: 0, zeff: 11.80, c: 0.35 }, { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 }, { atom: 4, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
       ]},
-      { name: 'O lone pairs', type: 'nonbonding', electrons: 6, ao: [
+      { name: 'O lone pairs', type: 'nonbonding', electrons: 6,
+      energy: 3, desc: 'Lone pair electrons — localized and can act as a Lewis base.', ao: [
         { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 }, { atom: 3, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 }, { atom: 4, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 },
       ]},
     ],
@@ -8294,32 +9488,41 @@ const MOLECULAR_ORBITALS = {
   // ─── Actinide sesquioxides ───
 
   'Ac₂O₃': {
+    notes: 'Actinium sesquioxide — intensely radioactive. Ac has no 5f electrons; bonding is purely 6d/7s.',
     orbitals: [
-      { name: 'σ₁ (Ac-O bond)', type: 'bonding', electrons: 2, ao: [
+      { name: 'σ₁ (Ac-O bond)', type: 'bonding', electrons: 2,
+      energy: 1, desc: 'σ bonding — head-on d/p overlap concentrates electron density along the bond axis.', ao: [
         { atom: 0, n: 6, l: 2, m: 0, zeff: 8.50, c: 0.35 }, { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 }, { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
       ]},
-      { name: 'σ₂ (Ac-O bond)', type: 'bonding', electrons: 2, ao: [
+      { name: 'σ₂ (Ac-O bond)', type: 'bonding', electrons: 2,
+      energy: 2, desc: 'σ bonding — head-on d/p overlap concentrates electron density along the bond axis.', ao: [
         { atom: 1, n: 6, l: 2, m: 0, zeff: 8.50, c: 0.35 }, { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 }, { atom: 4, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
       ]},
-      { name: 'O lone pairs', type: 'nonbonding', electrons: 6, ao: [
+      { name: 'O lone pairs', type: 'nonbonding', electrons: 6,
+      energy: 3, desc: 'Lone pair electrons — localized and can act as a Lewis base.', ao: [
         { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 }, { atom: 3, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 }, { atom: 4, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 },
       ]},
     ],
   },
 
   'Cm₂O₃': {
+    notes: 'Curium sesquioxide — Cm 5f⁷ mirrors Gd 4f⁷ as the half-filled analog in the actinide series.',
     orbitals: [
-      { name: 'σ₁ (Cm-O bond)', type: 'bonding', electrons: 2, ao: [
+      { name: 'σ₁ (Cm-O bond)', type: 'bonding', electrons: 2,
+      energy: 1, desc: 'σ bonding — head-on d/p overlap concentrates electron density along the bond axis.', ao: [
         { atom: 0, n: 6, l: 2, m: 0, zeff: 11.50, c: 0.35 }, { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 }, { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
       ]},
-      { name: 'σ₂ (Cm-O bond)', type: 'bonding', electrons: 2, ao: [
+      { name: 'σ₂ (Cm-O bond)', type: 'bonding', electrons: 2,
+      energy: 2, desc: 'σ bonding — head-on d/p overlap concentrates electron density along the bond axis.', ao: [
         { atom: 1, n: 6, l: 2, m: 0, zeff: 11.50, c: 0.35 }, { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 }, { atom: 4, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.60 },
       ]},
-      { name: 'Cm 5f nonbonding (14e)', type: 'nonbonding', electrons: 14, ao: [
+      { name: 'Cm 5f nonbonding (14e)', type: 'nonbonding', electrons: 14,
+      energy: 3, desc: 'Localized f-electrons — shielded from bonding by outer electron shells.', ao: [
         { atom: 0, n: 5, l: 3, m: -3, zeff: 9.10, c: 0.267 }, { atom: 0, n: 5, l: 3, m: -2, zeff: 9.10, c: 0.267 }, { atom: 0, n: 5, l: 3, m: -1, zeff: 9.10, c: 0.267 }, { atom: 0, n: 5, l: 3, m: 0, zeff: 9.10, c: 0.267 }, { atom: 0, n: 5, l: 3, m: 1, zeff: 9.10, c: 0.267 }, { atom: 0, n: 5, l: 3, m: 2, zeff: 9.10, c: 0.267 }, { atom: 0, n: 5, l: 3, m: 3, zeff: 9.10, c: 0.267 },
         { atom: 1, n: 5, l: 3, m: -3, zeff: 9.10, c: 0.267 }, { atom: 1, n: 5, l: 3, m: -2, zeff: 9.10, c: 0.267 }, { atom: 1, n: 5, l: 3, m: -1, zeff: 9.10, c: 0.267 }, { atom: 1, n: 5, l: 3, m: 0, zeff: 9.10, c: 0.267 }, { atom: 1, n: 5, l: 3, m: 1, zeff: 9.10, c: 0.267 }, { atom: 1, n: 5, l: 3, m: 2, zeff: 9.10, c: 0.267 }, { atom: 1, n: 5, l: 3, m: 3, zeff: 9.10, c: 0.267 },
       ]},
-      { name: 'O lone pairs', type: 'nonbonding', electrons: 6, ao: [
+      { name: 'O lone pairs', type: 'nonbonding', electrons: 6,
+      energy: 4, desc: 'Lone pair electrons — localized and can act as a Lewis base.', ao: [
         { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 }, { atom: 3, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 }, { atom: 4, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.577 },
       ]},
     ],
@@ -8327,25 +9530,224 @@ const MOLECULAR_ORBITALS = {
 
   'PmCl₃': {
     // atoms: Pm(0), Cl(1), Cl(2), Cl(3) — trigonal pyramidal
+    notes: 'Promethium chloride — all Pm isotopes are radioactive. The 4f⁴ electrons are non-bonding.',
     orbitals: [
-      { name: 'σ₁ (Pm-Cl bond)', type: 'bonding', electrons: 2, ao: [
+      { name: 'σ₁ (Pm-Cl bond)', type: 'bonding', electrons: 2,
+      energy: 1, desc: 'σ bonding — head-on d/p overlap concentrates electron density along the bond axis.', ao: [
         { atom: 0, n: 5, l: 2, m: 0, zeff: 8.30, c: 0.35 }, { atom: 1, n: 3, l: 1, m: 1, zeff: 6.10, c: 0.70 },
       ]},
-      { name: 'σ₂ (Pm-Cl bond)', type: 'bonding', electrons: 2, ao: [
+      { name: 'σ₂ (Pm-Cl bond)', type: 'bonding', electrons: 2,
+      energy: 2, desc: 'σ bonding — head-on d/p overlap concentrates electron density along the bond axis.', ao: [
         { atom: 0, n: 5, l: 2, m: 2, zeff: 8.30, c: 0.35 }, { atom: 2, n: 3, l: 1, m: -1, zeff: 6.10, c: 0.70 },
       ]},
-      { name: 'σ₃ (Pm-Cl bond)', type: 'bonding', electrons: 2, ao: [
+      { name: 'σ₃ (Pm-Cl bond)', type: 'bonding', electrons: 2,
+      energy: 3, desc: 'σ bonding — head-on d/p overlap concentrates electron density along the bond axis.', ao: [
         { atom: 0, n: 5, l: 2, m: -2, zeff: 8.30, c: 0.35 }, { atom: 3, n: 3, l: 1, m: 0, zeff: 6.10, c: 0.70 },
       ]},
-      { name: 'Pm 4f nonbonding (8e)', type: 'nonbonding', electrons: 8, ao: [
+      { name: 'Pm 4f nonbonding (8e)', type: 'nonbonding', electrons: 8,
+      energy: 4, desc: 'Localized f-electrons — shielded from bonding by outer electron shells.', ao: [
         { atom: 0, n: 4, l: 3, m: -3, zeff: 8.30, c: 0.354 }, { atom: 0, n: 4, l: 3, m: -2, zeff: 8.30, c: 0.354 }, { atom: 0, n: 4, l: 3, m: -1, zeff: 8.30, c: 0.354 }, { atom: 0, n: 4, l: 3, m: 0, zeff: 8.30, c: 0.354 },
         { atom: 0, n: 4, l: 3, m: 1, zeff: 8.30, c: 0.354 }, { atom: 0, n: 4, l: 3, m: 2, zeff: 8.30, c: 0.354 }, { atom: 0, n: 4, l: 3, m: 3, zeff: 8.30, c: 0.354 }, { atom: 0, n: 4, l: 3, m: -3, zeff: 8.30, c: 0.354 },
       ]},
-      { name: 'Cl lone pairs (12e)', type: 'nonbonding', electrons: 12, ao: [
+      { name: 'Cl lone pairs (12e)', type: 'nonbonding', electrons: 12,
+      energy: 5, desc: 'Lone pair electrons — localized and can act as a Lewis base.', ao: [
         { atom: 1, n: 3, l: 1, m: 0, zeff: 6.10, c: 0.408 }, { atom: 1, n: 3, l: 1, m: -1, zeff: 6.10, c: 0.408 },
         { atom: 2, n: 3, l: 1, m: 0, zeff: 6.10, c: 0.408 }, { atom: 2, n: 3, l: 1, m: 1, zeff: 6.10, c: 0.408 },
         { atom: 3, n: 3, l: 1, m: 1, zeff: 6.10, c: 0.408 }, { atom: 3, n: 3, l: 1, m: -1, zeff: 6.10, c: 0.408 },
       ]},
+    ],
+  },
+
+  // ═══════════════════ NaTcO₄ — Sodium Pertechnetate ═══════════════════
+  // Tetrahedral TcO₄⁻ anion. Tc(VII) d⁰, 24 valence electrons.
+  // Atoms: Tc(0), O₁(1), O₂(2), O₃(3), O₄(4)
+  'NaTcO₄': {
+    notes: 'Sodium pertechnetate — the most widely used radiopharmaceutical (Tc-99m). The TcO₄⁻ anion is isoelectronic with MnO₄⁻ and RuO₄.',
+    orbitals: [
+      {
+        name: '1a₁ (Tc-O σ, symmetric)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 1, desc: 'Fully symmetric σ bond — Tc 5s overlaps with all four O 2p orbitals in phase.',
+        ao: [
+          { atom: 0, n: 5, l: 0, m: 0, zeff: 4.00, c:  0.40 },
+          { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.45 },
+          { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.45 },
+          { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.45 },
+          { atom: 4, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.45 },
+        ],
+      },
+      {
+        name: '1t₂ (Tc-O σ, x)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 2, desc: 'Triply-degenerate σ bond (x component) — Tc 5p mixes with O 2p along each bond axis.',
+        ao: [
+          { atom: 0, n: 5, l: 1, m: 1, zeff: 3.80, c:  0.38 },
+          { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.50 },
+          { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: -0.50 },
+          { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.25 },
+          { atom: 4, n: 2, l: 1, m: 1, zeff: 4.45, c: -0.25 },
+        ],
+      },
+      {
+        name: '1t₂ (Tc-O σ, y)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 3, desc: 'Triply-degenerate σ bond (y component) — Tc 5p mixes with O 2p.',
+        ao: [
+          { atom: 0, n: 5, l: 1, m: -1, zeff: 3.80, c:  0.38 },
+          { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c:  0.50 },
+          { atom: 2, n: 2, l: 1, m: -1, zeff: 4.45, c:  0.25 },
+          { atom: 3, n: 2, l: 1, m: -1, zeff: 4.45, c: -0.50 },
+          { atom: 4, n: 2, l: 1, m: -1, zeff: 4.45, c:  0.25 },
+        ],
+      },
+      {
+        name: '1t₂ (Tc-O σ, z)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 4, desc: 'Triply-degenerate σ bond (z component) — Tc 5p mixes with O 2p.',
+        ao: [
+          { atom: 0, n: 5, l: 1, m: 0, zeff: 3.80, c:  0.38 },
+          { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c:  0.25 },
+          { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c:  0.25 },
+          { atom: 3, n: 2, l: 1, m: 0, zeff: 4.45, c: -0.50 },
+          { atom: 4, n: 2, l: 1, m: 0, zeff: 4.45, c:  0.50 },
+        ],
+      },
+      {
+        name: '1e (Tc d-π bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 5, desc: 'Doubly-degenerate π bond — Tc 4d(eg) overlaps with O 2p perpendicular to bond axes.',
+        ao: [
+          { atom: 0, n: 4, l: 2, m: 0, zeff: 7.20, c:  0.45 },
+          { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c:  0.40 },
+          { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c:  0.40 },
+          { atom: 3, n: 2, l: 1, m: 0, zeff: 4.45, c: -0.40 },
+          { atom: 4, n: 2, l: 1, m: 0, zeff: 4.45, c: -0.40 },
+        ],
+      },
+      {
+        name: '1t₁ (O lone pair, x)',
+        type: 'nonbonding',
+        electrons: 2,
+        energy: 6, desc: 'Non-bonding O lone pair — no matching Tc orbital of t₁ symmetry in a tetrahedron.',
+        ao: [
+          { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c:  0.60 },
+          { atom: 2, n: 2, l: 1, m: -1, zeff: 4.45, c: -0.60 },
+          { atom: 3, n: 2, l: 1, m: -1, zeff: 4.45, c:  0.30 },
+          { atom: 4, n: 2, l: 1, m: -1, zeff: 4.45, c: -0.30 },
+        ],
+      },
+      {
+        name: '1t₁ (O lone pair, y)',
+        type: 'nonbonding',
+        electrons: 2,
+        energy: 7, desc: 'Non-bonding O lone pair — no matching Tc orbital of t₁ symmetry in a tetrahedron.',
+        ao: [
+          { atom: 1, n: 2, l: 0, m: 0, zeff: 4.45, c:  0.55 },
+          { atom: 2, n: 2, l: 0, m: 0, zeff: 4.45, c:  0.55 },
+          { atom: 3, n: 2, l: 0, m: 0, zeff: 4.45, c: -0.55 },
+          { atom: 4, n: 2, l: 0, m: 0, zeff: 4.45, c: -0.55 },
+        ],
+      },
+      {
+        name: '1t₁ (O lone pair, z)',
+        type: 'nonbonding',
+        electrons: 2,
+        energy: 8, desc: 'Non-bonding O lone pair — no matching Tc orbital of t₁ symmetry in a tetrahedron.',
+        ao: [
+          { atom: 1, n: 2, l: 0, m: 0, zeff: 4.45, c:  0.707 },
+          { atom: 3, n: 2, l: 0, m: 0, zeff: 4.45, c: -0.707 },
+        ],
+      },
+      {
+        name: 'O₁₂ lone pairs (4e)',
+        type: 'nonbonding',
+        electrons: 4,
+        energy: 9, desc: 'Remaining O 2s lone pairs — deep-lying, essentially atomic in character.',
+        ao: [
+          { atom: 1, n: 2, l: 0, m: 0, zeff: 4.45, c:  0.50 },
+          { atom: 2, n: 2, l: 0, m: 0, zeff: 4.45, c:  0.50 },
+          { atom: 3, n: 2, l: 0, m: 0, zeff: 4.45, c:  0.50 },
+          { atom: 4, n: 2, l: 0, m: 0, zeff: 4.45, c:  0.50 },
+        ],
+      },
+    ],
+  },
+
+  // ═══════════════════ PoO₂ — Polonium Dioxide ═══════════════════
+  // Linear O-Po-O. Po(IV) with 6s² inert pair. 16 valence electrons.
+  // Atoms: O₁(0), Po(1), O₂(2) — along x axis
+  'PoO₂': {
+    notes: 'Polonium dioxide — intensely radioactive. Po is the heaviest Group 16 element with characterized compounds. The 6s² inert pair effect is prominent.',
+    orbitals: [
+      {
+        name: '1σ_g (Po-O σ bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 1, desc: 'σ bonding — Po 6s overlaps with O 2p along the molecular axis (gerade symmetry).',
+        ao: [
+          { atom: 1, n: 6, l: 0, m: 0, zeff: 8.00, c: -0.55 },
+          { atom: 0, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.45 },
+          { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: -0.45 },
+        ],
+      },
+      {
+        name: '1σ_u (Po-O σ bond)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 2, desc: 'σ bonding — Po 6p overlaps head-on with O 2p (ungerade symmetry).',
+        ao: [
+          { atom: 1, n: 6, l: 1, m: 1, zeff: 7.00, c:  0.50 },
+          { atom: 0, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.45 },
+          { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c:  0.45 },
+        ],
+      },
+      {
+        name: '1π_u (Po-O π, y)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 3, desc: 'π bonding — Po 6p lateral overlap with O 2p, perpendicular to the bond axis.',
+        ao: [
+          { atom: 1, n: 6, l: 1, m: -1, zeff: 7.00, c:  0.50 },
+          { atom: 0, n: 2, l: 1, m: -1, zeff: 4.45, c:  0.45 },
+          { atom: 2, n: 2, l: 1, m: -1, zeff: 4.45, c:  0.45 },
+        ],
+      },
+      {
+        name: '1π_u (Po-O π, z)',
+        type: 'bonding',
+        electrons: 2,
+        energy: 4, desc: 'π bonding — the second degenerate π bond, orthogonal to the first.',
+        ao: [
+          { atom: 1, n: 6, l: 1, m: 0, zeff: 7.00, c:  0.50 },
+          { atom: 0, n: 2, l: 1, m: 0, zeff: 4.45, c:  0.45 },
+          { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c:  0.45 },
+        ],
+      },
+      {
+        name: '1π_g (O lone pair, y)',
+        type: 'nonbonding',
+        electrons: 2,
+        energy: 5, desc: 'O lone pair combination — out-of-phase, gerade symmetry, no Po orbital to mix with.',
+        ao: [
+          { atom: 0, n: 2, l: 1, m: -1, zeff: 4.45, c:  0.707 },
+          { atom: 2, n: 2, l: 1, m: -1, zeff: 4.45, c: -0.707 },
+        ],
+      },
+      {
+        name: '1π_g (O lone pair, z)',
+        type: 'nonbonding',
+        electrons: 2,
+        energy: 6, desc: 'O lone pair combination — the second degenerate non-bonding π_g orbital.',
+        ao: [
+          { atom: 0, n: 2, l: 1, m: 0, zeff: 4.45, c:  0.707 },
+          { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: -0.707 },
+        ],
+      },
     ],
   },
 };
