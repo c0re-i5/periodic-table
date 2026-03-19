@@ -34,7 +34,7 @@ Click any element to open a 3-column modal with:
 - **Orbital Diagram** — Hund's rule filling with up/down arrow notation
 - **Molecule Viewer** — 3D ball-and-stick models of common compounds for each element, with MO cloud visualization for 188 molecules
 
-### Nuclear Physics (5 tabs)
+### Nuclear Physics (7 tabs)
 A dedicated nuclear column shows subatomic structure for every element:
 - **Nucleus 3D** — interactive 3D visualization of the atomic nucleus:
   - Fibonacci sphere packing of protons (red) and neutrons (teal) as translucent, edge-stroked spheres
@@ -51,6 +51,16 @@ A dedicated nuclear column shows subatomic structure for every element:
 - **Binding Energy** — B/A vs mass number chart with Fe-56 peak marker, current element highlighted, gradient fill under curve
 - **Nuclear Shells** — dual-column proton/neutron shell filling diagram with magic number indicators (2, 8, 20, 28, 50, 82, 126)
 - **Chart of Nuclides** — Z vs N grid showing all known isotopes colored by decay mode (stable = black, β⁻ = blue, β⁺/EC = red, α = gold, SF = green), centered on the current element with current nuclide highlighted
+- **SEMF Waterfall** — Semi-Empirical Mass Formula (Weizsäcker) breakdown showing volume, surface, Coulomb, asymmetry, and pairing terms as a waterfall chart with predicted vs actual binding energy and shell effect indicator
+- **Decay Curve (t½)** — exponential decay plot $N(t) = N_0 \cdot (\tfrac{1}{2})^{t/t_{1/2}}$ over 6 half-lives with fraction markers; stable elements show a stability analysis instead
+
+#### Nuclear Analysis Panel
+Below the nuclear info badges, an analysis panel provides:
+- **Mass Defect & E = mc²** — free nucleon mass sum vs nuclear mass, mass defect in MeV/c², atomic mass units, and kg
+- **Stability Analysis** — N/Z ratio vs optimal, even-even/odd-odd parity classification, magic number proximity, predicted decay mode
+- **Fission/Fusion Context** — distance from the iron peak (8.79 MeV/nucleon), energy potential for fusion or fission, stellar burning and nucleosynthesis context
+- **Isotope Abundance Bar Chart** — horizontal bars showing natural abundance of each isotope
+- **Nuclear Force Range** — strong force connections visible on the 3D nucleus at intermediate zoom (0.8–2.5×), showing bonds between neighboring nucleons within ~1.5 fm
 
 Nuclear info badges show: proton/neutron count, nuclear radius, spin/parity, binding energy per nucleon, magnetic moment, stability status, thermal neutron capture cross-section (σₙ,γ in barns), separation energies (Sp/Sn in MeV), and nucleosynthesis origin (Big Bang, cosmic rays, stars, supernovae, neutron star mergers, radioactive decay, or artificial). Notable nuclear reactions are listed when available (e.g., fission, fusion, medical isotopes).
 
@@ -164,6 +174,10 @@ The nucleus renderer visualizes nuclear structure from the nucleon level down to
 | Decay chains | α, β⁻, β⁺, electron capture (EC), and spontaneous fission (SF) sequences |
 | Binding energy curve | 88-point B/A vs A reference data with Fe-56 peak |
 | Nuclear shell model | 28 energy levels ($1s_{1/2}$ through $3d_{3/2}$) with magic numbers at 2, 8, 20, 28, 50, 82, 126 |
+| SEMF | Weizsäcker formula: $B = a_V A - a_S A^{2/3} - a_C \frac{Z(Z-1)}{A^{1/3}} - a_A \frac{(N-Z)^2}{A} \pm \frac{\delta_0}{\sqrt{A}}$ |
+| Half-life decay | $N(t) = N_0 \cdot (\tfrac{1}{2})^{t/t_{1/2}}$ with parser for s, ms, μs, ns, m, h, d, y, ky, My, Gy, Ey units |
+| Mass defect | $\Delta m = Z \cdot m_p + N \cdot m_n - M_{\text{nucleus}}$, converted to MeV ($m_p = 938.272$, $m_n = 939.565$) |
+| Strong force range | ~1.5 fm inter-nucleon connections rendered at intermediate zoom |
 | Quark structure | Proton = uud, Neutron = udd — correct valence quark composition per the Standard Model |
 | QCD color charge | Each nucleon contains one red, one green, one blue quark — color-neutral (white) hadrons |
 | Gluon visualization | Wavy spring connections between quark pairs representing the strong force |

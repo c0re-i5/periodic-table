@@ -72,16 +72,26 @@
     const rect = el.getBoundingClientRect();
     const tipWidth = 220;
     let left = rect.left + rect.width / 2 - tipWidth / 2;
+
+    // Measure actual tooltip height
+    tooltipEl.style.left = '-9999px';
+    tooltipEl.style.top = '0';
+    tooltipEl.classList.add('visible');
+    const tipHeight = tooltipEl.offsetHeight;
+
     let top = rect.bottom + 8;
 
-    // Keep tooltip in viewport
+    // If tooltip would overflow bottom, show it above the element
+    if (top + tipHeight > window.innerHeight) {
+      top = rect.top - tipHeight - 8;
+    }
+
+    // Keep tooltip in viewport horizontally
     if (left < 8) left = 8;
     if (left + tipWidth > window.innerWidth - 8) left = window.innerWidth - tipWidth - 8;
-    if (top + 100 > window.innerHeight) top = rect.top - 80;
 
     tooltipEl.style.left = left + 'px';
     tooltipEl.style.top = top + 'px';
-    tooltipEl.classList.add('visible');
   }
 
   function hideTooltip() {
@@ -355,7 +365,7 @@
     renderShellDiagram(element.shells);
 
     // Nuclear data
-    showNuclearDetail(element);
+    try { showNuclearDetail(element); } catch(e) { console.error('Nuclear render error:', e); }
 
     // Show panel
     detailPanel.classList.add('open');
@@ -547,22 +557,11 @@
       reactionsEl.style.display = 'none';
     }
 
-    // Isotope table
-    const isoContainer = document.getElementById('isotope-list');
-    let isoHTML = '<h4>Isotopes</h4>';
-    nd.isotopes.forEach(iso => {
-      const stableClass = iso.halfLife === 'stable' ? 'isotope-stable' : 'isotope-radioactive';
-      const abund = iso.abundance > 0 ? iso.abundance.toFixed(2) + '%' : 'trace';
-      const halfStr = iso.halfLife === 'stable' ? 'Stable' : `t½ ${iso.halfLife}`;
-      const decay = iso.decayModes.length ? iso.decayModes.join(', ') : '';
-      isoHTML += `<div class="isotope-item">
-        <span class="isotope-name ${stableClass}">${iso.name}</span>
-        <span class="isotope-abundance">${abund}</span>
-        <span class="isotope-halflife">${halfStr}</span>
-        <span class="isotope-decay">${decay}</span>
-      </div>`;
-    });
-    isoContainer.innerHTML = isoHTML;
+    // Isotope table (enhanced with abundance bars)
+    buildIsotopeChart(nd);
+
+    // Nuclear analysis panels (mass defect, stability, fission/fusion)
+    buildNuclearAnalysis(nd);
 
     // Render nuclear visualizations
     renderNucleus3D(nd);
@@ -570,6 +569,8 @@
     renderBindingEnergyChart(nd);
     renderNuclearShells(nd);
     renderNuclideChart(nd);
+    renderSEMF(nd);
+    renderDecayCurve(nd);
   }
 
   // ─────────────── Nuclear Viz Tab Switching ───────────────
@@ -740,6 +741,7 @@
     nuc3d.nucleons = nucleons;
     nuc3d.nd = nd;
     nuc3d.size = size;
+    nuc3d.spacing = spacing;
     nuc3d.camTheta = 0.3;
     nuc3d.camPhi = 0.25;
     nuc3d.zoom = 1.0;
@@ -806,6 +808,35 @@
       const shellOpacity = 1 - quarkReveal * 0.65;
 
       ctx.clearRect(0, 0, size, size);
+
+      // ── Nuclear force range connections ──
+      // Show strong force bonds between neighboring nucleons at intermediate zoom (0.8–2.0)
+      const forceReveal = Math.max(0, Math.min(1, (zm - 0.8) / 0.5)) * Math.max(0, Math.min(1, (2.5 - zm) / 0.7));
+      if (forceReveal > 0 && total > 1 && total <= 300) {
+        const forceRange = nuc3d.spacing * 1.3; // ~1.5 fm range of strong nuclear force
+        const forceRangeSq = forceRange * forceRange;
+        for (let i = 0; i < total; i++) {
+          for (let j = i + 1; j < total; j++) {
+            const dx = nucleons[i].x - nucleons[j].x;
+            const dy = nucleons[i].y - nucleons[j].y;
+            const dz = nucleons[i].z - nucleons[j].z;
+            const distSq = dx * dx + dy * dy + dz * dz;
+            if (distSq < forceRangeSq) {
+              const pi = camTransform(nucleons[i].x * zm, nucleons[i].y * zm, nucleons[i].z * zm, cosT, sinT, cosP, sinP);
+              const pj = camTransform(nucleons[j].x * zm, nucleons[j].y * zm, nucleons[j].z * zm, cosT, sinT, cosP, sinP);
+              const strength = 1 - Math.sqrt(distSq) / forceRange;
+              const avgDepth = (pi.depth + pj.depth) / 2;
+              const depthAlpha = Math.max(0.1, Math.min(1, (avgDepth + 60) / 120));
+              ctx.beginPath();
+              ctx.moveTo(pi.sx, pi.sy);
+              ctx.lineTo(pj.sx, pj.sy);
+              ctx.strokeStyle = `rgba(255,180,60,${(forceReveal * strength * depthAlpha * 0.18).toFixed(3)})`;
+              ctx.lineWidth = Math.max(0.4, 0.8 * sc * strength);
+              ctx.stroke();
+            }
+          }
+        }
+      }
 
       // Build all drawable items for depth sorting
       const drawList = [];
@@ -1042,6 +1073,22 @@
         ctx.fillStyle = 'rgba(167,139,250,0.55)';
         const defLabel = neData.b2 > 0 ? 'prolate' : 'oblate';
         ctx.fillText(`β₂=${neData.b2 > 0 ? '+' : ''}${neData.b2.toFixed(2)} (${defLabel})`, sw, Math.round(14 * sc));
+      }
+
+      // Strong force range indicator (visible at intermediate zoom)
+      if (forceReveal > 0.3) {
+        const fAlpha = Math.min(1, (forceReveal - 0.3) / 0.4);
+        const fLy = legendY - Math.round((quarkReveal > 0.3 ? 42 : 16) * sc);
+        ctx.textAlign = 'left';
+        ctx.beginPath();
+        ctx.moveTo(sw, fLy + sw / 2);
+        ctx.lineTo(sw + sw * 3, fLy + sw / 2);
+        ctx.strokeStyle = `rgba(255,180,60,${(fAlpha * 0.5).toFixed(2)})`;
+        ctx.lineWidth = Math.max(0.8, 1 * sc);
+        ctx.stroke();
+        ctx.font = `${Math.round(9 * sc)}px Inter, sans-serif`;
+        ctx.fillStyle = `rgba(255,180,60,${(fAlpha * 0.6).toFixed(2)})`;
+        ctx.fillText('strong force (~1.5 fm)', sw + sw * 3 + 4, fLy + sw - 1);
       }
       ctx.textAlign = 'left';
 
@@ -1540,7 +1587,617 @@
     ctx.fillText(`${nd.symbol}-${nd.nucleons}`, canvasW - margin.right, legY + Math.round(8 * sc));
   }
 
-  // ═══════════════════════ Shell Diagram (Bohr Model) ═══════════════════════
+  // ═══════════════════════ SEMF BREAKDOWN (WATERFALL) ═══════════════════════
+  // Weizsäcker semi-empirical mass formula: B = aV*A - aS*A^(2/3) - aC*Z(Z-1)/A^(1/3) - aA*(N-Z)^2/A ± δ
+  function renderSEMF(nd) {
+    const container = document.getElementById('nviz-semf');
+    container.innerHTML = '';
+
+    const { w: cw } = getNuclearVizSize(container);
+    const sc = cw / 280;
+    const w = cw, h = Math.round(cw * 0.95);
+    const { canvas, ctx } = makeHiDPICanvas(container, w, h);
+
+    const A = nd.nucleons;
+    const Z = nd.z;
+    const N = A - Z;
+
+    // SEMF coefficients (MeV) — standard Weizsäcker values
+    const aV = 15.75, aS = 17.8, aC = 0.711, aA = 23.7;
+    // Pairing term
+    const delta0 = 11.2;
+    let delta = 0;
+    if (Z % 2 === 0 && N % 2 === 0) delta = delta0 / Math.sqrt(A);   // even-even
+    else if (Z % 2 !== 0 && N % 2 !== 0) delta = -delta0 / Math.sqrt(A); // odd-odd
+
+    // Individual terms (total binding energy, not per nucleon)
+    const volume = aV * A;
+    const surface = -aS * Math.pow(A, 2/3);
+    const coulomb = -aC * Z * (Z - 1) / Math.pow(A, 1/3);
+    const asymmetry = -aA * Math.pow(N - Z, 2) / A;
+    const pairing = delta;
+    const predicted = volume + surface + coulomb + asymmetry + pairing;
+    const actual = nd.bindingPerNucleon * A;
+
+    const terms = [
+      { label: 'Volume', value: volume, color: '#4ecdc4', formula: `aᵥA = ${volume.toFixed(1)}` },
+      { label: 'Surface', value: surface, color: '#ff6b6b', formula: `−aₛA²ᐟ³ = ${surface.toFixed(1)}` },
+      { label: 'Coulomb', value: coulomb, color: '#ffd93d', formula: `−a꜀Z(Z−1)/A¹ᐟ³ = ${coulomb.toFixed(1)}` },
+      { label: 'Asymmetry', value: asymmetry, color: '#a78bfa', formula: `−aₐ(N−Z)²/A = ${asymmetry.toFixed(1)}` },
+      { label: 'Pairing', value: pairing, color: '#ff9f43', formula: `δ = ${pairing >= 0 ? '+' : ''}${pairing.toFixed(1)}` },
+    ];
+
+    const pad = { top: Math.round(28 * sc), right: Math.round(12 * sc), bottom: Math.round(70 * sc), left: Math.round(48 * sc) };
+    const plotW = w - pad.left - pad.right;
+    const plotH = h - pad.top - pad.bottom;
+
+    // Find scale — waterfall goes from 0 to volume (max) and result could be near volume
+    const maxVal = volume * 1.05;
+    const minVal = Math.min(0, predicted - 50);
+
+    function yOf(v) { return pad.top + plotH * (1 - (v - minVal) / (maxVal - minVal)); }
+
+    // Grid
+    ctx.strokeStyle = 'rgba(255,255,255,0.05)';
+    ctx.lineWidth = 1;
+    const gridStep = maxVal > 2000 ? 500 : maxVal > 500 ? 200 : maxVal > 100 ? 50 : 20;
+    for (let v = 0; v <= maxVal; v += gridStep) {
+      ctx.beginPath();
+      ctx.moveTo(pad.left, yOf(v));
+      ctx.lineTo(w - pad.right, yOf(v));
+      ctx.stroke();
+    }
+
+    // Draw waterfall bars
+    const barW = plotW / 7; // 5 terms + predicted + actual
+    const gap = barW * 0.15;
+    let running = 0;
+
+    terms.forEach((term, i) => {
+      const x = pad.left + i * barW + gap;
+      const bw = barW - gap * 2;
+      const prevRunning = running;
+      running += term.value;
+
+      const y1 = yOf(prevRunning);
+      const y2 = yOf(running);
+
+      // Bar
+      const top = Math.min(y1, y2);
+      const barH = Math.abs(y2 - y1);
+      ctx.fillStyle = term.color;
+      ctx.globalAlpha = 0.7;
+      ctx.fillRect(x, top, bw, Math.max(barH, 1));
+      ctx.globalAlpha = 1;
+
+      // Connecting line to next bar
+      if (i < terms.length - 1) {
+        ctx.beginPath();
+        ctx.moveTo(x + bw, yOf(running));
+        ctx.lineTo(x + barW + gap, yOf(running));
+        ctx.strokeStyle = 'rgba(255,255,255,0.15)';
+        ctx.lineWidth = 1;
+        ctx.setLineDash([3, 3]);
+        ctx.stroke();
+        ctx.setLineDash([]);
+      }
+
+      // Label
+      ctx.font = `bold ${Math.max(6, Math.round(6.5 * sc))}px Inter, sans-serif`;
+      ctx.fillStyle = term.color;
+      ctx.textAlign = 'center';
+      ctx.fillText(term.label, x + bw / 2, pad.top + plotH + Math.round(12 * sc));
+
+      // Value on bar
+      ctx.font = `${Math.max(5, Math.round(6 * sc))}px JetBrains Mono, monospace`;
+      ctx.fillStyle = 'rgba(255,255,255,0.7)';
+      const valY = term.value >= 0 ? top - Math.round(4 * sc) : top + barH + Math.round(10 * sc);
+      ctx.fillText(`${term.value.toFixed(0)}`, x + bw / 2, valY);
+    });
+
+    // Predicted total bar
+    const predX = pad.left + 5 * barW + gap;
+    const predBW = barW - gap * 2;
+    const predY = yOf(Math.max(predicted, 0));
+    const predH = Math.abs(yOf(0) - yOf(Math.abs(predicted)));
+    ctx.fillStyle = '#888';
+    ctx.globalAlpha = 0.5;
+    ctx.fillRect(predX, predY, predBW, Math.max(predH, 1));
+    ctx.globalAlpha = 1;
+    ctx.font = `bold ${Math.max(6, Math.round(6.5 * sc))}px Inter, sans-serif`;
+    ctx.fillStyle = '#aaa';
+    ctx.textAlign = 'center';
+    ctx.fillText('SEMF', predX + predBW / 2, pad.top + plotH + Math.round(12 * sc));
+    ctx.font = `${Math.max(5, Math.round(6 * sc))}px JetBrains Mono, monospace`;
+    ctx.fillStyle = 'rgba(255,255,255,0.7)';
+    ctx.fillText(`${predicted.toFixed(0)}`, predX + predBW / 2, predY - Math.round(4 * sc));
+
+    // Actual total bar
+    const actX = pad.left + 6 * barW + gap;
+    const actBW = barW - gap * 2;
+    const actY = yOf(Math.max(actual, 0));
+    const actH = Math.abs(yOf(0) - yOf(Math.abs(actual)));
+    ctx.fillStyle = '#4ecdc4';
+    ctx.globalAlpha = 0.6;
+    ctx.fillRect(actX, actY, actBW, Math.max(actH, 1));
+    ctx.globalAlpha = 1;
+    ctx.font = `bold ${Math.max(6, Math.round(6.5 * sc))}px Inter, sans-serif`;
+    ctx.fillStyle = '#4ecdc4';
+    ctx.textAlign = 'center';
+    ctx.fillText('Actual', actX + actBW / 2, pad.top + plotH + Math.round(12 * sc));
+    ctx.font = `${Math.max(5, Math.round(6 * sc))}px JetBrains Mono, monospace`;
+    ctx.fillStyle = 'rgba(255,255,255,0.7)';
+    ctx.fillText(`${actual.toFixed(0)}`, actX + actBW / 2, actY - Math.round(4 * sc));
+
+    // Delta (shell effect) indicator
+    const diff = actual - predicted;
+    const diffPct = predicted !== 0 ? (diff / predicted * 100).toFixed(1) : '0.0';
+    ctx.font = `${Math.max(5, Math.round(6 * sc))}px JetBrains Mono, monospace`;
+    ctx.fillStyle = Math.abs(diff) > 20 ? '#ffd93d' : 'rgba(255,255,255,0.5)';
+    ctx.textAlign = 'center';
+    ctx.fillText(`Δ = ${diff >= 0 ? '+' : ''}${diff.toFixed(1)} MeV (${diffPct}%)`, (predX + actX + actBW) / 2, actY - Math.round(14 * sc));
+
+    // Y-axis labels
+    ctx.font = `${Math.max(6, Math.round(7 * sc))}px JetBrains Mono, monospace`;
+    ctx.fillStyle = 'rgba(255,255,255,0.4)';
+    ctx.textAlign = 'right';
+    for (let v = 0; v <= maxVal; v += gridStep) {
+      ctx.fillText(v.toFixed(0), pad.left - Math.round(4 * sc), yOf(v) + 3);
+    }
+
+    // Y-axis title
+    ctx.font = `${Math.max(7, Math.round(8 * sc))}px Inter, sans-serif`;
+    ctx.fillStyle = 'rgba(255,255,255,0.5)';
+    ctx.textAlign = 'center';
+    ctx.save();
+    ctx.translate(Math.round(10 * sc), pad.top + plotH / 2);
+    ctx.rotate(-Math.PI / 2);
+    ctx.fillText('Binding Energy (MeV)', 0, 0);
+    ctx.restore();
+
+    // Title
+    ctx.font = `bold ${Math.max(8, Math.round(9 * sc))}px Inter, sans-serif`;
+    ctx.fillStyle = 'rgba(255,255,255,0.6)';
+    ctx.textAlign = 'left';
+    ctx.fillText(`${nd.symbol}-${A}: SEMF Breakdown`, pad.left, Math.round(14 * sc));
+
+    // Formula legend at bottom
+    ctx.font = `${Math.max(5, Math.round(5.5 * sc))}px JetBrains Mono, monospace`;
+    ctx.textAlign = 'left';
+    let ly = pad.top + plotH + Math.round(24 * sc);
+    terms.forEach(term => {
+      ctx.fillStyle = term.color;
+      ctx.fillText(term.formula, pad.left, ly);
+      ly += Math.round(9 * sc);
+    });
+
+    // Pairing explanation
+    ctx.fillStyle = 'rgba(255,255,255,0.35)';
+    const pairType = (Z % 2 === 0 && N % 2 === 0) ? 'even-even (+δ)' : (Z % 2 !== 0 && N % 2 !== 0) ? 'odd-odd (−δ)' : 'odd-A (δ=0)';
+    ctx.fillText(pairType, pad.left + Math.round(120 * sc), ly - Math.round(11 * sc));
+  }
+
+  // ═══════════════════════ HALF-LIFE DECAY CURVE ═══════════════════════
+  function renderDecayCurve(nd) {
+    const container = document.getElementById('nviz-decaycurve');
+    container.innerHTML = '';
+
+    const { w: cw } = getNuclearVizSize(container);
+    const sc = cw / 280;
+    const w = cw, h = Math.round(cw * 0.85);
+    const { canvas, ctx } = makeHiDPICanvas(container, w, h);
+
+    // Find the primary radioactive isotope's half-life
+    let halfLifeStr = null;
+    let halfLifeSec = null;
+    let isoName = null;
+
+    if (!nd.stable) {
+      // Use the most abundant or first radioactive isotope
+      for (const iso of nd.isotopes) {
+        if (iso.halfLife !== 'stable' && iso.halfLife) {
+          halfLifeStr = iso.halfLife;
+          halfLifeSec = parseHalfLife(iso.halfLife);
+          isoName = iso.name;
+          if (iso.abundance > 0) break; // prefer abundant isotope
+        }
+      }
+    }
+
+    const pad = { top: Math.round(24 * sc), right: Math.round(16 * sc), bottom: Math.round(36 * sc), left: Math.round(44 * sc) };
+    const plotW = w - pad.left - pad.right;
+    const plotH = h - pad.top - pad.bottom;
+
+    if (nd.stable) {
+      // Stable element — show why it's stable
+      ctx.fillStyle = 'rgba(78,205,196,0.08)';
+      ctx.fillRect(0, 0, w, h);
+
+      const ne = typeof NUCLEAR_EXTRA !== 'undefined' ? NUCLEAR_EXTRA[nd.z] : null;
+      const A = nd.nucleons, Z = nd.z, N = A - Z;
+      const isEvenEven = Z % 2 === 0 && N % 2 === 0;
+      const nzRatio = N / Math.max(Z, 1);
+      const optimalNZ = 1 + 0.015 * A;
+
+      // Centered info block
+      let ty = Math.round(30 * sc);
+      const cxPos = w / 2;
+
+      ctx.font = `bold ${Math.round(12 * sc)}px Inter, sans-serif`;
+      ctx.fillStyle = '#4ecdc4';
+      ctx.textAlign = 'center';
+      ctx.fillText('● Stable Nucleus', cxPos, ty);
+      ty += Math.round(24 * sc);
+
+      ctx.font = `${Math.round(9 * sc)}px Inter, sans-serif`;
+      ctx.fillStyle = 'rgba(255,255,255,0.7)';
+
+      // Stability factors
+      const factors = [];
+      factors.push(`N/Z ratio: ${nzRatio.toFixed(2)} (optimal ≈ ${optimalNZ.toFixed(2)})`);
+      factors.push(`Nucleon type: ${isEvenEven ? 'even-even (most stable)' : Z % 2 === 0 || N % 2 === 0 ? 'even-odd' : 'odd-odd'}`);
+
+      // Check magic numbers
+      const magicNums = [2, 8, 20, 28, 50, 82, 126];
+      const magicZ = magicNums.includes(Z);
+      const magicN = magicNums.includes(N);
+      if (magicZ && magicN) factors.push('★ Doubly magic nucleus!');
+      else if (magicZ) factors.push('★ Magic proton number');
+      else if (magicN) factors.push('★ Magic neutron number');
+
+      if (ne && ne.Sn !== null) factors.push(`Neutron separation: ${ne.Sn.toFixed(1)} MeV`);
+      if (ne && ne.Sp !== null) factors.push(`Proton separation: ${ne.Sp.toFixed(1)} MeV`);
+
+      // Binding energy context
+      factors.push(`B/A: ${nd.bindingPerNucleon} MeV/nucleon`);
+
+      factors.forEach(f => {
+        ctx.fillText(f, cxPos, ty);
+        ty += Math.round(16 * sc);
+      });
+
+      // Small note
+      ctx.font = `${Math.round(7.5 * sc)}px Inter, sans-serif`;
+      ctx.fillStyle = 'rgba(255,255,255,0.35)';
+      ty += Math.round(10 * sc);
+      ctx.fillText('No decay curve — this nucleus does not undergo', cxPos, ty);
+      ty += Math.round(12 * sc);
+      ctx.fillText('spontaneous radioactive decay.', cxPos, ty);
+
+      return;
+    }
+
+    if (!halfLifeSec || halfLifeSec <= 0) {
+      container.innerHTML = '<div style="color:var(--text-muted);font-size:0.8rem;text-align:center;padding:40px 12px;">Half-life data not available for this isotope</div>';
+      return;
+    }
+
+    // Plot N(t)/N₀ = (1/2)^(t/t½) over 6 half-lives
+    const numHL = 6;
+    const tMax = halfLifeSec * numHL;
+
+    function xOf(t) { return pad.left + (t / tMax) * plotW; }
+    function yOf(frac) { return pad.top + plotH * (1 - frac); }
+
+    // Background grid
+    ctx.strokeStyle = 'rgba(255,255,255,0.06)';
+    ctx.lineWidth = 1;
+    for (let f = 0; f <= 1; f += 0.25) {
+      ctx.beginPath();
+      ctx.moveTo(pad.left, yOf(f));
+      ctx.lineTo(w - pad.right, yOf(f));
+      ctx.stroke();
+    }
+    for (let hl = 1; hl <= numHL; hl++) {
+      const xHL = xOf(hl * halfLifeSec);
+      ctx.beginPath();
+      ctx.moveTo(xHL, pad.top);
+      ctx.lineTo(xHL, pad.top + plotH);
+      ctx.strokeStyle = 'rgba(255,255,255,0.06)';
+      ctx.stroke();
+    }
+
+    // Fill under curve
+    ctx.beginPath();
+    ctx.moveTo(xOf(0), yOf(1));
+    for (let i = 0; i <= 200; i++) {
+      const t = (i / 200) * tMax;
+      const frac = Math.pow(0.5, t / halfLifeSec);
+      ctx.lineTo(xOf(t), yOf(frac));
+    }
+    ctx.lineTo(xOf(tMax), yOf(0));
+    ctx.lineTo(xOf(0), yOf(0));
+    ctx.closePath();
+    const grad = ctx.createLinearGradient(0, pad.top, 0, pad.top + plotH);
+    grad.addColorStop(0, 'rgba(255,107,107,0.2)');
+    grad.addColorStop(1, 'rgba(255,107,107,0.02)');
+    ctx.fillStyle = grad;
+    ctx.fill();
+
+    // Decay curve
+    ctx.beginPath();
+    for (let i = 0; i <= 200; i++) {
+      const t = (i / 200) * tMax;
+      const frac = Math.pow(0.5, t / halfLifeSec);
+      if (i === 0) ctx.moveTo(xOf(t), yOf(frac));
+      else ctx.lineTo(xOf(t), yOf(frac));
+    }
+    ctx.strokeStyle = '#ff6b6b';
+    ctx.lineWidth = 2.5;
+    ctx.stroke();
+
+    // Half-life markers
+    for (let hl = 1; hl <= numHL; hl++) {
+      const t = hl * halfLifeSec;
+      const frac = Math.pow(0.5, hl);
+      const mx = xOf(t), my = yOf(frac);
+
+      // Dashed lines to axes
+      ctx.beginPath();
+      ctx.moveTo(mx, my);
+      ctx.lineTo(pad.left, my);
+      ctx.strokeStyle = 'rgba(255,217,61,0.25)';
+      ctx.lineWidth = 1;
+      ctx.setLineDash([3, 3]);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      ctx.beginPath();
+      ctx.moveTo(mx, my);
+      ctx.lineTo(mx, pad.top + plotH);
+      ctx.strokeStyle = 'rgba(255,217,61,0.25)';
+      ctx.setLineDash([3, 3]);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Marker dot
+      ctx.beginPath();
+      ctx.arc(mx, my, Math.round(3.5 * sc), 0, Math.PI * 2);
+      ctx.fillStyle = '#ffd93d';
+      ctx.fill();
+
+      // Fraction label on left
+      ctx.font = `${Math.max(6, Math.round(7 * sc))}px JetBrains Mono, monospace`;
+      ctx.fillStyle = '#ffd93d';
+      ctx.textAlign = 'right';
+      const fracStr = hl <= 3 ? `1/${Math.pow(2, hl)}` : `${(frac * 100).toFixed(1)}%`;
+      ctx.fillText(fracStr, pad.left - Math.round(3 * sc), my + 3);
+
+      // Half-life count on bottom
+      ctx.textAlign = 'center';
+      ctx.fillStyle = 'rgba(255,255,255,0.5)';
+      ctx.fillText(`${hl}t½`, mx, pad.top + plotH + Math.round(14 * sc));
+    }
+
+    // Y-axis labels
+    ctx.font = `${Math.max(6, Math.round(7 * sc))}px JetBrains Mono, monospace`;
+    ctx.fillStyle = 'rgba(255,255,255,0.4)';
+    ctx.textAlign = 'right';
+    ctx.fillText('100%', pad.left - Math.round(3 * sc), yOf(1) + 3);
+    ctx.fillText('50%', pad.left - Math.round(3 * sc), yOf(0.5) + 3);
+    ctx.fillText('0%', pad.left - Math.round(3 * sc), yOf(0) + 3);
+
+    // Y-axis title
+    ctx.font = `${Math.max(7, Math.round(8 * sc))}px Inter, sans-serif`;
+    ctx.fillStyle = 'rgba(255,255,255,0.5)';
+    ctx.textAlign = 'center';
+    ctx.save();
+    ctx.translate(Math.round(10 * sc), pad.top + plotH / 2);
+    ctx.rotate(-Math.PI / 2);
+    ctx.fillText('N(t) / N₀', 0, 0);
+    ctx.restore();
+
+    // X-axis title
+    ctx.textAlign = 'center';
+    ctx.fillText('Time', w / 2, h - Math.round(4 * sc));
+
+    // Title & half-life info
+    ctx.font = `bold ${Math.max(8, Math.round(9 * sc))}px Inter, sans-serif`;
+    ctx.fillStyle = '#ff6b6b';
+    ctx.textAlign = 'left';
+    ctx.fillText(`${isoName || nd.symbol + '-' + nd.nucleons}`, pad.left, Math.round(14 * sc));
+
+    ctx.font = `${Math.max(7, Math.round(8 * sc))}px JetBrains Mono, monospace`;
+    ctx.fillStyle = 'rgba(255,255,255,0.6)';
+    ctx.textAlign = 'right';
+    ctx.fillText(`t½ = ${halfLifeStr}`, w - pad.right, Math.round(14 * sc));
+
+    // Formula at bottom
+    ctx.font = `${Math.max(6, Math.round(7 * sc))}px JetBrains Mono, monospace`;
+    ctx.fillStyle = 'rgba(255,255,255,0.3)';
+    ctx.textAlign = 'center';
+    ctx.fillText('N(t) = N₀ · (½)^(t/t½)', w / 2, h - Math.round(16 * sc));
+  }
+
+  // Parse half-life strings to seconds
+  function parseHalfLife(str) {
+    if (!str || str === 'stable') return 0;
+    const s = str.toString().trim();
+    // Handle ">X y" format
+    const cleaned = s.replace(/^>/, '');
+    const num = parseFloat(cleaned);
+    if (isNaN(num)) return 0;
+    // Match units (order matters — check longer suffixes first)
+    if (/Ey$/i.test(cleaned))    return num * 3.156e25;  // exayears
+    if (/Gy$/i.test(cleaned))    return num * 3.156e16;  // gigayears
+    if (/My$/i.test(cleaned))    return num * 3.156e13;  // megayears
+    if (/ky$/i.test(cleaned))    return num * 3.156e10;  // kiloyears
+    if (/ms$/i.test(cleaned))    return num * 1e-3;      // milliseconds
+    if (/μs|µs/i.test(cleaned))  return num * 1e-6;      // microseconds
+    if (/ns$/i.test(cleaned))    return num * 1e-9;      // nanoseconds
+    if (/\by$/i.test(cleaned) || /\s+y$/i.test(cleaned)) return num * 3.156e7;  // years
+    if (/\bd$/i.test(cleaned) || /\s+d$/i.test(cleaned)) return num * 86400;    // days
+    if (/\bh$/i.test(cleaned) || /\s+h$/i.test(cleaned)) return num * 3600;     // hours
+    if (/\bm$/i.test(cleaned) || /\s+m$/i.test(cleaned)) return num * 60;       // minutes
+    if (/\bs$/i.test(cleaned) || /\s+s$/i.test(cleaned)) return num;            // seconds
+    return num; // assume seconds
+  }
+
+  // ═══════════════════════ NUCLEAR ANALYSIS PANEL ═══════════════════════
+  // Shows: mass defect/E=mc², stability analysis, fission/fusion context
+  function buildNuclearAnalysis(nd) {
+    const el = document.getElementById('nuclear-analysis');
+    if (!el) return;
+
+    const ne = typeof NUCLEAR_EXTRA !== 'undefined' ? NUCLEAR_EXTRA[nd.z] : null;
+    const A = nd.nucleons, Z = nd.z, N = A - Z;
+
+    let html = '';
+
+    // ── Mass Defect & E = mc² ──
+    const mp = 938.272;  // proton mass MeV/c²
+    const mn = 939.565;  // neutron mass MeV/c²
+    const freeMass = Z * mp + N * mn; // sum of free nucleon masses
+    const bindingTotal = nd.bindingPerNucleon * A;
+    const nuclearMass = freeMass - bindingTotal;
+    const massDefect = freeMass - nuclearMass; // = bindingTotal
+
+    html += '<div class="nuc-analysis-section">';
+    html += '<div class="nuc-analysis-title">E = mc² Mass Defect</div>';
+    html += '<div class="nuc-analysis-grid">';
+    html += `<div class="nuc-analysis-item"><span class="nuc-label">Free nucleons</span><span class="nuc-value">${freeMass.toFixed(1)} MeV/c²</span></div>`;
+    html += `<div class="nuc-analysis-item"><span class="nuc-label">Nuclear mass</span><span class="nuc-value">${nuclearMass.toFixed(1)} MeV/c²</span></div>`;
+    html += `<div class="nuc-analysis-item nuc-highlight"><span class="nuc-label">Δm (mass defect)</span><span class="nuc-value">${massDefect.toFixed(1)} MeV/c²</span></div>`;
+    html += `<div class="nuc-analysis-item"><span class="nuc-label">Δm per nucleon</span><span class="nuc-value">${nd.bindingPerNucleon} MeV</span></div>`;
+    html += '</div>';
+    // Express in kg for educational context
+    const massDefectKg = (massDefect * 1.783e-30); // MeV to kg
+    const massDefectU = massDefect / 931.494;
+    html += `<div class="nuc-analysis-note">Δm = ${massDefectU.toFixed(4)} u = ${massDefectKg.toExponential(2)} kg</div>`;
+    html += '</div>';
+
+    // ── Stability Analysis ──
+    const nzRatio = N / Math.max(Z, 1);
+    const optimalNZ = 1 + 0.015 * A;
+    const isEvenEven = Z % 2 === 0 && N % 2 === 0;
+    const isOddOdd = Z % 2 !== 0 && N % 2 !== 0;
+    const magicNums = [2, 8, 20, 28, 50, 82, 126];
+    const magicZ = magicNums.includes(Z);
+    const magicN = magicNums.includes(N);
+
+    html += '<div class="nuc-analysis-section">';
+    html += '<div class="nuc-analysis-title">Stability Analysis</div>';
+    html += '<div class="nuc-analysis-grid">';
+
+    // N/Z ratio
+    const nzDev = Math.abs(nzRatio - optimalNZ);
+    const nzClass = nzDev < 0.15 ? 'nuc-good' : nzDev < 0.5 ? 'nuc-warn' : 'nuc-bad';
+    html += `<div class="nuc-analysis-item ${nzClass}"><span class="nuc-label">N/Z ratio</span><span class="nuc-value">${nzRatio.toFixed(2)} <small>(opt: ${optimalNZ.toFixed(2)})</small></span></div>`;
+
+    // Pairing
+    const pairClass = isEvenEven ? 'nuc-good' : isOddOdd ? 'nuc-bad' : '';
+    const pairLabel = isEvenEven ? 'even-even ✓' : isOddOdd ? 'odd-odd ✗' : Z % 2 === 0 ? 'even Z, odd N' : 'odd Z, even N';
+    html += `<div class="nuc-analysis-item ${pairClass}"><span class="nuc-label">Parity</span><span class="nuc-value">${pairLabel}</span></div>`;
+
+    // Magic numbers
+    if (magicZ && magicN) {
+      html += '<div class="nuc-analysis-item nuc-good"><span class="nuc-label">Magic numbers</span><span class="nuc-value">★ Doubly magic!</span></div>';
+    } else if (magicZ) {
+      html += '<div class="nuc-analysis-item nuc-good"><span class="nuc-label">Magic number</span><span class="nuc-value">★ Z = ' + Z + '</span></div>';
+    } else if (magicN) {
+      html += '<div class="nuc-analysis-item nuc-good"><span class="nuc-label">Magic number</span><span class="nuc-value">★ N = ' + N + '</span></div>';
+    } else {
+      // Show distance to nearest magic
+      let nearestMagZ = magicNums.reduce((a, b) => Math.abs(b - Z) < Math.abs(a - Z) ? b : a);
+      let nearestMagN = magicNums.reduce((a, b) => Math.abs(b - N) < Math.abs(a - N) ? b : a);
+      html += `<div class="nuc-analysis-item"><span class="nuc-label">Nearest magic</span><span class="nuc-value">Z→${nearestMagZ} (${Z - nearestMagZ >= 0 ? '+' : ''}${Z - nearestMagZ}), N→${nearestMagN} (${N - nearestMagN >= 0 ? '+' : ''}${N - nearestMagN})</span></div>`;
+    }
+
+    // Predicted dominant decay mode
+    if (!nd.stable) {
+      let predDecay = '—';
+      if (Z > 83) predDecay = 'α decay (Z > 83)';
+      else if (nzRatio > optimalNZ + 0.1) predDecay = 'β⁻ decay (neutron-rich)';
+      else if (nzRatio < optimalNZ - 0.1) predDecay = 'β⁺/EC (proton-rich)';
+      html += `<div class="nuc-analysis-item"><span class="nuc-label">Predicted decay</span><span class="nuc-value">${predDecay}</span></div>`;
+    }
+
+    html += '</div></div>';
+
+    // ── Fission/Fusion Energy Context ──
+    const fePeak = 8.79; // Fe-56 B/A
+    const ba = nd.bindingPerNucleon;
+
+    html += '<div class="nuc-analysis-section">';
+    html += '<div class="nuc-analysis-title">Fission / Fusion</div>';
+    html += '<div class="nuc-analysis-grid">';
+
+    if (A <= 4) {
+      const gain = fePeak - ba;
+      html += `<div class="nuc-analysis-item nuc-fusion"><span class="nuc-label">Fusion candidate</span><span class="nuc-value">+${gain.toFixed(1)} MeV/A to peak</span></div>`;
+      html += `<div class="nuc-analysis-item"><span class="nuc-label">Energy potential</span><span class="nuc-value">${(gain * A).toFixed(0)} MeV total</span></div>`;
+      html += '<div class="nuc-analysis-note">Light nuclei release energy when fused toward iron peak</div>';
+    } else if (A < 56) {
+      const gain = fePeak - ba;
+      html += `<div class="nuc-analysis-item nuc-fusion"><span class="nuc-label">Fusion favorable</span><span class="nuc-value">+${gain.toFixed(2)} MeV/A to peak</span></div>`;
+      html += '<div class="nuc-analysis-note">Fusion toward heavier nuclei releases energy (stellar burning)</div>';
+    } else if (A <= 62) {
+      html += '<div class="nuc-analysis-item nuc-peak"><span class="nuc-label">Near B/A peak</span><span class="nuc-value">Maximum stability</span></div>';
+      html += '<div class="nuc-analysis-note">Neither fission nor fusion is energetically favorable — iron group nuclei are the nuclear "ash" of stars</div>';
+    } else if (A < 150) {
+      const gain = ba > 0 ? (fePeak - ba) : 0;
+      html += `<div class="nuc-analysis-item"><span class="nuc-label">Above iron peak</span><span class="nuc-value">${(-gain).toFixed(2)} MeV/A below peak</span></div>`;
+      html += '<div class="nuc-analysis-note">Heavier than iron — formed in supernovae (r/s-process) or neutron star mergers</div>';
+    } else {
+      const fissionGain = ba < fePeak ? (fePeak - ba) * 0.3 : 0; // rough estimate — fragments get ~30% closer to peak
+      html += `<div class="nuc-analysis-item nuc-fission"><span class="nuc-label">Fission candidate</span><span class="nuc-value">~${(fissionGain * A).toFixed(0)} MeV released</span></div>`;
+      if (Z >= 90) {
+        html += `<div class="nuc-analysis-item"><span class="nuc-label">Fissile potential</span><span class="nuc-value">${Z >= 92 ? 'Actinide — fissile/fissionable' : 'Heavy — fissionable'}</span></div>`;
+      }
+      html += '<div class="nuc-analysis-note">Heavy nuclei release energy via fission into lighter fragments closer to the iron peak</div>';
+    }
+
+    html += '</div></div>';
+
+    el.innerHTML = html;
+    el.style.display = '';
+  }
+
+  // ═══════════════════════ ISOTOPE ABUNDANCE CHART ═══════════════════════
+  function buildIsotopeChart(nd) {
+    const isoContainer = document.getElementById('isotope-list');
+
+    // Build header
+    let isoHTML = '<h4>Isotopes</h4>';
+
+    // Check if any isotopes have meaningful abundances
+    const hasAbundance = nd.isotopes.some(iso => iso.abundance > 0.01);
+
+    if (hasAbundance) {
+      // Abundance bar chart
+      const maxAbund = Math.max(...nd.isotopes.map(i => i.abundance));
+      isoHTML += '<div class="isotope-bars">';
+      nd.isotopes.forEach(iso => {
+        if (iso.abundance < 0.001) return; // skip trace for bar chart
+        const pct = (iso.abundance / maxAbund * 100).toFixed(1);
+        const stableClass = iso.halfLife === 'stable' ? 'iso-bar-stable' : 'iso-bar-radio';
+        isoHTML += `<div class="isotope-bar-row">
+          <span class="iso-bar-label">${iso.name}</span>
+          <div class="iso-bar-track">
+            <div class="iso-bar-fill ${stableClass}" style="width:${pct}%"></div>
+          </div>
+          <span class="iso-bar-value">${iso.abundance.toFixed(2)}%</span>
+        </div>`;
+      });
+      isoHTML += '</div>';
+    }
+
+    // Full isotope table (always shown)
+    nd.isotopes.forEach(iso => {
+      const stableClass = iso.halfLife === 'stable' ? 'isotope-stable' : 'isotope-radioactive';
+      const abund = iso.abundance > 0 ? iso.abundance.toFixed(2) + '%' : 'trace';
+      const halfStr = iso.halfLife === 'stable' ? 'Stable' : `t½ ${iso.halfLife}`;
+      const decay = iso.decayModes.length ? iso.decayModes.join(', ') : '';
+      isoHTML += `<div class="isotope-item">
+        <span class="isotope-name ${stableClass}">${iso.name}</span>
+        <span class="isotope-abundance">${abund}</span>
+        <span class="isotope-halflife">${halfStr}</span>
+        <span class="isotope-decay">${decay}</span>
+      </div>`;
+    });
+
+    isoContainer.innerHTML = isoHTML;
+  }
   function renderShellDiagram(shells) {
     // Render the active visualization
     renderBohr2D(shells);
@@ -1968,7 +2625,10 @@
     cloud3d.zoom = 1.0;
     cloud3d.autoRotate = true;
 
-    const size = 480;
+    // Dynamic size based on available container width
+    const vizContainer = document.getElementById('viz-bohr3d');
+    const containerRect = vizContainer ? vizContainer.getBoundingClientRect() : { width: 500 };
+    const size = Math.max(360, Math.min(640, Math.floor(containerRect.width - 20)));
 
     // Build orbital selector buttons
     // Group by subshell (e.g. all 2p orbitals together)
@@ -2784,8 +3444,11 @@
     const hasMO = typeof MOLECULAR_ORBITALS !== 'undefined' && MOLECULAR_ORBITALS[compound.formula];
 
     // Build UI
-    const size = 320;
-    const cloudSize = 420;
+    // Dynamic size based on available container width
+    const molVizContainer = document.getElementById('viz-molecule');
+    const molContainerRect = molVizContainer ? molVizContainer.getBoundingClientRect() : { width: 400 };
+    const size = Math.max(280, Math.min(560, Math.floor(molContainerRect.width - 20)));
+    const cloudSize = Math.round(size * 1.3);
     let selectorHtml = '';
     if (compounds.length > 1) {
       selectorHtml = '<div class="mol-selector">' +

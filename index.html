@@ -80,6 +80,7 @@
               </div>
               <div class="nuclear-stability" id="nuclear-stability"></div>
               <div class="nuclear-origin" id="nuclear-origin"></div>
+              <div class="nuclear-analysis" id="nuclear-analysis"></div>
             </div>
             <div class="nuclear-viz-switcher">
               <button class="nuclear-viz-tab active" data-nviz="nucleus3d" title="3D Nucleus">
@@ -112,6 +113,18 @@
                 </svg>
                 <span>Nuclides</span>
               </button>
+              <button class="nuclear-viz-tab" data-nviz="semf" title="Semi-Empirical Mass Formula">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="14" width="4" height="7" fill="#4ecdc4" stroke="none" opacity="0.7"/><rect x="8" y="10" width="4" height="11" fill="#ff6b6b" stroke="none" opacity="0.7"/><rect x="13" y="6" width="4" height="15" fill="#ffd93d" stroke="none" opacity="0.7"/><rect x="18" y="3" width="4" height="18" fill="#a78bfa" stroke="none" opacity="0.7"/>
+                </svg>
+                <span>SEMF</span>
+              </button>
+              <button class="nuclear-viz-tab" data-nviz="decaycurve" title="Half-Life Decay Curve">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="3,4 6,4.5 9,6 12,9 15,14 18,18 21,20"/><line x1="3" y1="21" x2="21" y2="21" opacity="0.3"/><circle cx="9" cy="6" r="2" fill="#ff6b6b" stroke="none" opacity="0.7"/>
+                </svg>
+                <span>t½</span>
+              </button>
             </div>
             <div class="nuclear-viz-container" id="nuclear-viz-container">
               <div class="nuclear-viz-panel active" id="nviz-nucleus3d"></div>
@@ -119,6 +132,8 @@
               <div class="nuclear-viz-panel" id="nviz-binding"></div>
               <div class="nuclear-viz-panel" id="nviz-shells"></div>
               <div class="nuclear-viz-panel" id="nviz-nuclides"></div>
+              <div class="nuclear-viz-panel" id="nviz-semf"></div>
+              <div class="nuclear-viz-panel" id="nviz-decaycurve"></div>
             </div>
             <div class="nuclear-reactions" id="nuclear-reactions" style="display:none"></div>
             <div class="isotope-list" id="isotope-list"></div>
