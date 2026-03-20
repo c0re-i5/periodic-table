@@ -2233,8 +2233,35 @@
     }
     // Re-render molecule when switching to it (container now visible → correct size)
     if (mode === 'molecule' && activeElement) {
-      renderMolecule(activeElement);
-      startMoleculeAnimation();
+      // Resize canvas to match now-visible container, but preserve cloud/sticks state
+      const molVizC = document.getElementById('viz-molecule');
+      const canvas = molState.canvas;
+      if (molVizC && canvas) {
+        const molCR = molVizC.getBoundingClientRect();
+        if (molState.cloudMode) {
+          const cloudSize = Math.round(Math.max(280, Math.min(560, Math.floor(molCR.width - 20))) * 1.3);
+          canvas.width = cloudSize * 2;
+          canvas.height = cloudSize * 2;
+          canvas.style.width = cloudSize + 'px';
+          canvas.style.height = cloudSize + 'px';
+          initMolCloud(molState.compound, canvas);
+          startMolCloudAnimation();
+        } else {
+          const sticksSize = Math.max(280, Math.min(560, Math.floor(molCR.width - 20)));
+          canvas.width = sticksSize * 2;
+          canvas.height = sticksSize * 2;
+          canvas.style.width = sticksSize + 'px';
+          canvas.style.height = sticksSize + 'px';
+          const c = molState.compound;
+          const xs = c.atoms.map(a => a.x), ys = c.atoms.map(a => a.y), zs = c.atoms.map(a => a.z);
+          const maxSpan = Math.max(Math.max(...xs)-Math.min(...xs), Math.max(...ys)-Math.min(...ys), Math.max(...zs)-Math.min(...zs), 1.5);
+          molState.scale = (sticksSize * 0.55) / maxSpan;
+          startMoleculeAnimation();
+        }
+      } else {
+        renderMolecule(activeElement);
+        startMoleculeAnimation();
+      }
     }
   }
 

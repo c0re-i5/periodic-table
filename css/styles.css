@@ -540,31 +540,45 @@ body {
   grid-template-columns: 1.15fr 1fr 1fr;
   gap: 24px;
   align-items: start;
+  max-height: calc(92vh - 80px);
 }
 
 .detail-col-nuclear,
 .detail-col-left,
 .detail-col-right {
   min-width: 0;
+  max-height: 100%;
 }
 
 .detail-col-nuclear {
   display: flex;
   flex-direction: column;
-}
-
-.detail-col-right {
-  display: flex;
-  flex-direction: column;
-  max-height: calc(92vh - 80px);
   overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: var(--border-color) transparent;
 }
 
+.detail-col-left {
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-color) transparent;
+}
+
+.detail-col-right {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-color) transparent;
+}
+
+.detail-col-nuclear::-webkit-scrollbar,
+.detail-col-left::-webkit-scrollbar,
 .detail-col-right::-webkit-scrollbar {
   width: 4px;
 }
+.detail-col-nuclear::-webkit-scrollbar-thumb,
+.detail-col-left::-webkit-scrollbar-thumb,
 .detail-col-right::-webkit-scrollbar-thumb {
   background: var(--border-color);
   border-radius: 2px;
@@ -1989,6 +2003,12 @@ body {
     max-width: none;
   }
 
+  .detail-layout {
+    max-height: none;
+  }
+
+  .detail-col-nuclear,
+  .detail-col-left,
   .detail-col-right {
     max-height: none;
     overflow-y: visible;
