@@ -548,30 +548,19 @@ body {
 .detail-col-right {
   min-width: 0;
   max-height: 100%;
-  overflow-x: hidden;
+  overflow: hidden auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-color) transparent;
 }
 
 .detail-col-nuclear {
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
-  scrollbar-width: thin;
-  scrollbar-color: var(--border-color) transparent;
-}
-
-.detail-col-left {
-  overflow-y: auto;
-  scrollbar-width: thin;
-  scrollbar-color: var(--border-color) transparent;
 }
 
 .detail-col-right {
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
-  scrollbar-width: thin;
-  scrollbar-color: var(--border-color) transparent;
-  padding-right: 4px;
 }
 
 .detail-col-nuclear::-webkit-scrollbar,
@@ -867,6 +856,7 @@ body {
   font-weight: 600;
   color: var(--text-primary);
   font-family: var(--font-mono);
+  word-break: break-word;
 }
 
 .property-unit {
@@ -938,6 +928,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  max-width: 100%;
 }
 
 .viz-panel {
@@ -957,6 +948,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  max-width: 100%;
+  overflow: hidden;
 }
 
 .bohr2d-nucleus {
@@ -1013,13 +1006,16 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 6px;
+  max-width: 100%;
 }
 
 .bohr3d-wrapper canvas {
   border-radius: var(--radius);
   background: radial-gradient(ellipse at center, #1a1d2780 0%, transparent 70%);
   display: block;
-  touch-action: none; /* needed for pointer events */
+  touch-action: none;
+  max-width: 100%;
+  height: auto !important;
 }
 
 .bohr3d-hint {
@@ -1180,6 +1176,7 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 6px;
+  max-width: 100%;
 }
 
 .mol-header {
@@ -1207,6 +1204,8 @@ body {
   background: radial-gradient(ellipse at center, #1a1d2780 0%, transparent 70%);
   display: block;
   touch-action: none;
+  max-width: 100%;
+  height: auto !important;
 }
 
 .mol-desc {
@@ -2016,7 +2015,7 @@ body {
   .detail-col-left,
   .detail-col-right {
     max-height: none;
-    overflow-y: visible;
+    overflow: visible;
   }
 
   .detail-layout {
