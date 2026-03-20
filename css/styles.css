@@ -556,6 +556,18 @@ body {
 .detail-col-right {
   display: flex;
   flex-direction: column;
+  max-height: calc(92vh - 80px);
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-color) transparent;
+}
+
+.detail-col-right::-webkit-scrollbar {
+  width: 4px;
+}
+.detail-col-right::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 2px;
 }
 
 .detail-col-right .detail-shells {
@@ -1975,6 +1987,11 @@ body {
   .detail-panel {
     width: 98vw;
     max-width: none;
+  }
+
+  .detail-col-right {
+    max-height: none;
+    overflow-y: visible;
   }
 
   .detail-layout {
