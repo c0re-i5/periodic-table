@@ -10758,8 +10758,8 @@ const MOLECULAR_ORBITALS = {
         electrons: 2,
         energy: 1, desc: 'Mn 3d - O 2p σ bonding — first Mn-O bond in the tetrahedral permanganate.',
         ao: [
-          { atom: 1, n: 3, l: 2, m: 0, zeff: 6.85, c: 0.40 },
-          { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.75 },
+          { atom: 0, n: 3, l: 2, m: 0, zeff: 6.85, c: 0.40 },
+          { atom: 1, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.75 },
         ],
       },
       {
@@ -10768,8 +10768,8 @@ const MOLECULAR_ORBITALS = {
         electrons: 2,
         energy: 2, desc: 'Second Mn-O σ bond.',
         ao: [
-          { atom: 1, n: 3, l: 2, m: 2, zeff: 6.85, c: 0.40 },
-          { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.75 },
+          { atom: 0, n: 3, l: 2, m: 2, zeff: 6.85, c: 0.40 },
+          { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.75 },
         ],
       },
       {
@@ -10778,8 +10778,8 @@ const MOLECULAR_ORBITALS = {
         electrons: 2,
         energy: 3, desc: 'Third Mn-O σ bond.',
         ao: [
-          { atom: 1, n: 3, l: 2, m: -2, zeff: 6.85, c: 0.40 },
-          { atom: 4, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.75 },
+          { atom: 0, n: 3, l: 2, m: -2, zeff: 6.85, c: 0.40 },
+          { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.75 },
         ],
       },
       {
@@ -10788,8 +10788,8 @@ const MOLECULAR_ORBITALS = {
         electrons: 2,
         energy: 4, desc: 'Fourth Mn-O σ bond completing the tetrahedron.',
         ao: [
-          { atom: 1, n: 4, l: 0, m: 0, zeff: 4.80, c: 0.35 },
-          { atom: 5, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.75 },
+          { atom: 0, n: 4, l: 0, m: 0, zeff: 4.80, c: 0.35 },
+          { atom: 4, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.75 },
         ],
       },
       {
@@ -10798,11 +10798,11 @@ const MOLECULAR_ORBITALS = {
         electrons: 2,
         energy: 5, desc: 'Delocalized π bonding across MnO₄⁻ — Mn d orbitals overlap with O p orbitals. Responsible for the intense purple color.',
         ao: [
-          { atom: 1, n: 3, l: 2, m: 1, zeff: 6.85, c: 0.35 },
+          { atom: 0, n: 3, l: 2, m: 1, zeff: 6.85, c: 0.35 },
+          { atom: 1, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
           { atom: 2, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
           { atom: 3, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
           { atom: 4, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
-          { atom: 5, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.50 },
         ],
       },
       {
@@ -10811,10 +10811,10 @@ const MOLECULAR_ORBITALS = {
         electrons: 8,
         energy: 6, desc: 'Non-bonding oxygen lone pairs on the four permanganate oxygens.',
         ao: [
+          { atom: 1, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.50 },
           { atom: 2, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.50 },
           { atom: 3, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.50 },
           { atom: 4, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.50 },
-          { atom: 5, n: 2, l: 1, m: -1, zeff: 4.45, c: 0.50 },
         ],
       },
     ],
@@ -11073,8 +11073,8 @@ const MOLECULAR_ORBITALS = {
         electrons: 2,
         energy: 1, desc: 'Cr=O σ bonding to a terminal oxygen on the first CrO₃ unit.',
         ao: [
-          { atom: 2, n: 3, l: 2, m: 0, zeff: 6.77, c: 0.40 },
-          { atom: 4, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.75 },
+          { atom: 0, n: 3, l: 2, m: 0, zeff: 6.77, c: 0.40 },
+          { atom: 3, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.75 },
         ],
       },
       {
@@ -11083,8 +11083,8 @@ const MOLECULAR_ORBITALS = {
         electrons: 2,
         energy: 2, desc: 'Cr=O σ bonding on the second CrO₃ unit.',
         ao: [
-          { atom: 3, n: 3, l: 2, m: 0, zeff: 6.77, c: 0.40 },
-          { atom: 7, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.75 },
+          { atom: 1, n: 3, l: 2, m: 0, zeff: 6.77, c: 0.40 },
+          { atom: 5, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.75 },
         ],
       },
       {
@@ -11093,9 +11093,9 @@ const MOLECULAR_ORBITALS = {
         electrons: 2,
         energy: 3, desc: 'Bridging oxygen connecting the two CrO₃ units — the Cr-O-Cr linkage.',
         ao: [
-          { atom: 2, n: 4, l: 0, m: 0, zeff: 4.72, c: 0.30 },
-          { atom: 10, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.55 },
-          { atom: 3, n: 4, l: 0, m: 0, zeff: 4.72, c: 0.30 },
+          { atom: 0, n: 4, l: 0, m: 0, zeff: 4.72, c: 0.30 },
+          { atom: 2, n: 2, l: 1, m: 1, zeff: 4.45, c: 0.55 },
+          { atom: 1, n: 4, l: 0, m: 0, zeff: 4.72, c: 0.30 },
         ],
       },
       {
@@ -11104,12 +11104,12 @@ const MOLECULAR_ORBITALS = {
         electrons: 8,
         energy: 4, desc: 'Non-bonding lone pairs on the six terminal oxygens.',
         ao: [
+          { atom: 3, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.408 },
           { atom: 4, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.408 },
+          { atom: 7, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.408 },
           { atom: 5, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.408 },
           { atom: 6, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.408 },
-          { atom: 7, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.408 },
           { atom: 8, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.408 },
-          { atom: 9, n: 2, l: 1, m: 0, zeff: 4.45, c: 0.408 },
         ],
       },
     ],

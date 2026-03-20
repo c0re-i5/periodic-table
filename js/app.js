@@ -2221,8 +2221,9 @@
       cancelAnimationFrame(bohr3dAnimationId);
       bohr3dAnimationId = null;
     }
-    // Restart 3D if switching to it
+    // Re-render & restart 3D cloud when switching to it (container now visible → correct size)
     if (mode === 'bohr3d' && activeElement) {
+      renderCloud3D(activeElement);
       startCloudAnimation();
     }
     // Stop molecule animation when not visible
@@ -2230,7 +2231,9 @@
       cancelAnimationFrame(molState.animId);
       molState.animId = null;
     }
+    // Re-render molecule when switching to it (container now visible → correct size)
     if (mode === 'molecule' && activeElement) {
+      renderMolecule(activeElement);
       startMoleculeAnimation();
     }
   }
@@ -3068,6 +3071,7 @@
     let psi = 0;
     for (const a of mo.ao) {
       const atom = atomsBohr[a.atom];
+      if (!atom) continue;
       psi += a.c * evalAO(a.n, a.l, a.m, a.zeff, x - atom.x, y - atom.y, z - atom.z);
     }
     return psi;
@@ -3084,6 +3088,7 @@
       const weight = (contrib.c * contrib.c) / totalW;
       const targetPts = Math.max(10, Math.round(weight * numPoints));
       const atom = atomsBohr[contrib.atom];
+      if (!atom) continue;
       const { n, l, m, zeff } = contrib;
       const rCut = Math.max(4, (5 * n * n) / zeff);
 
@@ -3525,13 +3530,13 @@
     });
 
     // View toggle events (Ball & Stick / e⁻ Cloud)
-    setupMolViewToggle(container, compound, size, cloudSize);
+    setupMolViewToggle(container);
 
     if (activeViz === 'molecule') startMoleculeAnimation();
   }
 
   // Toggle between Ball & Stick and e⁻ Cloud views
-  function setupMolViewToggle(container, compound, sticksSize, cloudSize) {
+  function setupMolViewToggle(container) {
     container.querySelectorAll('.mol-view-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         container.querySelectorAll('.mol-view-btn').forEach(b => b.classList.remove('active'));
@@ -3541,6 +3546,12 @@
 
         const canvas = molState.canvas;
         const selector = document.getElementById('mol-cloud-selector');
+
+        // Compute fresh sizes from current container
+        const molVizC = document.getElementById('viz-molecule');
+        const molCR = molVizC ? molVizC.getBoundingClientRect() : { width: 400 };
+        const sticksSize = Math.max(280, Math.min(560, Math.floor(molCR.width - 20)));
+        const cloudSize = Math.round(sticksSize * 1.3);
 
         if (molState.cloudMode) {
           // Switch to cloud mode
@@ -3589,6 +3600,12 @@
           canvas.height = sticksSize * 2;
           canvas.style.width = sticksSize + 'px';
           canvas.style.height = sticksSize + 'px';
+
+          // Recalculate molecule scale for new canvas size
+          const c = molState.compound;
+          const xs = c.atoms.map(a => a.x), ys = c.atoms.map(a => a.y), zs = c.atoms.map(a => a.z);
+          const maxSpan = Math.max(Math.max(...xs)-Math.min(...xs), Math.max(...ys)-Math.min(...ys), Math.max(...zs)-Math.min(...zs), 1.5);
+          molState.scale = (sticksSize * 0.55) / maxSpan;
 
           // Remove cloud events, add molecule events
           canvas.removeEventListener('pointerdown', onMolCloudPointerDown);
@@ -3661,6 +3678,7 @@
       let moExtent = 0;
       const totalW = mo.ao.reduce((s, a) => s + a.c * a.c, 0) || 1;
       for (const ao of mo.ao) {
+        if (!bohrCoords[ao.atom]) continue; // skip out-of-bounds atoms
         const atomR = Math.sqrt(bohrCoords[ao.atom].x ** 2 + bohrCoords[ao.atom].y ** 2 + bohrCoords[ao.atom].z ** 2);
         const rCut = Math.max(4, (5 * ao.n * ao.n) / ao.zeff);
         const ext = atomR + rCut;
@@ -3915,7 +3933,6 @@
       Math.max(...zs) - Math.min(...zs),
       1.5
     );
-    molState.scale = (160 * 0.55) / maxSpan * 2;
 
     // Reset to Ball & Stick mode
     molState.cloudMode = false;
@@ -3941,10 +3958,14 @@
     // Restore sticks canvas size and event listeners
     const canvas = molState.canvas;
     if (canvas) {
-      canvas.width = 640;
-      canvas.height = 640;
-      canvas.style.width = '320px';
-      canvas.style.height = '320px';
+      const molVizC = document.getElementById('viz-molecule');
+      const molCR = molVizC ? molVizC.getBoundingClientRect() : { width: 400 };
+      const sticksSize = Math.max(280, Math.min(560, Math.floor(molCR.width - 20)));
+      molState.scale = (sticksSize * 0.55) / maxSpan;
+      canvas.width = sticksSize * 2;
+      canvas.height = sticksSize * 2;
+      canvas.style.width = sticksSize + 'px';
+      canvas.style.height = sticksSize + 'px';
 
       // Ensure sticks event listeners (remove cloud ones if present)
       canvas.removeEventListener('pointerdown', onMolCloudPointerDown);
