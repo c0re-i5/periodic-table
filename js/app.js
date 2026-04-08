@@ -37,6 +37,8 @@
   let tooltipEl = null;
   let bohr3dAnimationId = null;
   let nucleus3dAnimationId = null;
+  let gpuCloudEnabled = (typeof GPURenderer !== 'undefined' && GPURenderer.isSupported());
+  let gpuCloudActive = false; // true when GPU canvas is currently in the DOM
 
   // ═══════════════════════ Initialize ═══════════════════════
   function init() {
@@ -379,6 +381,10 @@
     document.body.style.overflow = '';
     cellMap.forEach(c => c.classList.remove('active'));
     activeElement = null;
+    if (gpuCloudActive) {
+      GPURenderer.destroy();
+      gpuCloudActive = false;
+    }
     if (bohr3dAnimationId) {
       cancelAnimationFrame(bohr3dAnimationId);
       bohr3dAnimationId = null;
@@ -2221,6 +2227,9 @@
       cancelAnimationFrame(bohr3dAnimationId);
       bohr3dAnimationId = null;
     }
+    if (mode !== 'bohr3d' && gpuCloudActive) {
+      GPURenderer.stopAnimation();
+    }
     // Re-render & restart 3D cloud when switching to it (container now visible → correct size)
     if (mode === 'bohr3d' && activeElement) {
       renderCloud3D(activeElement);
@@ -2636,6 +2645,134 @@
     return `${orb.n}${orb.lChar}`;
   }
 
+  // ── Radial probability density chart ──
+  function laguerreJS(nn, alpha, x) {
+    if (nn === 0) return 1;
+    if (nn === 1) return 1 + alpha - x;
+    let p2 = 1, p1 = 1 + alpha - x;
+    for (let k = 2; k <= nn; k++) {
+      const c = ((2*k - 1 + alpha - x) * p1 - (k - 1 + alpha) * p2) / k;
+      p2 = p1; p1 = c;
+    }
+    return p1;
+  }
+
+  function radialProbDensity(n, l, Zeff, r) {
+    const rho = (2 * Zeff * r) / n;
+    const L = laguerreJS(n - l - 1, 2 * l + 1, rho);
+    const R = Math.pow(rho, l) * Math.exp(-rho / 2) * L;
+    return r * r * R * R;  // r² |R(r)|²
+  }
+
+  function updateRadialChart(filter, orbData) {
+    const container = document.getElementById('radial-chart-container');
+    const chartCanvas = document.getElementById('radial-chart');
+    if (!container || !chartCanvas) return;
+
+    if (filter === 'all' || !orbData) {
+      container.style.display = 'none';
+      return;
+    }
+
+    // Find the orbital(s) for this filter
+    let orbs = [];
+    if (filter.startsWith('__sub_')) {
+      const subKey = filter.slice(6);
+      for (const o of orbData) {
+        if (`${o.n}${o.lChar}` === subKey) orbs.push(o);
+      }
+    } else {
+      for (const o of orbData) {
+        if (`${o.n}${o.l}${o.m}` === filter) { orbs.push(o); break; }
+      }
+    }
+    if (orbs.length === 0) { container.style.display = 'none'; return; }
+
+    // Use first orbital for the chart (all same n,l have same radial part)
+    const orb = orbs[0];
+    const rMax = orb.rExt * 1.1;
+    const steps = 160;
+    const dr = rMax / steps;
+    const data = [];
+    let peak = 0;
+    for (let i = 0; i <= steps; i++) {
+      const r = i * dr;
+      const val = radialProbDensity(orb.n, orb.l, orb.Zeff, r);
+      data.push(val);
+      if (val > peak) peak = val;
+    }
+    if (peak < 1e-12) peak = 1;  // guard against division by near-zero
+
+    // Draw
+    container.style.display = 'block';
+    const ctx = chartCanvas.getContext('2d');
+    const W = chartCanvas.width, H = chartCanvas.height;
+    ctx.clearRect(0, 0, W, H);
+
+    // Background
+    ctx.fillStyle = 'rgba(0,0,0,0.55)';
+    ctx.beginPath();
+    if (ctx.roundRect) { ctx.roundRect(0, 0, W, H, 6); } else { ctx.rect(0, 0, W, H); }
+    ctx.fill();
+
+    // Chart area with padding
+    const pad = { top: 14, right: 8, bottom: 18, left: 8 };
+    const cw = W - pad.left - pad.right;
+    const ch = H - pad.top - pad.bottom;
+
+    // Title
+    ctx.fillStyle = '#ccc';
+    ctx.font = '10px monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText(`r² |R(r)|²  —  ${orb.n}${orb.lChar}`, W / 2, 11);
+
+    // Axes
+    ctx.strokeStyle = '#555';
+    ctx.lineWidth = 0.5;
+    ctx.beginPath();
+    ctx.moveTo(pad.left, pad.top);
+    ctx.lineTo(pad.left, pad.top + ch);
+    ctx.lineTo(pad.left + cw, pad.top + ch);
+    ctx.stroke();
+
+    // Curve
+    if (peak > 0) {
+      // Filled area
+      ctx.beginPath();
+      ctx.moveTo(pad.left, pad.top + ch);
+      for (let i = 0; i <= steps; i++) {
+        const x = pad.left + (i / steps) * cw;
+        const y = pad.top + ch - (data[i] / peak) * ch;
+        ctx.lineTo(x, y);
+      }
+      ctx.lineTo(pad.left + cw, pad.top + ch);
+      ctx.closePath();
+      ctx.fillStyle = 'rgba(120, 180, 255, 0.25)';
+      ctx.fill();
+
+      // Stroke
+      ctx.beginPath();
+      for (let i = 0; i <= steps; i++) {
+        const x = pad.left + (i / steps) * cw;
+        const y = pad.top + ch - (data[i] / peak) * ch;
+        if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      }
+      ctx.strokeStyle = '#78b4ff';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+    }
+
+    // Axis labels
+    ctx.fillStyle = '#888';
+    ctx.font = '9px monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText('r (a₀)', W / 2, H - 2);
+    ctx.textAlign = 'right';
+    ctx.fillText(rMax.toFixed(1), pad.left + cw, H - 2);
+    ctx.textAlign = 'left';
+    ctx.fillText('0', pad.left, H - 2);
+  }
+
   // ── Main render call ──
   function renderCloud3D(element) {
     const container = document.getElementById('viz-bohr3d');
@@ -2700,14 +2837,39 @@
     }
     legendHtml += '</div>';
 
+    // GPU toggle button (only if WebGL2 is available)
+    const gpuAvailable = (typeof GPURenderer !== 'undefined' && GPURenderer.isSupported());
+    const gpuToggleHtml = gpuAvailable
+      ? `<button class="bohr3d-btn gpu-toggle-btn${gpuCloudEnabled ? ' gpu-active' : ''}" data-action="gpu" title="Toggle GPU HD rendering">HD</button>`
+      : '';
+    const fsToggleHtml = gpuAvailable
+      ? `<button class="bohr3d-btn fs-toggle-btn" data-action="fullscreen" title="Toggle fullscreen">⛶</button>`
+      : '';
+
+    const modeDisabled = !(gpuAvailable && gpuCloudEnabled) ? ' disabled' : '';
+    const gpuModeButtons = gpuAvailable
+      ? `<button class="bohr3d-btn gpu-mode-btn" data-action="clip" title="Cross-section clipping plane"${modeDisabled}>✂</button>`
+      + `<button class="bohr3d-btn gpu-mode-btn" data-action="iso" title="Isosurface (solid lobe) mode"${modeDisabled}>◆</button>`
+      + `<button class="bohr3d-btn gpu-mode-btn" data-action="phase" title="Phase colormap (blue–white–red)"${modeDisabled}>φ</button>`
+      : '';
+
     container.innerHTML = `
       <div class="bohr3d-wrapper">
         ${selectorHtml}
-        <canvas id="bohr3d-canvas" width="${size * 2}" height="${size * 2}"
-                style="width:${size}px;height:${size}px;cursor:grab;"></canvas>
-        ${legendHtml}
+        <div class="bohr3d-canvas-area">
+          <canvas id="bohr3d-canvas" width="${size * 2}" height="${size * 2}"
+                  style="width:${size}px;height:${size}px;cursor:grab;"></canvas>
+          ${legendHtml}
+          <div class="bohr3d-orbital-label" id="orbital-label"></div>
+          <div id="radial-chart-container" style="display:none;position:absolute;bottom:36px;left:8px;">
+            <canvas id="radial-chart" width="180" height="100" style="width:180px;height:100px;"></canvas>
+          </div>
+        </div>
         <div class="bohr3d-hint" id="cloud-hint">Drag to rotate · Scroll to zoom · Select orbital to see its shape</div>
         <div class="bohr3d-controls">
+          ${gpuToggleHtml}
+          ${gpuModeButtons}
+          ${fsToggleHtml}
           <button class="bohr3d-btn" data-action="auto" title="Toggle auto-rotate">⟳</button>
           <button class="bohr3d-btn" data-action="reset" title="Reset view">↺</button>
         </div>
@@ -2719,20 +2881,78 @@
     cloud3d.dpr = window.devicePixelRatio || 1;
     cloud3d.w = canvas.width;
     cloud3d.h = canvas.height;
+    gpuCloudActive = false;
 
-    // Pointer events
-    canvas.addEventListener('pointerdown', onCloudPointerDown);
-    canvas.addEventListener('pointermove', onCloudPointerMove);
-    canvas.addEventListener('pointerup', onCloudPointerUp);
-    canvas.addEventListener('pointerleave', onCloudPointerUp);
-    canvas.addEventListener('wheel', onCloudWheel, { passive: false });
+    // ── Initialize GPU renderer if enabled ──
+    if (gpuCloudEnabled && gpuAvailable) {
+      initGPUCloud(canvas, orbData, maxR, size);
+    }
+
+    // Pointer events (only bind CPU events if not GPU mode)
+    if (!gpuCloudActive) {
+      canvas.addEventListener('pointerdown', onCloudPointerDown);
+      canvas.addEventListener('pointermove', onCloudPointerMove);
+      canvas.addEventListener('pointerup', onCloudPointerUp);
+      canvas.addEventListener('pointerleave', onCloudPointerUp);
+      canvas.addEventListener('wheel', onCloudWheel, { passive: false });
+    }
 
     // Control buttons
     container.querySelectorAll('.bohr3d-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         const a = btn.dataset.action;
-        if (a === 'auto') cloud3d.autoRotate = !cloud3d.autoRotate;
-        if (a === 'reset') { cloud3d.camTheta = 0.4; cloud3d.camPhi = 0.3; cloud3d.zoom = 1.0; cloud3d.autoRotate = true; cloud3d.pointCache = {}; }
+        if (a === 'auto') {
+          cloud3d.autoRotate = !cloud3d.autoRotate;
+          if (gpuCloudActive) GPURenderer.state.autoRotate = !GPURenderer.state.autoRotate;
+        }
+        if (a === 'reset') {
+          cloud3d.camTheta = 0.4; cloud3d.camPhi = 0.3; cloud3d.zoom = 1.0; cloud3d.autoRotate = true; cloud3d.pointCache = {};
+          if (gpuCloudActive) GPURenderer.resetCamera();
+        }
+        if (a === 'gpu') {
+          gpuCloudEnabled = !gpuCloudEnabled;
+          btn.classList.toggle('gpu-active', gpuCloudEnabled);
+          // Reset mode button states on GPU toggle
+          container.querySelectorAll('.gpu-mode-btn').forEach(mb => {
+            mb.classList.remove('gpu-active');
+            mb.disabled = !gpuCloudEnabled;
+          });
+          renderCloud3D(element);
+          if (activeViz === 'bohr3d') startCloudAnimation();
+        }
+        if (a === 'clip' && gpuCloudActive) {
+          GPURenderer.toggleClip();
+          const axis = GPURenderer.state.clipAxis;
+          btn.classList.toggle('gpu-active', axis >= 0);
+          btn.title = axis < 0 ? 'Cross-section clipping plane' : `Clipping ${['X','Y','Z'][axis]} axis (click to cycle)`;
+        }
+        if (a === 'iso' && gpuCloudActive) {
+          GPURenderer.toggleMode();
+          const iso = GPURenderer.state.renderMode === 1;
+          btn.classList.toggle('gpu-active', iso);
+          btn.title = iso ? 'Isosurface mode (click for cloud)' : 'Isosurface (solid lobe) mode';
+        }
+        if (a === 'phase' && gpuCloudActive) {
+          GPURenderer.togglePhaseMode();
+          const ph = GPURenderer.state.phaseMode === 1;
+          btn.classList.toggle('gpu-active', ph);
+          btn.title = ph ? 'Phase colormap active (click for lobe colors)' : 'Phase colormap (blue–white–red)';
+        }
+        if (a === 'fullscreen') {
+          if (gpuCloudActive) {
+            const wrapper = document.querySelector('.bohr3d-wrapper');
+            GPURenderer.toggleFullscreen(wrapper);
+          } else {
+            // Enable GPU first, then go fullscreen
+            gpuCloudEnabled = true;
+            renderCloud3D(element);
+            if (activeViz === 'bohr3d') startCloudAnimation();
+            setTimeout(() => {
+              const wrapper = document.querySelector('.bohr3d-wrapper');
+              GPURenderer.toggleFullscreen(wrapper);
+            }, 100);
+          }
+        }
       });
     });
 
@@ -2771,16 +2991,44 @@
         } else {
           cloud3d.activeFilter = filter;
         }
+        // Forward filter to GPU renderer if active
+        if (gpuCloudActive) {
+          if (filter === 'all') {
+            GPURenderer.setOrbitals(cloud3d.allOrbData, precomputeOrbData(element).maxR);
+          } else if (filter.startsWith('sub:')) {
+            GPURenderer.setFilter('__sub_' + filter.slice(4), cloud3d.allOrbData);
+          } else {
+            GPURenderer.setFilter(filter, cloud3d.allOrbData);
+          }
+        }
         // Update hint text
         const hint = document.getElementById('cloud-hint');
+        const orbLabel = document.getElementById('orbital-label');
         if (hint) {
           if (filter === 'all') {
             hint.textContent = `Drag to rotate · Scroll to zoom · Select orbital to see its shape`;
+          } else if (gpuCloudActive) {
+            const name = btn.textContent.trim().replace(/[↑↓]/g, '').trim();
+            const scalePercent = Math.round((GPURenderer.state.renderScale || 1) * 100);
+            hint.textContent = `Showing ${name} orbital · GPU volumetric (${scalePercent}%)`;
           } else {
             const name = btn.textContent.trim().replace(/[↑↓]/g, '').trim();
             hint.textContent = `Showing ${name} orbital · ${getActivePoints().length.toLocaleString()} points`;
           }
         }
+        // Update orbital label overlay
+        if (orbLabel) {
+          if (filter === 'all') {
+            orbLabel.textContent = '';
+            orbLabel.style.display = 'none';
+          } else {
+            const name = btn.textContent.trim().replace(/[↑↓]/g, '').trim();
+            orbLabel.textContent = name;
+            orbLabel.style.display = 'block';
+          }
+        }
+        // Update radial probability chart
+        updateRadialChart(filter, cloud3d.allOrbData);
       });
     });
 
@@ -2814,9 +3062,94 @@
     e.preventDefault();
   }
 
+  // ── Initialize GPU cloud renderer ──
+  function initGPUCloud(cpuCanvas, orbData, maxR, size) {
+    // Destroy any previous GPU state
+    GPURenderer.destroy();
+    // Remove any stale axis overlay
+    const oldOverlay = document.getElementById('gpu-axis-overlay');
+    if (oldOverlay) oldOverlay.remove();
+
+    // Create a separate WebGL2 canvas overlaying the CPU canvas
+    const wrapper = cpuCanvas.parentElement;
+    const gpuCanvas = document.createElement('canvas');
+    gpuCanvas.id = 'bohr3d-gpu-canvas';
+    gpuCanvas.width = size * 2;
+    gpuCanvas.height = size * 2;
+    gpuCanvas.style.width = size + 'px';
+    gpuCanvas.style.height = size + 'px';
+    gpuCanvas.style.cursor = 'grab';
+
+    // Insert GPU canvas right after CPU canvas, then hide CPU canvas
+    cpuCanvas.insertAdjacentElement('afterend', gpuCanvas);
+    cpuCanvas.style.display = 'none';
+
+    if (!GPURenderer.init(gpuCanvas)) {
+      // WebGL2 failed — fall back to CPU
+      gpuCanvas.remove();
+      cpuCanvas.style.display = '';
+      gpuCloudEnabled = false;
+      gpuCloudActive = false;
+      return;
+    }
+
+    // Create axis label overlay (positioned over the GPU canvas)
+    const axisOverlay = document.createElement('div');
+    axisOverlay.id = 'gpu-axis-overlay';
+    axisOverlay.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;';
+    gpuCanvas.insertAdjacentElement('afterend', axisOverlay);
+    for (const a of ['x', 'y', 'z']) {
+      const lbl = document.createElement('span');
+      lbl.className = 'gpu-axis-label';
+      lbl.id = 'gpu-axis-' + a;
+      lbl.textContent = a;
+      axisOverlay.appendChild(lbl);
+    }
+
+    GPURenderer.setOrbitals(orbData, maxR);
+    GPURenderer.setQuality('high');
+    GPURenderer.resetCamera();
+    GPURenderer.bindEvents(gpuCanvas);
+    GPURenderer.state.onFrame = updateAxisLabels;
+    gpuCloudActive = true;
+  }
+
+  function updateAxisLabels() {
+    const overlay = document.getElementById('gpu-axis-overlay');
+    if (!overlay || !gpuCloudActive) return;
+    const axes = GPURenderer.projectAxes();
+    const w = overlay.offsetWidth;
+    const h = overlay.offsetHeight;
+    // Hide all first
+    for (const a of ['x', 'y', 'z']) {
+      const el = document.getElementById('gpu-axis-' + a);
+      if (el) el.style.display = 'none';
+    }
+    for (const a of axes) {
+      const el = document.getElementById('gpu-axis-' + a.label);
+      if (!el) continue;
+      const px = a.sx * w;
+      const py = a.sy * h;
+      // Only show if within bounds with margin
+      if (px < -10 || px > w + 10 || py < -10 || py > h + 10) continue;
+      el.style.display = '';
+      el.style.left = px + 'px';
+      el.style.top = py + 'px';
+      el.style.color = a.color;
+    }
+  }
+
   // ── Animation loop ──
   function startCloudAnimation() {
+    // Stop any existing CPU animation
     if (bohr3dAnimationId) cancelAnimationFrame(bohr3dAnimationId);
+
+    // If GPU mode is active, use GPU animation loop
+    if (gpuCloudActive) {
+      GPURenderer.startAnimation();
+      return;
+    }
+
     const ctx = cloud3d.ctx;
     if (!ctx) return;
 

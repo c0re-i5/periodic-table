@@ -27,10 +27,22 @@ Click any element to open a 3-column modal with:
   - Associated Laguerre polynomials via recurrence relation
   - Real spherical harmonics for s, p, d, and f orbitals
   - Slater's rules for effective nuclear charge ($Z_{\text{eff}}$)
-  - Monte Carlo rejection sampling from $|\psi|^2$
+  - Monte Carlo rejection sampling from $|\psi|^2$ (CPU mode), or volumetric raymarching (GPU HD mode)
+  - **GPU HD mode** — WebGL2 volumetric raymarching with real-time analytical wavefunction evaluation:
+    - Two-pass FBO architecture: render at adaptive resolution, bilinear upscale to display
+    - Adaptive render scaling targets 60 fps — automatically adjusts resolution under load
+    - **Cloud mode** — volumetric density with front-to-back alpha compositing and density-adaptive stepping
+    - **Isosurface mode** — solid lobe rendering with per-orbital 90% probability enclosure thresholds, translucent Fresnel compositing, and three-point lighting (key + fill + rim)
+    - **Cross-section clipping** — cycle through X/Y/Z axis clipping planes to reveal internal structure
+    - **Phase colormap** — blue–white–red color scheme showing wavefunction sign
+    - **Fullscreen support** — adaptive scaling maintains interactive framerates at any resolution
+    - Spherical orbital fast path: radial-only density evaluation and analytical normals for s orbitals and merged subshells
+    - Per-orbital peak normalization and density compression for multi-orbital views
+    - Closed-subshell merging — full subshells rendered as single spherically symmetric entries
+  - **Radial probability chart** — $r^2 |R(r)|^2$ plot shown when viewing individual orbitals or subshells
   - **Orbital selector** — view individual orbitals (1s, 2p_z, 3d_xy, etc.) with characteristic shapes
   - **Sign-sensitive lobe coloring** — positive/negative wavefunction phases in distinct colors
-  - Drag to rotate, scroll to zoom, up to 80,000-point resolution per orbital
+  - Drag to rotate, scroll to zoom, up to 80,000-point resolution per orbital (CPU) or unlimited analytical resolution (GPU)
 - **Orbital Diagram** — Hund's rule filling with up/down arrow notation
 - **Molecule Viewer** — 3D ball-and-stick models of common compounds for each element, with MO cloud visualization for 188 molecules
 
@@ -115,14 +127,16 @@ periodic-table/
     ├── ions.js               # Ionic states for 50 elements
     ├── nuclear-data.js       # Nuclear properties, isotopes, decay chains for 118 elements
     ├── nuclear-extra.js      # Deformation, cross-sections, separation energies, origins, nuclide ranges
+    ├── gpu-renderer.js       # WebGL2 volumetric raymarching electron cloud renderer
     └── app.js                # All interactivity, renderers, and math
 ```
 
 ## Technical Details
 
 - **Zero dependencies** — pure HTML5, CSS3, and ES6+ JavaScript
-- **Canvas 2D API** — all 3D visualizations rendered via manual rotation matrices and perspective projection
-- **~25,000 lines of code** across 10 files
+- **Canvas 2D API** — 3D visualizations rendered via manual rotation matrices and perspective projection
+- **WebGL2** — GPU electron cloud renderer uses volumetric raymarching with two-pass FBO and adaptive resolution
+- **~27,000 lines of code** across 11 files
 - **Responsive** — adapts from desktop to mobile with CSS Grid breakpoints
 - **Dark theme** — designed for readability with carefully chosen contrast ratios
 
@@ -136,7 +150,10 @@ The electron cloud renderer implements real quantum mechanics:
 | Angular wavefunctions | Real spherical harmonics $Y_l^m(\theta, \varphi)$ for $l = 0, 1, 2, 3$ |
 | Effective nuclear charge | Slater's rules with proper group screening constants |
 | Electron filling | Hund's rule — maximize spin before pairing |
-| Probability sampling | Monte Carlo rejection sampling from $|\psi|^2 = |R_{nl}|^2 |Y_l^m|^2$ |
+| Probability sampling | Monte Carlo rejection sampling from $|\psi|^2 = |R_{nl}|^2 |Y_l^m|^2$ (CPU), analytical evaluation (GPU) |
+| GPU raymarching | Density-adaptive stepping with bisection refinement (8 iterations), per-orbital 90% probability enclosure thresholds via histogram integration |
+| Isosurface field | $\max_j \frac{\rho_j}{\hat{\rho}_j \cdot \tau_j}$ where $\tau_j$ encloses 90% of $|\psi_j|^2$ |
+| Spherical fast path | Radial-only evaluation for $l=0$ orbitals and merged subshells — analytical sphere normals |
 
 All math has been verified against analytical solutions (radial node positions, angular node counts, Slater $Z_{\text{eff}}$ values for H, He, Li, C, Na, Ti, and lobe sign correctness for p/d/f orbitals).
 
@@ -185,7 +202,7 @@ The nucleus renderer visualizes nuclear structure from the nucleon level down to
 
 ## Browser Support
 
-Works in all modern browsers (Chrome, Firefox, Safari, Edge). Requires ES6+ support (template literals, Maps, arrow functions, `const`/`let`).
+Works in all modern browsers (Chrome, Firefox, Safari, Edge). Requires ES6+ support (template literals, Maps, arrow functions, `const`/`let`). GPU HD mode requires WebGL2 (supported in all modern browsers since 2020); falls back to CPU point-cloud rendering if unavailable.
 
 ## License
 

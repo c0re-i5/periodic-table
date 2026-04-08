@@ -1018,6 +1018,13 @@ body {
   height: auto !important;
 }
 
+.bohr3d-canvas-area {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius);
+  display: inline-block;
+}
+
 .bohr3d-hint {
   font-size: 0.72rem;
   color: var(--text-muted);
@@ -1053,6 +1060,163 @@ body {
   color: var(--accent);
   background: var(--bg-hover);
 }
+.bohr3d-btn:active {
+  transform: scale(0.93);
+}
+
+/* GPU HD toggle */
+.gpu-toggle-btn {
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  font-size: 0.7rem;
+  padding: 0 8px;
+}
+.gpu-toggle-btn.gpu-active {
+  color: #fff;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  border-color: #7c3aed;
+  box-shadow: 0 0 8px rgba(124, 58, 237, 0.4);
+}
+.fs-toggle-btn {
+  font-size: 0.85rem;
+  padding: 0 7px;
+}
+/* GPU mode toggle buttons (clip, iso, phase) */
+.gpu-mode-btn {
+  font-size: 0.82rem;
+  padding: 0 6px;
+  transition: color var(--transition-fast), background var(--transition-fast),
+              opacity var(--transition-fast), box-shadow var(--transition-fast);
+}
+.gpu-mode-btn.gpu-active {
+  color: #fff;
+  background: linear-gradient(135deg, #0ea5e9, #06b6d4);
+  border-color: #0891b2;
+  box-shadow: 0 0 6px rgba(14, 165, 233, 0.35);
+}
+.gpu-mode-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+.gpu-mode-btn:active:not(:disabled) {
+  transform: scale(0.93);
+}
+/* Keyboard focus ring */
+.bohr3d-btn:focus-visible,
+.cloud-sel-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+/* Orbital label overlay */
+.bohr3d-orbital-label {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.8);
+  text-shadow: 0 0 6px rgba(0,0,0,0.8), 0 1px 2px rgba(0,0,0,0.6);
+  pointer-events: none;
+  user-select: none;
+  letter-spacing: 0.04em;
+  display: none;
+}
+/* GPU axis labels */
+.gpu-axis-label {
+  position: absolute;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  font-style: italic;
+  text-transform: lowercase;
+  transform: translate(-50%, -50%);
+  text-shadow: 0 0 4px rgba(0,0,0,0.7), 0 0 1px rgba(0,0,0,0.9);
+  pointer-events: none;
+  user-select: none;
+  transition: left 0.05s linear, top 0.05s linear;
+}
+#gpu-axis-overlay {
+  position: absolute;
+  overflow: hidden;
+}
+/* Fullscreen wrapper */
+.bohr3d-wrapper:fullscreen,
+.bohr3d-wrapper:-webkit-full-screen {
+  background: #000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+.bohr3d-wrapper:fullscreen canvas,
+.bohr3d-wrapper:-webkit-full-screen canvas {
+  width: 100vw !important;
+  height: 100vh !important;
+}
+.bohr3d-wrapper:fullscreen .bohr3d-canvas-area,
+.bohr3d-wrapper:-webkit-full-screen .bohr3d-canvas-area {
+  overflow: visible;
+  width: 100vw;
+  height: 100vh;
+}
+.bohr3d-wrapper:fullscreen .bohr3d-controls,
+.bohr3d-wrapper:-webkit-full-screen .bohr3d-controls {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 10;
+}
+.bohr3d-wrapper:fullscreen .cloud-selector,
+.bohr3d-wrapper:-webkit-full-screen .cloud-selector {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  transform: none;
+  z-index: 10;
+  max-width: 100vw;
+  padding: 12px 2vw;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.35) 80%, transparent 100%);
+  pointer-events: none;
+}
+.bohr3d-wrapper:fullscreen .cloud-sel-btn,
+.bohr3d-wrapper:-webkit-full-screen .cloud-sel-btn {
+  pointer-events: auto;
+}
+.bohr3d-wrapper:fullscreen .bohr3d-hint,
+.bohr3d-wrapper:-webkit-full-screen .bohr3d-hint {
+  position: fixed;
+  bottom: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  color: rgba(255,255,255,0.5);
+}
+.bohr3d-wrapper:fullscreen .cloud-legend,
+.bohr3d-wrapper:-webkit-full-screen .cloud-legend {
+  position: fixed;
+  bottom: 60px;
+  left: 20px;
+  z-index: 10;
+}
+.bohr3d-wrapper:fullscreen .bohr3d-orbital-label,
+.bohr3d-wrapper:-webkit-full-screen .bohr3d-orbital-label {
+  position: fixed;
+  top: 20px;
+  right: 24px;
+  font-size: 1.4rem;
+  z-index: 10;
+}
+.bohr3d-wrapper:fullscreen #radial-chart-container,
+.bohr3d-wrapper:-webkit-full-screen #radial-chart-container {
+  position: fixed;
+  bottom: 120px;
+  left: 20px;
+  z-index: 10;
+}
 
 /* Cloud orbital selector */
 .cloud-selector {
@@ -1087,6 +1251,9 @@ body {
   color: #fff;
   background: var(--accent);
   border-color: var(--accent);
+}
+.cloud-sel-btn.active:hover {
+  filter: brightness(1.15);
 }
 
 .cloud-sel-btn.cloud-sel-group {
